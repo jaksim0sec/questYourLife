@@ -21,6 +21,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Side-by-side install with old builds signed using lost ephemeral keys.
+            // The original applicationId and its Room data remain untouched.
+            applicationIdSuffix = ".preview"
+            versionNameSuffix = "-preview"
+        }
         release {
             isMinifyEnabled = false
         }

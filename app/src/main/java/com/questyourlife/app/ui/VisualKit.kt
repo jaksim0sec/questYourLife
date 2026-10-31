@@ -94,11 +94,13 @@ fun SmallBar(progress: Float, modifier: Modifier = Modifier,
         targetValue = progress.coerceIn(0f,1f),
         animationSpec = tween(340, easing = FastOutSlowInEasing), label = "progress"
     )
-    LinearProgressIndicator(progress = { animated },
-        modifier = modifier.fillMaxWidth().height(height).clip(CircleShape),
-        color = AccentRed, trackColor = Color(0xFFF0D9D5), gapSize = 0.dp,
-        strokeCap = StrokeCap.Round
-    )
+    Row(modifier.fillMaxWidth().height(height)
+        .clip(CircleShape).background(Color(0xFFF0D9D5))) {
+        if (animated > 0f) {
+            Box(Modifier.fillMaxWidth(animated).fillMaxHeight()
+                .clip(CircleShape).background(AccentRed))
+        }
+    }
 }
 
 @Composable

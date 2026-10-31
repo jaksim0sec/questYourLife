@@ -43,6 +43,7 @@ class DailyQuestRepository(context: Context) {
     }
 
     fun observeDay(dateKey: String) = dao.observeDay(dateKey)
+    suspend fun snapshotDay(dateKey: String) = dao.snapshotDay(dateKey)
     fun observeCoins() = dao.observeEarnedCoins()
     fun observeCompletionCount() = dao.observeCompletedCount()
 

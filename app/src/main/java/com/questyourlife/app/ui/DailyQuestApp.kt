@@ -167,7 +167,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                             SimpleCard {
                                 Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                                     Text("지금까지의 기록", fontSize = 14.sp, color = Muted)
-                                    Text("$completed개 완료", fontSize = 28.sp,
+                                    Text("${completed}개 완료", fontSize = 28.sp,
                                         fontWeight = FontWeight.Bold, color = Ink)
                                     HorizontalDivider(color = Line)
                                     Text("획득한 캐시  $coins C", fontSize = 17.sp,

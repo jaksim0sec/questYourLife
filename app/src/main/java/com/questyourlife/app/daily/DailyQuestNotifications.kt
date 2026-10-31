@@ -64,7 +64,7 @@ object DailyQuestNotifications {
         setup(context)
         val notification = builder(context, PROPOSALS)
             .setContentTitle("오늘의 퀘스트가 도착했어")
-            .setContentText("$amount개의 작은 목표가 준비됐어. 마음에 드는 퀘스트를 수락해 봐.")
+            .setContentText("${amount}개의 작은 목표가 준비됐어. 마음에 드는 퀘스트를 수락해 봐.")
             .setStyle(Notification.BigTextStyle().bigText(
                 "오늘은 어떤 한 걸음을 시작할까? 현생패치에서 퀘스트를 골라 수락해 봐."
             ))
@@ -75,7 +75,6 @@ object DailyQuestNotifications {
     fun active(context: Context, quest: DailyQuestEntity) {
         if (!allowed(context)) return
         setup(context)
-        manager(context).cancel(PROPOSAL_ID)
         val notification = builder(context, ACTIVE)
             .setContentTitle("진행 중 · ${quest.title}")
             .setContentText("마쳤다면 완료를 눌러 +${quest.reward} C 받기")

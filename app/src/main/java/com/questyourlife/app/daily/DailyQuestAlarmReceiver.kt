@@ -19,9 +19,14 @@ class DailyQuestAlarmReceiver : BroadcastReceiver() {
                     DailyQuestScheduler.ACTION_DAILY -> {
                         DailyQuestScheduler.scheduleNext(app)
                         if (DailyQuestScheduler.enabled(app)) {
-                            repo.ensureToday()
+                            val day = repo.ensureToday()
                             DailyQuestNotifications.clearOld(app)
-                            DailyQuestNotifications.proposals(app, 3)
+                            val quests = repo.snapshotDay(day)
+                            val pending = quests.count { !it.accepted }
+                            if (pending > 0) DailyQuestNotifications.proposals(app, pending)
+                            quests.filter { it.accepted && it.completedAt == null }.forEach {
+                                DailyQuestNotifications.active(app, it)
+                            }
                         }
                     }
                     DailyQuestScheduler.ACTION_ACCEPT -> {

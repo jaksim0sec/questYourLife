@@ -34,11 +34,11 @@ import com.questyourlife.app.data.DailyQuestEntity
 // Design tokens shared across all screens. Keep the paper surface quieter than the stamp.
 val Cream = Color(0xFFFBF9F5)
 val TextInk = Color(0xFF252321)
-val TextGray = Color(0xFF77736F)
+val TextGray = Color(0xFF6E6964)
 val AccentRed = Color(0xFFD64B49)
 val LightRed = Color(0xFFF8E7E4)
 val WarmLine = Color(0xFFEAE6E0)
-val CoinGold = Color(0xFFCE993F)
+val CoinGold = Color(0xFF93621A)
 val MutedSurface = Color(0xFFF2EFEA)
 val CardWhite = Color(0xFFFFFEFC)
 
@@ -154,9 +154,9 @@ fun DailyCompactRow(
         quest.accepted -> "완료하기"
         else -> "수락하기"
     }
-    Row(Modifier.fillMaxWidth().heightIn(min=53.dp),
+    Row(Modifier.fillMaxWidth().heightIn(min=56.dp),
         verticalAlignment=Alignment.CenterVertically) {
-        Box(Modifier.size(43.dp).clip(CircleShape)
+        Box(Modifier.size(48.dp).clip(CircleShape)
             .clickable(enabled = !done, role = Role.Button, onClick=action)
             .semantics { contentDescription = "${quest.title}, $label" },
             contentAlignment=Alignment.Center) {

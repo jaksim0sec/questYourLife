@@ -42,10 +42,26 @@ jobs:
           path: ~/.android/debug.keystore
           key: questyourlife-debug-signing-v1
 
+      # Persistent signing requires PREVIEW_DEBUG_KEYSTORE_B64 in repository Secrets.
+      # The secret is the base64 encoding of the previous debug.keystore.
+      - name: Restore permanent signing key when configured
+        env:
+          PREVIEW_DEBUG_KEYSTORE_B64: ${{ secrets.PREVIEW_DEBUG_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$PREVIEW_DEBUG_KEYSTORE_B64" ]; then
+            mkdir -p "$HOME/.android"
+            printf '%s' "$PREVIEW_DEBUG_KEYSTORE_B64" | base64 --decode > "$HOME/.android/debug.keystore"
+            chmod 600 "$HOME/.android/debug.keystore"
+            echo "Fixed signing keystore restored from GitHub Secrets."
+          else
+            echo "::warning::No PREVIEW_DEBUG_KEYSTORE_B64 secret. Debug signing depends on temporary cache, APK update compatibility is not guaranteed."
+          fi
+
       - name: Assemble debug APK
         run: gradle --no-daemon :app:assembleDebug
 
       - name: Publish debug APK
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: hyunsaengpatch-debug-apk

@@ -11,6 +11,9 @@ interface DailyQuestDao {
     @Query("SELECT * FROM daily_quests WHERE dateKey = :dateKey ORDER BY id ASC")
     fun observeDay(dateKey: String): Flow<List<DailyQuestEntity>>
 
+    @Query("SELECT * FROM daily_quests ORDER BY dateKey DESC, id ASC")
+    fun observeHistory(): Flow<List<DailyQuestEntity>>
+
     @Query("SELECT * FROM daily_quests WHERE dateKey = :dateKey ORDER BY id ASC")
     suspend fun snapshotDay(dateKey: String): List<DailyQuestEntity>
 

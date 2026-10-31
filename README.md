@@ -1,4 +1,6 @@
-# questYourLife
+# 현생패치 (questYourLife)
+
+**앱 한국어 이름: 현생패치** · 저장소·기술 식별자: questYourLife.
 
 목표를 작은 퀘스트로 나누고, 일상에서 체크하고, 보상을 받는 **Android 우선 목표 관리 앱**.
 

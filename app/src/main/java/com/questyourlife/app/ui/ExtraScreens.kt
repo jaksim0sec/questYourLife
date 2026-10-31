@@ -207,18 +207,31 @@ fun HistoryPanel(
 ) {
     var range by remember { mutableIntStateOf(0) }
     var weekShift by remember { mutableIntStateOf(0) }
-    val completed=questsHistory.filter{it.completedAt!=null}
-    val minutes=sessions.sumOf { it.durationSeconds }/60
-    val dates=completed.map{it.dateKey}.toSet()
-    val anchor=LocalDate.now().minusWeeks(weekShift.toLong())
+    val anchor=when(range) {
+        0 -> LocalDate.now().minusDays(weekShift.toLong())
+        1 -> LocalDate.now().minusWeeks(weekShift.toLong())
+        else -> LocalDate.now().minusMonths(weekShift.toLong())
+    }
     val monday=anchor.minusDays((anchor.dayOfWeek.value-1).toLong())
+    val periodStart=when(range) { 0 -> anchor; 1 -> monday; else -> anchor.withDayOfMonth(1) }
+    val periodEnd=when(range) { 0 -> anchor.plusDays(1); 1 -> monday.plusWeeks(1); else -> periodStart.plusMonths(1) }
+    fun inPeriod(day: LocalDate) = !day.isBefore(periodStart) && day.isBefore(periodEnd)
+    val allCompleted=questsHistory.filter { it.completedAt!=null }
+    val completed=allCompleted.filter { inPeriod(LocalDate.parse(it.dateKey)) }
+    val completedSteps=steps.filter { step -> step.completedAt?.let { ms ->
+        inPeriod(java.time.Instant.ofEpochMilli(ms).atZone(java.time.ZoneId.systemDefault()).toLocalDate())
+    } ?: false }
+    val minutes=sessions.filter { s ->
+        inPeriod(java.time.Instant.ofEpochMilli(s.finishedAt).atZone(java.time.ZoneId.systemDefault()).toLocalDate())
+    }.sumOf { it.durationSeconds }/60
+    val dates=allCompleted.map{it.dateKey}.toSet()
     Column(verticalArrangement=Arrangement.spacedBy(19.dp)) {
         ScreenHeading("기록")
         Row(Modifier.fillMaxWidth().background(Color(0xFFF0EEEB),CircleShape).padding(4.dp)) {
             listOf("일간","주간","월간").forEachIndexed { i,label->
                 Box(Modifier.weight(1f).background(
                     if(range==i) Color.White else Color.Transparent,CircleShape)
-                    .clickable { range=i }.padding(vertical=10.dp),
+                    .clickable { range=i; weekShift=0 }.padding(vertical=10.dp),
                     contentAlignment=Alignment.Center) {
                     Text(label,fontSize=12.sp,color=if(range==i) TextInk else TextGray)
                 }
@@ -228,7 +241,7 @@ fun HistoryPanel(
             Row(verticalAlignment=Alignment.CenterVertically) {
                 Text("‹",fontSize=26.sp,color=TextInk,
                     modifier=Modifier.clickable { weekShift++ }.padding(end=18.dp))
-                Text("${monday.monthValue}월 ${monday.dayOfMonth}일 ~ ${monday.plusDays(6).monthValue}월 ${monday.plusDays(6).dayOfMonth}일",
+                Text(when(range) { 0 -> "${anchor.monthValue}월 ${anchor.dayOfMonth}일"; 1 -> "${monday.monthValue}월 ${monday.dayOfMonth}일 ~ ${monday.plusDays(6).monthValue}월 ${monday.plusDays(6).dayOfMonth}일"; else -> "${anchor.year}년 ${anchor.monthValue}월" },
                     modifier=Modifier.weight(1f),textAlign=TextAlign.Center,
                     color=TextInk,fontSize=12.sp,fontWeight=FontWeight.Bold)
                 Text("›",fontSize=26.sp,color=if(weekShift>0) TextInk else TextGray,
@@ -255,7 +268,7 @@ fun HistoryPanel(
         Row(horizontalArrangement=Arrangement.spacedBy(11.dp)) {
             WhitePanel(modifier=Modifier.weight(1f)) {
                 Text("완료한 퀘스트",color=TextGray,fontSize=11.sp)
-                Text("${completed.size + steps.count { it.completedAt!=null }}개",fontSize=26.sp,
+                Text("${completed.size + completedSteps.size}개",fontSize=26.sp,
                     fontWeight=FontWeight.Black,color=TextInk)
             }
             WhitePanel(modifier=Modifier.weight(1f)) {
@@ -269,8 +282,8 @@ fun HistoryPanel(
             Spacer(Modifier.height(17.dp))
             val study=completed.count {
                 listOf("단어","공부","읽","책","일본어","집중").any { word->it.title.contains(word) }
-            }+steps.count{it.completedAt!=null}
-            val total=(completed.size+steps.count{it.completedAt!=null}).coerceAtLeast(1)
+            }+completedSteps.size
+            val total=(completed.size+completedSteps.size).coerceAtLeast(1)
             val ratio=study.toFloat()/total
             Row(Modifier.fillMaxWidth().height(12.dp)
                 .background(Color(0xFFF0E7DC),CircleShape)) {

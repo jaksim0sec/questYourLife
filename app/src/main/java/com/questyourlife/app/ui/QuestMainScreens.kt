@@ -69,7 +69,7 @@ fun HomePanel(
                 .padding(16.dp)
         ) {
             Row(verticalAlignment=Alignment.CenterVertically) {
-                PaleTag(if(goal == null) "메인 퀘스트" else "메인 퀘스트 · 챕터 ${if(done==0) 1 else ((done*5)/maxOf(progressSteps.size,1)+1).coerceAtMost(5)}")
+                PaleTag(if(goal == null) "메인 퀘스트" else if(goal.id=="example-japanese") "예시 메인 퀘스트" else "메인 퀘스트 · 챕터 ${if(done==0) 1 else ((done*5)/maxOf(progressSteps.size,1)+1).coerceAtMost(5)}")
                 Spacer(Modifier.weight(1f))
                 Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,tint=TextGray,modifier=Modifier.size(20.dp))
             }

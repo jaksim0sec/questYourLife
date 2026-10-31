@@ -1,6 +1,10 @@
 package com.questyourlife.app.ui
 
 import androidx.compose.foundation.*
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
@@ -39,49 +43,49 @@ fun HomePanel(
     val done = progressSteps.count { it.completedAt != null }
     val date = remember { java.time.LocalDate.now()
         .format(java.time.format.DateTimeFormatter.ofPattern("M월 d일 EEEE",java.util.Locale.KOREAN)) }
-    Column(verticalArrangement=Arrangement.spacedBy(17.dp)) {
+    Column(verticalArrangement=Arrangement.spacedBy(13.dp)) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            Text("현생패치",fontWeight=FontWeight.Black,fontSize=26.sp,color=TextInk)
+            Text("현생패치",fontWeight=FontWeight.Black,fontSize=23.sp,color=TextInk)
             Spacer(Modifier.weight(1f))
             CashBadge(coins)
-            IconButton(onClick=onSettings,modifier=Modifier.size(32.dp)) {
+            IconButton(onClick=onSettings,modifier=Modifier.size(44.dp)) {
                 Icon(Icons.Outlined.Settings,contentDescription="설정",tint=TextGray,
                     modifier=Modifier.size(18.dp))
             }
         }
-        Row(verticalAlignment=Alignment.CenterVertically,modifier=Modifier.height(132.dp)) {
+        Row(verticalAlignment=Alignment.CenterVertically,modifier=Modifier.heightIn(min=149.dp)) {
             Column(Modifier.weight(1f)) {
                 Text(date,color=TextGray,fontSize=12.sp)
-                Spacer(Modifier.height(13.dp))
+                Spacer(Modifier.height(10.dp))
                 Text("오늘도,\n한 걸음 더",fontWeight=FontWeight.Black,
-                    fontSize=31.sp,lineHeight=38.sp,color=TextInk)
+                    fontSize=27.sp,lineHeight=33.sp,color=TextInk)
                 Spacer(Modifier.height(8.dp))
                 Text("작은 수행이 모여\n일상이 패치돼.",fontSize=12.sp,
                     lineHeight=18.sp,color=TextGray)
             }
-            MascotArt(Modifier.size(128.dp),festive=true)
+            MascotArt(Modifier.size(115.dp),festive=true)
         }
         Column(
             modifier=Modifier.fillMaxWidth()
                 .background(Brush.linearGradient(listOf(Color(0xFFFBE9E7),Color(0xFFFCF1EE))),
                     RoundedCornerShape(21.dp))
                 .clickable { if(goal==null) onCreateGoal() else onGoal(goal.id) }
-                .padding(16.dp)
+                .padding(14.dp)
         ) {
             Row(verticalAlignment=Alignment.CenterVertically) {
                 PaleTag(if(goal == null) "메인 퀘스트" else if(goal.id=="example-japanese") "예시 메인 퀘스트" else "메인 퀘스트 · 챕터 ${if(done==0) 1 else ((done*5)/maxOf(progressSteps.size,1)+1).coerceAtMost(5)}")
                 Spacer(Modifier.weight(1f))
                 Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,tint=TextGray,modifier=Modifier.size(20.dp))
             }
-            Row(Modifier.fillMaxWidth().height(82.dp),verticalAlignment=Alignment.CenterVertically) {
+            Row(Modifier.fillMaxWidth().heightIn(min=67.dp),verticalAlignment=Alignment.CenterVertically) {
                 Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                     Text(goal?.title ?: "새로운 목표를 만들어봐",fontWeight=FontWeight.Bold,
-                        fontSize=18.sp,lineHeight=23.sp,color=TextInk,maxLines=2,
+                        fontSize=15.sp,lineHeight=21.sp,color=TextInk,maxLines=2,
                         overflow=TextOverflow.Ellipsis)
                     Text(if(goal==null) "목표를 직접 추가할 수 있어" else "$done / ${progressSteps.size} 단계",
                         color=TextGray,fontSize=12.sp)
                 }
-                MountainArt(Modifier.size(90.dp))
+                MountainArt(Modifier.size(67.dp))
             }
             Row(verticalAlignment=Alignment.CenterVertically) {
                 SmallBar(if(progressSteps.isEmpty()) 0f else done.toFloat()/progressSteps.size,
@@ -116,7 +120,7 @@ fun QuestListPanel(
     onCreate: () -> Unit
 ) {
     var filter by remember { mutableIntStateOf(0) }
-    Column(verticalArrangement=Arrangement.spacedBy(17.dp)) {
+    Column(verticalArrangement=Arrangement.spacedBy(13.dp)) {
         ScreenHeading("퀘스트",action={
             TextButton(onClick=onCreate) {
                 Icon(Icons.Outlined.Add,null,modifier=Modifier.size(18.dp))
@@ -140,20 +144,20 @@ fun QuestListPanel(
             }.forEachIndexed { i,goal ->
                 val gSteps=steps.filter { it.goalId == goal.id }
                 val completed=gSteps.count { it.completedAt!=null }
-                Row(Modifier.fillMaxWidth().height(123.dp)
+                Row(Modifier.fillMaxWidth().heightIn(min=97.dp)
                     .background(
                         when(i%3){0->Color(0xFFFAE8E6);1->Color(0xFFF3F3EA);else->Color(0xFFF6F2EF)},
                         RoundedCornerShape(20.dp))
-                    .clickable { onGoal(goal.id) }.padding(17.dp),
+                    .clickable { onGoal(goal.id) }.padding(13.dp),
                     verticalAlignment=Alignment.CenterVertically) {
                     if(i%2 == 0) MountainArt(Modifier.size(75.dp))
-                    else SproutArt(Modifier.size(75.dp))
+                    else SproutArt(Modifier.size(67.dp))
                     Spacer(Modifier.width(11.dp))
                     Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                         PaleTag(if(completed==gSteps.size && gSteps.isNotEmpty()) "완료"
                             else if(completed>0) "진행 중" else "대기 중")
                         Text(goal.title,fontWeight=FontWeight.Bold,color=TextInk,
-                            fontSize=14.sp,maxLines=2,overflow=TextOverflow.Ellipsis)
+                            fontSize=13.sp,maxLines=2,overflow=TextOverflow.Ellipsis)
                         Text("챕터 ${(completed*5/maxOf(gSteps.size,1)+1).coerceAtMost(5)} · 작은 단계부터",
                             fontSize=10.sp,color=TextGray)
                         SmallBar(if(gSteps.isEmpty()) 0f else completed.toFloat()/gSteps.size)
@@ -204,8 +208,9 @@ fun GoalDetailPanel(
     val chapterTasks=steps.filter { it.chapter==chapter }
     Column(verticalArrangement=Arrangement.spacedBy(19.dp)) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            Text("‹",fontSize=31.sp,color=TextInk,
-                modifier=Modifier.clickable(onClick=onBack).padding(end=17.dp))
+            IconButton(onClick=onBack,modifier=Modifier.size(44.dp)) {
+            Icon(Icons.AutoMirrored.Outlined.ArrowBack,contentDescription="뒤로가기",tint=TextInk)
+        }
             Spacer(Modifier.weight(1f))
             Text("•••",color=TextInk,fontSize=17.sp)
         }
@@ -249,7 +254,7 @@ fun GoalDetailPanel(
                     color=TextGray,fontSize=10.sp)
             }
             Spacer(Modifier.height(13.dp))
-            steps.forEach { step ->
+            chapterTasks.forEach { step ->
                 val locked=steps.any { it.position < step.position && it.completedAt==null }
                 Row(Modifier.fillMaxWidth().heightIn(min=56.dp),
                     verticalAlignment=Alignment.CenterVertically) {
@@ -270,7 +275,7 @@ fun GoalDetailPanel(
                 }
             }
         }
-        RedButton(if(done==steps.size) "챕터 완료!" else "집중하며 퀘스트 수행하기  ▷",
+        RedButton(if(done==steps.size) "집중 타이머 열기" else "집중 타이머 시작  ▷",
             onClick=onTimer,modifier=Modifier.fillMaxWidth())
     }
 }

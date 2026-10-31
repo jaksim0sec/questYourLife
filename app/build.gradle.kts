@@ -14,6 +14,8 @@ android {
         minSdk = 26
         targetSdk = 35
         val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        // GitHub Actions run numbers always increase for the same workflow.
+        // Never reset to 1 for published installable builds.
         versionCode = buildNumber
         versionName = "0.1.$buildNumber"
     }

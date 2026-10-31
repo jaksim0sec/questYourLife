@@ -61,3 +61,11 @@ Android에서는 일반 예약 알림을 지연할 수 있어 `AlarmManager.setA
 - 고정 서명용 GitHub Secrets 이름: `PREVIEW_DEBUG_KEYSTORE_B64`. 값은 **현재 설치된 APK와 같은 debug.keystore를 base64 인코딩한 문자열**이어야 함.
 - 이 Secret이 설정되지 않은 상태에서는 GitHub Actions Cache 키에 의존하며, 캐시가 사라지면 다시 충돌할 수 있음.
 - 어떤 방식도 기존에 다른 키로 서명된 앱을 덮어쓸 수 없음. 이전 설치본 데이터 보존이 중요하면 앱을 지우기 전에 백업 경로부터 확보.
+
+## 2026-11-01: 설치 충돌 방지
+
+- 로그상 이전 `actions/cache` 저장이 `debug.keystore` 파일 부재 때문에 실패하여 실행마다 디버그 서명 인증서가 달라질 수 있었음.
+- 새 디버그 빌드는 `com.questyourlife.app.preview`로 설치됨. 기존 `com.questyourlife.app`과 **동시에 설치 가능**하며 이전 앱/데이터를 삭제하지 않음.
+- 기존 앱의 데이터가 새 프리뷰로 자동 복사되는 것은 아님. 2개 앱은 독립 저장소임.
+- 이후 **동일 preview 앱 업데이트**는 기존 서명키를 재사용해야 함. 새 워크플로가 최초 빌드 전 키를 생성하고 캐시하지만 영속성이 없음.
+- 진정한 고정키 설정: GitHub Settings → Secrets and variables → Actions → New repository secret에 기존 디버그 키를 Base64로 인코딩해 `PREVIEW_DEBUG_KEYSTORE_B64`에 보관. 인증서가 이미 설치된 preview APK와 동일한 키여야 함.

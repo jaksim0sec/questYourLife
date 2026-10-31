@@ -9,6 +9,14 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -100,29 +107,74 @@ fun DailyPanel(quests: List<DailyQuestEntity>, history: List<DailyQuestEntity>,
 
 @Composable
 fun CompletionPanel(title: String,reward: Int,onClose: () -> Unit,onNext: () -> Unit) {
-    Column(Modifier.fillMaxWidth(),horizontalAlignment=Alignment.CenterHorizontally,
-        verticalArrangement=Arrangement.spacedBy(20.dp)) {
-        Spacer(Modifier.height(8.dp))
-        Text("퀘스트 완료!",color=TextInk,fontWeight=FontWeight.Black,fontSize=29.sp)
-        MascotArt(Modifier.size(210.dp),festive=true)
-        Text("+$reward C",fontSize=27.sp,fontWeight=FontWeight.Black,color=AccentRed,
-            modifier=Modifier.background(Color(0xFFFFF1DA),CircleShape)
-                .padding(horizontal=24.dp,vertical=10.dp))
-        WhitePanel {
-            Text(title,color=TextInk,fontWeight=FontWeight.Bold,fontSize=16.sp)
+    var entered by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { entered=true }
+    val mascotScale by animateFloatAsState(
+        targetValue=if(entered) 1f else .83f,
+        animationSpec=spring(dampingRatio=.66f,stiffness=420f),
+        label="reward mascot"
+    )
+    Box(Modifier.fillMaxWidth()) {
+        Canvas(Modifier.matchParentSize()) {
+            val grid=28.dp.toPx()
+            var x=0f
+            while(x<size.width) {
+                drawLine(Color(0xFFECE8E2).copy(alpha=.65f),
+                    androidx.compose.ui.geometry.Offset(x,0f),
+                    androidx.compose.ui.geometry.Offset(x,size.height),strokeWidth=.75.dp.toPx())
+                x+=grid
+            }
+            var y=0f
+            while(y<size.height) {
+                drawLine(Color(0xFFECE8E2).copy(alpha=.65f),
+                    androidx.compose.ui.geometry.Offset(0f,y),
+                    androidx.compose.ui.geometry.Offset(size.width,y),strokeWidth=.75.dp.toPx())
+                y+=grid
+            }
+            drawLine(AccentRed.copy(alpha=.14f),
+                androidx.compose.ui.geometry.Offset(25.dp.toPx(),0f),
+                androidx.compose.ui.geometry.Offset(25.dp.toPx(),size.height),
+                strokeWidth=1.dp.toPx())
+        }
+        Column(
+            Modifier.fillMaxWidth().padding(horizontal=24.dp,vertical=12.dp),
+            horizontalAlignment=Alignment.CenterHorizontally,
+            verticalArrangement=Arrangement.spacedBy(12.dp)
+        ) {
+            PaleTag("오늘의 한 걸음")
+            Text("퀘스트 완료!",color=TextInk,
+                fontWeight=FontWeight.Black,fontSize=26.sp)
+            MascotArt(Modifier.size(157.dp).scale(mascotScale),festive=true)
+            Text("+$reward C",fontSize=23.sp,
+                fontWeight=FontWeight.ExtraBold,color=TextInk,
+                modifier=Modifier.background(Color(0xFFFFF1D9),CircleShape)
+                    .padding(horizontal=24.dp,vertical=8.dp))
             Spacer(Modifier.height(6.dp))
-            Text("오늘도 한 걸음 성장했어",color=TextGray,fontSize=12.sp)
-        }
-        WhitePanel {
-            Text("✎  선택의 영향",color=TextGray,fontSize=12.sp)
+            WhitePanel {
+                Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                    QuestTick(true)
+                    Spacer(Modifier.width(12.dp))
+                    Column {
+                        Text(title,color=TextInk,fontWeight=FontWeight.Bold,
+                            fontSize=14.sp,maxLines=2,overflow=TextOverflow.Ellipsis)
+                        Spacer(Modifier.height(3.dp))
+                        Text("완료 · 보상이 기록됐어",color=TextGray,fontSize=11.sp)
+                    }
+                }
+            }
+            Spacer(Modifier.height(3.dp))
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,
+                verticalAlignment=Alignment.CenterVertically) {
+                Text("선택의 영향",color=TextInk,fontWeight=FontWeight.Bold,fontSize=13.sp)
+                PaleTag("성장 기록")
+            }
+            Text("작은 하루가 쌓여 결국 큰 목표가 돼.",
+                color=TextGray,fontSize=12.sp,
+                modifier=Modifier.fillMaxWidth())
             Spacer(Modifier.height(9.dp))
-            Text("“작은 하루가 쌓여서 결국 목표가 되는 거야.”",fontSize=14.sp,
-                lineHeight=22.sp,color=TextInk)
-        }
-        Row(horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-            OutlinedButton(onClick=onClose,modifier=Modifier.weight(1f).height(51.dp),
-                shape=RoundedCornerShape(16.dp)) { Text("닫기",color=TextInk) }
-            RedButton("다음 퀘스트 보기  ▷",onClick=onNext,modifier=Modifier.weight(1.5f))
+            RedButton("보상 확인하고 계속하기",
+                onClick=onNext,modifier=Modifier.fillMaxWidth())
+            TextButton(onClick=onClose) { Text("닫기",color=TextGray,fontSize=12.sp) }
         }
     }
 }
@@ -136,19 +188,19 @@ private val Prices=listOf(0,50,80,100,120,150)
 fun DecorPanel(coins: Int, owned: List<OwnedItemEntity>, equipped: Int,
     onBuy: (Int,Int)->Unit,onEquip: (Int)->Unit) {
     var category by remember { mutableIntStateOf(0) }
-    Column(verticalArrangement=Arrangement.spacedBy(18.dp)) {
+    Column(verticalArrangement=Arrangement.spacedBy(13.dp)) {
         ScreenHeading("꾸미기",action={CashBadge(coins)})
-        Box(Modifier.fillMaxWidth().height(183.dp),contentAlignment=Alignment.Center) {
-            MascotArt(Modifier.size(177.dp))
+        Box(Modifier.fillMaxWidth().height(156.dp),contentAlignment=Alignment.Center) {
+            MascotArt(Modifier.size(146.dp))
             HatArt(HatColors[equipped.coerceIn(0,5)],
-                modifier=Modifier.size(100.dp).offset(x=(-6).dp,y=(-48).dp))
+                modifier=Modifier.size(78.dp).rotate(-12f).offset(x=(-8).dp,y=(-44).dp))
         }
         Row(Modifier.fillMaxWidth().background(Color(0xFFF0EEEB),CircleShape).padding(4.dp),
             horizontalArrangement=Arrangement.spacedBy(3.dp)) {
             listOf("모자","옷","소품","배경").forEachIndexed { index,s ->
                 Box(Modifier.weight(1f).background(
                     if(category==index) Color(0xFF343433) else Color.Transparent,CircleShape)
-                    .clickable { category=index }.padding(vertical=10.dp),
+                    .clickable { category=index }.padding(vertical=8.dp),
                     contentAlignment=Alignment.Center) {
                     Text(s,fontSize=12.sp,color=if(category==index) Color.White else TextGray)
                 }
@@ -164,23 +216,23 @@ fun DecorPanel(coins: Int, owned: List<OwnedItemEntity>, equipped: Int,
             val items=(0..8).toList()
             // Explicit two-dimensional grid, no unbounded nested scrolling.
             items.chunked(3).forEach { group ->
-                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                     group.forEach { index ->
                         val available=index<=5
                         val ownedItem=index==0 || owned.any { it.itemId==index }
                         val isEquipped=index==equipped
                         Column(
-                            modifier=Modifier.weight(1f).height(118.dp)
+                            modifier=Modifier.weight(1f).height(107.dp)
                                 .border(if(isEquipped) 1.4.dp else .5.dp,
                                     if(isEquipped) AccentRed else WarmLine,RoundedCornerShape(17.dp))
                                 .background(Color.White.copy(alpha=.86f),RoundedCornerShape(17.dp))
                                 .clickable(enabled=available) {
                                     if(ownedItem) onEquip(index) else onBuy(index,Prices[index])
-                                }.padding(8.dp),
+                                }.padding(7.dp),
                             horizontalAlignment=Alignment.CenterHorizontally,
                             verticalArrangement=Arrangement.SpaceBetween
                         ) {
-                            Box(contentAlignment=Alignment.Center,modifier=Modifier.size(69.dp)) {
+                            Box(contentAlignment=Alignment.Center,modifier=Modifier.size(58.dp)) {
                                 if(available) HatArt(HatColors[index],Modifier.fillMaxSize())
                                 else Text("?",fontSize=36.sp,color=WarmLine,fontWeight=FontWeight.Black)
                             }
@@ -280,19 +332,42 @@ fun HistoryPanel(
         WhitePanel {
             Text("활동 비중",fontSize=15.sp,color=TextInk,fontWeight=FontWeight.Bold)
             Spacer(Modifier.height(17.dp))
-            val study=completed.count {
-                listOf("단어","공부","읽","책","일본어","집중").any { word->it.title.contains(word) }
-            }+completedSteps.size
-            val total=(completed.size+completedSteps.size).coerceAtLeast(1)
-            val ratio=study.toFloat()/total
-            Row(Modifier.fillMaxWidth().height(12.dp)
-                .background(Color(0xFFF0E7DC),CircleShape)) {
-                Box(Modifier.fillMaxWidth(ratio).fillMaxHeight().background(Color(0xFF78A4DA),CircleShape))
+            val studyWords=listOf("단어","공부","읽","책","일본어","집중","수학","학습")
+            val wellnessWords=listOf("산책","걷","운동","스트레칭","휴식","수면")
+            val learning=completed.count { q-> studyWords.any { q.title.contains(it) } } +
+                completedSteps.count { step-> studyWords.any { step.title.contains(it) } }
+            val wellness=completed.count { q-> wellnessWords.any { q.title.contains(it) } } +
+                completedSteps.count { step-> wellnessWords.any { step.title.contains(it) } }
+            val total=completed.size+completedSteps.size
+            val other=(total-learning-wellness).coerceAtLeast(0)
+            val parts=listOf(
+                Triple("학습",learning,Color(0xFF7A9ED1)),
+                Triple("건강",wellness,Color(0xFF92BAA4)),
+                Triple("기타",other,Color(0xFFE6C6A4))
+            )
+            Row(
+                Modifier.fillMaxWidth().height(11.dp).clip(CircleShape)
+                    .background(Color(0xFFEDE9E3)),
+                horizontalArrangement=Arrangement.spacedBy(2.dp)
+            ) {
+                parts.forEach { (label,count,color)->
+                    if(count>0) Box(Modifier.weight(count.toFloat()).fillMaxHeight()
+                        .background(color))
+                }
             }
-            Spacer(Modifier.height(14.dp))
-            Text("● 학습 ${study*100/total}%    ● 기타 ${(total-study)*100/total}%",
-                fontSize=11.sp,color=TextGray)
-            Text("개인 기기에 기록된 완료 항목 기준",fontSize=10.sp,color=TextGray)
+            Spacer(Modifier.height(15.dp))
+            parts.forEach { (label,count,color) ->
+                Row(verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.size(7.dp).background(color,CircleShape))
+                    Spacer(Modifier.width(7.dp))
+                    Text(label,color=TextGray,fontSize=11.sp)
+                    Spacer(Modifier.weight(1f))
+                    Text(if(total==0) "0%" else "${count*100/total}%",
+                        color=TextInk,fontWeight=FontWeight.Medium,fontSize=11.sp)
+                }
+                Spacer(Modifier.height(6.dp))
+            }
+            Text("완료 기록의 제목 기준으로 분류한 비중",fontSize=10.sp,color=TextGray)
         }
     }
 }
@@ -306,6 +381,11 @@ fun FocusPanel(onBack: () -> Unit, onFinish: (Int) -> Unit) {
     var startedAt by remember { mutableLongStateOf(prefs.getLong("started_at",0L)) }
     var focusLength by remember { mutableIntStateOf(prefs.getInt("length",25*60)) }
     val running=deadline>0
+    val ringProgress by animateFloatAsState(
+        targetValue = seconds.toFloat() / focusLength.coerceAtLeast(1),
+        animationSpec = tween(durationMillis=500),
+        label="timer ring"
+    )
     LaunchedEffect(deadline) {
         while(deadline>0L) {
             val rest=((deadline-System.currentTimeMillis()+999)/1000).toInt().coerceAtLeast(0)
@@ -330,14 +410,14 @@ fun FocusPanel(onBack: () -> Unit, onFinish: (Int) -> Unit) {
             Text("♪",fontSize=21.sp,color=TextGray)
         }
         Spacer(Modifier.height(42.dp))
-        Box(Modifier.size(292.dp),contentAlignment=Alignment.Center) {
+        Box(Modifier.fillMaxWidth().widthIn(max=284.dp).aspectRatio(1f),contentAlignment=Alignment.Center) {
             Canvas(Modifier.fillMaxSize()) {
                 val width=10.dp.toPx()
                 val r=size.minDimension*.47f
                 val top=androidx.compose.ui.geometry.Offset(size.width*.5f-r,size.height*.5f-r)
                 val sizeArc=androidx.compose.ui.geometry.Size(r*2,r*2)
                 drawArc(Color(0xFFF0E9E2),-90f,360f,false,top,sizeArc,style=Stroke(width,cap=StrokeCap.Round))
-                drawArc(AccentRed,-90f,360f*seconds.toFloat()/focusLength.coerceAtLeast(1),
+                drawArc(AccentRed,-90f,360f*ringProgress,
                     false,top,sizeArc,style=Stroke(width,cap=StrokeCap.Round))
             }
             Column(horizontalAlignment=Alignment.CenterHorizontally) {

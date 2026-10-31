@@ -1,4 +1,4 @@
-name: Android Debug APK
+name: Android Preview APK
 
 on:
   push:
@@ -34,37 +34,89 @@ jobs:
         with:
           gradle-version: '8.13'
 
-      # Best-effort persistence for updates between preview APKs.
-      # This cache may expire. A stable release key belongs in GitHub Secrets.
-      - name: Restore debug signing key
+      # Reuse the same debug certificate across main builds.
+      # An original matching secret wins over this disposable cache.
+      - name: Restore preview signing key
         uses: actions/cache@v4
         with:
           path: ~/.android/debug.keystore
-          key: questyourlife-debug-signing-v1
+          key: questyourlife-preview-signing-v2
 
-      # Persistent signing requires PREVIEW_DEBUG_KEYSTORE_B64 in repository Secrets.
-      # The secret is the base64 encoding of the previous debug.keystore.
-      - name: Restore permanent signing key when configured
+      - name: Prepare signing key before build
+        shell: bash
         env:
           PREVIEW_DEBUG_KEYSTORE_B64: ${{ secrets.PREVIEW_DEBUG_KEYSTORE_B64 }}
         run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.android"
           if [ -n "$PREVIEW_DEBUG_KEYSTORE_B64" ]; then
-            mkdir -p "$HOME/.android"
             printf '%s' "$PREVIEW_DEBUG_KEYSTORE_B64" | base64 --decode > "$HOME/.android/debug.keystore"
-            chmod 600 "$HOME/.android/debug.keystore"
-            echo "Fixed signing keystore restored from GitHub Secrets."
-          else
-            echo "::warning::No PREVIEW_DEBUG_KEYSTORE_B64 secret. Debug signing depends on temporary cache, APK update compatibility is not guaranteed."
+            echo "Using repository secret signing identity"
+          elif [ ! -s "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -keystore "$HOME/.android/debug.keystore" \
+              -storepass android -keypass android -alias androiddebugkey \
+              -dname "CN=Android Debug,O=Android,C=US" -keyalg RSA \
+              -keysize 2048 -validity 10000 -noprompt
+            echo "::warning::New preview signing identity: copy the private keystore to a secure GitHub Secret before cache expiration. This APK installs alongside the original app."
           fi
+          test -s "$HOME/.android/debug.keystore"
+          chmod 600 "$HOME/.android/debug.keystore"
+          keytool -list -v -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey | grep 'SHA256:' >> "$GITHUB_STEP_SUMMARY"
+          echo "Package: com.questyourlife.app.preview" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Assemble debug APK
+      - name: Assemble preview APK
         run: gradle --no-daemon :app:assembleDebug
 
-      - name: Publish debug APK
+      - name: Capture Android phone UI (PR audit)
+        if: github.event_name == 'pull_request'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: false
+          script: |
+            set -e
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -n com.questyourlife.app.preview/com.questyourlife.app.MainActivity
+            sleep 6
+            adb shell pidof com.questyourlife.app.preview
+            mkdir -p app/build/ui-captures
+            adb exec-out screencap -p > app/build/ui-captures/01-home.png
+            SIZE=$(adb shell wm size | tail -n 1 | tr -d '\r' | awk '{print $NF}')
+            W=${SIZE%x*}
+            H=${SIZE#*x}
+            Y=$((H-150))
+            adb shell input tap $((W*3/8)) "$Y"
+            sleep 2
+            adb exec-out screencap -p > app/build/ui-captures/02-quests.png
+            adb shell input tap $((W*5/8)) "$Y"
+            sleep 2
+            adb exec-out screencap -p > app/build/ui-captures/03-history.png
+            adb shell input tap $((W*7/8)) "$Y"
+            sleep 2
+            adb exec-out screencap -p > app/build/ui-captures/04-decor.png
+            adb shell settings put system font_scale 1.3
+            adb shell am force-stop com.questyourlife.app.preview
+            adb shell am start -n com.questyourlife.app.preview/com.questyourlife.app.MainActivity
+            sleep 3
+            adb exec-out screencap -p > app/build/ui-captures/05-large-text.png
+            adb shell settings put system font_scale 1.0
+
+      - name: Upload phone UI audit screenshots
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyunsaengpatch-ui-audit-screenshots
+          path: app/build/ui-captures/*.png
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Publish preview APK (main only)
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
-          name: hyunsaengpatch-debug-apk
+          name: hyunsaengpatch-side-by-side-preview-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

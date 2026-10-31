@@ -98,6 +98,7 @@ private fun AppBottomNav(active: String, onSelect: (String) -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit) {
     val daily by model.quests.collectAsStateWithLifecycle()

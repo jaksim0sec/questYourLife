@@ -14,6 +14,7 @@ import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -95,7 +96,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                 onGoal={ goalId=it;screen="detail" },
                                 onDaily={ screen="daily" },
                                 onAccept=model::accept,onComplete=model::complete,
-                                onCreateGoal={screen="create"})
+                                onCreateGoal={screen="create"},onSettings={screen="settings"})
                             "quests" -> QuestListPanel(coins,goals,steps,daily,
                                 onGoal={goalId=it;screen="detail"},
                                 onDaily={screen="daily"},
@@ -127,14 +128,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         }
                     }
                 }
-                if(screen=="home") {
-                    Box(Modifier.align(Alignment.TopEnd).padding(end=19.dp,top=15.dp)) {
-                        IconButton(onClick={screen="settings"},modifier=Modifier.size(32.dp)) {
-                            Icon(Icons.Outlined.Settings,contentDescription="설정",
-                                tint=TextGray,modifier=Modifier.size(19.dp))
-                        }
-                    }
-                }
+
             }
         }
     }

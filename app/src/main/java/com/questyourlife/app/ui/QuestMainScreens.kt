@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,7 +31,8 @@ fun HomePanel(
     onDaily: () -> Unit,
     onAccept: (String) -> Unit,
     onComplete: (String) -> Unit,
-    onCreateGoal: () -> Unit
+    onCreateGoal: () -> Unit,
+    onSettings: () -> Unit
 ) {
     val goal = goals.firstOrNull()
     val progressSteps = steps.filter { it.goalId == goal?.id }
@@ -42,6 +44,10 @@ fun HomePanel(
             Text("현생패치",fontWeight=FontWeight.Black,fontSize=26.sp,color=TextInk)
             Spacer(Modifier.weight(1f))
             CashBadge(coins)
+            IconButton(onClick=onSettings,modifier=Modifier.size(32.dp)) {
+                Icon(Icons.Outlined.Settings,contentDescription="설정",tint=TextGray,
+                    modifier=Modifier.size(18.dp))
+            }
         }
         Row(verticalAlignment=Alignment.CenterVertically,modifier=Modifier.height(132.dp)) {
             Column(Modifier.weight(1f)) {

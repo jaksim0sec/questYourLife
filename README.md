@@ -1,65 +1,49 @@
 # 현생패치 (questYourLife)
 
-**앱 한국어 이름: 현생패치** · 저장소·기술 식별자: questYourLife.
+**현생패치**는 AI가 목표를 현실적인 챕터와 퀘스트로 나누고, 위젯과 알림으로도 체크할 수 있게 만드는 Android 앱이다.
 
-목표를 작은 퀘스트로 나누고, 일상에서 체크하고, 보상을 받는 **Android 우선 목표 관리 앱**.
+## 지금 설치할 수 있는 버전
 
-> 현재 상태: Kotlin / Compose / Room 기반의 **로컬 체크리스트 초기 골격**. Gemini, Supabase, 위젯, 알림, 시즌 랭킹은 아직 미구현. 구현 우선순위와 제품 규격은 [IDEA.md](IDEA.md) 참고.
+현재는 **앱 껍데기 + 도장 마스코트 아이콘 + 기존 로컬 체크리스트**를 갖춘 미리보기다. Gemini, Supabase, 랭킹, 위젯, 알림 액션은 아직 작동하지 않는다. 구체적인 범위는 [IDEA.md](IDEA.md).
 
-## 기술 구성
+### 모바일에서 APK 설치
 
-| 영역 | 기술 | 현재 상태 |
+1. [GitHub Actions](https://github.com/jaksim0sec/questYourLife/actions/workflows/android-apk.yml)로 들어간다.
+2. 가장 최근 성공한 **Android Debug APK** 실행을 연다. 없으면 **Run workflow → main → Run workflow**로 수동 실행한다.
+3. 페이지 아래 **Artifacts → hyunsaengpatch-debug-apk** 다운로드.
+4. ZIP을 압축 해제하여 `app-debug.apk`를 설치한다.
+5. 설치 후 앱 목록에 **현생패치** 이름과 빨간 도장 아이콘이 표시된다.
+
+> 휴대폰에서 코드 수정·커밋하면 GitHub Actions가 빌드한다. Termux 및 로컬 Android SDK는 필요 없다.
+
+### 업데이트와 서명 주의
+
+- 이 빌드는 Play 스토어 출시용이 아닌 **테스트용 debug APK**다.
+- CI는 앱의 `versionCode`를 Actions 실행 번호로 설정한다.
+- 동일한 debug 서명 키로 만든 APK는 새 파일을 내려받아 덮어 설치할 수 있다. Actions 캐시에 키를 재사용하지만 **캐시는 만료되거나 삭제될 수 있으므로 영구 보장을 의미하지 않는다**.
+- 향후 지속 가능한 자동 업데이트에는 고정된 서명 키를 GitHub Secrets에 보관하고 배포 채널을 구성해야 한다.
+- APK 설치 업데이트가 **서명 불일치**로 거부되면 기존 앱을 삭제하고 다시 설치해야 할 수 있다. 이 경우 로컬 데이터가 지워질 수 있으므로 미리 백업 경로부터 마련한다.
+
+## 개발 구성
+
+| 영역 | 기술 | 상태 |
 | --- | --- | --- |
-| Android | Kotlin + Jetpack Compose | 초기 앱 구현 |
-| 로컬 데이터 | Room | 체크리스트 저장 |
+| Android | Kotlin + Jetpack Compose | 설치용 미리보기 화면 |
+| 저장 | Room | 기존 오프라인 체크리스트 유지 |
+| 아이콘 | 사용자 제공 도장 이미지, WebP 리소스 | 적용 |
 | 홈 위젯 | Jetpack Glance | 계획 |
-| 알림 액션 | Notification + BroadcastReceiver | 계획 |
+| 알림 | Android Notification API | 계획 |
 | 백그라운드 | WorkManager | 계획 |
-| 계정·동기화·랭킹 | Supabase (Auth / Postgres / RLS) | 계획 |
-| AI 계획 생성 | Gemini API via Supabase Edge Functions | 계획 |
-| 빌드 | Gradle + GitHub Actions | CI 설정 |
+| 계정·랭킹 | Supabase Auth / Postgres / RLS | 계획 |
+| AI | Gemini via Supabase Edge Functions | 계획 |
+| APK 빌드 | Gradle 8.13 + GitHub Actions | CI |
 
-**기본 빌드:** AGP 8.11.1 / Gradle 8.13 / Kotlin 2.2.20 / JDK 17 / compile SDK 36 / min SDK 26 / target SDK 35.
+고정 버전: AGP 8.11.1 / Kotlin 2.2.20 / JDK 17 / compile SDK 36 / min SDK 26 / target SDK 35.
 
-## 휴대전화만으로 개발하기
+## 프로젝트 메모
 
-1. GitHub 모바일 또는 Codespaces에서 파일 수정 후 push.
-2. 저장소의 **Actions → Android Debug APK** 실행 결과 확인. main에 push하거나 `workflow_dispatch`로 수동 실행 가능.
-3. 성공한 실행의 **Artifacts → questyourlife-debug-apk** ZIP 다운로드.
-4. 압축을 풀고 `app-debug.apk`를 갤럭시에 설치. Android에서 요청하는 설치 권한은 직접 확인.
-5. 화면이나 동작을 검증하고 다시 수정·push.
-
-**Termux / 로컬 Android SDK는 필요 없음.** CI가 Android SDK와 Gradle을 설치한다. 현재 저장소에는 Gradle Wrapper 바이너리를 넣지 않았으므로 CI는 `gradle/actions/setup-gradle`이 제공하는 **고정된 Gradle 8.13**을 사용한다.
-
-### 주의
-
-- Actions의 APK는 **디버그 테스트용**. Play 스토어 배포용이 아님.
-- CI 실행기에서 매번 만드는 임시 debug 서명 키는 달라질 수 있어 APK 업데이트 설치가 막힐 수 있음. 안정적인 업데이트/데이터 보존이 필요해지면 GitHub Secrets에 **고정 디버그 서명 키**를 설정한다. 키를 저장소에 커밋하지 않는다.
-- GitHub 비공개 저장소 Actions는 계정별 무료 제공량과 요금/제약이 적용될 수 있다.
-- Gemini 키나 Supabase service_role/secret 키는 **앱 코드에 절대 넣지 않는다**.
-
-## 프로젝트 구성
-
-```text
-app/src/main/java/com/questyourlife/app/
-  MainActivity.kt
-  data/QuestDatabase.kt
-  data/QuestDao.kt
-  data/QuestEntity.kt
-  ui/QuestHome.kt
-  ui/QuestViewModel.kt
-.github/workflows/android-apk.yml
-IDEA.md
-AGENT.md
-AGENTS.md
-```
-
-## 다음 순서
-
-1. CI에서 `assembleDebug` 통과 확인, 실제 갤럭시 설치 확인
-2. 위젯·알림 완료/미루기 구현 (Room을 유일한 로컬 데이터 원본으로)
-3. 로그인과 Supabase 동기화·RLS
-4. Edge Functions 기반 Gemini 챕터/미니 퀘스트 생성
-5. 포인트·시즌 랭킹 및 운영 정책
-
-현재 체크리스트의 XP는 **화면용 임시 계산**이며 서버 보상/시즌 점수가 아니다.
+- [IDEA.md](IDEA.md) · 제품 기획, UI, 우선순위
+- [AGENT.md](AGENT.md) · 개발 규칙
+- [AGENTS.md](AGENTS.md) · 에이전트 진입점
+- 사용자 제공 아이콘을 리사이즈해 `app/src/main/res/drawable-nodpi/launcher_stamp.webp`로 사용한다. 디자인을 새로 생성하지 않는다.
+- `MainActivity`에서 미리보기 홈과 기존 `QuestHome`을 전환한다. 기존 패키지명과 Room 스키마를 변경하지 않는다.

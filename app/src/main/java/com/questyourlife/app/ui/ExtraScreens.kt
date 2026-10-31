@@ -332,19 +332,42 @@ fun HistoryPanel(
         WhitePanel {
             Text("활동 비중",fontSize=15.sp,color=TextInk,fontWeight=FontWeight.Bold)
             Spacer(Modifier.height(17.dp))
-            val study=completed.count {
-                listOf("단어","공부","읽","책","일본어","집중").any { word->it.title.contains(word) }
-            }+completedSteps.size
-            val total=(completed.size+completedSteps.size).coerceAtLeast(1)
-            val ratio=study.toFloat()/total
-            Row(Modifier.fillMaxWidth().height(12.dp)
-                .background(Color(0xFFF0E7DC),CircleShape)) {
-                Box(Modifier.fillMaxWidth(ratio).fillMaxHeight().background(Color(0xFF78A4DA),CircleShape))
+            val studyWords=listOf("단어","공부","읽","책","일본어","집중","수학","학습")
+            val wellnessWords=listOf("산책","걷","운동","스트레칭","휴식","수면")
+            val learning=completed.count { q-> studyWords.any { q.title.contains(it) } } +
+                completedSteps.count { step-> studyWords.any { step.title.contains(it) } }
+            val wellness=completed.count { q-> wellnessWords.any { q.title.contains(it) } } +
+                completedSteps.count { step-> wellnessWords.any { step.title.contains(it) } }
+            val total=completed.size+completedSteps.size
+            val other=(total-learning-wellness).coerceAtLeast(0)
+            val parts=listOf(
+                Triple("학습",learning,Color(0xFF7A9ED1)),
+                Triple("건강",wellness,Color(0xFF92BAA4)),
+                Triple("기타",other,Color(0xFFE6C6A4))
+            )
+            Row(
+                Modifier.fillMaxWidth().height(11.dp).clip(CircleShape)
+                    .background(Color(0xFFEDE9E3)),
+                horizontalArrangement=Arrangement.spacedBy(2.dp)
+            ) {
+                parts.forEach { (label,count,color)->
+                    if(count>0) Box(Modifier.weight(count.toFloat()).fillMaxHeight()
+                        .background(color))
+                }
             }
-            Spacer(Modifier.height(14.dp))
-            Text("● 학습 ${study*100/total}%    ● 기타 ${(total-study)*100/total}%",
-                fontSize=11.sp,color=TextGray)
-            Text("개인 기기에 기록된 완료 항목 기준",fontSize=10.sp,color=TextGray)
+            Spacer(Modifier.height(15.dp))
+            parts.forEach { (label,count,color) ->
+                Row(verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.size(7.dp).background(color,CircleShape))
+                    Spacer(Modifier.width(7.dp))
+                    Text(label,color=TextGray,fontSize=11.sp)
+                    Spacer(Modifier.weight(1f))
+                    Text(if(total==0) "0%" else "${count*100/total}%",
+                        color=TextInk,fontWeight=FontWeight.Medium,fontSize=11.sp)
+                }
+                Spacer(Modifier.height(6.dp))
+            }
+            Text("완료 기록의 제목 기준으로 분류한 비중",fontSize=10.sp,color=TextGray)
         }
     }
 }
@@ -358,6 +381,11 @@ fun FocusPanel(onBack: () -> Unit, onFinish: (Int) -> Unit) {
     var startedAt by remember { mutableLongStateOf(prefs.getLong("started_at",0L)) }
     var focusLength by remember { mutableIntStateOf(prefs.getInt("length",25*60)) }
     val running=deadline>0
+    val ringProgress by animateFloatAsState(
+        targetValue = seconds.toFloat() / focusLength.coerceAtLeast(1),
+        animationSpec = tween(durationMillis=500),
+        label="timer ring"
+    )
     LaunchedEffect(deadline) {
         while(deadline>0L) {
             val rest=((deadline-System.currentTimeMillis()+999)/1000).toInt().coerceAtLeast(0)
@@ -382,14 +410,14 @@ fun FocusPanel(onBack: () -> Unit, onFinish: (Int) -> Unit) {
             Text("♪",fontSize=21.sp,color=TextGray)
         }
         Spacer(Modifier.height(42.dp))
-        Box(Modifier.size(292.dp),contentAlignment=Alignment.Center) {
+        Box(Modifier.fillMaxWidth().widthIn(max=284.dp).aspectRatio(1f),contentAlignment=Alignment.Center) {
             Canvas(Modifier.fillMaxSize()) {
                 val width=10.dp.toPx()
                 val r=size.minDimension*.47f
                 val top=androidx.compose.ui.geometry.Offset(size.width*.5f-r,size.height*.5f-r)
                 val sizeArc=androidx.compose.ui.geometry.Size(r*2,r*2)
                 drawArc(Color(0xFFF0E9E2),-90f,360f,false,top,sizeArc,style=Stroke(width,cap=StrokeCap.Round))
-                drawArc(AccentRed,-90f,360f*seconds.toFloat()/focusLength.coerceAtLeast(1),
+                drawArc(AccentRed,-90f,360f*ringProgress,
                     false,top,sizeArc,style=Stroke(width,cap=StrokeCap.Round))
             }
             Column(horizontalAlignment=Alignment.CenterHorizontally) {

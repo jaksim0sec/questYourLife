@@ -1,0 +1,23 @@
+# Gradle / IDE
+.gradle/
+build/
+**/build/
+.idea/
+*.iml
+local.properties
+.cxx/
+.externalNativeBuild/
+# Signing / secrets
+*.jks
+*.keystore
+*.p12
+*.pem
+.env
+.env.*
+!.env.example
+# Outputs
+*.apk
+*.aab
+# Local system
+.DS_Store
+Thumbs.db

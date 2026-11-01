@@ -52,49 +52,33 @@ private val tabs = listOf(
 )
 
 @Composable
-private fun AppBottomNav(active: String, onSelect: (String) -> Unit) {
-    Row(
-        Modifier.fillMaxWidth()
-            .background(CardWhite, RoundedCornerShape(topStart=18.dp,topEnd=18.dp))
-            .border(.5.dp, WarmLine, RoundedCornerShape(topStart=18.dp,topEnd=18.dp))
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .height(65.dp).padding(horizontal=12.dp,vertical=4.dp),
-        verticalAlignment=Alignment.CenterVertically,
-        horizontalArrangement=Arrangement.SpaceEvenly
-    ) {
-        tabs.forEach { tab ->
-            val isSelected = tab.route == active
-            val tint by animateColorAsState(
-                if(isSelected) AccentRed else TextGray,
-                animationSpec=tween(180),label="nav tint"
-            )
-            val scale by animateFloatAsState(
-                if(isSelected) 1f else .94f,
-                animationSpec=tween(180),label="nav scale"
-            )
-            Column(
-                modifier=Modifier.weight(1f).fillMaxHeight()
+private fun AppBottomNav(active:String,onSelect:(String)->Unit) {
+    Column(Modifier.fillMaxWidth().background(CardWhite)) {
+        HorizontalDivider(color=WarmLine.copy(alpha=.8f),thickness=.5.dp)
+        Row(Modifier.fillMaxWidth().height(65.dp).padding(horizontal=10.dp),
+            verticalAlignment=Alignment.CenterVertically) {
+            tabs.forEach { tab->
+                val activeTab=active==tab.route
+                val tint by animateColorAsState(if(activeTab) AccentRed else TextGray,
+                    animationSpec=tween(170),label="nav tint")
+                val iconSize by animateFloatAsState(if(activeTab) 1f else .95f,
+                    animationSpec=tween(170),label="nav scale")
+                Column(Modifier.weight(1f).fillMaxHeight()
                     .clickable(role=Role.Tab) { onSelect(tab.route) }
-                    .semantics { selected=isSelected },
-                verticalArrangement=Arrangement.Center,
-                horizontalAlignment=Alignment.CenterHorizontally
-            ) {
-                Box(
-                    Modifier.size(width=52.dp,height=29.dp)
-                        .background(if(isSelected) LightRed else Color.Transparent,
-                            RoundedCornerShape(13.dp)),
-                    contentAlignment=Alignment.Center
-                ) {
-                    Icon(if(isSelected) tab.activeIcon else tab.inactiveIcon,
-                        contentDescription=null,
-                        modifier=Modifier.size(21.dp).scale(scale),
-                        tint=tint)
+                    .semantics { selected=activeTab },
+                    horizontalAlignment=Alignment.CenterHorizontally,
+                    verticalArrangement=Arrangement.Center) {
+                    Icon(if(activeTab)tab.activeIcon else tab.inactiveIcon,
+                        contentDescription=null,tint=tint,
+                        modifier=Modifier.size(23.dp).scale(iconSize))
+                    Spacer(Modifier.height(5.dp))
+                    Text(tab.title,fontSize=10.sp,
+                        fontWeight=if(activeTab)FontWeight.Bold else FontWeight.Medium,
+                        color=tint)
                 }
-                Spacer(Modifier.height(2.dp))
-                Text(tab.title,fontSize=10.sp,color=tint,
-                    fontWeight=if(isSelected) FontWeight.Bold else FontWeight.Medium)
             }
         }
+        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
     }
 }
 

@@ -1,14 +1,11 @@
 package com.questyourlife.app.ui
 
 import androidx.compose.foundation.*
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.shape.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Lock
@@ -17,287 +14,309 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.questyourlife.app.data.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun HomePanel(
-    coins: Int,
-    goals: List<GoalEntity>,
-    steps: List<GoalStepEntity>,
-    daily: List<DailyQuestEntity>,
-    onGoal: (String) -> Unit,
-    onDaily: () -> Unit,
-    onAccept: (String) -> Unit,
-    onComplete: (String) -> Unit,
-    onCreateGoal: () -> Unit,
-    onSettings: () -> Unit
+    coins:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,
+    daily:List<DailyQuestEntity>,onGoal:(String)->Unit,onDaily:()->Unit,
+    onAccept:(String)->Unit,onComplete:(String)->Unit,
+    onCreateGoal:()->Unit,onSettings:()->Unit
 ) {
-    val goal = goals.firstOrNull()
-    val progressSteps = steps.filter { it.goalId == goal?.id }
-    val done = progressSteps.count { it.completedAt != null }
-    val date = remember { java.time.LocalDate.now()
-        .format(java.time.format.DateTimeFormatter.ofPattern("M월 d일 EEEE",java.util.Locale.KOREAN)) }
-    Column(verticalArrangement=Arrangement.spacedBy(13.dp)) {
+    val goal=goals.firstOrNull()
+    val relevant=steps.filter{it.goalId==goal?.id}
+    val completed=relevant.count{it.completedAt!=null}
+    val ratio=if(relevant.isEmpty()) 0f else completed.toFloat()/relevant.size
+    val date=remember { LocalDate.now().format(DateTimeFormatter.ofPattern("M월 d일 EEEE",Locale.KOREAN)) }
+    Column(verticalArrangement=Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            Text("현생패치",fontWeight=FontWeight.Black,fontSize=23.sp,color=TextInk)
+            Text("현생패치",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
             Spacer(Modifier.weight(1f))
             CashBadge(coins)
             IconButton(onClick=onSettings,modifier=Modifier.size(44.dp)) {
-                Icon(Icons.Outlined.Settings,contentDescription="설정",tint=TextGray,
-                    modifier=Modifier.size(18.dp))
+                Icon(Icons.Outlined.Settings,"설정",tint=TextGray,modifier=Modifier.size(19.dp))
             }
         }
-        Row(verticalAlignment=Alignment.CenterVertically,modifier=Modifier.heightIn(min=149.dp)) {
-            Column(Modifier.weight(1f)) {
-                Text(date,color=TextGray,fontSize=12.sp)
-                Spacer(Modifier.height(10.dp))
-                Text("오늘도,\n한 걸음 더",fontWeight=FontWeight.Black,
-                    fontSize=27.sp,lineHeight=33.sp,color=TextInk)
-                Spacer(Modifier.height(8.dp))
-                Text("작은 수행이 모여\n일상이 패치돼.",fontSize=12.sp,
-                    lineHeight=18.sp,color=TextGray)
+        Spacer(Modifier.height(2.dp))
+        Row(Modifier.fillMaxWidth().heightIn(min=144.dp),verticalAlignment=Alignment.CenterVertically) {
+            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(7.dp)) {
+                Text(date,fontSize=11.sp,color=TextGray)
+                Text("오늘도,\n한 걸음 더",fontSize=27.sp,lineHeight=32.sp,
+                    fontWeight=FontWeight.Black,letterSpacing=(-.6).sp,color=TextInk)
+                Text("작은 수행이 모여\n일상이 패치돼.",fontSize=11.sp,
+                    lineHeight=16.sp,color=TextGray)
             }
-            MascotArt(Modifier.size(115.dp),festive=true)
+            MascotArt(Modifier.size(128.dp),festive=true)
         }
-        Column(
-            modifier=Modifier.fillMaxWidth()
-                .background(Brush.linearGradient(listOf(Color(0xFFFBE9E7),Color(0xFFFCF1EE))),
-                    RoundedCornerShape(21.dp))
-                .clickable { if(goal==null) onCreateGoal() else onGoal(goal.id) }
-                .padding(14.dp)
-        ) {
+        Column(Modifier.fillMaxWidth()
+            .clip(CardShape)
+            .background(Brush.linearGradient(listOf(Color(0xFFFAE7E4),Color(0xFFFDF2EE))))
+            .clickable { if(goal==null) onCreateGoal() else onGoal(goal.id) }
+            .padding(16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment=Alignment.CenterVertically) {
-                PaleTag(if(goal == null) "메인 퀘스트" else if(goal.id=="example-japanese") "예시 메인 퀘스트" else "메인 퀘스트 · 챕터 ${if(done==0) 1 else ((done*5)/maxOf(progressSteps.size,1)+1).coerceAtMost(5)}")
+                PaleTag(if(goal==null) "메인 퀘스트" else if(goal.id=="example-japanese")
+                    "예시 메인 퀘스트" else "메인 퀘스트 · 챕터 "+
+                        (relevant.firstOrNull{it.completedAt==null}?.chapter ?: 5))
                 Spacer(Modifier.weight(1f))
-                Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,tint=TextGray,modifier=Modifier.size(20.dp))
-            }
-            Row(Modifier.fillMaxWidth().heightIn(min=67.dp),verticalAlignment=Alignment.CenterVertically) {
-                Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                    Text(goal?.title ?: "새로운 목표를 만들어봐",fontWeight=FontWeight.Bold,
-                        fontSize=15.sp,lineHeight=21.sp,color=TextInk,maxLines=2,
-                        overflow=TextOverflow.Ellipsis)
-                    Text(if(goal==null) "목표를 직접 추가할 수 있어" else "$done / ${progressSteps.size} 단계",
-                        color=TextGray,fontSize=12.sp)
-                }
-                MountainArt(Modifier.size(67.dp))
+                Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,"목표 상세",
+                    tint=TextInk,modifier=Modifier.size(20.dp))
             }
             Row(verticalAlignment=Alignment.CenterVertically) {
-                SmallBar(if(progressSteps.isEmpty()) 0f else done.toFloat()/progressSteps.size,
-                    Modifier.weight(1f))
+                Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(7.dp)) {
+                    Text(goal?.title ?: "첫 목표를 만들어봐",fontSize=16.sp,
+                        fontWeight=FontWeight.Bold,lineHeight=21.sp,color=TextInk,
+                        maxLines=2,overflow=TextOverflow.Ellipsis)
+                    Text(if(goal==null) "지금 바로 시작할 수 있어" else
+                        "${completed} / ${relevant.size} 단계",fontSize=11.sp,color=TextGray)
+                }
+                MountainArt(Modifier.size(85.dp))
+            }
+            Row(verticalAlignment=Alignment.CenterVertically) {
+                SmallBar(ratio,Modifier.weight(1f),height=7.dp)
                 Spacer(Modifier.width(10.dp))
-                Text(if(progressSteps.isEmpty()) "0%" else "${done*100/progressSteps.size}%",
-                    fontSize=12.sp,color=AccentRed)
+                Text("${(ratio*100).toInt()}%",fontSize=11.sp,color=AccentRed,
+                    fontWeight=FontWeight.SemiBold)
             }
         }
-        Spacer(Modifier.height(1.dp))
-        HeadSection("◉  오늘의 일일 퀘스트",
-            "${daily.count { it.completedAt!=null }} / ${daily.size}",onDaily)
-        Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(1.dp)) {
-            daily.forEachIndexed { index, item ->
-                DailyCompactRow(item,onAccept,onComplete)
-                if(index != daily.lastIndex)
-                    HorizontalDivider(color=WarmLine,thickness=.6.dp)
+        Spacer(Modifier.height(3.dp))
+        HeadSection("오늘의 일일 퀘스트",
+            "${daily.count{it.completedAt!=null}} / ${daily.size}",onDaily)
+        Column(Modifier.fillMaxWidth()) {
+            daily.forEachIndexed { i,q ->
+                DailyCompactRow(q,onAccept,onComplete,onOpen=onDaily)
+                if(i<daily.lastIndex) HorizontalDivider(color=WarmLine,thickness=.6.dp)
             }
+            if(daily.isEmpty()) Text("오늘의 퀘스트가 아직 없어",color=TextGray,
+                fontSize=12.sp,modifier=Modifier.padding(vertical=14.dp))
         }
-        if(daily.isEmpty()) Text("오늘의 퀘스트를 준비하고 있어",color=TextGray,fontSize=13.sp)
     }
 }
 
 @Composable
 fun QuestListPanel(
-    coins: Int,
-    goals: List<GoalEntity>,
-    steps: List<GoalStepEntity>,
-    daily: List<DailyQuestEntity>,
-    onGoal: (String) -> Unit,
-    onDaily: () -> Unit,
-    onCreate: () -> Unit
+    coins:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,daily:List<DailyQuestEntity>,
+    onGoal:(String)->Unit,onDaily:()->Unit,onCreate:()->Unit
 ) {
-    var filter by remember { mutableIntStateOf(0) }
-    Column(verticalArrangement=Arrangement.spacedBy(13.dp)) {
+    var tab by remember { mutableIntStateOf(0) }
+    Column(verticalArrangement=Arrangement.spacedBy(17.dp)) {
         ScreenHeading("퀘스트",action={
             TextButton(onClick=onCreate) {
-                Icon(Icons.Outlined.Add,null,modifier=Modifier.size(18.dp))
+                Icon(Icons.Outlined.Add,null,modifier=Modifier.size(16.dp),tint=AccentRed)
                 Text("목표 추가",fontSize=12.sp,color=TextInk)
             }
         })
-        Row(horizontalArrangement=Arrangement.spacedBy(7.dp),modifier=Modifier.fillMaxWidth()) {
-            listOf("메인 퀘스트","일일 퀘스트","완료").forEachIndexed { i,s ->
-                Box(Modifier.weight(1f).background(
-                    if(filter==i) Color(0xFF343433) else Color(0xFFF0EEEA),CircleShape)
-                    .clickable { filter=i }.padding(vertical=11.dp),
-                    contentAlignment=Alignment.Center) {
-                    Text(s,fontSize=11.sp,color=if(filter==i) Color.White else TextGray,
-                        fontWeight=FontWeight.SemiBold)
-                }
+        SegmentedTabs(listOf("메인 퀘스트","일일 퀘스트","완료"),tab,{tab=it})
+        if(tab==0 || tab==2) {
+            val visible=goals.filter { g ->
+                val list=steps.filter{it.goalId==g.id}
+                if(tab==0) list.any{it.completedAt==null} || list.isEmpty()
+                else list.isNotEmpty() && list.all{it.completedAt!=null}
             }
-        }
-        if(filter == 0 || filter == 2) {
-            goals.filter { g ->
-                filter==0 || steps.filter { it.goalId==g.id }.let { s->s.isNotEmpty() && s.all { it.completedAt!=null } }
-            }.forEachIndexed { i,goal ->
-                val gSteps=steps.filter { it.goalId == goal.id }
-                val completed=gSteps.count { it.completedAt!=null }
-                Row(Modifier.fillMaxWidth().heightIn(min=97.dp)
-                    .background(
-                        when(i%3){0->Color(0xFFFAE8E6);1->Color(0xFFF3F3EA);else->Color(0xFFF6F2EF)},
-                        RoundedCornerShape(20.dp))
-                    .clickable { onGoal(goal.id) }.padding(13.dp),
+            visible.forEachIndexed { index,g ->
+                val current=steps.filter{it.goalId==g.id}
+                val done=current.count{it.completedAt!=null}
+                val ratio=if(current.isEmpty()) 0f else done.toFloat()/current.size
+                val bg=when(index%3) {
+                    0->Color(0xFFFAEAE7)
+                    1->GrassSurface
+                    else->Color(0xFFF6F1EE)
+                }
+                Row(Modifier.fillMaxWidth().clip(CardShape).background(bg)
+                    .clickable {onGoal(g.id)}.padding(15.dp),
                     verticalAlignment=Alignment.CenterVertically) {
-                    if(i%2 == 0) MountainArt(Modifier.size(75.dp))
-                    else SproutArt(Modifier.size(67.dp))
-                    Spacer(Modifier.width(11.dp))
-                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                        PaleTag(if(completed==gSteps.size && gSteps.isNotEmpty()) "완료"
-                            else if(completed>0) "진행 중" else "대기 중")
-                        Text(goal.title,fontWeight=FontWeight.Bold,color=TextInk,
-                            fontSize=13.sp,maxLines=2,overflow=TextOverflow.Ellipsis)
-                        Text("챕터 ${(completed*5/maxOf(gSteps.size,1)+1).coerceAtMost(5)} · 작은 단계부터",
-                            fontSize=10.sp,color=TextGray)
-                        SmallBar(if(gSteps.isEmpty()) 0f else completed.toFloat()/gSteps.size)
+                    Box(Modifier.size(66.dp),contentAlignment=Alignment.Center) {
+                        if(index%2==0) MountainArt(Modifier.fillMaxSize())
+                        else SproutArt(Modifier.fillMaxSize())
                     }
-                    Text("$completed / ${gSteps.size}",fontSize=11.sp,color=TextGray)
+                    Spacer(Modifier.width(10.dp))
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(5.dp)) {
+                        Text(if(done==current.size && current.isNotEmpty()) "완료"
+                            else if(done>0) "진행 중" else "대기 중",
+                            fontSize=10.sp,color=if(done>0) AccentRed else TextGray,
+                            fontWeight=FontWeight.Bold)
+                        Text(g.title,fontSize=13.sp,lineHeight=18.sp,color=TextInk,
+                            fontWeight=FontWeight.Bold,maxLines=2,overflow=TextOverflow.Ellipsis)
+                        Text("챕터 ${current.firstOrNull{it.completedAt==null}?.chapter ?: 5} · 단계별 도전",
+                            fontSize=10.sp,color=TextGray)
+                        SmallBar(ratio,Modifier.fillMaxWidth(),height=6.dp)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Text("${done} / ${current.size}",fontSize=10.sp,color=TextGray)
+                }
+            }
+            if(visible.isEmpty()) WhitePanel {
+                Text(if(tab==2) "완료한 메인 퀘스트가 없어" else "아직 목표가 없어",
+                    fontSize=13.sp,color=TextGray)
+            }
+        }
+        if(tab==1) {
+            Column(Modifier.fillMaxWidth().clip(CardShape)
+                .background(Color(0xFFFAEAE7)).clickable(onClick=onDaily).padding(18.dp)) {
+                Row(verticalAlignment=Alignment.CenterVertically) {
+                    Text("오늘의 제안",fontSize=16.sp,fontWeight=FontWeight.Bold,color=TextInk)
+                    Spacer(Modifier.weight(1f))
+                    Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,"일일 퀘스트",
+                        tint=TextInk,modifier=Modifier.size(19.dp))
+                }
+                Spacer(Modifier.height(5.dp))
+                Text("${daily.size}개의 일일 퀘스트 · 수락하고 시작하기",
+                    color=TextGray,fontSize=12.sp)
+                Spacer(Modifier.height(12.dp))
+                daily.take(3).forEach { q ->
+                    Row(verticalAlignment=Alignment.CenterVertically,
+                        modifier=Modifier.padding(vertical=4.dp)) {
+                        QuestTick(q.completedAt!=null)
+                        Spacer(Modifier.width(9.dp))
+                        Text(q.title,color=TextInk,fontSize=12.sp)
+                    }
                 }
             }
         }
-        if(filter == 1) {
-            Box(Modifier.fillMaxWidth().background(LightRed,RoundedCornerShape(20.dp))
-                .clickable(onClick=onDaily).padding(20.dp)) {
-                Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                    Text("매일 쌓는 작은 성취",fontSize=16.sp,fontWeight=FontWeight.Bold,color=TextInk)
-                    Text("오늘의 제안 ${daily.size}개 · 수락하고 완료하기",fontSize=12.sp,color=TextGray)
-                    Text("일일 퀘스트 보러 가기  ›",color=AccentRed,fontWeight=FontWeight.Bold,fontSize=12.sp)
-                }
-            }
-        } else if(filter==0) {
-            Row(Modifier.fillMaxWidth().background(Color(0xFFF6ECF5),
-                RoundedCornerShape(17.dp)).clickable(onClick=onCreate).padding(17.dp),
+        if(tab==0) {
+            Row(Modifier.fillMaxWidth().clip(CardShape)
+                .background(LilacSurface).clickable(onClick=onCreate).padding(17.dp),
                 verticalAlignment=Alignment.CenterVertically) {
-                Text("✧",fontSize=24.sp,color=Color(0xFFB58AB7))
-                Spacer(Modifier.width(10.dp))
-                Column {
-                    Text("새 목표 만들기",fontWeight=FontWeight.Bold,color=TextInk,fontSize=14.sp)
-                    Text("내 목표를 작은 퀘스트로 시작해 봐",color=TextGray,fontSize=11.sp)
+                Text("✦",fontSize=25.sp,color=Color(0xFFA781AD))
+                Spacer(Modifier.width(12.dp))
+                Column(Modifier.weight(1f)) {
+                    Text("새 목표 만들기",fontSize=14.sp,fontWeight=FontWeight.Bold,color=TextInk)
+                    Spacer(Modifier.height(3.dp))
+                    Text("내 목표를 작은 퀘스트로 시작해 봐",fontSize=11.sp,color=TextGray)
                 }
-                Spacer(Modifier.weight(1f))
-                Text("›",color=TextGray,fontSize=24.sp)
+                Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,
+                    tint=TextGray,modifier=Modifier.size(19.dp))
             }
         }
-        if(filter==2 && goals.none { g ->
-                steps.filter { it.goalId==g.id }.let { it.isNotEmpty() && it.all { step -> step.completedAt!=null } }
-            }) Text("완료한 메인 퀘스트가 아직 없어",color=TextGray,fontSize=13.sp)
     }
 }
 
 @Composable
-fun GoalDetailPanel(
-    goal: GoalEntity,
-    steps: List<GoalStepEntity>,
-    onBack: () -> Unit,
-    onComplete: (String,Int) -> Unit,
-    onTimer: () -> Unit
+fun GoalDetailPanel(goal:GoalEntity,steps:List<GoalStepEntity>,
+    onBack:()->Unit,onComplete:(String,Int)->Unit,onTimer:()->Unit
 ) {
-    val done=steps.count { it.completedAt!=null }
-    val chapter=(done*5/maxOf(steps.size,1)+1).coerceAtMost(5)
-    val chapterTasks=steps.filter { it.chapter==chapter }
-    Column(verticalArrangement=Arrangement.spacedBy(19.dp)) {
+    val sorted=steps.sortedBy{it.position}
+    val done=sorted.count{it.completedAt!=null}
+    val chapter=sorted.firstOrNull{it.completedAt==null}?.chapter
+        ?: sorted.maxOfOrNull{it.chapter} ?: 1
+    val active=sorted.filter{it.chapter==chapter}
+    val ratio=if(sorted.isEmpty()) 0f else done.toFloat()/sorted.size
+    val totalChapters=maxOf(5,sorted.maxOfOrNull{it.chapter} ?: 5)
+    Column(verticalArrangement=Arrangement.spacedBy(18.dp)) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            IconButton(onClick=onBack,modifier=Modifier.size(44.dp)) {
-            Icon(Icons.AutoMirrored.Outlined.ArrowBack,contentDescription="뒤로가기",tint=TextInk)
-        }
-            Spacer(Modifier.weight(1f))
-            Text("•••",color=TextInk,fontSize=17.sp)
-        }
-        Row(verticalAlignment=Alignment.CenterVertically) {
-            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(7.dp)) {
-                PaleTag("메인 퀘스트")
-                Text(goal.title,fontSize=24.sp,lineHeight=29.sp,fontWeight=FontWeight.ExtraBold,color=TextInk)
-                Text(goal.description,fontSize=12.sp,lineHeight=18.sp,color=TextGray)
+            IconButton(onClick=onBack,modifier=Modifier.size(45.dp)) {
+                Icon(Icons.AutoMirrored.Outlined.ArrowBack,"뒤로가기",tint=TextInk)
             }
-            MountainArt(Modifier.size(102.dp))
+            Spacer(Modifier.weight(1f))
+            Text("메인 퀘스트",fontSize=11.sp,color=AccentRed,
+                modifier=Modifier.clip(CircleShape).background(LightRed)
+                    .padding(horizontal=10.dp,vertical=5.dp))
         }
         Row(verticalAlignment=Alignment.CenterVertically) {
-            Text("$done / ${steps.size} 단계",fontSize=12.sp,color=TextInk)
-            Spacer(Modifier.weight(1f))
-            Text("${if(steps.isEmpty()) 0 else done*100/steps.size}%",
-                color=AccentRed,fontSize=12.sp,fontWeight=FontWeight.Bold)
+            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                Text(goal.title,fontSize=22.sp,lineHeight=27.sp,color=TextInk,
+                    fontWeight=FontWeight.ExtraBold)
+                Text(goal.description,fontSize=11.sp,color=TextGray,lineHeight=17.sp)
+            }
+            MountainArt(Modifier.size(91.dp))
         }
-        SmallBar(if(steps.isEmpty()) 0f else done.toFloat()/steps.size)
-        Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            for(i in 1..5) {
-                if(i>1) HorizontalDivider(color=WarmLine,modifier=Modifier.weight(.35f))
+        Text("${done} / ${sorted.size} 단계",fontSize=12.sp,color=TextInk)
+        SmallBar(ratio,height=7.dp)
+        Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.Top) {
+            (1..totalChapters).forEach { number ->
+                if(number>1) {
+                    Box(Modifier.weight(.33f).padding(top=13.dp).height(2.dp)
+                        .background(if(number<=chapter) AccentRed.copy(alpha=.55f) else WarmLine))
+                }
                 Column(Modifier.weight(1f),horizontalAlignment=Alignment.CenterHorizontally) {
-                    Box(Modifier.size(30.dp).background(
-                        if(i<chapter) AccentRed else if(i==chapter) AccentRed else WarmLine,
-                        CircleShape),contentAlignment=Alignment.Center) {
-                        Text(if(i<chapter) "✓" else "$i",
-                            color=if(i<=chapter) Color.White else TextGray,
-                            fontSize=12.sp,fontWeight=FontWeight.Bold)
+                    Box(Modifier.size(28.dp).background(
+                        if(number<=chapter) AccentRed else MutedSurface,CircleShape),
+                        contentAlignment=Alignment.Center) {
+                        Text(if(number<chapter) "✓" else "$number",fontSize=11.sp,
+                            fontWeight=FontWeight.Bold,
+                            color=if(number<=chapter) Color.White else TextGray)
                     }
-                    Spacer(Modifier.height(6.dp))
-                    Text("챕터 $i",fontSize=10.sp,color=if(i==chapter) AccentRed else TextGray)
+                    Spacer(Modifier.height(5.dp))
+                    Text("챕터 $number",fontSize=9.sp,color=if(number==chapter) AccentRed else TextGray,
+                        maxLines=1)
                 }
             }
         }
         WhitePanel {
             Row(verticalAlignment=Alignment.CenterVertically) {
-                Text("챕터 $chapter · ${when(chapter){1->"첫걸음";2->"듣기 감각 기르기";3->"반복 연습";4->"실전 도전";else->"마무리"}}",
-                    fontWeight=FontWeight.Bold,fontSize=15.sp,color=TextInk)
+                Text("챕터 $chapter",fontSize=15.sp,fontWeight=FontWeight.Bold,color=TextInk)
                 Spacer(Modifier.weight(1f))
-                Text("${chapterTasks.count{it.completedAt!=null}} / ${chapterTasks.size} 완료",
-                    color=TextGray,fontSize=10.sp)
+                Text("${active.count{it.completedAt!=null}} / ${active.size} 완료",
+                    color=TextGray,fontSize=11.sp)
             }
-            Spacer(Modifier.height(13.dp))
-            chapterTasks.forEach { step ->
-                val locked=steps.any { it.position < step.position && it.completedAt==null }
+            Spacer(Modifier.height(12.dp))
+            active.forEachIndexed { i,step ->
+                val locked=sorted.any{it.position<step.position && it.completedAt==null}
                 Row(Modifier.fillMaxWidth().heightIn(min=56.dp),
                     verticalAlignment=Alignment.CenterVertically) {
-                    Box(Modifier.clickable {
-                        if(!locked && step.completedAt==null) onComplete(step.goalId,step.position)
-                    }) { QuestTick(step.completedAt!=null,locked=locked) }
-                    Spacer(Modifier.width(10.dp))
-                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                    Box(Modifier.size(44.dp).clip(CircleShape).clickable(
+                        enabled=!locked && step.completedAt==null,
+                        onClick={onComplete(step.goalId,step.position)}),
+                        contentAlignment=Alignment.Center) {
+                        QuestTick(step.completedAt!=null,locked=locked)
+                    }
+                    Column(Modifier.weight(1f)) {
                         Text("#${step.position+1} ${step.title}",fontSize=12.sp,
+                            fontWeight=FontWeight.Medium,
                             color=if(locked) TextGray else TextInk,
-                            fontWeight=FontWeight.SemiBold)
+                            maxLines=2,overflow=TextOverflow.Ellipsis)
                         if(locked) Text("이전 단계 완료 후 해금",fontSize=10.sp,color=TextGray)
                     }
                     Text("+${step.reward} C",fontSize=10.sp,color=CoinGold)
-                    Spacer(Modifier.width(5.dp))
-                    Icon(if(locked) Icons.Outlined.Lock else Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                        contentDescription=null,tint=TextGray,modifier=Modifier.size(16.dp))
+                    Spacer(Modifier.width(7.dp))
+                    Icon(if(locked) Icons.Outlined.Lock else
+                        Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription=null,tint=TextGray,modifier=Modifier.size(17.dp))
                 }
+                if(i<active.lastIndex) HorizontalDivider(color=WarmLine.copy(alpha=.7f),thickness=.5.dp)
             }
+            if(active.isEmpty()) Text("이 챕터에는 퀘스트가 없어",color=TextGray,fontSize=12.sp)
         }
-        RedButton(if(done==steps.size) "집중 타이머 열기" else "집중 타이머 시작  ▷",
-            onClick=onTimer,modifier=Modifier.fillMaxWidth())
+        RedButton("집중 타이머 열기",onClick=onTimer,modifier=Modifier.fillMaxWidth())
     }
 }
 
 @Composable
-fun NewGoalPanel(onBack: () -> Unit,onCreate: (String) -> Unit) {
+fun NewGoalPanel(onBack:()->Unit,onCreate:(String)->Unit) {
     var title by remember { mutableStateOf("") }
-    Column(verticalArrangement=Arrangement.spacedBy(19.dp)) {
-        Text("‹",fontSize=28.sp,modifier=Modifier.clickable(onClick=onBack),color=TextInk)
-        ScreenHeading("새 목표 만들기","작은 단계부터 하나씩 시작해 봐")
-        WhitePanel {
-            Text("이루고 싶은 목표",color=TextInk,fontSize=15.sp,fontWeight=FontWeight.Bold)
-            Spacer(Modifier.height(12.dp))
-            OutlinedTextField(value=title,onValueChange={ if(it.length<=90) title=it },
-                placeholder={Text("예: 일본어로 자유롭게 대화하기")},
-                modifier=Modifier.fillMaxWidth(),singleLine=false,maxLines=3,
-                shape=RoundedCornerShape(12.dp))
-            Spacer(Modifier.height(7.dp))
-            Text("현재는 로컬 7단계 가이드로 시작해. Gemini 생성은 아직 연결 전이야.",
-                color=TextGray,fontSize=11.sp,lineHeight=16.sp)
+    Column(verticalArrangement=Arrangement.spacedBy(21.dp)) {
+        Row(verticalAlignment=Alignment.CenterVertically) {
+            IconButton(onClick=onBack) {
+                Icon(Icons.AutoMirrored.Outlined.ArrowBack,"뒤로가기",tint=TextInk)
+            }
+            Text("새 목표",fontSize=19.sp,fontWeight=FontWeight.Bold,color=TextInk)
         }
-        RedButton("목표 시작하기",onClick={if(title.isNotBlank()) onCreate(title)},
+        Text("지금부터 이뤄볼 목표",fontSize=24.sp,color=TextInk,fontWeight=FontWeight.ExtraBold)
+        WhitePanel {
+            Text("어떤 목표를 이루고 싶어?",fontSize=14.sp,color=TextInk,
+                fontWeight=FontWeight.Bold)
+            Spacer(Modifier.height(12.dp))
+            OutlinedTextField(value=title,onValueChange={if(it.length<=90)title=it},
+                modifier=Modifier.fillMaxWidth(),maxLines=3,
+                placeholder={Text("예: 일본어로 자연스럽게 대화하기",fontSize=13.sp)},
+                shape=RoundedCornerShape(14.dp),
+                colors=OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor=AccentRed,unfocusedBorderColor=WarmLine))
+            Spacer(Modifier.height(10.dp))
+            Text("현재는 로컬에서 7단계 계획을 만들어. AI 자동 생성은 아직 연결 전이야.",
+                fontSize=11.sp,lineHeight=16.sp,color=TextGray)
+        }
+        RedButton("목표 시작하기",onClick={if(title.isNotBlank())onCreate(title.trim())},
             modifier=Modifier.fillMaxWidth())
     }
 }

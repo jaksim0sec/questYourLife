@@ -59,7 +59,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
+                    verticalArrangement = Arrangement.spacedBy(1.dp, Alignment.CenterVertically)) {
                     val isDark = LocalPatchDark.current
                     val darkActiveIcon = when (tab.route) {
                         "home" -> R.drawable.ic_patch_nav_active_home_dark
@@ -77,7 +77,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     }
                     Crossfade(isSelected, animationSpec = tween(160), label = "tab icon") { selected ->
                         Icon(painterResource(if (selected) { if (isDark) darkActiveIcon else tab.activeIcon } else tab.inactiveIcon),
-                            null, tint = if (!selected && isDark) PatchTokens.muted else Color.Unspecified, modifier = Modifier.size(25.dp)
+                            null, tint = if (!selected && isDark) PatchTokens.muted else Color.Unspecified, modifier = Modifier.size(27.dp)
                                 .graphicsLayer { scaleX = iconScale.value; scaleY = iconScale.value }
                                 .alpha(if (selected || isDark) 1f else 0.55f))
                     }

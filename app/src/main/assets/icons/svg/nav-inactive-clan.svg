@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#222222" stroke-width="1.88" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(12 12) scale(1.025) translate(-12 -12)">
   <circle cx="12" cy="12" r="9"></circle>
   <polygon points="16 8 14 14 8 16 10 10 16 8"></polygon>
+  </g>
   </svg>

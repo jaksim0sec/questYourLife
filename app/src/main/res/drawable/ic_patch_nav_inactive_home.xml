@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:pathData="M4 10V20C4 20.5523 4.44772 21 5 21H19C19.5523 21 20 20.5523 20 20V10" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" />
-    <path android:pathData="M2 10L12 2L22 10" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" />
-    <path android:pathData="M9 21V14H15V21" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <group android:pivotX="12" android:pivotY="12" android:scaleX="1.025" android:scaleY="1.025">
+    <path android:pathData="M4 10V20C4 20.5523 4.44772 21 5 21H19C19.5523 21 20 20.5523 20 20V10" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="1.88" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M2 10L12 2L22 10" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="1.88" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M9 21V14H15V21" android:fillColor="#00000000" android:strokeColor="#222222" android:strokeWidth="1.88" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    </group>
 </vector>

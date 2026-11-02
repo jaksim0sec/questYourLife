@@ -86,7 +86,7 @@ fun NotificationCenter(quests: List<DailyQuestEntity>, onDismiss: () -> Unit, on
                             .semantics { contentDescription = "읽지 않은 알림" })
                     }
                     if (alert.name != null) DressedAvatar(CosmeticArtwork.demoItem(alert.name), Modifier.size(48.dp),
-                        "${alert.name}의 알림", alternateCreamCap = alert.name == "하루")
+                        "${alert.name}의 알림")
                     else Image(painterResource(R.drawable.box_gold), "공동 상자", Modifier.size(48.dp))
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(alert.title, fontSize = 14.sp, lineHeight = 19.sp,

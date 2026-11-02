@@ -53,7 +53,7 @@ fun PatchPersonProfilePage(name: String, clanName: String, onBack: () -> Unit,
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(136.dp), "$name 프로필")
+                DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(136.dp), "$name 프로필", alternateCreamCap = name == "하루")
                 Text(name, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = PatchTokens.ink)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     ClanMark(Modifier.size(24.dp))

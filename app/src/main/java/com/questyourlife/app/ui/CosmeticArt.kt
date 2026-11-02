@@ -43,10 +43,10 @@ fun CosmeticImage(id: Int, modifier: Modifier = Modifier) {
 
 /** One coordinate system keeps the face and accessories aligned at every avatar size. */
 @Composable
-fun DressedAvatar(itemId: Int, modifier: Modifier = Modifier, description: String? = null) {
+fun DressedAvatar(itemId: Int, modifier: Modifier = Modifier, description: String? = null, alternateCreamCap: Boolean = false) {
     BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
         val side = minOf(maxWidth, maxHeight)
-        val composition = androidx.compose.runtime.remember(itemId) { AvatarComposer.compose(itemId) }
+        val composition = androidx.compose.runtime.remember(itemId, alternateCreamCap) { AvatarComposer.compose(itemId, alternateCreamCap) }
         Box(Modifier.size(side)) {
             composition.layers.forEach { layer ->
                 val placement = Modifier.offset(x = side * layer.x, y = side * layer.y)

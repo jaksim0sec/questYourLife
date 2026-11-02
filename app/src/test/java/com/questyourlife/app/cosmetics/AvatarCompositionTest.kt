@@ -4,69 +4,66 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class AvatarCompositionTest {
-    @Test fun accessoryCorrectionsKeepFaceAndReferenceCapUnchanged() {
-        val referenceFace = AvatarComposer.compose(-1).layers.single()
-        listOf(0, 1, 2, 4, 5, 1001, 1003).forEach {
-            assertEquals(referenceFace, AvatarComposer.compose(it).layers.first())
+    private fun equipment(id: Int): AvatarLayer = AvatarComposer.compose(id).layers.last()
+
+    @Test fun faceIsIdenticalForAllItems() {
+        val baseFace = AvatarComposer.compose(-1).layers.single()
+        listOf(0, 1, 2, 3, 4, 5, 1001, 1003, 1004).forEach { id ->
+            val layers = AvatarComposer.compose(id).layers
+            assertEquals(2, layers.size)
+            assertEquals(baseFace, layers.first())
+            assertEquals(id, layers.last().itemId)
+            assertTrue(layers.last().width > 0 && layers.last().height > 0)
         }
-        val blue = AvatarComposer.compose(2).layers.last()
-        assertEquals(.065f, blue.x, .00001f)
-        assertEquals(.015f, blue.y, .00001f)
-        assertEquals(.87f, blue.width, .00001f)
-        val cap = AvatarComposer.compose(1).layers.last()
-        val alternate = AvatarComposer.compose(1, alternateCreamCap = true).layers.last()
-        assertEquals(-1f / 200f, alternate.x - cap.x, .00001f)
-        assertEquals(cap.y, alternate.y, .00001f)
-        assertEquals(cap.width, alternate.width, .00001f)
-        assertEquals(.81f * 1.02f, AvatarComposer.compose(0).layers.last().width, .00001f)
-        assertEquals(1.04f * .92f, AvatarComposer.compose(1001).layers.last().width, .00001f)
     }
 
-    @Test fun eachAccessoryMovesAndScalesFromItsPreviousCenter() {
-        data class Case(val id: Int, val x: Float, val y: Float, val w: Float, val h: Float,
-            val dx: Float, val dy: Float, val scale: Float, val alternate: Boolean = false)
-        val cases = listOf(
-            Case(1003, -.02f, .155f, 1.04f, .765f, 3f, -7f, .95f),
-            Case(0, .095f, -.015f, .81f, .601f, -1f, -5f, 1.02f),
-            Case(1, .075f, -.020f, .85f, .605f, -4f, -6f, 1f),
-            Case(1, .075f, -.020f, .85f, .605f, -5f, -6f, 1f, true),
-            Case(2, .065f, .015f, .87f, .582f, 0f, 0f, 1f),
-            Case(1001, -.02f, .145f, 1.04f, .817f, 1f, -9f, .92f),
-            Case(5, .09f, -.055f, .82f, .638f, 2f, -4f, 1.03f),
-            Case(4, .11f, -.025f, .78f, .612f, -1f, 1f, 1f))
-        val face = AvatarComposer.compose(-1).layers.single()
-        cases.forEach { c ->
-            val layers = AvatarComposer.compose(c.id, c.alternate).layers
-            assertEquals(face, layers.first())
-            val layer = layers.last()
-            assertEquals(c.w * c.scale, layer.width, .00001f)
-            assertEquals(c.h * c.scale, layer.height, .00001f)
-            assertEquals(c.dx / 200f, layer.x + layer.width / 2f - c.x - c.w / 2f, .00001f)
-            assertEquals(c.dy / 200f, layer.y + layer.height / 2f - c.y - c.h / 2f, .00001f)
+    @Test fun navyReferenceNeverMovesAndForwardCapsShareItsSize() {
+        val navy = equipment(2)
+        assertEquals(.065f, navy.x, .00001f)
+        assertEquals(.015f, navy.y, .00001f)
+        assertEquals(.87f, navy.width, .00001f)
+        assertEquals(.582f, navy.height, .00001f)
+        listOf(1, 3).forEach {
+            val cap = equipment(it)
+            assertEquals(navy.x, cap.x, .00001f)
+            assertEquals(navy.width, cap.width, .00001f)
+            assertEquals(navy.height, cap.height, .00001f)
+            assertEquals(navy.y + .005f, cap.y, .00001f)
         }
     }
-    @Test fun unsupportedItemKeepsFaceWithoutSubstitutingAnAccessory() {
+
+    @Test fun knitAndBucketHatsAreLowerAndHaveIndependentFits() {
+        val beanie = equipment(0)
+        val bucket = equipment(5)
+        assertEquals(.012f, beanie.y, .00001f)
+        assertEquals(.612f, beanie.height, .00001f)
+        assertEquals(-.018f, bucket.y, .00001f)
+        assertEquals(.656f, bucket.height, .00001f)
+        assertNotEquals(beanie.width, bucket.width)
+    }
+
+    @Test fun bothHeadphonesHaveCenteredTighterPlacement() {
+        val cream = equipment(1001)
+        val black = equipment(1003)
+        assertEquals(.030f, cream.x, .00001f)
+        assertEquals(.175f, cream.y, .00001f)
+        assertEquals(.94f, cream.width, .00001f)
+        assertEquals(.730f, cream.height, .00001f)
+        assertEquals(.5f, cream.x + cream.width / 2f, .00001f)
+        assertEquals(cream.x, black.x, .00001f)
+        assertEquals(cream.y, black.y, .00001f)
+        assertEquals(cream.width, black.width, .00001f)
+        assertEquals(cream.height, black.height, .00001f)
+    }
+
+    @Test fun backwardsCapAndEarbudsKeepTheirExistingPosition() {
+        assertEquals(AvatarLayer(4, .105f, -.020f, .78f, .612f), equipment(4))
+        assertEquals(AvatarLayer(1004, .025f, .480f, .95f, .360f), equipment(1004))
+    }
+
+    @Test fun unsupportedItemsDoNotReceiveInventedAccessories() {
         val layers = AvatarComposer.compose(1002).layers
         assertEquals(1, layers.size)
         assertNull(layers.single().itemId)
-    }
-
-    @Test fun everyRegisteredAccessoryIsComposedAboveTheSameFace() {
-        val face = AvatarComposer.compose(-1).layers.single()
-        listOf(0, 1, 2, 3, 4, 5, 1001, 1003, 1004).forEach { id ->
-            val layers = AvatarComposer.compose(id).layers
-            assertEquals(face, layers.first())
-            assertEquals(id, layers.last().itemId)
-            assertEquals(2, layers.size)
-            assertTrue(layers.last().width > 0f && layers.last().height > 0f)
-        }
-    }
-
-    @Test fun differentSilhouettesHaveIndependentCalibration() {
-        val beanie = AvatarComposer.compose(0).layers.last()
-        val cap = AvatarComposer.compose(1).layers.last()
-        val bucket = AvatarComposer.compose(5).layers.last()
-        assertNotEquals(beanie.y, cap.y)
-        assertNotEquals(cap.height, bucket.height)
     }
 }

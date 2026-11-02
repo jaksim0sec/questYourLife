@@ -66,7 +66,7 @@ object DailyQuestNotifications {
             .setContentTitle("오늘의 퀘스트가 도착했어")
             .setContentText("${amount}개의 작은 목표가 준비됐어. 마음에 드는 퀘스트를 수락해 봐.")
             .setStyle(Notification.BigTextStyle().bigText(
-                "오늘은 어떤 한 걸음을 시작할까? 현생패치에서 퀘스트를 골라 수락해 봐."
+                "오늘은 어떤 한 걸음을 시작할까? 갓생패치에서 퀘스트를 골라 수락해 봐."
             ))
             .build()
         manager(context).notify(PROPOSAL_ID, notification)

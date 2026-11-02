@@ -37,6 +37,8 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     private val companion: CompanionGateway = LocalCompanionGateway(QuestDatabase.get(app).companionDao())
     val contacts = companion.contacts()
     val demoClan = companion.demoClan()
+    val nearbyClans = companion.nearbyClanRanks()
+    fun clanPreview(previous: Boolean = false) = companion.clanPreview(previous)
     val activeThread = MutableStateFlow("")
     val chatMessages = activeThread.flatMapLatest(companion::watchMessages)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

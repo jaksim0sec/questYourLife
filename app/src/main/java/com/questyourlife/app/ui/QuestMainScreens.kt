@@ -42,7 +42,7 @@ fun HomePanel(
     val date=remember { LocalDate.now().format(DateTimeFormatter.ofPattern("M월 d일 EEEE",Locale.KOREAN)) }
     Column(verticalArrangement=Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            Text("현생패치",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
+            Text("갓생패치",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
             Spacer(Modifier.weight(1f))
             CashBadge(coins)
             IconButton(onClick=onSettings,modifier=Modifier.size(44.dp)) {

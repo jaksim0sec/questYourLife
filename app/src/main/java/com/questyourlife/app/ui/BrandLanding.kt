@@ -49,7 +49,7 @@ fun BrandLanding(onOpenChecklist: () -> Unit) {
         ) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "현생패치",
+                    text = "갓생패치",
                     color = Ink,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold
@@ -62,7 +62,7 @@ fun BrandLanding(onOpenChecklist: () -> Unit) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(id = R.drawable.launcher_stamp),
-                    contentDescription = "현생패치 빨간 도장 마스코트",
+                    contentDescription = "갓생패치 빨간 도장 마스코트",
                     modifier = Modifier.size(216.dp).clip(RoundedCornerShape(32.dp))
                 )
                 Spacer(modifier = Modifier.height(20.dp))

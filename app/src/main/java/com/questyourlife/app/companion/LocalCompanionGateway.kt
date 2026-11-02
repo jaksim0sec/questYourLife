@@ -11,6 +11,8 @@ class LocalCompanionGateway(private val dao: CompanionDao) : CompanionGateway {
         DemoContact("demo-mochi", "모찌", "이번 주도 차근차근!", 160),
         DemoContact("demo-haru", "하루", "작은 완료부터 시작해요", 140)
     )
+    override fun nearbyClanRanks() = LocalClanPreview.nearby(clanPreview())
+    override fun clanPreview(previous: Boolean) = LocalClanPreview.week(previous)
     override fun demoClan() = DemoClan("느슨한 갓생단", contacts(), 1000)
     override suspend fun openThread(thread: String) {
         if (thread.isBlank()) return

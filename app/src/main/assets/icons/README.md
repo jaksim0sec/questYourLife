@@ -10,7 +10,6 @@ Run `python3 tools/sync_svg_icons.py` after changing these SVGs. The generated
 rounded caps/joins, stroke widths and multi-color active states. Do not hand-edit
 the generated files or replace these icons with a library look-alike.
 
-Known source/reference discrepancy: both `nav-*-clan.svg` show a compass,
-while the user's clan mockup shows people. The supplied source is currently used;
-a corrected clan pair is needed for exact mockup fidelity. The pack contains
+The user explicitly approved the compass in `nav-*-clan.svg` as the new clan
+icon (2026-11-02), superseding the people icon in earlier mockups. The pack contains
 no chest, mascot raster, hat, or other reward illustration.

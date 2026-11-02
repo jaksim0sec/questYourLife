@@ -75,7 +75,7 @@ fun QuestHome(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(horizontal = 22.dp, vertical = 24.dp)
         ) {
-            Text("현생패치", color = Muted, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+            Text("갓생패치", color = Muted, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(12.dp))
             Text("오늘의 퀘스트", color = Color.White, fontSize = 30.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(20.dp))

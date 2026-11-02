@@ -8,6 +8,8 @@ interface CompanionGateway {
     fun watchMessages(thread: String): Flow<List<CompanionMessageEntity>>
     fun contacts(): List<DemoContact>
     fun demoClan(): DemoClan
+    fun nearbyClanRanks(): List<ClanRankEntry>
+    fun clanPreview(previous: Boolean = false): ClanPreview
     suspend fun openThread(thread: String)
     suspend fun send(thread: String, text: String)
     suspend fun applyPlan(messageId: String): String?

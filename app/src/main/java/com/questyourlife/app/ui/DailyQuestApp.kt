@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import com.questyourlife.app.R
 import androidx.compose.ui.semantics.Role
@@ -57,7 +58,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(PatchTokens.space4, Alignment.CenterVertically)) {
                     Icon(painterResource(if (isSelected) tab.activeIcon else tab.inactiveIcon),
-                        null, tint = Color.Unspecified, modifier = Modifier.size(30.dp))
+                        null, tint = Color.Unspecified, modifier = Modifier.size(28.dp).alpha(if (isSelected) 1f else 0.7f))
                     Text(tab.title, color = tint, fontSize = 12.sp, lineHeight = 16.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.SemiBold)
                 }

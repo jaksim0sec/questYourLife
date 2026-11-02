@@ -22,10 +22,14 @@ object LocalClanPreview {
         if (previous) 1 else 3,
         if (previous) listOf(
             ClanPreviewMember("밤산책", 280), ClanPreviewMember("이모리", 240, true),
-            ClanPreviewMember("모찌", 200)
+            ClanPreviewMember("모찌", 200), ClanPreviewMember("하루", 100),
+            ClanPreviewMember("다온", 80), ClanPreviewMember("초록", 60),
+            ClanPreviewMember("별이", 45), ClanPreviewMember("단비", 35)
         ) else listOf(
             ClanPreviewMember("밤산책", 220), ClanPreviewMember("이모리", 180, true),
-            ClanPreviewMember("모찌", 160)
+            ClanPreviewMember("모찌", 160), ClanPreviewMember("하루", 100),
+            ClanPreviewMember("다온", 70), ClanPreviewMember("초록", 50),
+            ClanPreviewMember("별이", 0), ClanPreviewMember("단비", 0)
         )
     )
 }

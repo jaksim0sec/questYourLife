@@ -59,7 +59,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(1.dp, Alignment.CenterVertically)) {
+                    verticalArrangement = Arrangement.spacedBy(2.5.dp, Alignment.CenterVertically)) {
                     val isDark = LocalPatchDark.current
                     val darkActiveIcon = when (tab.route) {
                         "home" -> R.drawable.ic_patch_nav_active_home_dark

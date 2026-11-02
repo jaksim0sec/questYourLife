@@ -23,7 +23,7 @@ private val ArtRed = Color(0xFFDA514D)
 @Composable
 fun MascotArt(modifier: Modifier = Modifier, festive: Boolean = false) {
     Box(modifier, contentAlignment = Alignment.Center) {
-        Image(painter = painterResource(R.drawable.mascot_sticker),
+        Image(painter = painterResource(R.drawable.mascot_face_stamp),
             contentDescription = "갓생패치 도장 마스코트", modifier = Modifier.matchParentSize())
         if (festive) {
             Canvas(Modifier.matchParentSize()) {

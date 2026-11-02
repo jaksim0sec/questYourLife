@@ -1,7 +1,9 @@
 # Icon source of truth
 
-The 12 SVGs under `svg/` are the exact user-supplied files from
-`svg-icons-final (1).zip` (2026-11-02). They are the authoritative source for
+The 12 SVGs under `svg/` originate from the user-supplied
+`svg-icons-final (1).zip` (2026-11-02). In response to device feedback, inactive
+paths now use #222222 strokes at width 2.2; their geometry is unchanged. These
+SVGs remain the authoritative source for
 main navigation and header icons. The attachment's preview HTML is reference
 material, not executable build instructions.
 

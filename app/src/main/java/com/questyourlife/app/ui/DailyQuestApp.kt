@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.questyourlife.app.ui.redesign.*
 
@@ -48,7 +49,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
             patchTabs.forEach { tab ->
                 val isSelected = active == tab.route
                 val tint by animateColorAsState(
-                    if (isSelected) PatchTokens.red else PatchTokens.muted,
+                    if (isSelected) Color(0xFFFF3B30) else Color(0xFF222222),
                     animationSpec = tween(160), label = "${tab.route} tab color")
                 Column(Modifier.weight(1f).fillMaxHeight()
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
@@ -56,9 +57,9 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(PatchTokens.space4, Alignment.CenterVertically)) {
                     Icon(painterResource(if (isSelected) tab.activeIcon else tab.inactiveIcon),
-                        null, tint = Color.Unspecified, modifier = Modifier.size(24.dp))
-                    Text(tab.title, color = tint, style = MaterialTheme.typography.labelSmall,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium)
+                        null, tint = Color.Unspecified, modifier = Modifier.size(30.dp))
+                    Text(tab.title, color = tint, fontSize = 12.sp, lineHeight = 16.sp,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.SemiBold)
                 }
             }
         }

@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,6 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -37,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.questyourlife.app.companion.ClanPreview
 import com.questyourlife.app.ui.DailyQuestViewModel
-import com.questyourlife.app.ui.MascotArt
+import com.questyourlife.app.R
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -64,26 +68,32 @@ fun PatchClanPage(model: DailyQuestViewModel) {
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var copied by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val fontScale = LocalDensity.current.fontScale
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+    // Preserve the reference rhythm while keeping the rank panel reachable on shorter phones.
+    val compact = maxHeight < 650.dp && fontScale <= 1.05f
+    val rowHeight = if (compact) 48.dp else 54.dp
+
 
     Column(Modifier.fillMaxSize().background(ClanStyle.paper)
         .verticalScroll(rememberScrollState())
-        .padding(horizontal = 16.dp).padding(top = 2.dp, bottom = 12.dp),
+        .padding(horizontal = 16.dp).padding(top = 2.dp, bottom = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth().heightIn(min = 58.dp).padding(horizontal = 4.dp),
+        Row(Modifier.fillMaxWidth().heightIn(min = if (compact) 52.dp else 58.dp).padding(horizontal = 4.dp),
             verticalAlignment = Alignment.CenterVertically) {
             ClanFlag(Modifier.size(44.dp))
             Spacer(Modifier.width(10.dp))
             Column(Modifier.weight(1f)) {
-                Text(clan.name, color = ClanStyle.ink, fontSize = 20.sp,
-                    lineHeight = 25.sp, fontWeight = FontWeight.Bold,
+                Text(clan.name, color = ClanStyle.ink, fontSize = 21.sp,
+                    lineHeight = 26.sp, fontWeight = FontWeight.Bold,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.semantics { heading() })
-                Text("멤버 ${clan.memberCount}명 · 예시", color = ClanStyle.muted,
+                Text("멤버 ${clan.memberCount}명", color = ClanStyle.muted,
                     fontSize = 12.sp, lineHeight = 18.sp)
             }
             OutlinedButton(onClick = { copied = false; sheet = "invite" },
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
-                modifier = Modifier.heightIn(min = 40.dp),
+                modifier = Modifier.height(36.dp),
                 shape = RoundedCornerShape(10.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, ClanStyle.line),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = ClanStyle.ink)) {
@@ -92,17 +102,17 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                 Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
             }
         }
-        ClanChestPanel(clan)
+        ClanChestPanel(clan, compact)
         Column(Modifier.fillMaxWidth().clip(ClanStyle.radius).background(ClanStyle.card)
-            .padding(horizontal = 14.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            .padding(horizontal = 14.dp, vertical = if (compact) 10.dp else 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
             ClanHeading("이번 주 함께 쌓은 기록")
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                repeat(4) { ClanFace(Modifier.size(58.dp)) }
+                repeat(4) { ClanFace(Modifier.size(if (compact) 60.dp else 64.dp)) }
             }
         }
         Column(Modifier.fillMaxWidth().clip(ClanStyle.radius).background(ClanStyle.card)
-            .padding(horizontal = 8.dp).padding(top = 8.dp, bottom = 8.dp)) {
+            .padding(horizontal = 8.dp).padding(top = 4.dp, bottom = 8.dp)) {
             Row(Modifier.fillMaxWidth().padding(start = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 ClanHeading("멤버 기여도", Modifier.weight(1f))
                 Box {
@@ -110,7 +120,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                         shape = CircleShape,
                         border = androidx.compose.foundation.BorderStroke(1.dp, ClanStyle.line),
                         contentPadding = PaddingValues(horizontal = 10.dp),
-                        modifier = Modifier.heightIn(min = 40.dp)) {
+                        modifier = Modifier.height(30.dp).defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)) {
                         Text(if (previous) "지난 주" else "이번 주", fontSize = 12.sp, color = ClanStyle.muted)
                         Icon(Icons.Rounded.KeyboardArrowDown, null, Modifier.size(16.dp), tint = ClanStyle.muted)
                     }
@@ -123,14 +133,14 @@ fun PatchClanPage(model: DailyQuestViewModel) {
             contributionWeek.members.forEachIndexed { index, member ->
                 Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp))
                     .background(if (member.isSelf) ClanStyle.soft else ClanStyle.card)
-                    .heightIn(min = 52.dp).padding(horizontal = 8.dp),
+                    .heightIn(min = rowHeight).padding(horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("${index + 1}", Modifier.width(26.dp), fontSize = 16.sp,
                         fontWeight = FontWeight.Bold, color = ClanStyle.ink)
-                    ClanFace(Modifier.size(42.dp))
+                    ClanFace(Modifier.size(46.dp))
                     Spacer(Modifier.width(12.dp))
-                    Text(member.name, Modifier.weight(1f), fontSize = 15.sp, color = ClanStyle.ink)
-                    Text("+${member.cash} C", fontSize = 15.sp, fontWeight = FontWeight.SemiBold,
+                    Text(member.name, Modifier.weight(1f), fontSize = 16.sp, fontWeight = FontWeight.Medium, color = ClanStyle.ink)
+                    Text("+${member.cash} C", fontSize = 16.sp, fontWeight = FontWeight.SemiBold,
                         color = ClanStyle.ink, maxLines = 1)
                 }
             }
@@ -153,6 +163,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
             Icon(Icons.Rounded.ChevronRight, null, Modifier.size(18.dp), tint = ClanStyle.muted)
         }
     }
+    } // viewport
     if (sheet != null) {
         PatchSheet(if (sheet == "invite") "클랜 초대" else "클랜 주간 순위", { sheet = null }) {
             Text("시연용 클랜이에요. 멤버·기여도·순위는 준비된 예시이며 내 캐시에는 반영되지 않아요.",
@@ -191,48 +202,53 @@ fun PatchClanPage(model: DailyQuestViewModel) {
 }
 
 @Composable
-private fun ClanChestPanel(clan: ClanPreview) {
-    BoxWithConstraints(Modifier.fillMaxWidth().heightIn(min = 174.dp).clip(ClanStyle.radius).background(ClanStyle.ink)) {
-        // Empty art slot is intentional: the user deferred the golden chest asset.
-        val artWidth = (maxWidth * .37f).coerceAtMost(142.dp)
-        val textWidth = maxWidth - 30.dp - artWidth
-        Spacer(Modifier.align(Alignment.BottomEnd).padding(end = 8.dp, bottom = 8.dp)
-            .width(artWidth).height(126.dp))
+private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
+    val fontScale = LocalDensity.current.fontScale
+    val panelHeight = (if (compact) 170.dp else 178.dp) * fontScale.coerceAtLeast(1f)
+    BoxWithConstraints(Modifier.fillMaxWidth().heightIn(min = panelHeight)
+        .clip(ClanStyle.radius).background(ClanStyle.ink)) {
+        val artWidth = (maxWidth * .38f).coerceAtMost(148.dp)
+        val textWidth = maxWidth - artWidth - 12.dp
+        val multilineCaption = fontScale > 1.1f || maxWidth < 330.dp
+        val barWidth = (textWidth - 16.dp - 78.dp * fontScale).coerceIn(48.dp, 104.dp)
+        Image(painterResource(R.drawable.box_gold), "이번 주 공동 보상 상자",
+            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 8.dp, bottom = 12.dp)
+                .width(artWidth).height(130.dp), contentScale = ContentScale.Fit)
         Text("${clan.contributorCount}명 기여 중", Modifier.align(Alignment.TopEnd)
             .padding(top = 12.dp, end = 12.dp).clip(RoundedCornerShape(10.dp))
             .background(ClanStyle.lime).padding(horizontal = 10.dp, vertical = 6.dp),
-            fontSize = 12.sp, fontWeight = FontWeight.Bold, color = ClanStyle.ink)
-        Column(Modifier.width(textWidth + 16.dp).padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Bold, color = ClanStyle.ink)
+        Column(Modifier.width(textWidth)
+            .padding(start = 16.dp, top = 16.dp, bottom = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("각자 해내고,\n같이 열자", fontSize = 25.sp, lineHeight = 31.sp,
-                fontWeight = FontWeight.Bold, color = Color.White)
-            Spacer(Modifier.height(6.dp))
-            Text("이번 주 공동 상자", fontSize = 12.sp, color = Color(0xFFDEDEDA))
+                fontWeight = FontWeight.ExtraBold, color = Color.White)
+            Text("이번 주 공동 상자", fontSize = 13.sp, lineHeight = 18.sp, color = Color(0xFFE2E2DE))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 LinearProgressIndicator(progress = { (clan.cash.toFloat() / clan.target).coerceIn(0f, 1f) },
-                    modifier = Modifier.width(100.dp).height(12.dp).clip(CircleShape),
+                    modifier = Modifier.width(barWidth).height(13.dp).clip(CircleShape),
                     color = ClanStyle.yellow, trackColor = Color(0xFF62635F), gapSize = 0.dp,
                     drawStopIndicator = {})
-                Spacer(Modifier.width(6.dp))
-                Text("${clan.cash} / ${clan.target}", fontSize = 11.sp, color = Color.White, maxLines = 1)
+                Spacer(Modifier.width(7.dp))
+                Text("${clan.cash} / ${clan.target}", fontSize = 12.sp, lineHeight = 16.sp,
+                    fontWeight = FontWeight.Medium, color = Color.White, maxLines = 1)
             }
-            Text("보상  3가지 꾸미기 중 1개 선택", fontSize = 10.sp, lineHeight = 17.sp,
-                color = Color(0xFFDEDEDA), maxLines = 1)
+            Text("보상  3가지 꾸미기 중 1개 선택", fontSize = 11.sp, lineHeight = 17.sp,
+                color = Color(0xFFE2E2DE), maxLines = if (multilineCaption) 2 else 1)
         }
     }
 }
 
 @Composable
 private fun ClanFace(modifier: Modifier = Modifier) {
-    Box(modifier.clip(CircleShape).background(ClanStyle.paper), contentAlignment = Alignment.Center) {
-        MascotArt(Modifier.fillMaxSize().padding(3.dp))
-    }
+    Image(painterResource(R.drawable.mascot_face_stamp), "갓생패치 사용자 아바타",
+        modifier = modifier, contentScale = ContentScale.Fit)
 }
 
 @Composable
 private fun ClanHeading(title: String, modifier: Modifier = Modifier) {
     Text(title, modifier.semantics { heading() }, fontSize = 16.sp, lineHeight = 22.sp,
-        fontWeight = FontWeight.Bold, color = ClanStyle.ink)
+        fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
 }
 
 @Composable

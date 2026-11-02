@@ -333,12 +333,7 @@ private fun DmLabel(text: String) {
 
 @Composable
 private fun DmFriendAvatar(name: String, compact: Boolean = false) {
-    Box(Modifier.size(if (compact) 32.dp else 48.dp).clip(CircleShape)
-        .background(PatchTokens.yellow.copy(alpha = .35f)), contentAlignment = Alignment.Center) {
-        Text(name.take(1), color = PatchTokens.ink,
-            style = if (compact) MaterialTheme.typography.labelLarge else MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold)
-    }
+    MascotArt(Modifier.size(if (compact) 32.dp else 48.dp))
 }
 
 @Composable

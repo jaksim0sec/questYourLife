@@ -1,0 +1,9 @@
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <!-- 유저 머리 -->
+    <circle cx="9" cy="7" r="4"></circle>
+    <!-- [수정] 둥글고 통통한 어깨 (부드러운 곡선 처리) -->
+    <path d="M2 21c0-3.3 2.7-6 6-6h2c3.3 0 6 2.7 6 6"></path>
+    <!-- 플러스(+) 기호 (어깨와 겹치지 않게 위치 미세 조정) -->
+    <path d="M17 8h5"></path>
+    <path d="M19.5 5.5v5"></path>
+</svg>

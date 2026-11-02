@@ -35,6 +35,8 @@ def geometry(element):
 def color(value):
     if value == 'none':
         return '#00000000'
+    if value == 'currentColor':
+        return '#111111'  # Android VectorDrawable requires an explicit color.
     if len(value) == 4 and value.startswith('#'):
         return '#' + ''.join(c * 2 for c in value[1:])
     return value
@@ -61,6 +63,6 @@ def compile_icon(source):
 
 if __name__ == '__main__':
     icons = sorted(SOURCE.glob('*.svg'))
-    assert len(icons) == 12, 'Expected supplied 12-icon source pack'
+    assert len(icons) >= 12, 'Missing original 12-icon source pack'
     for icon in icons:
         print(compile_icon(icon).relative_to(ROOT))

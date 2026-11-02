@@ -2,6 +2,8 @@ package com.questyourlife.app.ui.redesign
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -129,8 +131,11 @@ fun PatchMoney(amount: Int, modifier: Modifier = Modifier, compact: Boolean = fa
 /** Native sheet anchors/nested scrolling own all drag, fling and interruption behavior. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> Unit)? = null,
+    initialHeight: androidx.compose.ui.unit.Dp? = null, startExpanded: Boolean = false,
+    content: @Composable ColumnScope.() -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = startExpanded)
+    var useFullHeight by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val close: () -> Unit = {
         scope.launch {
@@ -145,25 +150,46 @@ fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> 
         shape = RoundedCornerShape(topStart = PatchTokens.space24, topEnd = PatchTokens.space24),
         dragHandle = {
             BottomSheetDefaults.DragHandle(
-                modifier = Modifier.clickable(role = Role.Button) {
+                modifier = Modifier.then(if (initialHeight != null) Modifier.pointerInput(initialHeight, useFullHeight) {
+                    var drag = 0f
+                    detectVerticalDragGestures(onDragStart = { drag = 0f }, onVerticalDrag = { change, amount ->
+                        change.consume()
+                        drag += amount
+                    }, onDragEnd = {
+                        val threshold = 28.dp.toPx()
+                        if (drag < -threshold) useFullHeight = true
+                        else if (drag > threshold) {
+                            if (useFullHeight) useFullHeight = false else close()
+                        }
+                    })
+                } else Modifier).clickable(role = Role.Button) {
                     scope.launch {
-                        if (sheetState.currentValue == SheetValue.Expanded && sheetState.hasPartiallyExpandedState)
+                        if (initialHeight != null) useFullHeight = !useFullHeight
+                        else if (sheetState.currentValue == SheetValue.Expanded && sheetState.hasPartiallyExpandedState)
                             sheetState.partialExpand()
                         else sheetState.expand()
                     }
                 }.semantics {
-                    contentDescription = if (sheetState.currentValue == SheetValue.Expanded) "시트 반으로 줄이기" else "시트 전체 펼치기"
+                    contentDescription = if (initialHeight != null) {
+                        if (useFullHeight) "시트 기본 높이로 줄이기" else "시트 전체 펼치기"
+                    } else if (sheetState.currentValue == SheetValue.Expanded) "시트 반으로 줄이기" else "시트 전체 펼치기"
                 }, color = PatchTokens.muted.copy(alpha = .4f))
         }
     ) {
         // Tall measurement ensures both partial and expanded anchors exist, even for short content.
-        BoxWithConstraints(Modifier.fillMaxWidth().fillMaxHeight(.92f).imePadding()) {
+        BoxWithConstraints(Modifier.fillMaxWidth().animateContentSize()
+            .then(if (initialHeight != null && !useFullHeight)
+                Modifier.heightIn(max = initialHeight).fillMaxHeight() else Modifier.fillMaxHeight(.92f))
+            .imePadding()) {
         val density = androidx.compose.ui.platform.LocalDensity.current
         val windowHeight = with(density) { androidx.compose.ui.platform.LocalView.current.rootView.height.toDp() }
         val offset = with(density) { runCatching { sheetState.requireOffset() }.getOrDefault(0f).toDp() }
         val bottomInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-        val visibleHeight = (windowHeight - offset - 48.dp - bottomInset).coerceIn(0.dp, maxHeight)
-        Column(Modifier.fillMaxWidth().then(if (footer != null) Modifier.height(visibleHeight) else Modifier.fillMaxHeight())) {
+        val targetHeight = if (initialHeight != null && !useFullHeight) initialHeight.coerceAtMost(maxHeight) else maxHeight
+        val bodyHeight by androidx.compose.animation.core.animateDpAsState(targetHeight,
+            androidx.compose.animation.core.tween(220), label = "sheet height")
+        val visibleHeight = (windowHeight - offset - 48.dp - bottomInset).coerceIn(0.dp, bodyHeight)
+        Column(Modifier.fillMaxWidth().then(if (footer != null) Modifier.height(visibleHeight) else Modifier.height(bodyHeight))) {
             Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = PatchTokens.ink,

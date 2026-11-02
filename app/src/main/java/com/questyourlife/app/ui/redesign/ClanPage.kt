@@ -172,7 +172,10 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
     }
     } // viewport
     if (sheet != null) {
-        PatchSheet(when (sheet) { "invite" -> "클랜 초대"; "members" -> "우리 클랜의 멤버들"; else -> "클랜 주간 순위" }, { sheet = null }) {
+        PatchSheet(when (sheet) { "invite" -> "클랜 초대"; "members" -> "우리 클랜의 멤버들"; else -> "클랜 주간 순위" }, { sheet = null },
+            initialHeight = if (sheet == "members") (220 + ((clan.members.take(10).size + 4) / 5) * 100).dp else null,
+            startExpanded = sheet == "members",
+            footer = if (sheet == "members") ({ PatchButton("확인", { sheet = null }) }) else null) {
             Text("시연용 클랜이에요. 멤버·기여도·순위는 준비된 예시이며 내 캐시에는 반영되지 않아요.",
                 style = MaterialTheme.typography.bodyMedium)
             if (sheet == "members") {
@@ -188,7 +191,6 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
                         repeat(5 - members.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }
-                PatchButton("확인", { sheet = null })
             } else if (sheet == "invite") {
                 Text("테스트용 초대 코드", style = MaterialTheme.typography.labelLarge)
                 Text("PATCH-DEMO", style = MaterialTheme.typography.titleLarge)

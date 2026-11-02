@@ -24,11 +24,13 @@ import com.questyourlife.app.ui.DressedAvatar
 
 @Composable
 fun PatchHeaderActions(onNotifications: () -> Unit, onMenu: () -> Unit) {
+    Row(Modifier.width(96.dp), horizontalArrangement = Arrangement.End) {
     IconButton(onClick = onNotifications) {
         Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = PatchTokens.ink)
     }
     IconButton(onClick = onMenu) {
         Icon(painterResource(R.drawable.ic_patch_header_more), "더보기", tint = PatchTokens.ink)
+    }
     }
 }
 

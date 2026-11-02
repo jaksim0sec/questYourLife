@@ -184,16 +184,16 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
 
     Column(Modifier.fillMaxSize().imePadding()) {
         Row(
-            Modifier.fillMaxWidth().padding(start = 4.dp, end = 20.dp, top = 8.dp, bottom = 8.dp),
+            Modifier.fillMaxWidth().padding(start = 4.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "대화 목록으로",
                     tint = PatchTokens.ink)
             }
             if (mascot) MascotArt(Modifier.size(36.dp)) else DmFriendAvatar(name, compact = true, onProfile = onProfile)
-            Text(name, modifier = Modifier.weight(1f).semantics { heading() },
+            Text(name, modifier = Modifier.weight(1f).padding(start = 8.dp).semantics { heading() },
                 style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
                 color = PatchTokens.ink, maxLines = 1, overflow = TextOverflow.Ellipsis)
             PatchHeaderActions(onNotifications, onMenu)
@@ -244,38 +244,30 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
             }
         }
         HorizontalDivider(color = PatchTokens.line)
-        Row(
-            Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            OutlinedTextField(
-                value = draft,
-                onValueChange = { draft = it.take(2000) },
-                modifier = Modifier.weight(1f).animateContentSize().heightIn(min = 48.dp),
-                placeholder = { Text(if (mascot) "목표나 고민을 말해 주세요" else "메시지 보내기") },
-                minLines = 1,
-                maxLines = 3,
-                shape = RoundedCornerShape(24.dp),
-                textStyle = MaterialTheme.typography.bodyMedium,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
-                keyboardActions = KeyboardActions(onSend = { send() }),
-                colors = dmFieldColors(),
-                trailingIcon = if (draft.isNotBlank()) ({ FilledIconButton(
-                onClick = send,
-                enabled = canSend,
-                modifier = Modifier.size(48.dp),
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = PatchTokens.red,
-                    contentColor = PatchTokens.surface,
-                    disabledContainerColor = PatchTokens.line,
-                    disabledContentColor = PatchTokens.muted
-                )
-            ) {
-                Icon(Icons.AutoMirrored.Rounded.Send, contentDescription = "메시지 보내기",
-                    modifier = Modifier.size(21.dp))
-            } }) else null
-            )
+        Surface(Modifier.fillMaxWidth(), color = PatchTokens.background) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp)
+                .background(PatchTokens.surface, RoundedCornerShape(26.dp))
+                .padding(start = 16.dp, end = 6.dp, top = 4.dp, bottom = 4.dp),
+                verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                androidx.compose.foundation.text.BasicTextField(
+                    value = draft, onValueChange = { draft = it.take(2000) },
+                    modifier = Modifier.weight(1f).animateContentSize().heightIn(min = 40.dp)
+                        .padding(vertical = 10.dp),
+                    maxLines = 3, textStyle = MaterialTheme.typography.bodyMedium.copy(color = PatchTokens.ink),
+                    cursorBrush = androidx.compose.ui.graphics.SolidColor(PatchTokens.red),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                    keyboardActions = KeyboardActions(onSend = { send() }),
+                    decorationBox = { input ->
+                        Box { if (draft.isEmpty()) Text("메시지 입력", style = MaterialTheme.typography.bodyMedium,
+                            color = PatchTokens.muted); input() }
+                    })
+                IconButton(onClick = send, enabled = canSend,
+                    modifier = Modifier.size(40.dp).background(
+                        if (canSend) PatchTokens.red else PatchTokens.soft, CircleShape)) {
+                    Icon(Icons.AutoMirrored.Rounded.Send, "메시지 보내기", Modifier.size(20.dp),
+                        tint = if (canSend) PatchTokens.surface else PatchTokens.muted)
+                }
+            }
         }
     }
 }

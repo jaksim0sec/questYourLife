@@ -115,12 +115,6 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
         }
     }}
     fun clearReward(){lastReward.value=null}
-    fun buyItem(id:Int,price:Int){viewModelScope.launch {
-        if(withContext(Dispatchers.IO){goalRepo.buy(id,price)}) {
-            goalRepo.equipped=id
-            equipped.intValue=id
-        }
-    }}
     val cosmeticBusy = mutableStateOf(false)
     val cosmeticMessage = mutableStateOf<String?>(null)
     fun chooseCosmetic(id: Int) {
@@ -153,11 +147,6 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun equipItem(id:Int){
-        if(id!=0 && ownedItems.value.none{it.itemId==id}) return
-        goalRepo.equipped=id
-        equipped.intValue=id
-    }
     fun finishFocus(seconds:Int){viewModelScope.launch(Dispatchers.IO){goalRepo.recordFocus(seconds)}}
     fun setTime(h:Int,m:Int){
         DailyQuestScheduler.setTime(app,h,m);hour.intValue=h;minute.intValue=m

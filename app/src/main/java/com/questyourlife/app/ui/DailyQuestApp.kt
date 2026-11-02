@@ -104,7 +104,6 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val goals by model.goals.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
     val coins by model.coins.collectAsStateWithLifecycle()
-    val owned by model.ownedItems.collectAsStateWithLifecycle()
     val sessions by model.sessions.collectAsStateWithLifecycle()
     var screen by rememberSaveable { mutableStateOf("home") }
     var returnTab by rememberSaveable { mutableStateOf("home") }

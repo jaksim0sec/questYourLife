@@ -102,21 +102,3 @@ fun ChestArt(modifier: Modifier = Modifier) {
             cornerRadius=androidx.compose.ui.geometry.CornerRadius(w*.04f))
     }
 }
-
-@Composable
-fun HatArt(color: Color, modifier: Modifier = Modifier) {
-    Canvas(modifier) {
-        val w=size.width;val h=size.height
-        val dome=Path().apply {
-            moveTo(w*.20f,h*.63f)
-            cubicTo(w*.23f,h*.21f,w*.64f,h*.17f,w*.78f,h*.60f)
-            close()
-        }
-        drawPath(dome, Brush.verticalGradient(listOf(color.copy(alpha=.83f),color)))
-        drawOval(Color(0xFF33302E),topLeft=Offset(w*.09f,h*.57f),size=Size(w*.82f,h*.23f))
-        drawOval(color,topLeft=Offset(w*.14f,h*.58f),size=Size(w*.72f,h*.13f))
-        drawLine(Color.White.copy(alpha=.5f),Offset(w*.33f,h*.39f),
-            Offset(w*.49f,h*.32f),w*.033f,cap=StrokeCap.Round)
-        drawCircle(Color(0xFFF4D4A8),radius=w*.048f,center=Offset(w*.55f,h*.48f))
-    }
-}

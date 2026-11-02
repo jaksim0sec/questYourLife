@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import com.questyourlife.app.companion.ClanPreview
 import com.questyourlife.app.ui.DailyQuestViewModel
 import com.questyourlife.app.R
+import com.questyourlife.app.ui.DressedAvatar
+import com.questyourlife.app.ui.CosmeticArtwork
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -143,7 +145,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("${index + 1}", Modifier.width(26.dp), fontSize = 16.sp,
                         fontWeight = FontWeight.Bold, color = ClanStyle.ink)
-                    ClanFace(Modifier.size(46.dp))
+                    ClanFace(Modifier.size(46.dp), member.name)
                     Spacer(Modifier.width(12.dp))
                     Text(member.name, Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
                     Text("+${member.cash} C", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold,
@@ -279,8 +281,8 @@ private fun ClanProgressLabel(clan: ClanPreview) {
 
 @Composable
 private fun ClanFace(modifier: Modifier = Modifier, name: String? = null) {
-    Image(painterResource(R.drawable.mascot_face_stamp), name?.let { "${it}의 아바타" } ?: "갓생패치 사용자 아바타",
-        modifier = modifier, contentScale = ContentScale.Fit)
+    DressedAvatar(CosmeticArtwork.demoItem(name.orEmpty()), modifier,
+        name?.let { "${it}의 시연 아바타" } ?: "시연 아바타")
 }
 
 @Composable

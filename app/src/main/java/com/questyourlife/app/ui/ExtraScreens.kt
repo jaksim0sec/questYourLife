@@ -29,7 +29,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -164,71 +163,6 @@ fun CompletionPanel(title:String,reward:Int,onClose:()->Unit,onNext:()->Unit) {
         RedButton("보상 받고 다음 퀘스트 보기",onClick=onNext,
             modifier=Modifier.fillMaxWidth())
         TextButton(onClick=onClose) { Text("닫기",fontSize=12.sp,color=TextGray) }
-    }
-}
-
-private val HatColors=listOf(
-    Color(0xFF303033),Color(0xFFF1CB81),Color(0xFF447CC6),
-    Color(0xFF8864B6),Color(0xFF668A7C),Color(0xFF666D74)
-)
-private val HatPrices=listOf(0,50,80,100,120,150)
-
-@Composable
-fun DecorPanel(coins:Int,owned:List<OwnedItemEntity>,equipped:Int,
-    onBuy:(Int,Int)->Unit,onEquip:(Int)->Unit
-) {
-    var category by remember { mutableIntStateOf(0) }
-    Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        ScreenHeading("꾸미기",action={CashBadge(coins)})
-        Box(Modifier.fillMaxWidth().height(175.dp),contentAlignment=Alignment.Center) {
-            MascotArt(Modifier.size(174.dp))
-            HatArt(HatColors[equipped.coerceIn(0,5)],
-                modifier=Modifier.size(87.dp).offset(x=(-11).dp,y=(-51).dp).rotate(-10f))
-        }
-        SegmentedTabs(listOf("모자","옷","소품","배경"),category,{category=it})
-        if(category==0) {
-            (0..8).toList().chunked(3).forEach { indexes ->
-                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(9.dp)) {
-                    indexes.forEach { index ->
-                        val unlocked=index<=5
-                        val mine=index==0 || owned.any{it.itemId==index}
-                        val worn=index==equipped
-                        val price=HatPrices.getOrElse(index){0}
-                        Column(
-                            Modifier.weight(1f).height(120.dp)
-                                .clip(RoundedCornerShape(17.dp))
-                                .background(CardWhite)
-                                .border(if(worn) 1.5.dp else .7.dp,
-                                    if(worn) AccentRed else WarmLine,RoundedCornerShape(17.dp))
-                                .clickable(enabled=unlocked) {
-                                    if(mine) onEquip(index) else onBuy(index,price)
-                                }.padding(8.dp),
-                            verticalArrangement=Arrangement.SpaceBetween,
-                            horizontalAlignment=Alignment.CenterHorizontally
-                        ) {
-                            Box(Modifier.fillMaxWidth().height(73.dp),
-                                contentAlignment=Alignment.Center) {
-                                if(unlocked) HatArt(HatColors[index],Modifier.size(74.dp))
-                                else Text("?",fontSize=39.sp,fontWeight=FontWeight.Black,
-                                    color=WarmLine)
-                            }
-                            Text(when {
-                                !unlocked->"잠김"
-                                worn->"착용 중"
-                                mine->"착용하기"
-                                else->"${price} C"
-                            },fontSize=11.sp,color=if(worn) AccentRed else TextGray,
-                                fontWeight=if(worn) FontWeight.Bold else FontWeight.Medium)
-                        }
-                    }
-                }
-            }
-        } else WhitePanel {
-            Text("아직 준비 중인 꾸미기 항목이야",fontWeight=FontWeight.Bold,
-                color=TextInk,fontSize=13.sp)
-            Spacer(Modifier.height(5.dp))
-            Text("현재는 모자만 구매하고 착용할 수 있어.",color=TextGray,fontSize=11.sp)
-        }
     }
 }
 

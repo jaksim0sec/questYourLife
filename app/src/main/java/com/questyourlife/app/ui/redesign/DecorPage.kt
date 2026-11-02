@@ -54,7 +54,8 @@ import com.questyourlife.app.cosmetics.CosmeticCatalog
 import com.questyourlife.app.cosmetics.CosmeticCategory
 import com.questyourlife.app.cosmetics.CosmeticItem
 import com.questyourlife.app.ui.DailyQuestViewModel
-import com.questyourlife.app.ui.MascotArt
+import com.questyourlife.app.ui.DressedAvatar
+import com.questyourlife.app.ui.CosmeticImage
 
 private enum class DecorTab(val label: String) {
     RECOMMENDED("추천"), HATS("모자"), ACCESSORIES("소품"), OWNED("보관함")
@@ -97,7 +98,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
                 .padding(horizontal = PatchTokens.space16)
                 .padding(bottom = PatchTokens.space8)
         ) {
-            DecorAppearancePreview()
+            DecorAppearancePreview(equipped)
             DecorTabs(tab) { tab = it }
             Spacer(Modifier.height(PatchTokens.space12))
             DecorClanReward { showClanReward = true }
@@ -155,13 +156,13 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     }
     if (showAppearance) {
         PatchSheet("착용 모습", onDismiss = { showAppearance = false }) {
-            DecorAppearancePreview()
+            DecorAppearancePreview(equipped)
             equippedItem?.let {
                 Text(it.name, style = MaterialTheme.typography.titleMedium, color = PatchTokens.ink)
                 Text("착용 중", style = MaterialTheme.typography.labelLarge, color = PatchTokens.red)
             }
             Text(
-                "꾸미기 이미지는 준비 중이에요. 저장한 착용 정보는 그대로 유지돼요.",
+                "선택한 꾸미기가 프로필에 적용돼요.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = PatchTokens.muted
             )
@@ -169,8 +170,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     }
     if (showClanReward) {
         PatchSheet("이번 주 클랜 보상", onDismiss = { showClanReward = false }) {
-            Box(Modifier.fillMaxWidth().height(144.dp).clip(RoundedCornerShape(PatchTokens.space12))
-                .background(PatchTokens.soft))
+            CosmeticImage(2, Modifier.fillMaxWidth().height(144.dp))
             Text("함께 열어서 받는 꾸미기", style = MaterialTheme.typography.titleMedium,
                 color = PatchTokens.ink)
             Text("클랜은 데모 화면이에요. 실제 보상 받기는 준비 중이에요.",
@@ -205,17 +205,15 @@ private fun DecorHeader(coins: Int, onBack: () -> Unit) {
 }
 
 @Composable
-private fun DecorAppearancePreview() {
+private fun DecorAppearancePreview(itemId: Int) {
     BoxWithConstraints(
         Modifier.fillMaxWidth().aspectRatio(1.72f)
             .clip(RoundedCornerShape(PatchTokens.space16)).background(PatchTokens.soft)
-            .semantics { contentDescription = "꾸미기 이미지 준비 중인 기본 도장 얼굴 미리보기" },
+            .semantics { contentDescription = "현재 착용 아바타" },
         contentAlignment = Alignment.BottomCenter
     ) {
         val faceSize = minOf(maxWidth * .52f, 192.dp)
-        // This reserved region stays empty until the actual cosmetic art exists.
-        Box(Modifier.align(Alignment.TopCenter).width(faceSize).height(PatchTokens.space32))
-        MascotArt(Modifier.padding(bottom = PatchTokens.space12).size(faceSize))
+        DressedAvatar(itemId, Modifier.padding(bottom = PatchTokens.space12).size(faceSize))
     }
 }
 
@@ -259,8 +257,7 @@ private fun DecorClanReward(onClick: () -> Unit) {
             Text("함께 열어서 받는 꾸미기 · 데모", style = MaterialTheme.typography.bodySmall,
                 color = PatchTokens.ink)
         }
-        // Deliberately blank: the reward hat illustration has not been supplied.
-        Box(Modifier.width(80.dp).height(64.dp))
+        CosmeticImage(2, Modifier.width(80.dp).height(64.dp))
         Icon(painterResource(R.drawable.ic_patch_chevron_right), null,
             Modifier.size(20.dp), tint = PatchTokens.ink)
     }
@@ -290,6 +287,7 @@ private fun DecorItemTile(
         Box(
             Modifier.fillMaxWidth().aspectRatio(1.58f).background(PatchTokens.soft)
         ) {
+            CosmeticImage(item.id, Modifier.fillMaxSize().padding(PatchTokens.space8))
             if (equipped) {
                 Text("착용 중", style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold, color = PatchTokens.surface,
@@ -330,7 +328,9 @@ private fun DecorItemSheet(
     val affordable = owned || item.price <= coins
     PatchSheet(item.name, onDismiss = onDismiss) {
         Box(Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(PatchTokens.space12))
-            .background(PatchTokens.soft))
+            .background(PatchTokens.soft), contentAlignment = Alignment.Center) {
+            DressedAvatar(item.id, Modifier.size(156.dp))
+        }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(if (owned) "보유한 꾸미기" else "구매 가격",
                 style = MaterialTheme.typography.bodyMedium, color = PatchTokens.muted,
@@ -341,7 +341,7 @@ private fun DecorItemSheet(
                     color = if (equipped) PatchTokens.red else PatchTokens.ink)
             } else PatchMoney(item.price)
         }
-        Text("꾸미기 이미지는 준비 중이에요. 현재 미리보기에는 기본 얼굴이 보여요.",
+        Text("구매한 꾸미기는 보관함에서 다시 착용할 수 있어요.",
             style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
         if (!owned) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {

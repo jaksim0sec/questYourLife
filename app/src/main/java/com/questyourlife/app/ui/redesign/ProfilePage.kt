@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.questyourlife.app.R
 import com.questyourlife.app.ui.DailyQuestViewModel
-import com.questyourlife.app.ui.MascotArt
+import com.questyourlife.app.ui.DressedAvatar
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -127,7 +127,7 @@ fun PatchProfilePage(
             .padding(top = PatchTokens.space4, bottom = PatchTokens.space12),
         verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
     ) {
-        ProfileHero(model.demoClan.name, onDecor)
+        ProfileHero(model.demoClan.name, model.equipped.intValue, onDecor)
 
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             val stacked = maxWidth < 300.dp || LocalDensity.current.fontScale > 1.3f ||
@@ -235,20 +235,20 @@ fun PatchProfilePage(
 }
 
 @Composable
-private fun ProfileHero(clanName: String, onDecor: () -> Unit) {
+private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val availableWidth = maxWidth
         val stacked = availableWidth < 300.dp || LocalDensity.current.fontScale > 1.4f
         if (stacked) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                ProfileAvatar(Modifier.width(160.dp))
+                ProfileAvatar(itemId, Modifier.width(160.dp))
                 ProfileIdentity(clanName, onDecor, Modifier.fillMaxWidth())
             }
         } else {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
-                ProfileAvatar(Modifier.width((availableWidth * .48f).coerceAtMost(176.dp)))
+                ProfileAvatar(itemId, Modifier.width((availableWidth * .48f).coerceAtMost(176.dp)))
                 ProfileIdentity(clanName, onDecor, Modifier.weight(1f))
             }
         }
@@ -256,10 +256,9 @@ private fun ProfileHero(clanName: String, onDecor: () -> Unit) {
 }
 
 @Composable
-private fun ProfileAvatar(modifier: Modifier) {
+private fun ProfileAvatar(itemId: Int, modifier: Modifier) {
     Box(modifier.height(144.dp), contentAlignment = Alignment.BottomCenter) {
-        // The upper space is reserved for future supplied hat art; the face stays bare.
-        MascotArt(Modifier.fillMaxWidth().height(120.dp))
+        DressedAvatar(itemId, Modifier.fillMaxWidth().height(144.dp), "내 착용 아바타")
     }
 }
 

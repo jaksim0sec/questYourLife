@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.questyourlife.app.data.CompanionMessageEntity
 import com.questyourlife.app.ui.DailyQuestViewModel
+import com.questyourlife.app.ui.DressedAvatar
+import com.questyourlife.app.ui.CosmeticArtwork
 import com.questyourlife.app.ui.MascotArt
 import java.time.Instant
 import java.time.ZoneId
@@ -333,7 +335,7 @@ private fun DmLabel(text: String) {
 
 @Composable
 private fun DmFriendAvatar(name: String, compact: Boolean = false) {
-    MascotArt(Modifier.size(if (compact) 32.dp else 48.dp))
+    DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(if (compact) 32.dp else 48.dp), "${name}의 시연 아바타")
 }
 
 @Composable

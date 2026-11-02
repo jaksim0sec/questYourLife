@@ -115,7 +115,7 @@ fun PatchHomePage(
                     Text("패치와 목표를 작게 나눠 봐요", style = MaterialTheme.typography.bodySmall,
                         color = PatchTokens.muted)
                 }
-                TextButton(onClick = onCompanion) { Text("DM 열기", color = PatchTokens.red) }
+                TextButton(onClick = onCompanion) { Text("쪽지 열기", color = PatchTokens.red) }
             }
         }
         item {

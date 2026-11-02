@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -102,7 +103,11 @@ fun PatchClanPage(model: DailyQuestViewModel) {
             .clickable(role = Role.Button, onClickLabel = "클랜 멤버 전체 보기") { sheet = "members" }
             .padding(horizontal = 14.dp, vertical = if (compact) 10.dp else 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ClanHeading("우리 클랜의 멤버들")
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                ClanHeading("우리 클랜의 멤버들", Modifier.weight(1f))
+                Text("${clan.memberCount}명", color = ClanStyle.muted,
+                    fontSize = 12.sp, fontWeight = FontWeight.Medium)
+            }
             BoxWithConstraints(Modifier.fillMaxWidth()) {
                 val faceSize = minOf(if (compact) 64.dp else 68.dp,
                     ((maxWidth - 18.dp) / 4).coerceAtLeast(0.dp))
@@ -261,10 +266,14 @@ private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
 
 @Composable
 private fun ClanProgress(clan: ClanPreview, modifier: Modifier = Modifier) {
-    LinearProgressIndicator(progress = { (clan.cash.toFloat() / clan.target).coerceIn(0f, 1f) },
-        modifier = modifier.height(13.dp).clip(CircleShape),
-        color = ClanStyle.yellow, trackColor = Color(0xFF62635F), gapSize = 0.dp,
-        drawStopIndicator = {})
+    val fraction by androidx.compose.animation.core.animateFloatAsState(
+        if (clan.target > 0) (clan.cash.toFloat() / clan.target).coerceIn(0f, 1f) else 0f,
+        androidx.compose.animation.core.tween(260), label = "clan progress")
+    Box(modifier.height(12.dp).clip(CircleShape).background(Color(0xFF62635F))
+        .semantics { progressBarRangeInfo = androidx.compose.ui.semantics.ProgressBarRangeInfo(fraction, 0f..1f) }) {
+        if (fraction > 0f) Box(Modifier.fillMaxHeight().fillMaxWidth(fraction)
+            .clip(CircleShape).background(ClanStyle.yellow))
+    }
 }
 
 @Composable

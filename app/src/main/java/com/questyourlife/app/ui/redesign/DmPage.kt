@@ -1,6 +1,6 @@
 package com.questyourlife.app.ui.redesign
 
-import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -43,18 +43,20 @@ import java.util.Locale
 
 /** Both the assistant and the demo conversations are stored by the local repository. */
 @Composable
-fun PatchDmPage(model: DailyQuestViewModel) {
-    val threadId by model.activeThread.collectAsStateWithLifecycle()
-    BackHandler(enabled = threadId.isNotEmpty()) { model.openThread("") }
-    if (threadId.isEmpty()) {
-        DmConversations(model)
-    } else {
-        DmConversation(model, threadId)
-    }
+fun PatchDmPage(model: DailyQuestViewModel, onOpenThread: (String) -> Unit) {
+    DmConversations(model, onOpenThread)
 }
 
 @Composable
-private fun DmConversations(model: DailyQuestViewModel) {
+fun PatchThreadPage(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit) {
+    LaunchedEffect(threadId) {
+        if (model.activeThread.value != threadId) model.openThread(threadId)
+    }
+    DmConversation(model, threadId, onBack)
+}
+
+@Composable
+private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -> Unit) {
     var search by rememberSaveable { mutableStateOf("") }
     val query = search.trim()
     val contacts = model.contacts.filter {
@@ -71,7 +73,7 @@ private fun DmConversations(model: DailyQuestViewModel) {
                 value = search,
                 onValueChange = { search = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("대화 검색") },
+                placeholder = { Text("검색해보세요") },
                 leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
                 trailingIcon = if (search.isNotEmpty()) {
                     { IconButton(onClick = { search = "" }) {
@@ -85,13 +87,12 @@ private fun DmConversations(model: DailyQuestViewModel) {
         }
         item {
             Spacer(Modifier.height(12.dp))
-            PatchSection("대화")
         }
         item(key = "pinned-mascot") {
-            PatchSurface {
+            Column {
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-                        .clickable { model.openThread("mascot") }
+                        .clickable { onOpenThread("mascot") }
                         .padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -120,7 +121,7 @@ private fun DmConversations(model: DailyQuestViewModel) {
         items(contacts, key = { it.id }) { contact ->
             Row(
                 Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-                    .clickable { model.openThread(contact.id) }
+                    .clickable { onOpenThread(contact.id) }
                     .padding(vertical = 14.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp)
@@ -152,7 +153,7 @@ private fun DmConversations(model: DailyQuestViewModel) {
 }
 
 @Composable
-private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
+private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit) {
     val allMessages by model.chatMessages.collectAsStateWithLifecycle()
     val busy by model.chatBusy.collectAsStateWithLifecycle()
     val messages = allMessages.filter { it.threadId == threadId }
@@ -176,11 +177,11 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
 
     Column(Modifier.fillMaxSize().imePadding()) {
         Row(
-            Modifier.fillMaxWidth().padding(start = 4.dp, end = 20.dp, bottom = 8.dp),
+            Modifier.fillMaxWidth().padding(start = 4.dp, end = 20.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            IconButton(onClick = { model.openThread("") }) {
+            IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "대화 목록으로",
                     tint = PatchTokens.ink)
             }
@@ -214,7 +215,9 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
                 }
             }
             items(messages, key = { it.id }) { message ->
-                DmMessage(message, mascot, name, busy) { model.applyChatPlan(message.id) }
+                Box(Modifier.animateItem()) {
+                    DmMessage(message, mascot, name, busy) { model.applyChatPlan(message.id) }
+                }
             }
             if (busy) {
                 item(key = "busy") {
@@ -242,7 +245,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
             OutlinedTextField(
                 value = draft,
                 onValueChange = { draft = it.take(2000) },
-                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                modifier = Modifier.weight(1f).animateContentSize().heightIn(min = 48.dp),
                 placeholder = { Text(if (mascot) "목표나 고민을 말해 주세요" else "메시지 보내기") },
                 minLines = 1,
                 maxLines = 3,
@@ -250,9 +253,8 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
                 textStyle = MaterialTheme.typography.bodyMedium,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { send() }),
-                colors = dmFieldColors()
-            )
-            FilledIconButton(
+                colors = dmFieldColors(),
+                trailingIcon = if (draft.isNotBlank()) ({ FilledIconButton(
                 onClick = send,
                 enabled = canSend,
                 modifier = Modifier.size(48.dp),
@@ -265,7 +267,8 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String) {
             ) {
                 Icon(Icons.AutoMirrored.Rounded.Send, contentDescription = "메시지 보내기",
                     modifier = Modifier.size(21.dp))
-            }
+            } }) else null
+            )
         }
     }
 }
@@ -288,6 +291,8 @@ private fun DmMessage(
         Column(Modifier.widthIn(max = 320.dp).fillMaxWidth(.86f),
             horizontalAlignment = if (message.fromUser) Alignment.End else Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            if (!message.fromUser) Text(name, style = MaterialTheme.typography.labelMedium,
+                color = PatchTokens.muted, fontWeight = FontWeight.SemiBold)
             Surface(
                 shape = RoundedCornerShape(18.dp),
                 color = if (message.fromUser) PatchTokens.line.copy(alpha = .55f) else PatchTokens.surface,

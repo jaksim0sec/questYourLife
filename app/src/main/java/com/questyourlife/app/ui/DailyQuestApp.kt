@@ -1,6 +1,9 @@
 package com.questyourlife.app.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.*
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -36,7 +39,7 @@ private data class PatchTab(
 private val patchTabs = listOf(
     PatchTab("home", "홈", R.drawable.ic_patch_nav_active_home, R.drawable.ic_patch_nav_inactive_home),
     PatchTab("quests", "퀘스트", R.drawable.ic_patch_nav_active_quest, R.drawable.ic_patch_nav_inactive_quest),
-    PatchTab("dm", "DM", R.drawable.ic_patch_nav_active_dm, R.drawable.ic_patch_nav_inactive_dm),
+    PatchTab("dm", "쪽지", R.drawable.ic_patch_nav_active_dm, R.drawable.ic_patch_nav_inactive_dm),
     PatchTab("clan", "클랜", R.drawable.ic_patch_nav_active_clan, R.drawable.ic_patch_nav_inactive_clan),
     PatchTab("my", "마이", R.drawable.ic_patch_nav_active_my, R.drawable.ic_patch_nav_inactive_my)
 )
@@ -57,8 +60,14 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
-                    Icon(painterResource(if (isSelected) tab.activeIcon else tab.inactiveIcon),
-                        null, tint = Color.Unspecified, modifier = Modifier.size(25.dp).alpha(if (isSelected) 1f else 0.55f))
+                    val iconScale by animateFloatAsState(if (isSelected) 1.06f else 1f,
+                        tween(180), label = "tab scale")
+                    Crossfade(isSelected, animationSpec = tween(160), label = "tab icon") { selected ->
+                        Icon(painterResource(if (selected) tab.activeIcon else tab.inactiveIcon),
+                            null, tint = Color.Unspecified, modifier = Modifier.size(25.dp)
+                                .graphicsLayer { scaleX = iconScale; scaleY = iconScale }
+                                .alpha(if (selected) 1f else 0.55f))
+                    }
                     Text(tab.title, color = tint, fontSize = 11.sp, lineHeight = 15.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.SemiBold)
                 }
@@ -69,18 +78,24 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
 }
 
 @Composable
-private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -> Unit) {
+private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -> Unit, onCompose: (() -> Unit)? = null) {
     Column(Modifier.background(PatchTokens.background).statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().heightIn(min = 60.dp)
             .padding(start = PatchTokens.space20, end = PatchTokens.space8),
             verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black,
                 color = PatchTokens.ink, modifier = Modifier.weight(1f))
-            IconButton(onClick = onNotifications) {
-                Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = Color.Unspecified)
-            }
-            IconButton(onClick = onMenu) {
-                Icon(painterResource(R.drawable.ic_patch_header_more), "메뉴", tint = Color.Unspecified)
+            if (onCompose != null) {
+                IconButton(onClick = onCompose) {
+                    Icon(painterResource(R.drawable.ic_patch_plus), "새 쪽지", tint = PatchTokens.ink)
+                }
+            } else {
+                IconButton(onClick = onNotifications) {
+                    Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = Color.Unspecified)
+                }
+                IconButton(onClick = onMenu) {
+                    Icon(painterResource(R.drawable.ic_patch_header_more), "메뉴", tint = Color.Unspecified)
+                }
             }
         }
     }
@@ -108,6 +123,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var screen by rememberSaveable { mutableStateOf("home") }
     var returnTab by rememberSaveable { mutableStateOf("home") }
     var focusReturn by rememberSaveable { mutableStateOf("home") }
+    var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedDailyId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -123,16 +139,19 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     }
     val back: () -> Unit = {
         screen = when (screen) {
+            "thread" -> "dm"
             "detail" -> "quests"
             "focus" -> focusReturn
             "create", "legacyQuests" -> "quests"
             else -> returnTab
         }
     }
-    val openCompanion: () -> Unit = {
-        model.openThread("mascot")
-        navigate("dm")
+    val openThread: (String) -> Unit = { id ->
+        selectedThreadId = id
+        model.openThread(id)
+        navigate("thread")
     }
+    val openCompanion: () -> Unit = { openThread("mascot") }
     BackHandler(enabled = !topTab && reward == null && sheet == null) { back() }
 
     PatchTheme {
@@ -141,7 +160,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
             contentWindowInsets = WindowInsets.safeDrawing,
             topBar = { if (topTab) PatchTopBar(
                 patchTabs.first { it.route == screen }.title,
-                onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" }) },
+                onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" },
+                onCompose = if (screen == "dm") ({ sheet = "recipients" }) else null) },
             bottomBar = { if (topTab) PatchBottomNav(screen) {
                 screen = it
                 selectedDailyId = null
@@ -149,12 +169,17 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
             } }
         ) { padding ->
             Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
-                when (screen) {
+                AnimatedContent(screen, modifier = Modifier.fillMaxSize(), transitionSpec = {
+                    (fadeIn(tween(200)) + slideInHorizontally(tween(220)) { it / 16 }) togetherWith
+                        fadeOut(tween(100))
+                }, label = "page transition") { page ->
+                when (page) {
                     "home" -> PatchHomePage(model,
                         onDaily = { selectedDailyId = it.id; sheet = "daily" },
                         onQuests = { navigate("quests") }, onClan = { navigate("clan") },
                         onCompanion = openCompanion)
-                    "dm" -> PatchDmPage(model)
+                    "dm" -> PatchDmPage(model, onOpenThread = openThread)
+                    "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back)
                     "clan" -> PatchClanPage(model)
                     "decor" -> PatchDecorPage(model, onBack = back)
                     "my" -> PatchProfilePage(model,
@@ -165,11 +190,11 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                             top = PatchTokens.space8, bottom = PatchTokens.space24),
                         verticalArrangement = Arrangement.spacedBy(PatchTokens.space16)) {
                         item {
-                            when (screen) {
+                            when (page) {
                                 "quests", "legacyQuests" -> QuestListPanel(coins, goals, steps, daily,
                                     onGoal = { goalId = it; navigate("detail") },
                                     onDaily = { navigate("daily") }, onCreate = { navigate("create") },
-                                    showHeading = screen == "legacyQuests")
+                                    showHeading = page == "legacyQuests")
                                 "detail" -> {
                                     val goal = goals.firstOrNull { it.id == goalId }
                                     if (goal != null) GoalDetailPanel(goal, steps.filter { it.goalId == goalId },
@@ -199,7 +224,14 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 }
             }
         }
+        }
 
+        if (sheet == "recipients") PatchSheet("새 쪽지", onDismiss = { sheet = null }) {
+            model.contacts.forEach { contact ->
+                TextButton(onClick = { openThread(contact.id) },
+                    modifier = Modifier.fillMaxWidth()) { Text(contact.name) }
+            }
+        }
         if (reward != null) {
             PatchSheet("퀘스트 완료", onDismiss = model::clearReward) {
                 Row(verticalAlignment = Alignment.CenterVertically,

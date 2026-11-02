@@ -1,5 +1,7 @@
 package com.questyourlife.app.ui.redesign
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -205,7 +207,9 @@ private fun DecorAppearancePreview(itemId: Int) {
         contentAlignment = Alignment.BottomCenter
     ) {
         val faceSize = minOf(maxWidth * .42f, 152.dp)
-        DressedAvatar(itemId, Modifier.padding(bottom = PatchTokens.space12).size(faceSize))
+        Crossfade(itemId, animationSpec = tween(180), label = "outfit preview") { id ->
+            DressedAvatar(id, Modifier.padding(bottom = PatchTokens.space12).size(faceSize))
+        }
     }
 }
 

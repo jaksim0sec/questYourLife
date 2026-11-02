@@ -1,5 +1,6 @@
 package com.questyourlife.app.ui.redesign
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -107,14 +108,14 @@ fun PatchButton(text: String, onClick: () -> Unit, enabled: Boolean = true) {
 /** Flat panel used by the new reference pages; content owns its structure. */
 @Composable
 fun PatchPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
-    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White)
+    Column(modifier.fillMaxWidth().animateContentSize().clip(RoundedCornerShape(16.dp)).background(Color.White)
         .padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
 }
 
 @Composable
 fun PatchMoney(amount: Int, modifier: Modifier = Modifier, compact: Boolean = false) {
     val formatted = remember(amount) { NumberFormat.getIntegerInstance(Locale.KOREA).format(amount) }
-    Row(modifier, verticalAlignment = Alignment.CenterVertically,
+    Row(modifier.animateContentSize(), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         Box(Modifier.size(if (compact) 18.dp else 22.dp).clip(CircleShape).background(Color(0xFFFFE5A0)),
             contentAlignment = Alignment.Center) {

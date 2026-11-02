@@ -15,7 +15,7 @@ class AvatarCompositionTest {
         assertEquals(.87f, blue.width, .00001f)
         val cap = AvatarComposer.compose(1).layers.last()
         val alternate = AvatarComposer.compose(1, alternateCreamCap = true).layers.last()
-        assertEquals(-1f / 100f, alternate.x - cap.x, .00001f)
+        assertEquals(-1f / 200f, alternate.x - cap.x, .00001f)
         assertEquals(cap.y, alternate.y, .00001f)
         assertEquals(cap.width, alternate.width, .00001f)
         assertEquals(.81f * 1.02f, AvatarComposer.compose(0).layers.last().width, .00001f)
@@ -41,8 +41,8 @@ class AvatarCompositionTest {
             val layer = layers.last()
             assertEquals(c.w * c.scale, layer.width, .00001f)
             assertEquals(c.h * c.scale, layer.height, .00001f)
-            assertEquals(c.dx / 100f, layer.x + layer.width / 2f - c.x - c.w / 2f, .00001f)
-            assertEquals(c.dy / 100f, layer.y + layer.height / 2f - c.y - c.h / 2f, .00001f)
+            assertEquals(c.dx / 200f, layer.x + layer.width / 2f - c.x - c.w / 2f, .00001f)
+            assertEquals(c.dy / 200f, layer.y + layer.height / 2f - c.y - c.h / 2f, .00001f)
         }
     }
     @Test fun unsupportedItemKeepsFaceWithoutSubstitutingAnAccessory() {

@@ -26,10 +26,10 @@ fun LevelProgress(level: UserLevel, modifier: Modifier = Modifier) {
 
 @Composable
 fun QuestInbox(quests: List<DailyQuestEntity>, onOpen: (String) -> Unit,
-    onAccept: (String) -> Unit, onReject: (String) -> Unit, onSettings: () -> Unit) {
+    onAccept: (String) -> Unit, onReject: (String) -> Unit, onSettings: (() -> Unit)? = null) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Text("🔔 오늘의 작은 실천", Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-        TextButton(onClick = onSettings) { Text("알림 설정") }
+        Text("📬 일일 퀘스트", Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
+        if (onSettings != null) TextButton(onClick = onSettings) { Text("알림 설정") }
     }
     if (quests.isEmpty()) Text("📭 새 제안이 아직 없어요.", color = PatchTokens.muted)
     quests.sortedBy { when { it.dismissed -> 3; it.completedAt != null -> 2; it.accepted -> 1; else -> 0 } }.forEach { quest ->

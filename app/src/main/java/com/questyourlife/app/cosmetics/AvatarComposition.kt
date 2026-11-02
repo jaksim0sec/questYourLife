@@ -5,7 +5,8 @@ data class AvatarLayer(val itemId: Int?, val x: Float, val y: Float, val width: 
 data class AvatarComposition(val layers: List<AvatarLayer>)
 
 object AvatarComposer {
-    // Pixel offsets are measured against the approximately 100 px avatar in the latest member sheet.
+    // Fixed design canvas from the supplied 1280 px reference, never the displayed widget size.
+    const val REFERENCE_SIZE_PX = 200f
     private data class Adjustment(val itemId: Int, val dx: Float, val dy: Float, val scale: Float)
     private val corrections = mapOf(
         1003 to Adjustment(1003, 3f, -7f, .95f),
@@ -33,8 +34,8 @@ object AvatarComposer {
         val adjustment = if (itemId == 1 && alternateCreamCap)
             Adjustment(1, -5f, -6f, 1f) else corrections[itemId]
         val accessory = if (original != null && adjustment != null) original.copy(
-            x = original.x + adjustment.dx / 100f + original.width * (1f - adjustment.scale) / 2f,
-            y = original.y + adjustment.dy / 100f + original.height * (1f - adjustment.scale) / 2f,
+            x = original.x + adjustment.dx / REFERENCE_SIZE_PX + original.width * (1f - adjustment.scale) / 2f,
+            y = original.y + adjustment.dy / REFERENCE_SIZE_PX + original.height * (1f - adjustment.scale) / 2f,
             width = original.width * adjustment.scale,
             height = original.height * adjustment.scale
         ) else original

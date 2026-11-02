@@ -152,7 +152,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     }
     val openProfile: (String) -> Unit = { name ->
         profileName = name
-        profileReturn = screen
+        if (screen != "person") profileReturn = screen
         navigate("person")
     }
     val openCompanion: () -> Unit = { openThread("mascot") }
@@ -287,13 +287,13 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     }
                 }
             }
-            "notifications" -> PatchSheet("알림", onDismiss = { sheet = null },
-                initialHeight = 520.dp, startExpanded = true) {
+            "notifications" -> {
                 val declined = history.filter { it.dismissed && !it.accepted && it.dateKey == com.questyourlife.app.daily.DailyQuestRepository.today() }
-                QuestInbox((daily + declined).distinctBy { it.id },
-                    onOpen = { selectedDailyId = it; sheet = "daily" },
-                    onAccept = model::accept, onReject = model::rejectQuest,
-                    onSettings = { navigate("settings") })
+                NotificationCenter((daily + declined).distinctBy { it.id },
+                    onDismiss = { sheet = null }, onSettings = { navigate("settings") },
+                    onProfile = openProfile, onClan = { navigate("clan") },
+                    onQuest = { selectedDailyId = it; sheet = "daily" },
+                    onAccept = model::accept, onReject = model::rejectQuest)
             }
             "appearance" -> PatchSheet("화면 테마", onDismiss = { sheet = null }, initialHeight = 240.dp, startExpanded = true) {
                 AppearanceOptions(appearance) { mode ->

@@ -153,6 +153,9 @@ fun PatchMoney(amount: Int, modifier: Modifier = Modifier, compact: Boolean = fa
 @Composable
 fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> Unit)? = null,
     initialHeight: androidx.compose.ui.unit.Dp? = null, startExpanded: Boolean = false,
+    headerActions: (@Composable () -> Unit)? = null, headerContent: (@Composable () -> Unit)? = null,
+    contentPadding: PaddingValues = PaddingValues(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 24.dp),
+    contentSpacing: androidx.compose.ui.unit.Dp = 16.dp,
     content: @Composable ColumnScope.() -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = startExpanded)
     var useFullHeight by remember { mutableStateOf(false) }
@@ -214,13 +217,15 @@ fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> 
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = PatchTokens.ink,
                     modifier = Modifier.weight(1f))
+                headerActions?.invoke()
                 IconButton(onClick = close) {
                     Icon(painterResource(R.drawable.ic_patch_close), "닫기", tint = PatchTokens.muted)
                 }
             }
+            headerContent?.invoke()
             Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
-                .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp), content = content)
+                .padding(contentPadding),
+                verticalArrangement = Arrangement.spacedBy(contentSpacing), content = content)
             if (footer != null) Box(Modifier.fillMaxWidth().background(PatchTokens.background)
                 .padding(horizontal = 20.dp, vertical = 12.dp)) { footer() }
         }

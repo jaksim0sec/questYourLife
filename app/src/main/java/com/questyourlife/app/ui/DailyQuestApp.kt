@@ -117,6 +117,9 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
     var profileName by rememberSaveable { mutableStateOf("") }
     var profileReturn by rememberSaveable { mutableStateOf("clan") }
+    var previewBookId by rememberSaveable { mutableStateOf("travel") }
+    var previewChapterId by rememberSaveable { mutableStateOf<String?>(null) }
+    var chapterReturn by rememberSaveable { mutableStateOf("quests") }
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedDailyId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -127,7 +130,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val pageStates = rememberSaveableStateHolder()
     val reward = model.lastReward.value
     val topTab = patchTabs.any { it.route == screen }
-    val selectedDaily = daily.firstOrNull { it.id == selectedDailyId }
+    val selectedDaily = (daily + history).firstOrNull { it.id == selectedDailyId }
     val navigate: (String) -> Unit = { route ->
         if (topTab) returnTab = screen
         if (route == "focus") focusReturn = screen
@@ -140,6 +143,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
             "person" -> profileReturn
             "thread" -> "dm"
             "detail" -> "quests"
+            "chapter" -> chapterReturn
             "focus" -> focusReturn
             "create", "legacyQuests" -> "quests"
             else -> returnTab
@@ -154,6 +158,12 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         profileName = name
         if (screen != "person") profileReturn = screen
         navigate("person")
+    }
+    val openPreview: (String, String?) -> Unit = { id, chapter ->
+        previewBookId = id
+        previewChapterId = chapter
+        chapterReturn = screen
+        navigate("chapter")
     }
     val openCompanion: () -> Unit = { openThread("mascot") }
     BackHandler(enabled = !topTab && reward == null && sheet == null) { back() }
@@ -179,6 +189,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 val stateKey = when (page) {
                     "thread" -> "thread:$selectedThreadId"
                     "person" -> "person:$profileName"
+                    "chapter" -> "chapter:$previewBookId:${previewChapterId.orEmpty()}"
                     else -> page
                 }
                 pageStates.SaveableStateProvider(stateKey) {
@@ -186,7 +197,12 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     "home" -> PatchHomePage(model,
                         onDaily = { selectedDailyId = it.id; sheet = "daily" },
                         onQuests = { navigate("quests") }, onClan = { navigate("clan") },
-                        onCompanion = openCompanion)
+                        onPreview = { openPreview(it, null) }, onMy = { navigate("my") })
+                    "quests" -> PatchQuestsPage(model, onPreview = { openPreview(it, null) },
+                        onChapter = { book, chapter -> openPreview(book, chapter) },
+                        onGoal = { goalId = it; navigate("detail") },
+                        onDaily = { selectedDailyId = it.id; sheet = "daily" }, onCreate = { navigate("create") })
+                    "chapter" -> PatchChapterPage(model, previewBookId, initialChapterId = previewChapterId, onBack = back, onMenu = { sheet = "menu" })
                     "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
                     "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
                         onProfile = openProfile, onMenu = { sheet = "menu" })
@@ -203,7 +219,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         verticalArrangement = Arrangement.spacedBy(PatchTokens.space16)) {
                         item {
                             when (page) {
-                                "quests", "legacyQuests" -> QuestListPanel(coins, goals, steps, daily,
+                                "legacyQuests" -> QuestListPanel(coins, goals, steps, daily,
                                     onGoal = { goalId = it; navigate("detail") },
                                     onDaily = { navigate("daily") }, onCreate = { navigate("create") },
                                     showHeading = page == "legacyQuests")

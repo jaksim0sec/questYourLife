@@ -15,3 +15,9 @@ the generated files or replace these icons with a library look-alike.
 The user explicitly approved the compass in `nav-*-clan.svg` as the new clan
 icon (2026-11-02), superseding the people icon in earlier mockups. The pack contains
 no chest, mascot raster, hat, or other reward illustration.
+
+Home/quest/chapter reference surfaces add `speech`, `shoe`, `lock`, `chest`,
+`route`, `chevron-down` and `more-vertical` as generic rounded SVGs. Outline
+icons use the same 24×24 viewBox and 1.8 rounded strokes; vertical menu dots
+are filled circles. Generate their `ic_patch_*` vectors with the same compiler.
+The navigation's red active states are retained alongside yellow task/reward actions.

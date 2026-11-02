@@ -43,6 +43,7 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
 
     private val companion: CompanionGateway = LocalCompanionGateway(QuestDatabase.get(app).companionDao())
+    val questPreview = QuestPreviewStore(app)
     val contacts = companion.contacts()
     val demoClan = companion.demoClan()
     val nearbyClans = companion.nearbyClanRanks()

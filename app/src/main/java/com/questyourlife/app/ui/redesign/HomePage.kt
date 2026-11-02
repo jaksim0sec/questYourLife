@@ -4,169 +4,138 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.Groups
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.Toll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.questyourlife.app.R
+import com.questyourlife.app.companion.QuestPreviewCatalog
 import com.questyourlife.app.data.DailyQuestEntity
 import com.questyourlife.app.ui.DailyQuestViewModel
-import com.questyourlife.app.ui.MascotArt
-import java.time.LocalDate
-import java.time.ZoneId
+import com.questyourlife.app.ui.DressedAvatar
 
+/** Fourth supplied reference: profile strip, shared chest, resume, popular quests, daily, clan. */
 @Composable
-fun PatchHomePage(
-    model: DailyQuestViewModel,
-    onDaily: (DailyQuestEntity) -> Unit,
-    onQuests: () -> Unit,
-    onClan: () -> Unit,
-    onCompanion: () -> Unit
-) {
-    val level by model.userLevel.collectAsStateWithLifecycle()
-    val daily by model.quests.collectAsStateWithLifecycle()
-    val history by model.history.collectAsStateWithLifecycle()
+fun PatchHomePage(model: DailyQuestViewModel, onDaily: (DailyQuestEntity) -> Unit,
+    onQuests: () -> Unit, onClan: () -> Unit, onPreview: (String) -> Unit, onMy: () -> Unit) {
     val coins by model.coins.collectAsStateWithLifecycle()
-    val steps by model.steps.collectAsStateWithLifecycle()
-    val done = daily.count { it.completedAt != null }
-    val weekStart = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays((LocalDate.now(ZoneId.of("Asia/Seoul")).dayOfWeek.value - 1).toLong()).toString()
-    val weekDaily = history.filter { it.completedAt != null && it.dateKey >= weekStart }.sumOf { it.reward }
-    val weekEpoch = LocalDate.parse(weekStart).atStartOfDay(java.time.ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli()
-    val weekStep = steps.filter { (it.completedAt ?: 0L) >= weekEpoch }.sumOf { it.reward }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = PatchTokens.space20, end = PatchTokens.space20,
-            top = PatchTokens.space8, bottom = PatchTokens.space24),
-        verticalArrangement = Arrangement.spacedBy(PatchTokens.space12)
-    ) {
-        item { LevelProgress(level) }
+    val daily by model.quests.collectAsStateWithLifecycle()
+    val preview by model.questPreview.state.collectAsStateWithLifecycle()
+    val clan = remember { model.clanPreview() }
+    val travel = QuestPreviewCatalog.books.first()
+    val current = preview.current(travel)
+    val fontScale = LocalDensity.current.fontScale.coerceAtLeast(1f)
+    val cash = clan.cash + preview.earned
+    val today = daily.firstOrNull { it.completedAt == null } ?: daily.firstOrNull()
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 18.dp, end = 18.dp,
+        top = 4.dp, bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
-            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.space12))
-                .background(PatchTokens.soft).padding(PatchTokens.space12),
-                verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Rounded.Toll, null, Modifier.size(20.dp), tint = PatchTokens.ink)
-                Spacer(Modifier.width(PatchTokens.space8))
-                Text("내 캐시 ", style = MaterialTheme.typography.bodySmall)
-                Text("$coins C", style = MaterialTheme.typography.titleSmall)
-                Spacer(Modifier.weight(1f))
-                Text("이번 주 +${weekDaily + weekStep} C", style = MaterialTheme.typography.labelMedium,
-                    color = PatchTokens.muted)
-            }
-        }
-        item {
-            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.radius))
-                .background(Color(0xFF252B25)).padding(PatchTokens.space20),
-                verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                    Text("TODAY'S PATCH", color = Color.White.copy(alpha = .7f),
-                        style = MaterialTheme.typography.labelMedium)
-                    Text("오늘의 작은 완료가\n내일의 나를 바꿔요", color = Color.White,
-                        style = MaterialTheme.typography.titleLarge)
-                    Text(if (done == 0) "가볍게 하나부터 시작해 봐요" else "오늘 ${done}개의 작은 약속을 지켰어요",
-                        color = Color.White.copy(alpha = .75f), style = MaterialTheme.typography.bodySmall)
+            Row(Modifier.fillMaxWidth().heightIn(min = 48.dp), verticalAlignment = Alignment.CenterVertically) {
+                BoxWithConstraints(Modifier.weight(1f)) {
+                    val compact = maxWidth < 240.dp || fontScale > 1.1f
+                    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp))
+                        .clickable(role = Role.Button, onClick = onMy), verticalAlignment = Alignment.CenterVertically) {
+                        DressedAvatar(model.equipped.intValue, Modifier.size(42.dp))
+                        if (compact) Column(Modifier.weight(1f).padding(start = 4.dp)) {
+                            Text("이모리", fontSize = 14.sp, fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                            Text(clan.name, fontSize = 10.sp, color = PatchTokens.muted, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        } else {
+                            Text("이모리", fontSize = 14.sp, fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                            Spacer(Modifier.width(6.dp))
+                            QuestPill(clan.name, QuestLime, QuestNight)
+                        }
+                    }
                 }
-                MascotArt(Modifier.size(80.dp))
+                PatchMoney(coins, compact = true)
             }
         }
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                BoxWithConstraints(Modifier.fillMaxWidth().height(202.dp + 300.dp * (fontScale - 1f))) {
+                    Text("오늘의 공략,\n같이 한 걸음", Modifier.fillMaxWidth(if (fontScale > 1.1f) 1f else .72f).align(Alignment.TopStart),
+                        fontSize = 30.sp, lineHeight = 35.sp, fontWeight = FontWeight.Black, color = PatchTokens.ink)
+                    QuestChest(Modifier.align(Alignment.BottomEnd).size(minOf(166.dp, maxWidth * .46f)), "함께 모으는 클랜 상자")
+                    QuestGlyph(R.drawable.ic_patch_sparkles, Modifier.align(Alignment.CenterEnd)
+                        .offset(x = (-120).dp, y = (-20).dp).size(32.dp), QuestYellow)
+                    QuestFaces(Modifier.align(Alignment.BottomStart).padding(bottom = 8.dp), 64.dp)
+                }
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    PatchSection("오늘의 퀘스트")
-                    Spacer(Modifier.weight(1f))
-                    Text("$done / ${daily.size} 완료", color = PatchTokens.muted,
-                        style = MaterialTheme.typography.labelMedium)
+                    Text("우리 클랜 상자", fontSize = 14.sp, fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                    Spacer(Modifier.width(8.dp))
+                    Text("$cash / ${clan.target}", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = PatchTokens.ink)
                 }
-                LinearProgressIndicator(progress = { if (daily.isEmpty()) 0f else done.toFloat() / daily.size },
-                    modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape),
-                    color = PatchTokens.red, trackColor = PatchTokens.line)
-            }
-        }
-        if (daily.isEmpty()) item {
-            PatchSurface {
-                Text("오늘 남은 제안이 없어요", style = MaterialTheme.typography.bodyMedium)
-                TextButton(onClick = model::refresh) { Text("다시 확인") }
-            }
-        }
-        items(daily, key = { it.id }) { quest ->
-            PatchDailyRow(quest, onOpen = { onDaily(quest) }, onAction = {
-                if (quest.accepted) model.complete(quest.id) else model.accept(quest.id)
-            })
-        }
-        item {
-            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.space16))
-                .background(PatchTokens.yellow.copy(alpha = .4f)).padding(PatchTokens.space16),
-                verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
-                    Text("지금 가능한 한 걸음", style = MaterialTheme.typography.titleSmall)
-                    Text("패치와 목표를 작게 나눠 봐요", style = MaterialTheme.typography.bodySmall,
-                        color = PatchTokens.muted)
-                }
-                TextButton(onClick = onCompanion) { Text("쪽지 열기", color = PatchTokens.red) }
+                QuestProgress(cash.toFloat() / clan.target)
             }
         }
         item {
-            PatchSurface(Modifier.clickable(role = Role.Button, onClick = onClan)) {
+            Column(Modifier.fillMaxWidth().clip(QuestShape).background(QuestNight)
+                .clickable(role = Role.Button) { onPreview(travel.id) }.padding(vertical = 12.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Rounded.Groups, null, tint = PatchTokens.muted)
-                    Spacer(Modifier.width(PatchTokens.space8))
-                    Text("함께하는 연습", style = MaterialTheme.typography.titleMedium)
-                    Spacer(Modifier.weight(1f))
-                    Text("데모", style = MaterialTheme.typography.labelSmall, color = PatchTokens.muted)
-                    Icon(Icons.Rounded.ChevronRight, null, tint = PatchTokens.muted)
+                    Text(if (current == null) "완주한 퀘스트 보기" else "내 미션 이어하기", color = QuestNightInk,
+                        fontSize = 18.sp, fontWeight = FontWeight.ExtraBold)
+                    QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(23.dp), QuestNightInk)
                 }
-                Text("내 기록은 실제로, 클랜 멤버는 데모로 둘러봐요.",
-                    style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
+                Text(current?.let { "${it.action} · ${it.minutes}분" } ?: "모든 챕터를 완주했어요",
+                    color = QuestNightInk.copy(alpha = .8f), fontSize = 11.sp, lineHeight = 17.sp,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+            }
+        }
+        item { QuestSectionHeading("지금 많이 도전하는 퀘스트", Modifier.padding(top = 6.dp)) }
+        items(QuestPreviewCatalog.books.size) { index ->
+            val book = QuestPreviewCatalog.books[index]
+            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp))
+                .clickable(role = Role.Button) { onPreview(book.id) }.padding(vertical = 2.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                QuestBookSymbol(book.clan)
+                Column(Modifier.weight(1f).padding(horizontal = 10.dp)) {
+                    Text(book.title, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold,
+                        color = PatchTokens.ink, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(if (book.clan) "1,284명 도전 중 · 시연" else "863명 도전 중 · 시연",
+                        fontSize = 11.sp, color = PatchTokens.muted)
+                }
+                QuestFaces(size = 25.dp)
+                QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(18.dp))
             }
         }
         item {
-            TextButton(onClick = onQuests, modifier = Modifier.fillMaxWidth().heightIn(min = PatchTokens.control)) {
-                Text("내 목표와 퀘스트 보기", color = PatchTokens.ink)
-                Icon(Icons.Rounded.ChevronRight, null, tint = PatchTokens.muted)
+            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp))
+                .background(QuestYellow.copy(alpha = .24f)).clickable(role = Role.Button) {
+                    if (today != null) onDaily(today) else onQuests()
+                }.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("오늘의 데일리", fontSize = 14.sp, fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        QuestGlyph(if (today?.completedAt != null) R.drawable.ic_patch_check else R.drawable.ic_patch_target,
+                            Modifier.size(18.dp), if (today?.completedAt != null) PatchTokens.red else PatchTokens.ink)
+                        Spacer(Modifier.width(7.dp))
+                        Text(today?.title ?: "새 목표에서 미션 시작하기", fontSize = 12.sp,
+                            color = PatchTokens.ink, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    }
+                }
+                if (today != null) QuestPill("+${today.reward} C", QuestYellow, QuestNight)
             }
         }
-    }
-}
-
-@Composable
-private fun PatchDailyRow(quest: DailyQuestEntity, onOpen: () -> Unit, onAction: () -> Unit) {
-    val done = quest.completedAt != null
-    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.space16))
-        .background(PatchTokens.surface).clickable(role = Role.Button, onClick = onOpen)
-        .padding(end = PatchTokens.space12, top = PatchTokens.space4, bottom = PatchTokens.space4),
-        verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = onAction, enabled = !done, modifier = Modifier.size(52.dp)) {
-            Icon(if (done) Icons.Rounded.Check else Icons.Rounded.RadioButtonUnchecked,
-                if (done) "${quest.title}, 완료됨" else if (quest.accepted) "${quest.title}, 완료하기" else "${quest.title}, 수락하기",
-                tint = if (done) PatchTokens.red else PatchTokens.muted)
+        item {
+            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).clickable(role = Role.Button, onClick = onClan)
+                .padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                QuestGlyph(R.drawable.ic_patch_flag, Modifier.size(22.dp), PatchTokens.red)
+                Text("방과후 일본어 · 함께 도전할 멤버 모집 중", Modifier.weight(1f).padding(horizontal = 8.dp),
+                    fontSize = 11.sp, color = PatchTokens.ink)
+                QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(18.dp))
+            }
         }
-        Column(Modifier.weight(1f).padding(vertical = PatchTokens.space8),
-            verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
-            Text(quest.title, style = MaterialTheme.typography.titleSmall,
-                color = if (done) PatchTokens.muted else PatchTokens.ink,
-                maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Text(if (done) "완료했어요" else if (quest.accepted) "진행 중 · 체크하면 완료" else "수락하고 시작하기",
-                style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
-        }
-        Spacer(Modifier.width(PatchTokens.space8))
-        Text("+${quest.reward} C", style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold, color = if (done) PatchTokens.muted else PatchTokens.ink,
-            modifier = Modifier.clip(CircleShape).background(if (done) PatchTokens.soft else PatchTokens.yellow)
-                .padding(horizontal = PatchTokens.space8, vertical = PatchTokens.space4))
+        item { Text("클랜·인기 퀘스트는 로컬 시연이에요. 내 캐시와 오늘의 데일리는 실제 기록이에요.",
+            fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted) }
     }
 }

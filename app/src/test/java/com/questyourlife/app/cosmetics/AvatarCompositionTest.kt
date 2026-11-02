@@ -17,7 +17,7 @@ class AvatarCompositionTest {
         }
     }
 
-    @Test fun navyReferenceNeverMovesAndForwardCapsShareItsSize() {
+    @Test fun navyReferenceNeverMovesAndForwardCapsAreCalibratedAgainstIt() {
         val navy = equipment(2)
         assertEquals(.065f, navy.x, .00001f)
         assertEquals(.015f, navy.y, .00001f)
@@ -25,30 +25,32 @@ class AvatarCompositionTest {
         assertEquals(.582f, navy.height, .00001f)
         listOf(1, 3).forEach {
             val cap = equipment(it)
-            assertEquals(navy.x, cap.x, .00001f)
-            assertEquals(navy.width, cap.width, .00001f)
+            assertEquals(.045f, cap.x, .00001f)
+            assertEquals(.100f, cap.y, .00001f)
+            assertEquals(.91f, cap.width, .00001f)
             assertEquals(navy.height, cap.height, .00001f)
-            assertEquals(navy.y + .005f, cap.y, .00001f)
+            assertTrue(cap.y > navy.y)
+            assertTrue(cap.width > navy.width)
         }
     }
 
     @Test fun knitAndBucketHatsAreLowerAndHaveIndependentFits() {
         val beanie = equipment(0)
         val bucket = equipment(5)
-        assertEquals(.012f, beanie.y, .00001f)
+        assertEquals(.095f, beanie.y, .00001f)
         assertEquals(.612f, beanie.height, .00001f)
-        assertEquals(-.018f, bucket.y, .00001f)
+        assertEquals(.052f, bucket.y, .00001f)
         assertEquals(.656f, bucket.height, .00001f)
         assertNotEquals(beanie.width, bucket.width)
     }
 
-    @Test fun bothHeadphonesHaveCenteredTighterPlacement() {
+    @Test fun bothHeadphonesHaveCenteredShallowerPlacement() {
         val cream = equipment(1001)
         val black = equipment(1003)
         assertEquals(.030f, cream.x, .00001f)
         assertEquals(.175f, cream.y, .00001f)
         assertEquals(.94f, cream.width, .00001f)
-        assertEquals(.730f, cream.height, .00001f)
+        assertEquals(.685f, cream.height, .00001f)
         assertEquals(.5f, cream.x + cream.width / 2f, .00001f)
         assertEquals(cream.x, black.x, .00001f)
         assertEquals(cream.y, black.y, .00001f)

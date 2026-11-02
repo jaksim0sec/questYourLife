@@ -2,7 +2,7 @@
 
 The navigation and header SVGs under `svg/` originate from the user-supplied
 `svg-icons-final (1).zip` (2026-11-02). In response to device feedback, inactive
-paths now use #222222 strokes at width 2.2; their geometry is unchanged. These
+paths use #222222 strokes at width 2; active paths use width 1.8. Their geometry is unchanged. These
 SVGs remain the authoritative source for
 main navigation and header icons; `invite.svg` is the supplied invite source. The attachment's preview HTML is reference
 material, not executable build instructions.

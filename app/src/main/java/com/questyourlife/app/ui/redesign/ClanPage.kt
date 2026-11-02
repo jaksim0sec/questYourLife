@@ -84,11 +84,11 @@ fun PatchClanPage(model: DailyQuestViewModel) {
             Spacer(Modifier.width(10.dp))
             Column(Modifier.weight(1f)) {
                 Text(clan.name, color = ClanStyle.ink, fontSize = 20.sp,
-                    lineHeight = 25.sp, fontWeight = FontWeight.ExtraBold,
+                    lineHeight = 25.sp, fontWeight = FontWeight.Black,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.semantics { heading() })
                 Text("멤버 ${clan.memberCount}명", color = ClanStyle.muted,
-                    fontSize = 12.sp, lineHeight = 18.sp, fontWeight = FontWeight.SemiBold)
+                    fontSize = 12.sp, lineHeight = 18.sp, fontWeight = FontWeight.Bold)
             }
             OutlinedButton(onClick = { copied = false; sheet = "invite" },
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
@@ -98,7 +98,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = ClanStyle.ink)) {
                 Icon(painterResource(R.drawable.ic_patch_invite), null, Modifier.size(19.dp), tint = Color.Unspecified)
                 Spacer(Modifier.width(4.dp))
-                Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
         }
         ClanChestPanel(clan, compact)
@@ -145,8 +145,8 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                         fontWeight = FontWeight.Bold, color = ClanStyle.ink)
                     ClanFace(Modifier.size(46.dp))
                     Spacer(Modifier.width(12.dp))
-                    Text(member.name, Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = ClanStyle.ink)
-                    Text("+${member.cash} C", fontSize = 15.sp, fontWeight = FontWeight.Bold,
+                    Text(member.name, Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
+                    Text("+${member.cash} C", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold,
                         color = ClanStyle.ink, maxLines = 1)
                 }
             }
@@ -155,7 +155,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
             .clickable(role = Role.Button) { sheet = "rank" }
             .padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("클랜 주간 순위", fontSize = 12.sp, color = ClanStyle.muted, fontWeight = FontWeight.SemiBold)
+                Text("클랜 주간 순위", fontSize = 12.sp, color = ClanStyle.muted, fontWeight = FontWeight.Bold)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("${clan.rank}위", fontSize = 26.sp, lineHeight = 32.sp,
                         fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
@@ -164,7 +164,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                     Text("${clan.rise}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = ClanStyle.red)
                 }
             }
-            Text("비슷한 규모의 클랜과\n비교해요", fontSize = 12.sp, lineHeight = 18.sp, color = ClanStyle.muted, fontWeight = FontWeight.Medium)
+            Text("비슷한 규모의 클랜과\n비교해요", fontSize = 12.sp, lineHeight = 18.sp, color = ClanStyle.muted, fontWeight = FontWeight.Bold)
             Spacer(Modifier.width(4.dp))
             Icon(Icons.Rounded.ChevronRight, null, Modifier.size(18.dp), tint = ClanStyle.muted)
         }
@@ -243,8 +243,8 @@ private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
             .padding(start = 16.dp, top = 16.dp, bottom = 14.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("각자 해내고,\n같이 열자", fontSize = 25.sp, lineHeight = 31.sp,
-                fontWeight = FontWeight.ExtraBold, color = Color.White)
-            Text("이번 주 공동 상자", fontSize = 12.sp, lineHeight = 18.sp, color = Color(0xFFE2E2DE), fontWeight = FontWeight.SemiBold)
+                fontWeight = FontWeight.Black, color = Color.White)
+            Text("이번 주 공동 상자", fontSize = 12.sp, lineHeight = 18.sp, color = Color(0xFFE2E2DE), fontWeight = FontWeight.Bold)
             if (wrapProgress) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     ClanProgress(clan, Modifier.width(barWidth))
@@ -257,7 +257,7 @@ private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
                     ClanProgressLabel(clan)
                 }
             }
-            Text("보상  3가지 꾸미기 중 1개 선택", fontSize = 11.sp, lineHeight = 17.sp, fontWeight = FontWeight.SemiBold,
+            Text("보상  3가지 꾸미기 중 1개 선택", fontSize = 11.sp, lineHeight = 17.sp, fontWeight = FontWeight.Bold,
                 color = Color(0xFFF1F1ED), maxLines = if (multilineCaption) 2 else 1)
         }
     }
@@ -286,7 +286,7 @@ private fun ClanFace(modifier: Modifier = Modifier, name: String? = null) {
 @Composable
 private fun ClanHeading(title: String, modifier: Modifier = Modifier) {
     Text(title, modifier.semantics { heading() }, fontSize = 16.sp, lineHeight = 22.sp,
-        fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
+        fontWeight = FontWeight.Black, color = ClanStyle.ink)
 }
 
 @Composable

@@ -45,21 +45,21 @@ private val patchTabs = listOf(
 private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
     Column(Modifier.fillMaxWidth().background(PatchTokens.background)) {
         HorizontalDivider(color = PatchTokens.line)
-        Row(Modifier.fillMaxWidth().height(64.dp).padding(horizontal = PatchTokens.space8),
+        Row(Modifier.fillMaxWidth().height(58.dp).padding(horizontal = PatchTokens.space8),
             verticalAlignment = Alignment.CenterVertically) {
             patchTabs.forEach { tab ->
                 val isSelected = active == tab.route
                 val tint by animateColorAsState(
-                    if (isSelected) Color(0xFFFF3B30) else Color(0xFF222222),
+                    if (isSelected) Color(0xFFFF3B30) else Color(0xFF222222).copy(alpha = 0.55f),
                     animationSpec = tween(160), label = "${tab.route} tab color")
                 Column(Modifier.weight(1f).fillMaxHeight()
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(PatchTokens.space4, Alignment.CenterVertically)) {
+                    verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
                     Icon(painterResource(if (isSelected) tab.activeIcon else tab.inactiveIcon),
-                        null, tint = Color.Unspecified, modifier = Modifier.size(28.dp).alpha(if (isSelected) 1f else 0.7f))
-                    Text(tab.title, color = tint, fontSize = 12.sp, lineHeight = 16.sp,
+                        null, tint = Color.Unspecified, modifier = Modifier.size(25.dp).alpha(if (isSelected) 1f else 0.55f))
+                    Text(tab.title, color = tint, fontSize = 11.sp, lineHeight = 15.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.SemiBold)
                 }
             }
@@ -74,7 +74,7 @@ private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -
         Row(Modifier.fillMaxWidth().heightIn(min = 60.dp)
             .padding(start = PatchTokens.space20, end = PatchTokens.space8),
             verticalAlignment = Alignment.CenterVertically) {
-            Text(title, style = MaterialTheme.typography.headlineSmall,
+            Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black,
                 color = PatchTokens.ink, modifier = Modifier.weight(1f))
             IconButton(onClick = onNotifications) {
                 Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = Color.Unspecified)

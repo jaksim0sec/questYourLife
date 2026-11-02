@@ -6,6 +6,7 @@ fail rather than silently approximating artwork. SVGs remain byte-for-byte sourc
 """
 from pathlib import Path
 import xml.etree.ElementTree as ET
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'app/src/main/assets/icons/svg'
@@ -47,14 +48,29 @@ def compile_icon(source):
     assert svg.attrib['viewBox'] == '0 0 24 24'
     attrs = {'width': '24dp', 'height': '24dp', 'viewportWidth': '24', 'viewportHeight': '24'}
     vector = ET.Element('vector', {f'{{{ANDROID}}}{k}': v for k, v in attrs.items()})
-    for element in svg:
-        inherited = svg.attrib | element.attrib
+    def emit(parent, element, inherited):
+        inherited = inherited | element.attrib
+        if element.tag.rsplit('}', 1)[-1] == 'g':
+            transform = element.attrib.get('transform', '')
+            match = re.fullmatch(r'translate\(([-\d.]+) ([-\d.]+)\) scale\(([-\d.]+)\) translate\(([-\d.]+) ([-\d.]+)\)', transform)
+            if not match:
+                raise ValueError(f'Unsupported SVG group transform: {transform}')
+            x, y, scale, nx, ny = map(float, match.groups())
+            assert x == -nx and y == -ny, 'Only centered scaling is supported'
+            group = ET.SubElement(parent, 'group', {f'{{{ANDROID}}}{k}': f'{v:g}' for k, v in
+                {'pivotX': x, 'pivotY': y, 'scaleX': scale, 'scaleY': scale}.items()})
+            for child in element:
+                emit(group, child, inherited)
+            return
+        assert 'transform' not in element.attrib, 'Primitive transforms must be represented by a group'
         path = {'pathData': geometry(element), 'fillColor': color(inherited.get('fill', '#000')),
                 'strokeColor': color(inherited.get('stroke', 'none')),
                 'strokeWidth': inherited.get('stroke-width', '1'),
                 'strokeLineCap': inherited.get('stroke-linecap', 'butt'),
                 'strokeLineJoin': inherited.get('stroke-linejoin', 'miter')}
-        ET.SubElement(vector, 'path', {f'{{{ANDROID}}}{k}': v for k, v in path.items()})
+        ET.SubElement(parent, 'path', {f'{{{ANDROID}}}{k}': v for k, v in path.items()})
+    for element in svg:
+        emit(vector, element, svg.attrib)
     ET.indent(vector, space='    ')
     output = TARGET / ('ic_patch_' + source.stem.replace('-', '_') + '.xml')
     ET.ElementTree(vector).write(output, encoding='utf-8', xml_declaration=True)

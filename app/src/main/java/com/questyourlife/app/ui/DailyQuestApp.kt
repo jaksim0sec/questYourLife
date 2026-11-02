@@ -18,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
@@ -54,20 +53,28 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
             patchTabs.forEach { tab ->
                 val isSelected = active == tab.route
                 val tint by animateColorAsState(
-                    if (isSelected) Color(0xFFFF3B30) else Color(0xFF222222).copy(alpha = 0.55f),
+                    if (isSelected) { if (LocalPatchDark.current) PatchTokens.red else Color(0xFFFF3B30) } else if (LocalPatchDark.current) PatchTokens.muted else Color(0xFF222222).copy(alpha = 0.55f),
                     animationSpec = tween(160), label = "${tab.route} tab color")
                 Column(Modifier.weight(1f).fillMaxHeight()
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
+                    val isDark = LocalPatchDark.current
+                    val darkActiveIcon = when (tab.route) {
+                        "home" -> R.drawable.ic_patch_nav_active_home_dark
+                        "quests" -> R.drawable.ic_patch_nav_active_quest_dark
+                        "dm" -> R.drawable.ic_patch_nav_active_dm_dark
+                        "clan" -> R.drawable.ic_patch_nav_active_clan_dark
+                        else -> R.drawable.ic_patch_nav_active_my_dark
+                    }
                     val iconScale by animateFloatAsState(if (isSelected) 1.06f else 1f,
                         tween(180), label = "tab scale")
                     Crossfade(isSelected, animationSpec = tween(160), label = "tab icon") { selected ->
-                        Icon(painterResource(if (selected) tab.activeIcon else tab.inactiveIcon),
-                            null, tint = Color.Unspecified, modifier = Modifier.size(25.dp)
+                        Icon(painterResource(if (selected) { if (isDark) darkActiveIcon else tab.activeIcon } else tab.inactiveIcon),
+                            null, tint = if (!selected && isDark) PatchTokens.muted else Color.Unspecified, modifier = Modifier.size(25.dp)
                                 .graphicsLayer { scaleX = iconScale; scaleY = iconScale }
-                                .alpha(if (selected) 1f else 0.55f))
+                                .alpha(if (selected || isDark) 1f else 0.55f))
                     }
                     Text(tab.title, color = tint, fontSize = 11.sp, lineHeight = 15.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.SemiBold)
@@ -92,17 +99,6 @@ private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -
 }
 
 @Composable
-private fun MenuRow(label: String, icon: ImageVector, onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().heightIn(min = PatchTokens.control)
-        .clickable(role = Role.Button, onClick = onClick), verticalAlignment = Alignment.CenterVertically) {
-        Icon(icon, null, tint = PatchTokens.muted, modifier = Modifier.size(24.dp))
-        Spacer(Modifier.width(PatchTokens.space12))
-        Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        Icon(Icons.Rounded.ChevronRight, null, tint = PatchTokens.muted)
-    }
-}
-
-@Composable
 fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit) {
     val daily by model.quests.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
@@ -119,6 +115,10 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedDailyId by rememberSaveable { mutableStateOf<String?>(null) }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val themePrefs = remember(context) { context.getSharedPreferences("patch_appearance", android.content.Context.MODE_PRIVATE) }
+    var appearance by rememberSaveable { mutableStateOf(themePrefs.getString("mode", "system") ?: "system") }
+    val dark = appearance == "dark" || (appearance == "system" && androidx.compose.foundation.isSystemInDarkTheme())
     val pageStates = rememberSaveableStateHolder()
     val reward = model.lastReward.value
     val topTab = patchTabs.any { it.route == screen }
@@ -153,7 +153,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val openCompanion: () -> Unit = { openThread("mascot") }
     BackHandler(enabled = !topTab && reward == null && sheet == null) { back() }
 
-    PatchTheme {
+    PatchTheme(dark = dark) {
         Scaffold(
             containerColor = PatchTokens.background,
             contentWindowInsets = WindowInsets.safeDrawing,
@@ -290,17 +290,15 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     onAccept = model::accept, onReject = model::rejectQuest,
                     onSettings = { navigate("settings") })
             }
-            "menu" -> PatchSheet("메뉴", onDismiss = { sheet = null }) {
-                MenuRow("패치와 목표 나누기", Icons.Rounded.ChatBubbleOutline, openCompanion)
-                MenuRow("직접 목표 만들기", Icons.Rounded.Add) { navigate("create") }
-                MenuRow("완료 기록", Icons.Rounded.History) { navigate("history") }
-                MenuRow("새 쪽지", Icons.Rounded.MailOutline) { sheet = "recipients" }
-                MenuRow("꾸미기", Icons.Rounded.Palette) { navigate("decor") }
-                MenuRow("집중 타이머", Icons.Rounded.Timer) { navigate("focus") }
-                MenuRow("설정", Icons.Rounded.Settings) { navigate("settings") }
-                MenuRow("기본 체크리스트", Icons.Rounded.Checklist) { sheet = null; onOpenClassicChecklist() }
-                Text("내 기록과 대화는 이 기기에 저장돼요. 친구와 클랜은 데모예요.",
-                    style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
+            "appearance" -> PatchSheet("화면 테마", onDismiss = { sheet = null }, initialHeight = 240.dp, startExpanded = true) {
+                AppearanceOptions(appearance) { mode ->
+                    appearance = mode
+                    themePrefs.edit().putString("mode", mode).apply()
+                }
+            }
+            "menu" -> PatchSheet("메뉴", onDismiss = { sheet = null }, initialHeight = 620.dp, startExpanded = true) {
+                AppMenu(openCompanion, { navigate("create") }, { navigate("history") },
+                    { sheet = "recipients" }, { navigate("focus") }, { sheet = "appearance" }, { navigate("settings") })
             }
         }
     }

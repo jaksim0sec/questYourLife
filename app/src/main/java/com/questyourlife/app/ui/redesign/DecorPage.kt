@@ -249,13 +249,13 @@ private fun DecorClanReward(onClick: () -> Unit) {
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
             Text("이번 주 클랜 보상", fontSize = 15.sp,
-                fontWeight = FontWeight.Bold, color = PatchTokens.ink)
+                fontWeight = FontWeight.Bold, color = androidx.compose.ui.graphics.Color(0xFF252321))
             Text("함께 열어서 받는 꾸미기 · 데모", style = MaterialTheme.typography.bodySmall,
-                color = PatchTokens.ink)
+                color = androidx.compose.ui.graphics.Color(0xFF252321))
         }
         CosmeticImage(2, Modifier.width(64.dp).height(52.dp))
         Icon(painterResource(R.drawable.ic_patch_chevron_right), null,
-            Modifier.size(20.dp), tint = PatchTokens.ink)
+            Modifier.size(20.dp), tint = androidx.compose.ui.graphics.Color(0xFF252321))
     }
 }
 

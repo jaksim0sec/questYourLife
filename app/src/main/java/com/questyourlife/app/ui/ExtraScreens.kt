@@ -73,7 +73,7 @@ fun DailyPanel(quests:List<DailyQuestEntity>,history:List<DailyQuestEntity>,
     Column(verticalArrangement=Arrangement.spacedBy(18.dp)) {
         BackTitle("일일 퀘스트",onBack)
         Row(Modifier.fillMaxWidth().clip(CardShape)
-            .background(Brush.horizontalGradient(listOf(Color(0xFFFAE4E0),Color(0xFFFDF0E9))))
+            .background(Brush.horizontalGradient(listOf(LightRed, LightRed)))
             .padding(18.dp),verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("${streak}일 연속 달성 중",fontSize=18.sp,fontWeight=FontWeight.Bold,
@@ -89,7 +89,7 @@ fun DailyPanel(quests:List<DailyQuestEntity>,history:List<DailyQuestEntity>,
                             Box(Modifier.size(25.dp).background(
                                 if(isDone) AccentRed else CardWhite,CircleShape),
                                 contentAlignment=Alignment.Center) {
-                                if(isDone) Icon(Icons.Filled.Check,null,Modifier.size(15.dp),Color.White)
+                                if(isDone) Icon(Icons.Filled.Check,null,Modifier.size(15.dp),MaterialTheme.colorScheme.onPrimary)
                             }
                             Spacer(Modifier.height(4.dp))
                             Text(listOf("월","화","수","목","금","토","일")
@@ -109,7 +109,7 @@ fun DailyPanel(quests:List<DailyQuestEntity>,history:List<DailyQuestEntity>,
             if(quests.isEmpty()) Text("오늘 제안된 퀘스트가 없어",fontSize=12.sp,color=TextGray)
         }
         Row(Modifier.fillMaxWidth().clip(CardShape)
-            .background(Color(0xFFFBECE7)).padding(17.dp),
+            .background(LightRed).padding(17.dp),
             verticalAlignment=Alignment.CenterVertically) {
             Text("주간 달성",fontSize=14.sp,fontWeight=FontWeight.Bold,color=TextInk)
             Spacer(Modifier.weight(1f))
@@ -137,7 +137,7 @@ fun CompletionPanel(title:String,reward:Int,onClose:()->Unit,onNext:()->Unit) {
         Box(Modifier.fillMaxWidth().height(177.dp),contentAlignment=Alignment.Center) {
             MascotArt(Modifier.size(170.dp).scale(scale),festive=true)
         }
-        Row(Modifier.clip(CircleShape).background(Color(0xFFFFF1D8))
+        Row(Modifier.clip(CircleShape).background(MutedSurface)
             .padding(horizontal=20.dp,vertical=8.dp),
             verticalAlignment=Alignment.CenterVertically) {
             Text("+$reward C",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
@@ -255,7 +255,7 @@ fun HistoryPanel(questsHistory:List<DailyQuestEntity>,steps:List<GoalStepEntity>
                             contentAlignment=Alignment.Center) {
                             Text(if(checked) "✓" else "${d.dayOfMonth}",
                                 fontSize=11.sp,
-                                color=if(d==LocalDate.now()&&shift==0)Color.White
+                                color=if(d==LocalDate.now()&&shift==0)MaterialTheme.colorScheme.onPrimary
                                     else if(checked)AccentRed else TextGray)
                         }
                     }
@@ -345,14 +345,16 @@ fun FocusPanel(onBack:()->Unit,onFinish:(Int)->Unit) {
         Spacer(Modifier.height(26.dp))
         Box(Modifier.fillMaxWidth().widthIn(max=294.dp).aspectRatio(1f),
             contentAlignment=Alignment.Center) {
+            val arcColor = AccentRed
+            val arcTrack = WarmLine
             Canvas(Modifier.fillMaxSize()) {
                 val stroke=8.dp.toPx()
                 val inset=stroke/2+6.dp.toPx()
-                drawArc(Color(0xFFF1EAE4),-90f,360f,false,
+                drawArc(arcTrack,-90f,360f,false,
                     topLeft=Offset(inset,inset),
                     size=Size(size.width-2*inset,size.height-2*inset),
                     style=Stroke(stroke,cap=StrokeCap.Round))
-                drawArc(AccentRed,-90f,360*progress.coerceIn(0f,1f),false,
+                drawArc(arcColor,-90f,360*progress.coerceIn(0f,1f),false,
                     topLeft=Offset(inset,inset),
                     size=Size(size.width-2*inset,size.height-2*inset),
                     style=Stroke(stroke,cap=StrokeCap.Round))
@@ -383,7 +385,7 @@ fun FocusPanel(onBack:()->Unit,onFinish:(Int)->Unit) {
                 }
             },contentAlignment=Alignment.Center) {
             Icon(if(running)Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                if(running)"일시정지" else "시작",tint=Color.White,
+                if(running)"일시정지" else "시작",tint=MaterialTheme.colorScheme.onPrimary,
                 modifier=Modifier.size(31.dp))
         }
         Spacer(Modifier.height(18.dp))

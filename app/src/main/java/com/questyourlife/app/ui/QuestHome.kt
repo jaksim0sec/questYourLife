@@ -67,6 +67,14 @@ fun QuestHome(
         }
     }
 
+    val window = (androidx.compose.ui.platform.LocalContext.current as? android.app.Activity)?.window
+    val view = androidx.compose.ui.platform.LocalView.current
+    androidx.compose.runtime.SideEffect {
+        window?.let { androidx.core.view.WindowCompat.getInsetsController(it, view).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        } }
+    }
     MaterialTheme(colorScheme = darkColorScheme(primary = Accent, background = Background, surface = Surface)) {
         Column(
             modifier = Modifier

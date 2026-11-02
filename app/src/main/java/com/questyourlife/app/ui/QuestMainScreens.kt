@@ -139,9 +139,9 @@ fun QuestListPanel(
                 val done=current.count{it.completedAt!=null}
                 val ratio=if(current.isEmpty()) 0f else done.toFloat()/current.size
                 val bg=when(index%3) {
-                    0->Color(0xFFFAEAE7)
+                    0->LightRed
                     1->GrassSurface
-                    else->Color(0xFFF6F1EE)
+                    else->MutedSurface
                 }
                 Row(Modifier.fillMaxWidth().clip(CardShape).background(bg)
                     .clickable {onGoal(g.id)}.padding(15.dp),
@@ -173,7 +173,7 @@ fun QuestListPanel(
         }
         if(tab==1) {
             Column(Modifier.fillMaxWidth().clip(CardShape)
-                .background(Color(0xFFFAEAE7)).clickable(onClick=onDaily).padding(18.dp)) {
+                .background(LightRed).clickable(onClick=onDaily).padding(18.dp)) {
                 Row(verticalAlignment=Alignment.CenterVertically) {
                     Text("오늘의 제안",fontSize=16.sp,fontWeight=FontWeight.Bold,color=TextInk)
                     Spacer(Modifier.weight(1f))
@@ -255,7 +255,7 @@ fun GoalDetailPanel(goal:GoalEntity,steps:List<GoalStepEntity>,
                         contentAlignment=Alignment.Center) {
                         Text(if(number<chapter) "✓" else "$number",fontSize=11.sp,
                             fontWeight=FontWeight.Bold,
-                            color=if(number<=chapter) Color.White else TextGray)
+                            color=if(number<=chapter) MaterialTheme.colorScheme.onPrimary else TextGray)
                     }
                     Spacer(Modifier.height(5.dp))
                     Text("챕터 $number",fontSize=9.sp,color=if(number==chapter) AccentRed else TextGray,

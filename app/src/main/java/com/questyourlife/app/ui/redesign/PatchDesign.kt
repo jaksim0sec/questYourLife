@@ -33,15 +33,15 @@ import com.questyourlife.app.ui.*
 
 /** Shared values for the five main pages and their sheets. */
 object PatchTokens {
-    val background = Cream
-    val surface = CardWhite
-    val ink = TextInk
-    val muted = TextGray
-    val red = AccentRed
+    val background: Color @Composable get() = Cream
+    val surface: Color @Composable get() = CardWhite
+    val ink: Color @Composable get() = TextInk
+    val muted: Color @Composable get() = TextGray
+    val red: Color @Composable get() = AccentRed
     val yellow = Color(0xFFFFE489)
-    val line = WarmLine
-    val soft = MutedSurface
-    val redSoft = LightRed
+    val line: Color @Composable get() = WarmLine
+    val soft: Color @Composable get() = MutedSurface
+    val redSoft: Color @Composable get() = LightRed
     val space4 = 4.dp
     val space8 = 8.dp
     val space12 = 12.dp
@@ -54,15 +54,34 @@ object PatchTokens {
 }
 
 @Composable
-fun PatchTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = lightColorScheme(
+fun PatchTheme(dark: Boolean = false, content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalPatchDark provides dark) {
+    val view = androidx.compose.ui.platform.LocalView.current
+    val activity = androidx.compose.ui.platform.LocalContext.current as? android.app.Activity
+    SideEffect {
+        activity?.let {
+            androidx.core.view.WindowCompat.getInsetsController(it.window, view).apply {
+                isAppearanceLightStatusBars = !dark
+                isAppearanceLightNavigationBars = !dark
+            }
+        }
+    }
+    val scheme = if (dark) darkColorScheme(
+        primary = PatchTokens.red, onPrimary = Color(0xFF261715),
+        background = PatchTokens.background, onBackground = PatchTokens.ink,
+        surface = PatchTokens.surface, onSurface = PatchTokens.ink,
+        surfaceVariant = PatchTokens.soft, onSurfaceVariant = PatchTokens.muted,
+        outline = PatchTokens.line, secondary = PatchTokens.ink,
+        error = Color(0xFFFFB4AB)
+    ) else lightColorScheme(
             primary = PatchTokens.red, onPrimary = Color.White,
             background = PatchTokens.background, onBackground = PatchTokens.ink,
             surface = PatchTokens.surface, onSurface = PatchTokens.ink,
             surfaceVariant = PatchTokens.soft, onSurfaceVariant = PatchTokens.muted,
             outline = PatchTokens.line, secondary = PatchTokens.ink
-        ),
+        )
+    MaterialTheme(
+        colorScheme = scheme,
         typography = Typography(
             headlineLarge = TextStyle(fontSize = 28.sp, lineHeight = 36.sp, fontWeight = FontWeight.ExtraBold),
             headlineSmall = TextStyle(fontSize = 24.sp, lineHeight = 32.sp, fontWeight = FontWeight.Bold),
@@ -77,6 +96,7 @@ fun PatchTheme(content: @Composable () -> Unit) {
             labelSmall = TextStyle(fontSize = 11.sp, lineHeight = 16.sp, fontWeight = FontWeight.Medium)
         ), content = content
     )
+    }
 }
 
 @Composable
@@ -110,7 +130,7 @@ fun PatchButton(text: String, onClick: () -> Unit, enabled: Boolean = true) {
 /** Flat panel used by the new reference pages; content owns its structure. */
 @Composable
 fun PatchPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
-    Column(modifier.fillMaxWidth().animateContentSize().clip(RoundedCornerShape(16.dp)).background(Color.White)
+    Column(modifier.fillMaxWidth().animateContentSize().clip(RoundedCornerShape(16.dp)).background(PatchTokens.surface)
         .padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
 }
 

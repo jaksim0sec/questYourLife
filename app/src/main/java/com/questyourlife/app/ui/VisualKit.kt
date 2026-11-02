@@ -29,19 +29,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.questyourlife.app.data.DailyQuestEntity
 
-// Reference-inspired design system, owned independently from the persistent model.
-val Cream = Color(0xFFFCFAF6)
-val CardWhite = Color(0xFFFFFEFC)
-val TextInk = Color(0xFF252321)
-val TextGray = Color(0xFF77736E)
-val AccentRed = Color(0xFFD64E4B)
-val LightRed = Color(0xFFF9E8E5)
-val WarmLine = Color(0xFFE9E5DF)
-val MutedSurface = Color(0xFFF3F0EB)
+val LocalPatchDark = staticCompositionLocalOf { false }
+// Semantic roles shared by modern and retained detail screens.
+val Cream: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF151715) else Color(0xFFFCFAF6)
+val CardWhite: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF222522) else Color(0xFFFFFEFC)
+val TextInk: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF4F1EB) else Color(0xFF252321)
+val TextGray: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFB7B4AC) else Color(0xFF6B6862)
+val AccentRed: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF38A82) else Color(0xFFC83F3C)
+val LightRed: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF3C2727) else Color(0xFFF9E8E5)
+val WarmLine: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF70776F) else Color(0xFFE9E5DF)
+val MutedSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF2D312D) else Color(0xFFF3F0EB)
 val CoinGold = Color(0xFFBE8529)
-val InkSoft = Color(0xFF363432)
-val LilacSurface = Color(0xFFF7EEF7)
-val GrassSurface = Color(0xFFF0F5ED)
+val InkSoft: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF4F1EB) else Color(0xFF363432)
+val LilacSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF312B35) else Color(0xFFF7EEF7)
+val GrassSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF283428) else Color(0xFFF0F5ED)
 val CardShape = RoundedCornerShape(21.dp)
 
 @Composable
@@ -66,7 +67,7 @@ fun CashBadge(coins: Int, onClick: (() -> Unit)? = null) {
     ) {
         Box(Modifier.size(17.dp).background(Color(0xFFFFD577),CircleShape),
             contentAlignment=Alignment.Center) {
-            Icon(Icons.Filled.Star,null,Modifier.size(11.dp),tint=Color.White)
+            Icon(Icons.Filled.Star,null,Modifier.size(11.dp),tint=if (LocalPatchDark.current) Color(0xFF261715) else Color.White)
         }
         Spacer(Modifier.width(6.dp))
         Text("${coins} C",fontSize=12.sp,fontWeight=FontWeight.Bold,color=TextInk)
@@ -86,7 +87,7 @@ fun SegmentedTabs(labels: List<String>, selected: Int, onSelect: (Int) -> Unit,
                 contentAlignment=Alignment.Center) {
                 Text(title,fontSize=11.sp,
                     fontWeight=if(index==selected) FontWeight.Bold else FontWeight.Medium,
-                    color=if(index==selected) Color.White else TextGray,maxLines=1)
+                    color=if(index==selected) { if (LocalPatchDark.current) Color(0xFF261715) else Color.White } else TextGray,maxLines=1)
             }
         }
     }
@@ -147,7 +148,7 @@ fun QuestTick(done: Boolean,modifier: Modifier=Modifier,locked: Boolean=false) {
         .border(if(done) 0.dp else 1.3.dp,
             if(locked) WarmLine else Color(0xFFB6B2AD),CircleShape),
         contentAlignment=Alignment.Center) {
-        if(done) Icon(Icons.Filled.Check,null,Modifier.size(17.dp),tint=Color.White)
+        if(done) Icon(Icons.Filled.Check,null,Modifier.size(17.dp),tint=if (LocalPatchDark.current) Color(0xFF261715) else Color.White)
     }
 }
 

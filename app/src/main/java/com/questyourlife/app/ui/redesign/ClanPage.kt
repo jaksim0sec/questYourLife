@@ -43,15 +43,15 @@ import com.questyourlife.app.ui.CosmeticArtwork
 
 /** Measurements belong to this reference surface, not the discarded generic cards. */
 private object ClanStyle {
-    val paper = Color(0xFFFAF9F6)
-    val card = Color.White
-    val ink = Color(0xFF151715)
-    val muted = Color(0xFF5C5E5A)
+    val paper: Color @Composable get() = PatchTokens.background
+    val card: Color @Composable get() = PatchTokens.surface
+    val ink: Color @Composable get() = PatchTokens.ink
+    val muted: Color @Composable get() = PatchTokens.muted
     val lime = Color(0xFFD9E779)
     val yellow = Color(0xFFFFDF58)
-    val soft = Color(0xFFF0EFEB)
-    val line = Color(0xFFD0D0CB)
-    val red = Color(0xFFFF3B30)
+    val soft: Color @Composable get() = PatchTokens.soft
+    val line: Color @Composable get() = PatchTokens.line
+    val red: Color @Composable get() = PatchTokens.red
     val radius = RoundedCornerShape(16.dp)
 }
 
@@ -93,7 +93,7 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
                 shape = RoundedCornerShape(10.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, ClanStyle.line),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = ClanStyle.ink)) {
-                Icon(painterResource(R.drawable.ic_patch_invite), null, Modifier.size(19.dp), tint = Color.Unspecified)
+                Icon(painterResource(R.drawable.ic_patch_invite), null, Modifier.size(19.dp), tint = ClanStyle.ink)
                 Spacer(Modifier.width(4.dp))
                 Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
@@ -229,7 +229,7 @@ private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
     val fontScale = LocalDensity.current.fontScale
     val panelHeight = (if (compact) 170.dp else 178.dp) * fontScale.coerceAtLeast(1f)
     BoxWithConstraints(Modifier.fillMaxWidth().heightIn(min = panelHeight)
-        .clip(ClanStyle.radius).background(ClanStyle.ink)) {
+        .clip(ClanStyle.radius).background(Color(0xFF191F19))) {
         val artWidth = (maxWidth * .38f).coerceAtMost(148.dp)
         val textWidth = maxWidth - artWidth - 20.dp
         val multilineCaption = fontScale > 1.1f || maxWidth < 330.dp
@@ -241,7 +241,7 @@ private fun ClanChestPanel(clan: ClanPreview, compact: Boolean) {
         Text("${clan.contributorCount}명 기여 중", Modifier.align(Alignment.TopEnd)
             .padding(top = 12.dp, end = 12.dp).clip(RoundedCornerShape(10.dp))
             .background(ClanStyle.lime).padding(horizontal = 10.dp, vertical = 6.dp),
-            fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Bold, color = ClanStyle.ink)
+            fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF151715))
         Column(Modifier.width(textWidth)
             .padding(start = 16.dp, top = 16.dp, bottom = 14.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)) {

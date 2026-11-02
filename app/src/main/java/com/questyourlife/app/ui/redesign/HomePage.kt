@@ -71,7 +71,7 @@ fun PatchHomePage(
         }
         item {
             Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.radius))
-                .background(PatchTokens.ink).padding(PatchTokens.space20),
+                .background(Color(0xFF252B25)).padding(PatchTokens.space20),
                 verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
                     Text("TODAY'S PATCH", color = Color.White.copy(alpha = .7f),

@@ -1,12 +1,17 @@
 package com.questyourlife.app.ui.redesign
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -14,39 +19,45 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.History
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.questyourlife.app.R
 import com.questyourlife.app.ui.DailyQuestViewModel
 import com.questyourlife.app.ui.MascotArt
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.text.NumberFormat
-import java.util.Locale
 
 private val ProfileZone = ZoneId.of("Asia/Seoul")
+private val ProfileShape = RoundedCornerShape(16.dp)
 
 @Composable
 fun PatchProfilePage(
@@ -59,10 +70,14 @@ fun PatchProfilePage(
     val history by model.history.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
     val ownedItems by model.ownedItems.collectAsStateWithLifecycle()
-    val sessions by model.sessions.collectAsStateWithLifecycle()
+    var showStamps by rememberSaveable { mutableStateOf(false) }
     val today = LocalDate.now(ProfileZone)
     val monday = today.minusDays((today.dayOfWeek.value - 1).toLong())
     val nextMonday = monday.plusWeeks(1)
+    val weekStart = monday.atStartOfDay(ProfileZone).toInstant().toEpochMilli()
+    val weekEnd = nextMonday.atStartOfDay(ProfileZone).toInstant().toEpochMilli()
+
+    // Both tables contribute to the persisted balance, including linked reward rows.
     val rewardEvents = remember(history, steps) {
         history.mapNotNull { quest -> quest.completedAt?.let { it to quest.reward } } +
             steps.mapNotNull { step -> step.completedAt?.let { it to step.reward } }
@@ -72,156 +87,247 @@ fun PatchProfilePage(
         val linkedSteps = completedDaily.mapNotNull { quest ->
             quest.goalId?.let { goalId -> quest.stepPosition?.let { goalId to it } }
         }.toSet()
-        // A linked daily completion also marks its goal step complete: one action, one record.
-        completedDaily.mapNotNull { quest -> quest.completedAt?.let { it to quest.reward } } +
+        // A daily quest can complete its parent step: count that action only once.
+        completedDaily.mapNotNull { it.completedAt } +
             steps.filter { (it.goalId to it.position) !in linkedSteps }
-                .mapNotNull { step -> step.completedAt?.let { it to step.reward } }
+                .mapNotNull { it.completedAt }
     }
-    val weekStart = monday.atStartOfDay(ProfileZone).toInstant().toEpochMilli()
-    val weekEnd = nextMonday.atStartOfDay(ProfileZone).toInstant().toEpochMilli()
     val weeklyEarned = remember(rewardEvents, weekStart, weekEnd) {
         rewardEvents.filter { (timestamp, _) -> timestamp >= weekStart && timestamp < weekEnd }
             .sumOf { it.second }
     }
-    val weekly = remember(completions, monday) {
-        completions.filter { (timestamp, _) ->
-            val date = Instant.ofEpochMilli(timestamp).atZone(ProfileZone).toLocalDate()
-            !date.isBefore(monday) && date.isBefore(nextMonday)
-        }
+    val weekly = remember(completions, weekStart, weekEnd) {
+        completions.filter { it >= weekStart && it < weekEnd }
+    }
+    val completionDates = remember(completions) {
+        completions.map { Instant.ofEpochMilli(it).atZone(ProfileZone).toLocalDate() }.toSet()
     }
     val activeDays = remember(weekly) {
-        weekly.map { (timestamp, _) ->
-            Instant.ofEpochMilli(timestamp).atZone(ProfileZone).toLocalDate()
-        }.toSet()
+        weekly.map { Instant.ofEpochMilli(it).atZone(ProfileZone).toLocalDate() }.toSet()
     }
-    val focusMinutes = sessions.sumOf { it.durationSeconds.toLong() } / 60
-    val numbers = remember { NumberFormat.getIntegerInstance(Locale.KOREA) }
+    val hasConsecutiveWeek = remember(completionDates) {
+        completionDates.any { lastDay ->
+            (0L..6L).all { offset -> lastDay.minusDays(offset) in completionDates }
+        }
+    }
+    val hasCompleteChapter = remember(steps) {
+        steps.groupBy { it.goalId to it.chapter }.values.any { chapter ->
+            chapter.isNotEmpty() && chapter.all { it.completedAt != null }
+        }
+    }
+    val stamps = listOf(
+        ProfileStamp("첫 시작", "퀘스트나 목표 단계를 처음 완료하면 받아요.", completions.isNotEmpty()),
+        ProfileStamp("꾸준한 일주일", "7일 연속으로 퀘스트나 목표 단계를 완료하면 받아요.", hasConsecutiveWeek),
+        ProfileStamp("첫 챕터", "한 챕터의 목표 단계를 모두 완료하면 받아요.", hasCompleteChapter)
+    )
 
     Column(
         Modifier.fillMaxWidth().verticalScroll(rememberScrollState())
-            .padding(horizontal = PatchTokens.space20)
-            .padding(bottom = PatchTokens.space24),
-        verticalArrangement = Arrangement.spacedBy(PatchTokens.space20)
+            .padding(horizontal = PatchTokens.space16)
+            .padding(top = PatchTokens.space4, bottom = PatchTokens.space12),
+        verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
     ) {
-        Row(
-            Modifier.fillMaxWidth().padding(vertical = PatchTokens.space8),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(PatchTokens.space16)
-        ) {
-            MascotArt(Modifier.size(128.dp))
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                Text("이 기기의 나", style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold, color = PatchTokens.ink)
-                Text("작은 실천을 쌓는 중", style = MaterialTheme.typography.bodySmall,
-                    color = PatchTokens.muted)
-                PatchButton("프로필 꾸미기", onClick = onDecor)
-            }
-        }
+        ProfileHero(model.demoClan.name, onDecor)
 
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
-            PatchSurface(Modifier.weight(1f)) {
-                Text("보유 캐시", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
-                Text("${numbers.format(coins)} C", style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold, color = PatchTokens.ink)
-            }
-            PatchSurface(Modifier.weight(1f)) {
-                Text("이번 주 획득", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
-                Text("${numbers.format(weeklyEarned)} C",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold, color = PatchTokens.red)
-            }
-        }
-
-        PatchSurface {
-            PatchSection("이번 주의 실천")
-            Row(Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Bottom) {
-                Column(Modifier.weight(1f)) {
-                    Text("퀘스트 ${weekly.size}개 완료", style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold, color = PatchTokens.ink)
-                    Text("일일 퀘스트와 목표 단계", style = MaterialTheme.typography.bodySmall,
-                        color = PatchTokens.muted)
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val stacked = maxWidth < 300.dp || LocalDensity.current.fontScale > 1.3f ||
+                coins.toString().length > 6 || weeklyEarned.toString().length > 6
+            if (stacked) {
+                Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+                    ProfileCash("보유 캐시", coins)
+                    ProfileCash("이번 주 획득", weeklyEarned)
                 }
-                Text("${activeDays.size}일 실천", style = MaterialTheme.typography.labelLarge,
-                    color = PatchTokens.red)
+            } else {
+                Row(horizontalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+                    ProfileCash("보유 캐시", coins, Modifier.weight(1f))
+                    ProfileCash("이번 주 획득", weeklyEarned, Modifier.weight(1f))
+                }
             }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        }
+
+        PatchPanel(Modifier.clickable(role = Role.Button, onClickLabel = "이번 주 성취 기록 보기", onClick = onHistory)) {
+            ProfileHeading("이번 주의 나", showArrow = true)
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+                Column(Modifier.weight(1f)) {
+                    Text("퀘스트", fontSize = 11.sp, lineHeight = 15.sp, color = PatchTokens.muted)
+                    Text("${weekly.size}개 완료", fontSize = 17.sp, lineHeight = 23.sp,
+                        fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                }
+                Text("${activeDays.size}일 실천", fontSize = 15.sp, lineHeight = 22.sp,
+                    fontWeight = FontWeight.Bold, color = PatchTokens.ink,
+                    modifier = Modifier.padding(start = PatchTokens.space8))
+            }
+            Row(Modifier.fillMaxWidth()) {
                 listOf("월", "화", "수", "목", "금", "토", "일").forEachIndexed { index, weekday ->
                     val date = monday.plusDays(index.toLong())
                     val completed = date in activeDays
-                    val description = "${date.monthValue}월 ${date.dayOfMonth}일 ${weekday}요일, " +
-                        when {
-                            date.isAfter(today) -> "아직 오지 않은 날"
-                            completed -> "실천 기록 있음"
-                            else -> "완료 기록 없음"
-                        }
+                    val description = "${date.monthValue}월 ${date.dayOfMonth}일 ${weekday}요일, " + when {
+                        completed -> "실천 기록 있음"
+                        date.isAfter(today) -> "아직 오지 않은 날"
+                        else -> "완료 기록 없음"
+                    }
                     Column(
-                        Modifier.clearAndSetSemantics { contentDescription = description },
+                        Modifier.weight(1f).clearAndSetSemantics { contentDescription = description },
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
-                        Box(Modifier.size(32.dp).background(
-                            if (completed) PatchTokens.red else PatchTokens.background, CircleShape),
-                            contentAlignment = Alignment.Center) {
-                            if (completed) Icon(Icons.Rounded.Check, null,
-                                Modifier.size(20.dp), tint = PatchTokens.surface)
-                            else Text("·", style = MaterialTheme.typography.titleMedium,
-                                color = PatchTokens.muted)
-                        }
-                        Text(weekday, style = MaterialTheme.typography.labelSmall,
-                            color = if (date == today) PatchTokens.ink else PatchTokens.muted,
-                            fontWeight = if (date == today) FontWeight.Bold else FontWeight.Normal)
+                        Image(painterResource(R.drawable.mascot_face_stamp), null,
+                            Modifier.fillMaxWidth().height(29.dp), contentScale = ContentScale.Fit,
+                            colorFilter = if (completed) null else ColorFilter.tint(PatchTokens.muted.copy(alpha = .28f)))
+                        Text(weekday, fontSize = 10.sp, lineHeight = 14.sp,
+                            fontWeight = if (date == today) FontWeight.Bold else FontWeight.Normal,
+                            color = if (date == today) PatchTokens.ink else PatchTokens.muted)
                     }
                 }
             }
-            Text(if (weekly.isEmpty()) "완료한 실천이 여기에 차곡차곡 쌓여요." else
-                "${monday.monthValue}월 ${monday.dayOfMonth}일 ~ ${nextMonday.minusDays(1).monthValue}월 ${nextMonday.minusDays(1).dayOfMonth}일 · 한국 시간 기준",
-                style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
         }
 
-        PatchSurface {
-            PatchSection("쌓인 기록")
-            Row(Modifier.fillMaxWidth().padding(top = PatchTokens.space12),
-                horizontalArrangement = Arrangement.spacedBy(PatchTokens.space16)) {
-                Column(Modifier.weight(1f)) {
-                    Text("전체 완료", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
-                    Spacer(Modifier.height(PatchTokens.space4))
-                    Text("${numbers.format(completions.size)}개", style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold, color = PatchTokens.ink)
-                }
-                Column(Modifier.weight(1f)) {
-                    Text("집중 기록", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
-                    Spacer(Modifier.height(PatchTokens.space4))
-                    Text("${numbers.format(focusMinutes)}분", style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold, color = PatchTokens.ink)
+        PatchPanel(Modifier.clickable(role = Role.Button, onClickLabel = "모은 도장과 획득 조건 보기") { showStamps = true }) {
+            ProfileHeading("모은 도장", showArrow = true)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+                stamps.forEach { stamp ->
+                    Column(
+                        Modifier.weight(1f).clearAndSetSemantics {
+                            contentDescription = "${stamp.title}, ${if (stamp.earned) "획득" else "미획득"}. ${stamp.requirement}"
+                        },
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        // Reserved for the supplied badge image. Never substitute invented art.
+                        Box(Modifier.fillMaxWidth().aspectRatio(1.6f)
+                            .background(PatchTokens.soft, RoundedCornerShape(10.dp)))
+                        Text(stamp.title, fontSize = 11.sp, lineHeight = 16.sp,
+                            color = PatchTokens.ink, fontWeight = FontWeight.Medium)
+                        Text(if (stamp.earned) "획득" else "미획득", fontSize = 10.sp, lineHeight = 13.sp,
+                            color = if (stamp.earned) PatchTokens.red else PatchTokens.muted,
+                            fontWeight = if (stamp.earned) FontWeight.Bold else FontWeight.Normal)
+                    }
                 }
             }
         }
 
-        Column {
-            ProfileLink(Icons.Rounded.Palette, "꾸미기 보관함", "구매한 아이템 ${ownedItems.size}개", onDecor)
-            HorizontalDivider(color = PatchTokens.line)
-            ProfileLink(Icons.Rounded.History, "성취 기록", "완료한 퀘스트와 집중 기록", onHistory)
-            HorizontalDivider(color = PatchTokens.line)
-            ProfileLink(Icons.Rounded.Settings, "알림 설정", "실천을 이어갈 시간 정하기", onSettings)
+        Column(Modifier.fillMaxWidth().clip(ProfileShape).background(PatchTokens.surface)) {
+            ProfileLink(R.drawable.ic_patch_shirt, "꾸미기 보관함", onDecor,
+                "꾸미기 보관함, 구매한 아이템 ${ownedItems.size}개")
+            ProfileDivider()
+            ProfileLink(R.drawable.ic_patch_chart_bars, "성취 기록", onHistory)
+            ProfileDivider()
+            ProfileLink(R.drawable.ic_patch_bell, "알림 설정", onSettings)
         }
-        Text("목표와 기록은 이 기기에 저장돼요. 다른 사람에게 공개되지 않아요.",
-            style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
+        Text("목표와 기록은 이 기기에만 저장돼요.",
+            fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted)
+    }
+
+    if (showStamps) {
+        PatchSheet("모은 도장", onDismiss = { showStamps = false }) {
+            stamps.forEach { stamp ->
+                Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
+                    Text("${stamp.title} · ${if (stamp.earned) "획득" else "미획득"}",
+                        fontSize = 16.sp, lineHeight = 23.sp, color = PatchTokens.ink,
+                        fontWeight = FontWeight.Bold)
+                    Text(stamp.requirement, fontSize = 14.sp, lineHeight = 21.sp, color = PatchTokens.muted)
+                }
+            }
+            Text("이 기기에 저장된 완료 기록을 기준으로 해요. 날짜는 한국 시간 기준이에요.",
+                fontSize = 12.sp, lineHeight = 18.sp, color = PatchTokens.muted)
+        }
     }
 }
 
 @Composable
-private fun ProfileLink(icon: ImageVector, title: String, subtitle: String, onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onClick)
-        .heightIn(min = 64.dp).padding(vertical = PatchTokens.space12),
-        verticalAlignment = Alignment.CenterVertically) {
-        Icon(icon, null, Modifier.size(24.dp), tint = PatchTokens.ink)
-        Spacer(Modifier.width(PatchTokens.space12))
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge, color = PatchTokens.ink,
-                fontWeight = FontWeight.Medium)
-            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
+private fun ProfileHero(clanName: String, onDecor: () -> Unit) {
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val availableWidth = maxWidth
+        val stacked = availableWidth < 300.dp || LocalDensity.current.fontScale > 1.4f
+        if (stacked) {
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+                ProfileAvatar(Modifier.width(160.dp))
+                ProfileIdentity(clanName, onDecor, Modifier.fillMaxWidth())
+            }
+        } else {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
+                ProfileAvatar(Modifier.width((availableWidth * .48f).coerceAtMost(176.dp)))
+                ProfileIdentity(clanName, onDecor, Modifier.weight(1f))
+            }
         }
-        Icon(Icons.Rounded.ChevronRight, null, Modifier.size(24.dp), tint = PatchTokens.muted)
     }
 }
+
+@Composable
+private fun ProfileAvatar(modifier: Modifier) {
+    Box(modifier.height(144.dp), contentAlignment = Alignment.BottomCenter) {
+        // The upper space is reserved for future supplied hat art; the face stays bare.
+        MascotArt(Modifier.fillMaxWidth().height(120.dp))
+    }
+}
+
+@Composable
+private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Modifier = Modifier) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
+        Text("나", fontSize = 25.sp, lineHeight = 31.sp, fontWeight = FontWeight.ExtraBold,
+            color = PatchTokens.ink, modifier = Modifier.semantics { heading() })
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
+            Icon(painterResource(R.drawable.ic_patch_flag), null, Modifier.size(22.dp), tint = Color.Unspecified)
+            Column {
+                Text(clanName, fontSize = 12.sp, lineHeight = 17.sp, color = PatchTokens.ink)
+                Text("시연용 클랜", fontSize = 10.sp, lineHeight = 14.sp, color = PatchTokens.muted)
+            }
+        }
+        OutlinedButton(onClick = onDecor, modifier = Modifier.fillMaxWidth().heightIn(min = PatchTokens.control),
+            shape = RoundedCornerShape(10.dp), border = BorderStroke(1.dp, PatchTokens.muted.copy(alpha = .6f)),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = PatchTokens.ink),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 8.dp)) {
+            Icon(painterResource(R.drawable.ic_patch_shirt), null, Modifier.size(20.dp))
+            Spacer(Modifier.width(PatchTokens.space4))
+            Text("프로필 꾸미기", fontSize = 12.sp, lineHeight = 17.sp, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Composable
+private fun ProfileCash(title: String, amount: Int, modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxWidth().clip(ProfileShape).background(PatchTokens.surface)
+        .padding(PatchTokens.space12), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
+        Text(title, fontSize = 11.sp, lineHeight = 16.sp, color = PatchTokens.muted)
+        PatchMoney(amount)
+    }
+}
+
+@Composable
+private fun ProfileHeading(title: String, showArrow: Boolean = false) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Text(title, fontSize = 16.sp, lineHeight = 22.sp, fontWeight = FontWeight.ExtraBold,
+            color = PatchTokens.ink, modifier = Modifier.weight(1f).semantics { heading() })
+        if (showArrow) Icon(painterResource(R.drawable.ic_patch_chevron_right), null,
+            Modifier.size(18.dp), tint = PatchTokens.muted)
+    }
+}
+
+@Composable
+private fun ProfileLink(
+    @DrawableRes icon: Int,
+    title: String,
+    onClick: () -> Unit,
+    description: String = title
+) {
+    Row(Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onClick)
+        .heightIn(min = PatchTokens.control).padding(horizontal = PatchTokens.space16, vertical = PatchTokens.space8)
+        .semantics { contentDescription = description }, verticalAlignment = Alignment.CenterVertically) {
+        Icon(painterResource(icon), null, Modifier.size(22.dp), tint = PatchTokens.ink)
+        Spacer(Modifier.width(PatchTokens.space12))
+        Text(title, Modifier.weight(1f).clearAndSetSemantics { }, fontSize = 14.sp, lineHeight = 21.sp,
+            color = PatchTokens.ink, fontWeight = FontWeight.Medium)
+        Icon(painterResource(R.drawable.ic_patch_chevron_right), null, Modifier.size(16.dp), tint = PatchTokens.muted)
+    }
+}
+
+@Composable
+private fun ProfileDivider() {
+    HorizontalDivider(Modifier.padding(start = 50.dp, end = PatchTokens.space12),
+        color = PatchTokens.line.copy(alpha = .45f))
+}
+
+private data class ProfileStamp(val title: String, val requirement: String, val earned: Boolean)

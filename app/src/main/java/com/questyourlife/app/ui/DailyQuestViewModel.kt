@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.questyourlife.app.data.*
 import com.questyourlife.app.daily.*
 import com.questyourlife.app.companion.*
+import com.questyourlife.app.cosmetics.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -120,6 +121,38 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
             equipped.intValue=id
         }
     }}
+    val cosmeticBusy = mutableStateOf(false)
+    val cosmeticMessage = mutableStateOf<String?>(null)
+    fun chooseCosmetic(id: Int) {
+        if (cosmeticBusy.value) return
+        cosmeticBusy.value = true
+        cosmeticMessage.value = null
+        viewModelScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    val owned = goalRepo.dao.currentOwned(id)
+                    val balance = goalRepo.dao.dailyRewards() + goalRepo.dao.mainRewards() - goalRepo.dao.purchases()
+                    val decision = CosmeticPolicy.decide(id, if (owned) setOf(id) else emptySet(), balance)
+                    when (decision) {
+                        is CosmeticDecision.Equip -> true
+                        is CosmeticDecision.Buy -> goalRepo.buy(id, decision.item.price) || goalRepo.dao.currentOwned(id)
+                        is CosmeticDecision.Reject -> false
+                    }
+                }
+                if (result) {
+                    goalRepo.equipped = id
+                    equipped.intValue = id
+                    cosmeticMessage.value = "착용 정보를 저장했어요."
+                } else {
+                    cosmeticMessage.value = if (CosmeticCatalog.find(id) == null) "보유한 아이템만 착용할 수 있어요."
+                        else "캐시가 부족해요. 잔액을 확인해 주세요."
+                }
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) { cosmeticMessage.value = "저장하지 못했어요. 다시 시도해 주세요." }
+            finally { cosmeticBusy.value = false }
+        }
+    }
+
     fun equipItem(id:Int){
         if(id!=0 && ownedItems.value.none{it.itemId==id}) return
         goalRepo.equipped=id

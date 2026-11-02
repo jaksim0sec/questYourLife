@@ -157,6 +157,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         onCompanion = openCompanion)
                     "dm" -> PatchDmPage(model)
                     "clan" -> PatchClanPage(model)
+                    "decor" -> PatchDecorPage(model, onBack = back)
                     "my" -> PatchProfilePage(model,
                         onHistory = { navigate("history") }, onDecor = { navigate("decor") },
                         onSettings = { navigate("settings") })
@@ -185,12 +186,6 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                     Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
                                         TextButton(onClick = back) { Text("돌아가기") }
                                         HistoryPanel(history, steps, sessions)
-                                    }
-                                }
-                                "decor" -> {
-                                    Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
-                                        TextButton(onClick = back) { Text("돌아가기") }
-                                        DecorPanel(coins, owned, model.equipped.intValue, model::buyItem, model::equipItem)
                                     }
                                 }
                                 "focus" -> FocusPanel(back, model::finishFocus)

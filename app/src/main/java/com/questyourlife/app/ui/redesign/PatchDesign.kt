@@ -6,10 +6,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.Role
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import com.questyourlife.app.R
+import java.text.NumberFormat
+import java.util.Locale
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -96,28 +104,70 @@ fun PatchButton(text: String, onClick: () -> Unit, enabled: Boolean = true) {
     }
 }
 
-/** All overlays share the same handle, close target, padding and keyboard treatment. */
+/** Flat panel used by the new reference pages; content owns its structure. */
+@Composable
+fun PatchPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White)
+        .padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = content)
+}
+
+@Composable
+fun PatchMoney(amount: Int, modifier: Modifier = Modifier) {
+    val formatted = remember(amount) { NumberFormat.getIntegerInstance(Locale.KOREA).format(amount) }
+    Row(modifier, verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        Box(Modifier.size(22.dp).clip(CircleShape).background(Color(0xFFFFE5A0)),
+            contentAlignment = Alignment.Center) {
+            Icon(painterResource(R.drawable.ic_patch_coin), null, Modifier.size(20.dp), tint = Color(0xFFBA8606))
+        }
+        Text("$formatted C", fontSize = 20.sp, lineHeight = 26.sp,
+            fontWeight = FontWeight.Bold, color = PatchTokens.ink)
+    }
+}
+
+/** Native sheet anchors/nested scrolling own all drag, fling and interruption behavior. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PatchSheet(title: String, onDismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val scope = rememberCoroutineScope()
+    val close: () -> Unit = {
+        scope.launch {
+            sheetState.hide()
+            if (!sheetState.isVisible) onDismiss()
+        }
+    }
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = sheetState,
         containerColor = PatchTokens.background,
         shape = RoundedCornerShape(topStart = PatchTokens.space24, topEnd = PatchTokens.space24),
-        dragHandle = { BottomSheetDefaults.DragHandle(color = PatchTokens.muted.copy(alpha = .4f)) }
+        dragHandle = {
+            BottomSheetDefaults.DragHandle(
+                modifier = Modifier.clickable(role = Role.Button) {
+                    scope.launch {
+                        if (sheetState.currentValue == SheetValue.Expanded && sheetState.hasPartiallyExpandedState)
+                            sheetState.partialExpand()
+                        else sheetState.expand()
+                    }
+                }.semantics {
+                    contentDescription = if (sheetState.currentValue == SheetValue.Expanded) "시트 반으로 줄이기" else "시트 전체 펼치기"
+                }, color = PatchTokens.muted.copy(alpha = .4f))
+        }
     ) {
-        Column(Modifier.fillMaxWidth().imePadding().verticalScroll(rememberScrollState())
-            .padding(start = PatchTokens.space20, end = PatchTokens.space20, bottom = PatchTokens.space24),
-            verticalArrangement = Arrangement.spacedBy(PatchTokens.space16)) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        // Tall measurement ensures both partial and expanded anchors exist, even for short content.
+        Column(Modifier.fillMaxWidth().fillMaxHeight(.92f).imePadding()) {
+            Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp),
+                verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = PatchTokens.ink,
                     modifier = Modifier.weight(1f))
-                IconButton(onClick = onDismiss) {
-                    Icon(Icons.Rounded.Close, "닫기", tint = PatchTokens.muted)
+                IconButton(onClick = close) {
+                    Icon(painterResource(R.drawable.ic_patch_close), "닫기", tint = PatchTokens.muted)
                 }
             }
-            content()
+            Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
+                .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp), content = content)
         }
     }
 }

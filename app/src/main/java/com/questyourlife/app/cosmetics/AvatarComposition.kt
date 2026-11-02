@@ -9,14 +9,14 @@ object AvatarComposer {
 
     // Equipment placement only: never special-case a friend's name or a screen.
     // Navy cap (2) stays untouched. Cream/charcoal frames compensate for visible PNG margins.
-    // Fits were calibrated against the revised-fit reference at the 110px screenshot scale.
+    // Fine-tuned upward after the 2026-11-03 mobile screenshot showed eyes obscured by brims.
     private val equipment = mapOf(
-        0 to AvatarLayer(0, .075f, .095f, .85f, .612f),    // Beanie: band lowered toward eyes
-        1 to AvatarLayer(1, .045f, .100f, .91f, .582f),   // Cream cap: visible size matches navy, lowered brim
+        0 to AvatarLayer(0, .075f, .055f, .85f, .612f),    // Beanie: band lowered toward eyes
+        1 to AvatarLayer(1, .045f, .060f, .91f, .582f),   // Cream cap: visible size matches navy, lowered brim
         2 to AvatarLayer(2, .065f, .015f, .87f, .582f),   // Navy cap: reference, unchanged
-        3 to AvatarLayer(3, .045f, .100f, .91f, .582f),   // Charcoal cap: same calibrated cap fit
+        3 to AvatarLayer(3, .045f, .060f, .91f, .582f),   // Charcoal cap: same calibrated cap fit
         4 to AvatarLayer(4, .105f, -.020f, .78f, .612f),  // Backward cap: preserve fit
-        5 to AvatarLayer(5, .0675f, .052f, .865f, .656f), // Bucket hat: brim lowered
+        5 to AvatarLayer(5, .0675f, .012f, .865f, .656f), // Bucket hat: brim lowered
         1001 to AvatarLayer(1001, .030f, .175f, .94f, .685f), // Cream headphones
         1003 to AvatarLayer(1003, .030f, .175f, .94f, .685f), // Black headphones
         1004 to AvatarLayer(1004, .025f, .480f, .95f, .360f) // Earbuds: unchanged

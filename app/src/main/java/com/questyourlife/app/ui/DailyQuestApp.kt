@@ -15,6 +15,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import com.questyourlife.app.R
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -25,15 +28,15 @@ import com.questyourlife.app.ui.redesign.*
 
 private data class PatchTab(
     val route: String, val title: String,
-    val activeIcon: ImageVector, val inactiveIcon: ImageVector
+    val activeIcon: Int, val inactiveIcon: Int
 )
 
 private val patchTabs = listOf(
-    PatchTab("home", "홈", Icons.Rounded.Home, Icons.Rounded.Home),
-    PatchTab("quests", "퀘스트", Icons.Rounded.CheckCircle, Icons.Rounded.CheckCircleOutline),
-    PatchTab("dm", "DM", Icons.Rounded.ChatBubble, Icons.Rounded.ChatBubbleOutline),
-    PatchTab("clan", "클랜", Icons.Rounded.People, Icons.Rounded.PeopleOutline),
-    PatchTab("my", "마이", Icons.Rounded.Person, Icons.Rounded.PersonOutline)
+    PatchTab("home", "홈", R.drawable.ic_patch_nav_active_home, R.drawable.ic_patch_nav_inactive_home),
+    PatchTab("quests", "퀘스트", R.drawable.ic_patch_nav_active_quest, R.drawable.ic_patch_nav_inactive_quest),
+    PatchTab("dm", "DM", R.drawable.ic_patch_nav_active_dm, R.drawable.ic_patch_nav_inactive_dm),
+    PatchTab("clan", "클랜", R.drawable.ic_patch_nav_active_clan, R.drawable.ic_patch_nav_inactive_clan),
+    PatchTab("my", "마이", R.drawable.ic_patch_nav_active_my, R.drawable.ic_patch_nav_inactive_my)
 )
 
 @Composable
@@ -52,8 +55,8 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                     .semantics { selected = isSelected },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(PatchTokens.space4, Alignment.CenterVertically)) {
-                    Icon(if (isSelected) tab.activeIcon else tab.inactiveIcon,
-                        null, tint = tint, modifier = Modifier.size(24.dp))
+                    Icon(painterResource(if (isSelected) tab.activeIcon else tab.inactiveIcon),
+                        null, tint = Color.Unspecified, modifier = Modifier.size(24.dp))
                     Text(tab.title, color = tint, style = MaterialTheme.typography.labelSmall,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium)
                 }
@@ -72,10 +75,10 @@ private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -
             Text(title, style = MaterialTheme.typography.headlineSmall,
                 color = PatchTokens.ink, modifier = Modifier.weight(1f))
             IconButton(onClick = onNotifications) {
-                Icon(Icons.Rounded.NotificationsNone, "알림", tint = PatchTokens.ink)
+                Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = Color.Unspecified)
             }
             IconButton(onClick = onMenu) {
-                Icon(Icons.Rounded.Menu, "메뉴", tint = PatchTokens.ink)
+                Icon(painterResource(R.drawable.ic_patch_header_more), "메뉴", tint = Color.Unspecified)
             }
         }
     }

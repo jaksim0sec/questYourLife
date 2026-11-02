@@ -16,6 +16,7 @@ object DailyQuestScheduler {
     const val ACTION_SNOOZE = "com.questyourlife.app.DAILY_SNOOZE"
     const val ACTION_SNOOZE_DUE = "com.questyourlife.app.DAILY_SNOOZE_DUE"
     const val ACTION_ACCEPT = "com.questyourlife.app.DAILY_ACCEPT"
+    const val ACTION_REJECT = "com.questyourlife.app.DAILY_REJECT"
     const val ACTION_COMPLETE = "com.questyourlife.app.DAILY_COMPLETE"
     const val EXTRA_ID = "daily_quest_id"
 

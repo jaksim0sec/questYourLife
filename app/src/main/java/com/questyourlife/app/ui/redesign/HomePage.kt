@@ -38,6 +38,7 @@ fun PatchHomePage(
     onClan: () -> Unit,
     onCompanion: () -> Unit
 ) {
+    val level by model.userLevel.collectAsStateWithLifecycle()
     val daily by model.quests.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
     val coins by model.coins.collectAsStateWithLifecycle()
@@ -54,6 +55,7 @@ fun PatchHomePage(
             top = PatchTokens.space8, bottom = PatchTokens.space24),
         verticalArrangement = Arrangement.spacedBy(PatchTokens.space12)
     ) {
+        item { LevelProgress(level) }
         item {
             Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.space12))
                 .background(PatchTokens.soft).padding(PatchTokens.space12),

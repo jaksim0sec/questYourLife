@@ -282,18 +282,13 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     }
                 }
             }
-            "notifications" -> PatchSheet("알림", onDismiss = { sheet = null }) {
-                Text("이 기기의 오늘 퀘스트", style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
-                if (daily.isEmpty()) Text("아직 오늘의 제안이 없어요", color = PatchTokens.muted)
-                daily.forEach { quest ->
-                    MenuRow(quest.title, if (quest.completedAt == null) Icons.Rounded.NotificationsNone else Icons.Rounded.CheckCircle) {
-                        selectedDailyId = quest.id
-                        sheet = "daily"
-                    }
-                    Text(if (quest.completedAt != null) "완료 · +${quest.reward} C" else if (quest.accepted) "수락했어요 · 이어서 완료하기" else "제안이 준비됐어요 · 수락하고 시작하기",
-                        style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
-                }
-                TextButton(onClick = { navigate("settings") }) { Text("알림 설정") }
+            "notifications" -> PatchSheet("알림", onDismiss = { sheet = null },
+                initialHeight = 520.dp, startExpanded = true) {
+                val declined = history.filter { it.dismissed && !it.accepted && it.dateKey == com.questyourlife.app.daily.DailyQuestRepository.today() }
+                QuestInbox((daily + declined).distinctBy { it.id },
+                    onOpen = { selectedDailyId = it; sheet = "daily" },
+                    onAccept = model::accept, onReject = model::rejectQuest,
+                    onSettings = { navigate("settings") })
             }
             "menu" -> PatchSheet("메뉴", onDismiss = { sheet = null }) {
                 MenuRow("패치와 목표 나누기", Icons.Rounded.ChatBubbleOutline, openCompanion)

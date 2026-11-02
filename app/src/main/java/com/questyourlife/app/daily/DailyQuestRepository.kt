@@ -45,6 +45,7 @@ class DailyQuestRepository(context: Context) {
     }
     suspend fun defer(id: String) = dao.defer(id, LocalDate.now().plusDays(1).toString())
     suspend fun abandon(id: String) = dao.abandon(id)
+    suspend fun reject(id: String) = dao.reject(id, today())
     fun observeDay(dateKey:String)=dao.observeDay(dateKey)
     fun observeHistory()=dao.observeHistory()
     suspend fun snapshotDay(dateKey:String)=dao.snapshotDay(dateKey)

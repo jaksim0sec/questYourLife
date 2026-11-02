@@ -69,6 +69,7 @@ fun PatchPersonProfilePage(name: String, clanName: String, onBack: () -> Unit,
                 Text(if (requested) "친구 요청을 이 기기에 저장했어요." else "친구 요청을 시연해 볼 수 있어요.",
                     style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
             }
+            LevelProgress(com.questyourlife.app.progression.UserLevel.fromXp(completed * 20L))
             PatchPanel {
                 Text("이번 주의 $name", style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold)

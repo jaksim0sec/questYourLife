@@ -66,6 +66,7 @@ fun PatchProfilePage(
     onDecor: () -> Unit,
     onSettings: () -> Unit
 ) {
+    val level by model.userLevel.collectAsStateWithLifecycle()
     val coins by model.coins.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
@@ -128,6 +129,8 @@ fun PatchProfilePage(
         verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
     ) {
         ProfileHero(model.demoClan.name, model.equipped.intValue, onDecor)
+        LevelProgress(level)
+        Text("완료 보상 1 C = 1 XP · 100 XP마다 레벨 업", fontSize = 10.sp, color = PatchTokens.muted)
 
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             val stacked = maxWidth < 300.dp || LocalDensity.current.fontScale > 1.3f ||

@@ -12,12 +12,15 @@ import android.os.Build
 import com.questyourlife.app.MainActivity
 import com.questyourlife.app.R
 import com.questyourlife.app.data.DailyQuestEntity
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 object DailyQuestNotifications {
+    private val dispatchMutex = Mutex()
+    suspend fun <T> serialized(block: suspend () -> T): T = dispatchMutex.withLock { block() }
     private const val PROPOSALS = "daily_proposals"
     private const val ACTIVE = "active_daily_quests"
     private const val COMPLETED = "daily_quest_rewards"
-    private const val PROPOSAL_ID = 701
 
     private fun manager(context: Context) = context.getSystemService(NotificationManager::class.java)
 
@@ -59,24 +62,26 @@ object DailyQuestNotifications {
             .setContentIntent(openApp(context))
             .setAutoCancel(true)
 
-    fun proposals(context: Context, amount: Int) {
+    fun proposal(context: Context, quest: DailyQuestEntity) {
         if (!allowed(context)) return
         setup(context)
         val notification = builder(context, PROPOSALS)
-            .setContentTitle("오늘의 퀘스트가 도착했어")
-            .setContentText("${amount}개의 작은 목표가 준비됐어. 마음에 드는 퀘스트를 수락해 봐.")
-            .setStyle(Notification.BigTextStyle().bigText(
-                "오늘은 어떤 한 걸음을 시작할까? 갓생패치에서 퀘스트를 골라 수락해 봐."
-            ))
+            .setContentTitle("📬 오늘의 퀘스트 · ${quest.title}")
+            .setContentText("${quest.detail} · 완료하면 +${quest.reward} C · +${quest.reward} XP")
+            .setStyle(Notification.BigTextStyle().bigText("${quest.detail}\n오늘 해볼까요? 수락하거나 거절할 수 있어요."))
+            .addAction(Notification.Action.Builder(null, "✅ 수락",
+                action(context, quest.id, DailyQuestScheduler.ACTION_ACCEPT)).build())
+            .addAction(Notification.Action.Builder(null, "🙅 거절",
+                action(context, quest.id, DailyQuestScheduler.ACTION_REJECT)).build())
             .build()
-        manager(context).notify(PROPOSAL_ID, notification)
+        manager(context).notify(quest.id.hashCode(), notification)
     }
 
     fun active(context: Context, quest: DailyQuestEntity) {
         if (!allowed(context)) return
         setup(context)
         val notification = builder(context, ACTIVE)
-            .setContentTitle("진행 중 · ${quest.title}")
+            .setContentTitle("🏃 진행 중 · ${quest.title}")
             .setContentText("마쳤다면 완료를 눌러 +${quest.reward} C 받기")
             .setOngoing(true)
             .setOnlyAlertOnce(true)
@@ -99,7 +104,7 @@ object DailyQuestNotifications {
         dismissActive(context, quest.id)
         if (!allowed(context)) return
         val notification = builder(context, COMPLETED)
-            .setContentTitle("퀘스트 완료! +${quest.reward} C")
+            .setContentTitle("🎉 퀘스트 완료! +${quest.reward} C · +${quest.reward} XP")
             .setContentText(quest.title)
             .build()
         manager(context).notify(quest.id.hashCode(), notification)

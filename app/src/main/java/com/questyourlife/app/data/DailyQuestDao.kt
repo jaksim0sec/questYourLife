@@ -36,6 +36,9 @@ interface DailyQuestDao {
     @Query("UPDATE daily_quests SET accepted = 1 WHERE id = :id AND dateKey = :dateKey AND accepted = 0 AND completedAt IS NULL AND dismissed = 0")
     suspend fun accept(id: String, dateKey: String): Int
 
+    @Query("UPDATE daily_quests SET dismissed = 1 WHERE id = :id AND dateKey = :day AND accepted = 0 AND completedAt IS NULL AND dismissed = 0")
+    suspend fun reject(id: String, day: String): Int
+
     @Query("UPDATE daily_quests SET completedAt = :timestamp WHERE id = :id AND dateKey = :dateKey AND accepted = 1 AND completedAt IS NULL AND dismissed = 0")
     suspend fun complete(id: String, dateKey: String, timestamp: Long): Int
 

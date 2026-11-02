@@ -31,6 +31,13 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     val steps=goalRepo.watchSteps().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalStepEntity>())
     val ownedItems=goalRepo.watchItems().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<OwnedItemEntity>())
     val sessions=goalRepo.watchSessions().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<FocusSessionEntity>())
+    val userLevel = combine(history, steps) { allDaily, mainSteps ->
+        com.questyourlife.app.progression.UserLevel.fromXp(
+            allDaily.sumOf { if (it.completedAt != null) it.reward.toLong() else 0L } +
+            mainSteps.sumOf { if (it.completedAt != null) it.reward.toLong() else 0L })
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000),
+        com.questyourlife.app.progression.UserLevel.fromXp(0))
+
     val coins=combine(dailyCoins,steps,ownedItems) { d,s,owned ->
         d+s.sumOf{if(it.completedAt!=null) it.reward else 0}-owned.sumOf{it.price}
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
@@ -69,10 +76,19 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
         catch (e: Exception) { chatError.value = "계획을 추가하지 못했어요. 다시 시도해 주세요." }
     } }
     fun deferQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
+        DailyQuestNotifications.serialized {
         if (daily.defer(id) == 1) DailyQuestNotifications.dismissActive(app, id)
+        }
+    } }
+    fun rejectQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
+        DailyQuestNotifications.serialized {
+        if (daily.reject(id) == 1) DailyQuestNotifications.dismissActive(app, id)
+        }
     } }
     fun abandonQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
+        DailyQuestNotifications.serialized {
         if (daily.abandon(id) == 1) DailyQuestNotifications.dismissActive(app, id)
+        }
     } }
 
     val lastReward=mutableStateOf<QuestReward?>(null)
@@ -94,11 +110,15 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
 
     fun refresh(){viewModelScope.launch(Dispatchers.IO){day.value=daily.ensureToday()}}
     fun accept(id:String){viewModelScope.launch(Dispatchers.IO){
-        daily.accept(id)?.let{DailyQuestNotifications.active(app,it)}
+        DailyQuestNotifications.serialized {
+            daily.accept(id)?.let { DailyQuestNotifications.active(app, it) }
+        }
     }}
     fun complete(id:String){viewModelScope.launch {
         val result=withContext(Dispatchers.IO){
-            daily.complete(id)?.also{DailyQuestNotifications.reward(app,it)}
+            DailyQuestNotifications.serialized {
+                daily.complete(id)?.also { DailyQuestNotifications.reward(app, it) }
+            }
         }
         if(result!=null) lastReward.value=QuestReward(result.title,result.reward,false)
     }}
@@ -107,8 +127,10 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
         val target=steps.value.firstOrNull{it.goalId==id && it.position==position}
         if (target != null) {
             val result = withContext(Dispatchers.IO) {
+                DailyQuestNotifications.serialized {
                 goalRepo.complete(id, position)?.also { completion ->
                     completion.dailyId?.let { DailyQuestNotifications.dismissActive(app, it) }
+                }
                 }
             }
             if (result != null) lastReward.value = QuestReward(target.title, result.reward, true)

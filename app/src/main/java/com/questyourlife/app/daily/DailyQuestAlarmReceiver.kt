@@ -15,6 +15,7 @@ class DailyQuestAlarmReceiver : BroadcastReceiver() {
             try {
                 val repo = DailyQuestRepository(app)
                 val id = intent.getStringExtra(DailyQuestScheduler.EXTRA_ID)
+                DailyQuestNotifications.serialized {
                 when (intent.action) {
                     DailyQuestScheduler.ACTION_DAILY -> {
                         DailyQuestScheduler.scheduleNext(app)
@@ -22,8 +23,9 @@ class DailyQuestAlarmReceiver : BroadcastReceiver() {
                             val day = repo.ensureToday()
                             DailyQuestNotifications.clearOld(app)
                             val quests = repo.snapshotDay(day)
-                            val pending = quests.count { !it.accepted }
-                            if (pending > 0) DailyQuestNotifications.proposals(app, pending)
+                            quests.filter { !it.accepted && it.completedAt == null }.forEach {
+                                DailyQuestNotifications.proposal(app, it)
+                            }
                             quests.filter { it.accepted && it.completedAt == null }.forEach {
                                 DailyQuestNotifications.active(app, it)
                             }
@@ -31,6 +33,9 @@ class DailyQuestAlarmReceiver : BroadcastReceiver() {
                     }
                     DailyQuestScheduler.ACTION_ACCEPT -> {
                         if (id != null) repo.accept(id)?.let { DailyQuestNotifications.active(app, it) }
+                    }
+                    DailyQuestScheduler.ACTION_REJECT -> {
+                        if (id != null && repo.reject(id) == 1) DailyQuestNotifications.dismissActive(app, id)
                     }
                     DailyQuestScheduler.ACTION_COMPLETE -> {
                         if (id != null) repo.complete(id)?.let { DailyQuestNotifications.reward(app, it) }
@@ -56,6 +61,7 @@ class DailyQuestAlarmReceiver : BroadcastReceiver() {
                             ) DailyQuestNotifications.active(app, quest)
                         }
                     }
+                }
                 }
             } finally {
                 pendingResult.finish()

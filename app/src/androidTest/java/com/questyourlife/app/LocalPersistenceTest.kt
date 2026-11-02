@@ -16,6 +16,25 @@ import java.util.UUID
 class LocalPersistenceTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
+    @Test fun rejectionIsIdempotentAndCannotCancelAnAcceptedQuest() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(context, QuestDatabase::class.java).build()
+        try {
+            val dao = db.dailyQuestDao()
+            val day = "2026-11-03"
+            dao.insertAll(listOf(
+                DailyQuestEntity("reject", day, "제안", "수락 전", 10),
+                DailyQuestEntity("accept", day, "진행", "수락 후", 10)))
+            assertEquals(0, dao.reject("reject", "2026-11-02"))
+            assertEquals(1, dao.reject("reject", day))
+            assertEquals(0, dao.reject("reject", day))
+            assertEquals(0, dao.accept("reject", day))
+            assertEquals(1, dao.accept("accept", day))
+            assertEquals(0, dao.reject("accept", day))
+            assertEquals(1, dao.completeAndAdvance("accept", day, 100L))
+            assertEquals(0, dao.reject("accept", day))
+        } finally { db.close() }
+    }
+
     @Test fun upgradeFromV3PreservesCompletedCurrencyAndPurchases() {
         val name = "migration-${UUID.randomUUID()}.db"
         val schema = InstrumentationRegistry.getInstrumentation().context.assets

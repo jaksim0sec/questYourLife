@@ -56,7 +56,7 @@ private object ClanStyle {
 }
 
 @Composable
-fun PatchClanPage(model: DailyQuestViewModel) {
+fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
     var previous by rememberSaveable { mutableStateOf(false) }
     val clan = remember { model.clanPreview() }
     val contributionWeek = remember(previous) { model.clanPreview(previous) }
@@ -113,7 +113,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                     ((maxWidth - 18.dp) / 4).coerceAtLeast(0.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     clan.members.take(4).forEach { member ->
-                        ClanFace(Modifier.size(faceSize), member.name)
+                        ClanFace(Modifier.size(faceSize).clickable(onClickLabel = "${member.name} 프로필 보기") { onProfile(member.name) }, member.name)
                     }
                 }
             }
@@ -144,7 +144,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("${index + 1}", Modifier.width(26.dp), fontSize = 16.sp,
                         fontWeight = FontWeight.Bold, color = ClanStyle.ink)
-                    ClanFace(Modifier.size(46.dp), member.name)
+                    ClanFace(Modifier.size(46.dp).clickable(onClickLabel = "${member.name} 프로필 보기") { onProfile(member.name) }, member.name)
                     Spacer(Modifier.width(12.dp))
                     Text(member.name, Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = ClanStyle.ink)
                     Text("+${member.cash} C", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold,
@@ -180,7 +180,7 @@ fun PatchClanPage(model: DailyQuestViewModel) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         members.forEach { member ->
                             Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                                ClanFace(Modifier.fillMaxWidth().aspectRatio(1f), member.name)
+                                ClanFace(Modifier.fillMaxWidth().aspectRatio(1f).clickable { sheet = null; onProfile(member.name) }, member.name)
                                 Text(member.name, fontSize = 12.sp, fontWeight = FontWeight.SemiBold,
                                     maxLines = 1, overflow = TextOverflow.Ellipsis, color = ClanStyle.ink)
                             }

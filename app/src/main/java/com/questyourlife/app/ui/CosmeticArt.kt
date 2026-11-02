@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.questyourlife.app.R
+import com.questyourlife.app.cosmetics.AvatarComposer
 
 /** Shared temporary artwork registry. IDs match persisted inventory, never grid positions. */
 object CosmeticArtwork {
@@ -24,7 +25,13 @@ object CosmeticArtwork {
         else -> null
     }
     private val demoItems = listOf(0, 1001, 2, 1, 3, 4, 5, 1003, 1004)
-    fun demoItem(name: String): Int = demoItems[Math.floorMod(name.hashCode(), demoItems.size)]
+    fun demoItem(name: String): Int = when (name) {
+        "밤산책" -> 1003
+        "이모리" -> 0
+        "모찌", "하루" -> 1
+        "다온" -> 2
+        else -> demoItems[Math.floorMod(name.hashCode(), demoItems.size)]
+    }
 }
 
 @Composable
@@ -39,17 +46,16 @@ fun CosmeticImage(id: Int, modifier: Modifier = Modifier) {
 fun DressedAvatar(itemId: Int, modifier: Modifier = Modifier, description: String? = null) {
     BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
         val side = minOf(maxWidth, maxHeight)
-        Box(Modifier.size(side), contentAlignment = Alignment.Center) {
-            Image(painterResource(R.drawable.mascot_face_stamp), description,
-                Modifier.size(side, side * .734f).offset(y = side * .10f),
-                contentScale = ContentScale.Fit)
-            when (itemId) {
-                in 0..5 -> CosmeticImage(itemId, Modifier.align(Alignment.TopCenter)
-                    .offset(y = side * -.025f).size(side * .75f, side * .48f))
-                1001, 1003 -> CosmeticImage(itemId, Modifier.align(Alignment.TopCenter)
-                    .offset(y = side * .10f).size(side * 1.02f, side * .80f))
-                1004 -> CosmeticImage(itemId, Modifier.offset(y = side * .16f)
-                    .size(side * .95f, side * .36f))
+        val composition = androidx.compose.runtime.remember(itemId) { AvatarComposer.compose(itemId) }
+        Box(Modifier.size(side)) {
+            composition.layers.forEach { layer ->
+                val placement = Modifier.offset(x = side * layer.x, y = side * layer.y)
+                    .wrapContentSize(Alignment.TopStart, unbounded = true)
+                    .size(side * layer.width, side * layer.height)
+                if (layer.itemId == null) {
+                    Image(painterResource(R.drawable.mascot_face_stamp), description, placement,
+                        contentScale = ContentScale.Fit)
+                } else CosmeticImage(layer.itemId, placement)
             }
         }
     }

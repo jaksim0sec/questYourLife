@@ -43,20 +43,21 @@ import java.util.Locale
 
 /** Both the assistant and the demo conversations are stored by the local repository. */
 @Composable
-fun PatchDmPage(model: DailyQuestViewModel, onOpenThread: (String) -> Unit) {
-    DmConversations(model, onOpenThread)
+fun PatchDmPage(model: DailyQuestViewModel, onOpenThread: (String) -> Unit, onProfile: (String) -> Unit) {
+    DmConversations(model, onOpenThread, onProfile)
 }
 
 @Composable
-fun PatchThreadPage(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit) {
+fun PatchThreadPage(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit,
+    onProfile: (String) -> Unit, onNotifications: () -> Unit, onMenu: () -> Unit) {
     LaunchedEffect(threadId) {
         if (model.activeThread.value != threadId) model.openThread(threadId)
     }
-    DmConversation(model, threadId, onBack)
+    DmConversation(model, threadId, onBack, onProfile, onNotifications, onMenu)
 }
 
 @Composable
-private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -> Unit) {
+private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -> Unit, onProfile: (String) -> Unit) {
     var search by rememberSaveable { mutableStateOf("") }
     val query = search.trim()
     val contacts = model.contacts.filter {
@@ -126,7 +127,7 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                DmFriendAvatar(contact.name)
+                DmFriendAvatar(contact.name, onProfile = onProfile)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(contact.name, style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold, color = PatchTokens.ink)
@@ -153,7 +154,8 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
 }
 
 @Composable
-private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit) {
+private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack: () -> Unit,
+    onProfile: (String) -> Unit, onNotifications: () -> Unit, onMenu: () -> Unit) {
     val allMessages by model.chatMessages.collectAsStateWithLifecycle()
     val busy by model.chatBusy.collectAsStateWithLifecycle()
     val messages = allMessages.filter { it.threadId == threadId }
@@ -161,6 +163,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
     val name = if (mascot) "마스코트" else model.contacts.firstOrNull { it.id == threadId }?.name ?: "데모 친구"
     val listState = rememberLazyListState()
     val keyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+    var lastSeenMessage by rememberSaveable(threadId) { mutableStateOf<String?>(null) }
     var draft by rememberSaveable(threadId) { mutableStateOf("") }
     val canSend = draft.isNotBlank() && !busy
     val send = {
@@ -172,7 +175,11 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
 
     LaunchedEffect(threadId, messages.lastOrNull()?.id, busy, keyboardOpen) {
         // The list includes the local-service notice and an optional busy row.
-        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size + if (busy) 1 else 0)
+        val lastId = messages.lastOrNull()?.id
+        if (lastId != null && (lastId != lastSeenMessage || busy || keyboardOpen)) {
+            listState.animateScrollToItem(messages.size + if (busy) 1 else 0)
+        }
+        if (lastId != null) lastSeenMessage = lastId
     }
 
     Column(Modifier.fillMaxSize().imePadding()) {
@@ -185,11 +192,11 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
                 Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "대화 목록으로",
                     tint = PatchTokens.ink)
             }
-            if (mascot) MascotArt(Modifier.size(36.dp)) else DmFriendAvatar(name, compact = true)
+            if (mascot) MascotArt(Modifier.size(36.dp)) else DmFriendAvatar(name, compact = true, onProfile = onProfile)
             Text(name, modifier = Modifier.weight(1f).semantics { heading() },
                 style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
                 color = PatchTokens.ink, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            DmLabel(if (mascot) "로컬" else "데모")
+            PatchHeaderActions(onNotifications, onMenu)
         }
         HorizontalDivider(color = PatchTokens.line)
         LazyColumn(
@@ -216,7 +223,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
             }
             items(messages, key = { it.id }) { message ->
                 Box(Modifier.animateItem()) {
-                    DmMessage(message, mascot, name, busy) { model.applyChatPlan(message.id) }
+                    DmMessage(message, mascot, name, busy, onProfile) { model.applyChatPlan(message.id) }
                 }
             }
             if (busy) {
@@ -279,13 +286,14 @@ private fun DmMessage(
     mascot: Boolean,
     name: String,
     busy: Boolean,
+    onProfile: (String) -> Unit,
     onApply: () -> Unit
 ) {
     Row(Modifier.fillMaxWidth(),
         horizontalArrangement = if (message.fromUser) Arrangement.End else Arrangement.Start,
         verticalAlignment = Alignment.Top) {
         if (!message.fromUser) {
-            if (mascot) MascotArt(Modifier.size(28.dp)) else DmFriendAvatar(name, compact = true)
+            if (mascot) MascotArt(Modifier.size(28.dp)) else DmFriendAvatar(name, compact = true, onProfile = onProfile)
             Spacer(Modifier.width(8.dp))
         }
         Column(Modifier.widthIn(max = 320.dp).fillMaxWidth(.86f),
@@ -339,8 +347,8 @@ private fun DmLabel(text: String) {
 }
 
 @Composable
-private fun DmFriendAvatar(name: String, compact: Boolean = false) {
-    DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(if (compact) 32.dp else 48.dp), "${name}의 시연 아바타")
+private fun DmFriendAvatar(name: String, compact: Boolean = false, onProfile: (String) -> Unit) {
+    DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(if (compact) 40.dp else 48.dp).clickable(onClickLabel = "$name 프로필 보기") { onProfile(name) }, "${name}의 시연 아바타")
 }
 
 @Composable

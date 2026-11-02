@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,25 +79,14 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
 }
 
 @Composable
-private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -> Unit, onCompose: (() -> Unit)? = null) {
+private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -> Unit) {
     Column(Modifier.background(PatchTokens.background).statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().heightIn(min = 60.dp)
             .padding(start = PatchTokens.space20, end = PatchTokens.space8),
             verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black,
                 color = PatchTokens.ink, modifier = Modifier.weight(1f))
-            if (onCompose != null) {
-                IconButton(onClick = onCompose) {
-                    Icon(painterResource(R.drawable.ic_patch_plus), "새 쪽지", tint = PatchTokens.ink)
-                }
-            } else {
-                IconButton(onClick = onNotifications) {
-                    Icon(painterResource(R.drawable.ic_patch_header_alarm), "알림", tint = Color.Unspecified)
-                }
-                IconButton(onClick = onMenu) {
-                    Icon(painterResource(R.drawable.ic_patch_header_more), "메뉴", tint = Color.Unspecified)
-                }
-            }
+            PatchHeaderActions(onNotifications, onMenu)
         }
     }
 }
@@ -124,9 +114,12 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var returnTab by rememberSaveable { mutableStateOf("home") }
     var focusReturn by rememberSaveable { mutableStateOf("home") }
     var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
+    var profileName by rememberSaveable { mutableStateOf("") }
+    var profileReturn by rememberSaveable { mutableStateOf("clan") }
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedDailyId by rememberSaveable { mutableStateOf<String?>(null) }
+    val pageStates = rememberSaveableStateHolder()
     val reward = model.lastReward.value
     val topTab = patchTabs.any { it.route == screen }
     val selectedDaily = daily.firstOrNull { it.id == selectedDailyId }
@@ -139,6 +132,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     }
     val back: () -> Unit = {
         screen = when (screen) {
+            "person" -> profileReturn
             "thread" -> "dm"
             "detail" -> "quests"
             "focus" -> focusReturn
@@ -151,6 +145,11 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         model.openThread(id)
         navigate("thread")
     }
+    val openProfile: (String) -> Unit = { name ->
+        profileName = name
+        profileReturn = screen
+        navigate("person")
+    }
     val openCompanion: () -> Unit = { openThread("mascot") }
     BackHandler(enabled = !topTab && reward == null && sheet == null) { back() }
 
@@ -160,8 +159,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
             contentWindowInsets = WindowInsets.safeDrawing,
             topBar = { if (topTab) PatchTopBar(
                 patchTabs.first { it.route == screen }.title,
-                onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" },
-                onCompose = if (screen == "dm") ({ sheet = "recipients" }) else null) },
+                onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" }) },
             bottomBar = { if (topTab) PatchBottomNav(screen) {
                 screen = it
                 selectedDailyId = null
@@ -173,14 +171,23 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     (fadeIn(tween(200)) + slideInHorizontally(tween(220)) { it / 16 }) togetherWith
                         fadeOut(tween(100))
                 }, label = "page transition") { page ->
+                val stateKey = when (page) {
+                    "thread" -> "thread:$selectedThreadId"
+                    "person" -> "person:$profileName"
+                    else -> page
+                }
+                pageStates.SaveableStateProvider(stateKey) {
                 when (page) {
                     "home" -> PatchHomePage(model,
                         onDaily = { selectedDailyId = it.id; sheet = "daily" },
                         onQuests = { navigate("quests") }, onClan = { navigate("clan") },
                         onCompanion = openCompanion)
-                    "dm" -> PatchDmPage(model, onOpenThread = openThread)
-                    "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back)
-                    "clan" -> PatchClanPage(model)
+                    "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
+                    "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
+                        onProfile = openProfile, onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
+                    "clan" -> PatchClanPage(model, onProfile = openProfile)
+                    "person" -> PatchPersonProfilePage(profileName, model.demoClan.name, back,
+                        onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
                     "decor" -> PatchDecorPage(model, onBack = back)
                     "my" -> PatchProfilePage(model,
                         onHistory = { navigate("history") }, onDecor = { navigate("decor") },
@@ -223,6 +230,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     }
                 }
             }
+        }
         }
         }
 
@@ -291,6 +299,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 MenuRow("패치와 목표 나누기", Icons.Rounded.ChatBubbleOutline, openCompanion)
                 MenuRow("직접 목표 만들기", Icons.Rounded.Add) { navigate("create") }
                 MenuRow("완료 기록", Icons.Rounded.History) { navigate("history") }
+                MenuRow("새 쪽지", Icons.Rounded.MailOutline) { sheet = "recipients" }
                 MenuRow("꾸미기", Icons.Rounded.Palette) { navigate("decor") }
                 MenuRow("집중 타이머", Icons.Rounded.Timer) { navigate("focus") }
                 MenuRow("설정", Icons.Rounded.Settings) { navigate("settings") }

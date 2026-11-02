@@ -189,7 +189,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         onCompanion = openCompanion)
                     "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
                     "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
-                        onProfile = openProfile, onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
+                        onProfile = openProfile, onMenu = { sheet = "menu" })
                     "clan" -> PatchClanPage(model, onProfile = openProfile)
                     "person" -> PatchPersonProfilePage(profileName, model.demoClan.name, back,
                         onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })

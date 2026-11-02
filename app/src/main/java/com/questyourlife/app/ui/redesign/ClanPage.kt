@@ -287,7 +287,7 @@ private fun ClanProgressLabel(clan: ClanPreview) {
 @Composable
 private fun ClanFace(modifier: Modifier = Modifier, name: String? = null) {
     DressedAvatar(CosmeticArtwork.demoItem(name.orEmpty()), modifier,
-        name?.let { "${it}의 시연 아바타" } ?: "시연 아바타", alternateCreamCap = name == "하루")
+        name?.let { "${it}의 시연 아바타" } ?: "시연 아바타")
 }
 
 @Composable

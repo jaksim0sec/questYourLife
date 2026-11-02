@@ -46,7 +46,7 @@ class GoalRepository(context: Context) {
         )
     }
 
-    suspend fun complete(id: String, position: Int) = dao.completeStep(id, position) == 1
+    suspend fun complete(id: String, position: Int) = dao.completeStepWithReward(id, position)
     suspend fun buy(itemId: Int, price: Int) = dao.buyItem(itemId, price)
 
     var equipped: Int

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -106,16 +107,26 @@ fun HomePanel(
 @Composable
 fun QuestListPanel(
     coins:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,daily:List<DailyQuestEntity>,
-    onGoal:(String)->Unit,onDaily:()->Unit,onCreate:()->Unit
+    onGoal:(String)->Unit,onDaily:()->Unit,onCreate:()->Unit,showHeading:Boolean=true
 ) {
     var tab by remember { mutableIntStateOf(0) }
     Column(verticalArrangement=Arrangement.spacedBy(17.dp)) {
-        ScreenHeading("퀘스트",action={
-            TextButton(onClick=onCreate) {
-                Icon(Icons.Outlined.Add,null,modifier=Modifier.size(16.dp),tint=AccentRed)
-                Text("목표 추가",fontSize=12.sp,color=TextInk)
+        if(showHeading) {
+            ScreenHeading("퀘스트",action={
+                TextButton(onClick=onCreate) {
+                    Icon(Icons.Outlined.Add,null,modifier=Modifier.size(16.dp),tint=AccentRed)
+                    Text("목표 추가",fontSize=12.sp,color=TextInk)
+                }
+            })
+        } else {
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.End) {
+                TextButton(onClick=onCreate) {
+                    Icon(Icons.Rounded.Add,null,modifier=Modifier.size(20.dp),tint=AccentRed)
+                    Spacer(Modifier.width(4.dp))
+                    Text("목표 만들기",color=TextInk)
+                }
             }
-        })
+        }
         SegmentedTabs(listOf("메인 퀘스트","일일 퀘스트","완료"),tab,{tab=it})
         if(tab==0 || tab==2) {
             val visible=goals.filter { g ->

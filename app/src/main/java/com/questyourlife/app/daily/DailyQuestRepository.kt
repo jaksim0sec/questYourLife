@@ -1,15 +1,29 @@
 package com.questyourlife.app.daily
 
 import android.content.Context
+import androidx.room.withTransaction
 import com.questyourlife.app.data.DailyQuestEntity
 import com.questyourlife.app.data.QuestDatabase
 import java.time.LocalDate
 
 class DailyQuestRepository(context: Context) {
-    private val dao=QuestDatabase.get(context).dailyQuestDao()
+    private val db=QuestDatabase.get(context)
+    private val dao=db.dailyQuestDao()
     companion object { fun today(): String=LocalDate.now().toString() }
-    suspend fun ensureToday(): String {
+    suspend fun ensureToday(): String = db.withTransaction {
         val day=today()
+        dao.carryUnfinished(day)
+        val existing = dao.snapshotDay(day)
+        val next = db.goalDao().nextCompanionSteps()
+            .filter { step -> existing.none { it.goalId == step.goalId } }
+            .take((3 - existing.size).coerceAtLeast(0))
+        if (next.isNotEmpty()) {
+            dao.insertAll(next.map { step ->
+                DailyQuestEntity("${step.goalId}-${step.position}-$day", day, step.title,
+                    "내 목표와 이어지는 오늘의 실행", 20,
+                    goalId = step.goalId, stepPosition = step.position)
+            })
+        }
         if(dao.countForDay(day)==0) {
             val templates=listOf(
                 Triple("단어 10개 복습하기","작게 시작하는 학습",15),
@@ -27,8 +41,10 @@ class DailyQuestRepository(context: Context) {
                     title=item.first,detail=item.second,reward=item.third)
             })
         }
-        return day
+        day
     }
+    suspend fun defer(id: String) = dao.defer(id, LocalDate.now().plusDays(1).toString())
+    suspend fun abandon(id: String) = dao.abandon(id)
     fun observeDay(dateKey:String)=dao.observeDay(dateKey)
     fun observeHistory()=dao.observeHistory()
     suspend fun snapshotDay(dateKey:String)=dao.snapshotDay(dateKey)
@@ -41,7 +57,8 @@ class DailyQuestRepository(context: Context) {
     }
     suspend fun complete(id:String):DailyQuestEntity? {
         val day=today()
-        if(dao.complete(id,day,System.currentTimeMillis())==0) return null
+        dao.carryUnfinished(day)
+        if(dao.completeAndAdvance(id,day,System.currentTimeMillis())==0) return null
         return dao.find(id)
     }
 }

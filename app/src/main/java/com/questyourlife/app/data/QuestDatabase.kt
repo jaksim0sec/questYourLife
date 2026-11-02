@@ -9,13 +9,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [QuestEntity::class, DailyQuestEntity::class, GoalEntity::class,
-        GoalStepEntity::class, OwnedItemEntity::class, FocusSessionEntity::class],
-    version = 3, exportSchema = true
+        GoalStepEntity::class, OwnedItemEntity::class, FocusSessionEntity::class, CompanionMessageEntity::class],
+    version = 4, exportSchema = true
 )
 abstract class QuestDatabase : RoomDatabase() {
     abstract fun questDao(): QuestDao
     abstract fun dailyQuestDao(): DailyQuestDao
     abstract fun goalDao(): GoalDao
+    abstract fun companionDao(): CompanionDao
 
     companion object {
         // Every migration is additive. Existing quests and rewards must survive updates.
@@ -45,11 +46,21 @@ abstract class QuestDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE daily_quests ADD COLUMN dismissed INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE daily_quests ADD COLUMN goalId TEXT")
+                db.execSQL("ALTER TABLE daily_quests ADD COLUMN stepPosition INTEGER")
+                db.execSQL("CREATE TABLE IF NOT EXISTS companion_messages (id TEXT NOT NULL PRIMARY KEY, threadId TEXT NOT NULL, body TEXT NOT NULL, fromUser INTEGER NOT NULL, createdAt INTEGER NOT NULL, planTitle TEXT, planSteps TEXT, appliedGoalId TEXT)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_companion_messages_threadId ON companion_messages(threadId)")
+            }
+        }
+
         @Volatile private var instance: QuestDatabase? = null
         fun get(context: Context): QuestDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(
                 context.applicationContext, QuestDatabase::class.java, "quests.db"
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build().also { instance = it }
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build().also { instance = it }
         }
     }
 }

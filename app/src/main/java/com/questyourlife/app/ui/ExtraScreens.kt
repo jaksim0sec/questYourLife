@@ -257,7 +257,10 @@ fun HistoryPanel(questsHistory:List<DailyQuestEntity>,steps:List<GoalStepEntity>
     fun inPeriod(d:LocalDate)=!d.isBefore(start)&&d.isBefore(end)
     val all=questsHistory.filter{it.completedAt!=null}
     val today=all.filter{ runCatching{inPeriod(LocalDate.parse(it.dateKey))}.getOrDefault(false) }
-    val doneSteps=steps.filter {
+    val linkedCompletions = questsHistory.filter { it.completedAt != null }.mapNotNull {
+        if (it.goalId != null && it.stepPosition != null) it.goalId to it.stepPosition else null
+    }.toSet()
+    val doneSteps=steps.filter { (it.goalId to it.position) !in linkedCompletions }.filter {
         it.completedAt?.let{value->
             inPeriod(Instant.ofEpochMilli(value).atZone(ZoneId.systemDefault()).toLocalDate())
         } ?: false

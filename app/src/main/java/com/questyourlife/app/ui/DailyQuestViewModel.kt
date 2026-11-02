@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.questyourlife.app.data.*
 import com.questyourlife.app.daily.*
+import com.questyourlife.app.companion.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -32,6 +33,44 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     val coins=combine(dailyCoins,steps,ownedItems) { d,s,owned ->
         d+s.sumOf{if(it.completedAt!=null) it.reward else 0}-owned.sumOf{it.price}
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
+
+    private val companion: CompanionGateway = LocalCompanionGateway(QuestDatabase.get(app).companionDao())
+    val contacts = companion.contacts()
+    val demoClan = companion.demoClan()
+    val activeThread = MutableStateFlow("")
+    val chatMessages = activeThread.flatMapLatest(companion::watchMessages)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    private val _chatBusy = MutableStateFlow(false)
+    val chatBusy: StateFlow<Boolean> = _chatBusy.asStateFlow()
+    val chatError = mutableStateOf<String?>(null)
+    fun openThread(id: String) {
+        activeThread.value = id
+        viewModelScope.launch(Dispatchers.IO) { companion.openThread(id) }
+    }
+    fun sendMessage(text: String) {
+        if (_chatBusy.value || text.isBlank()) return
+        val thread = activeThread.value
+        if (thread.isBlank()) return
+        _chatBusy.value = true
+        chatError.value = null
+        viewModelScope.launch {
+            try { withContext(Dispatchers.IO) { companion.send(thread, text) } }
+            catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (e: Exception) { chatError.value = "계획을 저장하지 못했어요. 입력을 확인하고 다시 시도해 주세요." }
+            finally { _chatBusy.value = false }
+        }
+    }
+    fun applyChatPlan(id: String) { viewModelScope.launch {
+        try { withContext(Dispatchers.IO) { companion.applyPlan(id) }; refresh() }
+        catch (e: kotlinx.coroutines.CancellationException) { throw e }
+        catch (e: Exception) { chatError.value = "계획을 추가하지 못했어요. 다시 시도해 주세요." }
+    } }
+    fun deferQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
+        if (daily.defer(id) == 1) DailyQuestNotifications.dismissActive(app, id)
+    } }
+    fun abandonQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
+        if (daily.abandon(id) == 1) DailyQuestNotifications.dismissActive(app, id)
+    } }
 
     val lastReward=mutableStateOf<QuestReward?>(null)
     var equipped=androidx.compose.runtime.mutableIntStateOf(goalRepo.equipped)
@@ -63,8 +102,13 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     fun addGoal(title:String){viewModelScope.launch(Dispatchers.IO){goalRepo.create(title)}}
     fun completeStep(id:String,position:Int){viewModelScope.launch {
         val target=steps.value.firstOrNull{it.goalId==id && it.position==position}
-        if(target!=null && withContext(Dispatchers.IO){goalRepo.complete(id,position)}) {
-            lastReward.value=QuestReward(target.title,target.reward,true)
+        if (target != null) {
+            val result = withContext(Dispatchers.IO) {
+                goalRepo.complete(id, position)?.also { completion ->
+                    completion.dailyId?.let { DailyQuestNotifications.dismissActive(app, it) }
+                }
+            }
+            if (result != null) lastReward.value = QuestReward(target.title, result.reward, true)
         }
     }}
     fun clearReward(){lastReward.value=null}

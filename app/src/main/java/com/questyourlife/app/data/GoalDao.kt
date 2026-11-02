@@ -1,11 +1,14 @@
 package com.questyourlife.app.data
 
+import java.time.LocalDate
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+
+data class GoalCompletion(val reward: Int, val dailyId: String?)
 
 @Dao
 interface GoalDao {
@@ -14,6 +17,9 @@ interface GoalDao {
 
     @Query("SELECT * FROM goal_steps ORDER BY goalId, position")
     fun watchSteps(): Flow<List<GoalStepEntity>>
+
+    @Query("SELECT s.* FROM goal_steps s JOIN goals g ON g.id = s.goalId WHERE g.id LIKE 'companion-%' AND s.completedAt IS NULL AND NOT EXISTS (SELECT 1 FROM goal_steps earlier WHERE earlier.goalId = s.goalId AND earlier.position < s.position AND earlier.completedAt IS NULL) AND NOT EXISTS (SELECT 1 FROM daily_quests d WHERE d.goalId = s.goalId AND d.stepPosition = s.position AND d.dismissed = 0 AND d.completedAt IS NULL)")
+    suspend fun nextCompanionSteps(): List<GoalStepEntity>
 
     @Query("SELECT * FROM owned_items")
     fun watchItems(): Flow<List<OwnedItemEntity>>
@@ -72,12 +78,29 @@ interface GoalDao {
         deleteGoal(id)
     }
 
+    @Query("UPDATE daily_quests SET accepted = 1, completedAt = :now, dateKey = :dateKey WHERE goalId = :goalId AND stepPosition = :position AND completedAt IS NULL AND dismissed = 0")
+    suspend fun finishLinkedDaily(goalId: String, position: Int, now: Long, dateKey: String)
+
     @Transaction
     suspend fun completeStep(id: String, position: Int): Int {
         val steps = getSteps(id)
         val step = steps.firstOrNull { it.position == position && it.completedAt == null } ?: return 0
         if (steps.any { it.position < position && it.completedAt == null }) return 0
-        return markComplete(id, step.position, System.currentTimeMillis())
+        val now = System.currentTimeMillis()
+        val changed = markComplete(id, step.position, now)
+        if (changed == 1) finishLinkedDaily(id, step.position, now, LocalDate.now().toString())
+        return changed
+    }
+
+    @Query("SELECT * FROM daily_quests WHERE goalId = :id AND stepPosition = :position AND completedAt IS NULL AND dismissed = 0 LIMIT 1")
+    suspend fun linkedDaily(id: String, position: Int): DailyQuestEntity?
+
+    @Transaction
+    suspend fun completeStepWithReward(id: String, position: Int): GoalCompletion? {
+        val target = getSteps(id).firstOrNull { it.position == position } ?: return null
+        val linked = linkedDaily(id, position)
+        if (completeStep(id, position) != 1) return null
+        return GoalCompletion(target.reward + (linked?.reward ?: 0), linked?.id)
     }
 
     @Transaction

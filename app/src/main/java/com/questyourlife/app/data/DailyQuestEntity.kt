@@ -1,5 +1,6 @@
 package com.questyourlife.app.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,5 +12,8 @@ data class DailyQuestEntity(
     val detail: String,
     val reward: Int,
     val accepted: Boolean = false,
-    val completedAt: Long? = null
+    val completedAt: Long? = null,
+    @ColumnInfo(defaultValue = "0") val dismissed: Boolean = false,
+    val goalId: String? = null,
+    val stepPosition: Int? = null
 )

@@ -26,7 +26,7 @@ class AvatarCompositionTest {
         listOf(1, 3).forEach {
             val cap = equipment(it)
             assertEquals(.045f, cap.x, .00001f)
-            assertEquals(.100f, cap.y, .00001f)
+            assertEquals(.060f, cap.y, .00001f)
             assertEquals(.91f, cap.width, .00001f)
             assertEquals(navy.height, cap.height, .00001f)
             assertTrue(cap.y > navy.y)
@@ -37,9 +37,9 @@ class AvatarCompositionTest {
     @Test fun knitAndBucketHatsAreLowerAndHaveIndependentFits() {
         val beanie = equipment(0)
         val bucket = equipment(5)
-        assertEquals(.095f, beanie.y, .00001f)
+        assertEquals(.055f, beanie.y, .00001f)
         assertEquals(.612f, beanie.height, .00001f)
-        assertEquals(.052f, bucket.y, .00001f)
+        assertEquals(.012f, bucket.y, .00001f)
         assertEquals(.656f, bucket.height, .00001f)
         assertNotEquals(beanie.width, bucket.width)
     }

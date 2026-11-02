@@ -386,7 +386,7 @@ private fun DmLabel(text: String) {
 
 @Composable
 private fun DmFriendAvatar(name: String, compact: Boolean = false, onProfile: (String) -> Unit) {
-    DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(if (compact) 40.dp else 48.dp).clickable(onClickLabel = "$name 프로필 보기") { onProfile(name) }, "${name}의 시연 아바타", alternateCreamCap = name == "하루")
+    DressedAvatar(CosmeticArtwork.demoItem(name), Modifier.size(if (compact) 40.dp else 48.dp).clickable(onClickLabel = "$name 프로필 보기") { onProfile(name) }, "${name}의 시연 아바타")
 }
 
 @Composable

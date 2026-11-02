@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <group android:pivotX="12" android:pivotY="12" android:scaleX="1.025" android:scaleY="1.025">
-        <path android:pathData="M12 2L22 10H20V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V10H2Z" android:fillColor="#f38a82" android:strokeColor="#f38a82" android:strokeWidth="1.68" android:strokeLineCap="round" android:strokeLineJoin="round" />
-        <path android:pathData="M9 20V14H15V20" android:fillColor="#00000000" android:strokeColor="#261715" android:strokeWidth="1.68" android:strokeLineCap="butt" android:strokeLineJoin="round" />
-    </group>
+    <path android:pathData="M3.3 9.2L10.7 3.1Q12 1.9 13.3 3.1L20.7 9.2Q21.5 9.95 21.5 11.05V19.2Q21.5 21.5 19.2 21.5H4.8Q2.5 21.5 2.5 19.2V11.05Q2.5 9.95 3.3 9.2Z" android:fillColor="#f38a82" android:strokeColor="#f38a82" android:strokeWidth="1.60" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M9.2 21.5V16Q9.2 14.8 10.4 14.8H13.6Q14.8 14.8 14.8 16V21.5Z" android:fillColor="#261715" android:strokeColor="#00000000" android:strokeWidth="1.60" android:strokeLineCap="round" android:strokeLineJoin="round" />
 </vector>

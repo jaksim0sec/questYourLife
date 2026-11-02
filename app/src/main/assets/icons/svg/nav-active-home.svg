@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke-width="1.68" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(12 12) scale(1.025) translate(-12 -12)">
-  <path d="M12 2L22 10H20V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V10H2Z" fill="#ff3b30" stroke="#ff3b30"/>
-  <path d="M9 20V14H15V20" stroke="#fff" stroke-linecap="butt"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3.3 9.2L10.7 3.1Q12 1.9 13.3 3.1L20.7 9.2Q21.5 9.95 21.5 11.05V19.2Q21.5 21.5 19.2 21.5H4.8Q2.5 21.5 2.5 19.2V11.05Q2.5 9.95 3.3 9.2Z" fill="#ff3b30" stroke="#ff3b30"/>
+  <path d="M9.2 21.5V16Q9.2 14.8 10.4 14.8H13.6Q14.8 14.8 14.8 16V21.5Z" fill="#ffffff" stroke="none"/>
 </svg>

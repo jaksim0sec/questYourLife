@@ -68,12 +68,17 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
                         "clan" -> R.drawable.ic_patch_nav_active_clan_dark
                         else -> R.drawable.ic_patch_nav_active_my_dark
                     }
-                    val iconScale by animateFloatAsState(if (isSelected) 1.06f else 1f,
-                        tween(180), label = "tab scale")
+                    val iconScale = remember { androidx.compose.animation.core.Animatable(1f) }
+                    LaunchedEffect(isSelected) {
+                        if (isSelected) {
+                            iconScale.animateTo(1.045f, tween(90))
+                            iconScale.animateTo(1f, tween(140))
+                        } else iconScale.animateTo(1f, tween(100))
+                    }
                     Crossfade(isSelected, animationSpec = tween(160), label = "tab icon") { selected ->
                         Icon(painterResource(if (selected) { if (isDark) darkActiveIcon else tab.activeIcon } else tab.inactiveIcon),
                             null, tint = if (!selected && isDark) PatchTokens.muted else Color.Unspecified, modifier = Modifier.size(25.dp)
-                                .graphicsLayer { scaleX = iconScale; scaleY = iconScale }
+                                .graphicsLayer { scaleX = iconScale.value; scaleY = iconScale.value }
                                 .alpha(if (selected || isDark) 1f else 0.55f))
                     }
                     Text(tab.title, color = tint, fontSize = 11.sp, lineHeight = 15.sp,

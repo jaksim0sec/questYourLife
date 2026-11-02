@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,10 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
@@ -43,8 +39,6 @@ import com.questyourlife.app.ui.DailyQuestViewModel
 import com.questyourlife.app.R
 import com.questyourlife.app.ui.DressedAvatar
 import com.questyourlife.app.ui.CosmeticArtwork
-import kotlin.math.cos
-import kotlin.math.sin
 
 /** Measurements belong to this reference surface, not the discarded generic cards. */
 private object ClanStyle {
@@ -292,21 +286,4 @@ private fun ClanHeading(title: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ClanFlag(modifier: Modifier = Modifier) {
-    Canvas(modifier) {
-        val w = size.width; val h = size.height
-        drawLine(Color(0xFF53533D), Offset(w * .12f, h * .06f), Offset(w * .12f, h * .96f), w * .055f, StrokeCap.Round)
-        val flag = Path().apply {
-            moveTo(w * .17f, h * .08f); lineTo(w * .95f, h * .14f)
-            lineTo(w * .95f, h * .80f); lineTo(w * .17f, h * .73f); close()
-        }
-        drawPath(flag, ClanStyle.lime)
-        repeat(6) { n ->
-            val a = n * Math.PI / 3
-            drawLine(ClanStyle.ink, Offset(w * .55f, h * .44f),
-                Offset(w * .55f + cos(a).toFloat() * w * .19f,
-                    h * .44f + sin(a).toFloat() * h * .19f),
-                w * .09f, StrokeCap.Round)
-        }
-    }
-}
+private fun ClanFlag(modifier: Modifier = Modifier) = com.questyourlife.app.ui.ClanMark(modifier)

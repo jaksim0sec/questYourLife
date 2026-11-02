@@ -45,9 +45,9 @@ fun DressedAvatar(itemId: Int, modifier: Modifier = Modifier, description: Strin
                 contentScale = ContentScale.Fit)
             when (itemId) {
                 in 0..5 -> CosmeticImage(itemId, Modifier.align(Alignment.TopCenter)
-                    .size(side * .80f, side * .55f))
+                    .offset(y = side * -.025f).size(side * .75f, side * .48f))
                 1001, 1003 -> CosmeticImage(itemId, Modifier.align(Alignment.TopCenter)
-                    .offset(y = side * .12f).size(side * .98f, side * .77f))
+                    .offset(y = side * .10f).size(side * 1.02f, side * .80f))
                 1004 -> CosmeticImage(itemId, Modifier.offset(y = side * .16f)
                     .size(side * .95f, side * .36f))
             }

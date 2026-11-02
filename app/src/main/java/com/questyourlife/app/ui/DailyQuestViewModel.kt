@@ -117,7 +117,7 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     fun clearReward(){lastReward.value=null}
     val cosmeticBusy = mutableStateOf(false)
     val cosmeticMessage = mutableStateOf<String?>(null)
-    fun chooseCosmetic(id: Int) {
+    fun chooseCosmetic(id: Int, applyAfterPurchase: Boolean = true) {
         if (cosmeticBusy.value) return
         cosmeticBusy.value = true
         cosmeticMessage.value = null
@@ -134,9 +134,11 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
                     }
                 }
                 if (result) {
-                    goalRepo.equipped = id
-                    equipped.intValue = id
-                    cosmeticMessage.value = "착용 정보를 저장했어요."
+                    if (applyAfterPurchase) {
+                        goalRepo.equipped = id
+                        equipped.intValue = id
+                    }
+                    cosmeticMessage.value = if (applyAfterPurchase) "적용했어요." else "구매했어요. 적용하기를 누르면 착용해요."
                 } else {
                     cosmeticMessage.value = if (CosmeticCatalog.find(id) == null) "보유한 아이템만 착용할 수 있어요."
                         else "캐시가 부족해요. 잔액을 확인해 주세요."

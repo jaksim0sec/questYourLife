@@ -151,7 +151,7 @@ fun PatchProfilePage(
                 Column(Modifier.weight(1f)) {
                     Text("퀘스트", fontSize = 11.sp, lineHeight = 15.sp, color = PatchTokens.muted)
                     Text("${weekly.size}개 완료", fontSize = 17.sp, lineHeight = 23.sp,
-                        fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
+                        fontWeight = FontWeight.Bold, color = PatchTokens.ink)
                 }
                 Text("${activeDays.size}일 실천", fontSize = 15.sp, lineHeight = 22.sp,
                     fontWeight = FontWeight.Bold, color = PatchTokens.ink,
@@ -194,7 +194,7 @@ fun PatchProfilePage(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         // Reserved for the supplied badge image. Never substitute invented art.
-                        Box(Modifier.fillMaxWidth().aspectRatio(1.6f)
+                        Box(Modifier.fillMaxWidth().aspectRatio(2f)
                             .background(PatchTokens.soft, RoundedCornerShape(10.dp)))
                         Text(stamp.title, fontSize = 11.sp, lineHeight = 16.sp,
                             color = PatchTokens.ink, fontWeight = FontWeight.Medium)
@@ -242,13 +242,13 @@ private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit) {
         if (stacked) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                ProfileAvatar(itemId, Modifier.width(160.dp))
+                ProfileAvatar(itemId, Modifier.width(128.dp))
                 ProfileIdentity(clanName, onDecor, Modifier.fillMaxWidth())
             }
         } else {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
-                ProfileAvatar(itemId, Modifier.width((availableWidth * .48f).coerceAtMost(176.dp)))
+                ProfileAvatar(itemId, Modifier.width((availableWidth * .39f).coerceAtMost(136.dp)))
                 ProfileIdentity(clanName, onDecor, Modifier.weight(1f))
             }
         }
@@ -257,25 +257,25 @@ private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit) {
 
 @Composable
 private fun ProfileAvatar(itemId: Int, modifier: Modifier) {
-    Box(modifier.height(144.dp), contentAlignment = Alignment.BottomCenter) {
-        DressedAvatar(itemId, Modifier.fillMaxWidth().height(144.dp), "내 착용 아바타")
+    Box(modifier.height(120.dp), contentAlignment = Alignment.BottomCenter) {
+        DressedAvatar(itemId, Modifier.fillMaxWidth().height(120.dp), "내 착용 아바타")
     }
 }
 
 @Composable
 private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-        Text("나", fontSize = 25.sp, lineHeight = 31.sp, fontWeight = FontWeight.ExtraBold,
+        Text("나", fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.ExtraBold,
             color = PatchTokens.ink, modifier = Modifier.semantics { heading() })
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
-            Icon(painterResource(R.drawable.ic_patch_flag), null, Modifier.size(22.dp), tint = Color.Unspecified)
+            com.questyourlife.app.ui.ClanMark(Modifier.size(24.dp))
             Column {
                 Text(clanName, fontSize = 12.sp, lineHeight = 17.sp, color = PatchTokens.ink)
                 Text("시연용 클랜", fontSize = 10.sp, lineHeight = 14.sp, color = PatchTokens.muted)
             }
         }
-        OutlinedButton(onClick = onDecor, modifier = Modifier.fillMaxWidth().heightIn(min = PatchTokens.control),
+        OutlinedButton(onClick = onDecor, modifier = Modifier.heightIn(min = 40.dp),
             shape = RoundedCornerShape(10.dp), border = BorderStroke(1.dp, PatchTokens.muted.copy(alpha = .6f)),
             colors = ButtonDefaults.outlinedButtonColors(contentColor = PatchTokens.ink),
             contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 8.dp)) {
@@ -291,7 +291,7 @@ private fun ProfileCash(title: String, amount: Int, modifier: Modifier = Modifie
     Column(modifier.fillMaxWidth().clip(ProfileShape).background(PatchTokens.surface)
         .padding(PatchTokens.space12), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
         Text(title, fontSize = 11.sp, lineHeight = 16.sp, color = PatchTokens.muted)
-        PatchMoney(amount)
+        PatchMoney(amount, compact = true)
     }
 }
 

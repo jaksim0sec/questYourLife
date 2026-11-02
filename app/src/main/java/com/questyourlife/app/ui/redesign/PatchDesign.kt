@@ -112,15 +112,15 @@ fun PatchPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.(
 }
 
 @Composable
-fun PatchMoney(amount: Int, modifier: Modifier = Modifier) {
+fun PatchMoney(amount: Int, modifier: Modifier = Modifier, compact: Boolean = false) {
     val formatted = remember(amount) { NumberFormat.getIntegerInstance(Locale.KOREA).format(amount) }
     Row(modifier, verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        Box(Modifier.size(22.dp).clip(CircleShape).background(Color(0xFFFFE5A0)),
+        Box(Modifier.size(if (compact) 18.dp else 22.dp).clip(CircleShape).background(Color(0xFFFFE5A0)),
             contentAlignment = Alignment.Center) {
-            Icon(painterResource(R.drawable.ic_patch_coin), null, Modifier.size(20.dp), tint = Color(0xFFBA8606))
+            Icon(painterResource(R.drawable.ic_patch_coin), null, Modifier.size(if (compact) 16.dp else 20.dp), tint = Color(0xFFBA8606))
         }
-        Text("$formatted C", fontSize = 20.sp, lineHeight = 26.sp,
+        Text("$formatted C", fontSize = if (compact) 16.sp else 20.sp, lineHeight = if (compact) 22.sp else 26.sp,
             fontWeight = FontWeight.Bold, color = PatchTokens.ink)
     }
 }
@@ -128,7 +128,7 @@ fun PatchMoney(amount: Int, modifier: Modifier = Modifier) {
 /** Native sheet anchors/nested scrolling own all drag, fling and interruption behavior. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PatchSheet(title: String, onDismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+fun PatchSheet(title: String, onDismiss: () -> Unit, footer: (@Composable () -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val scope = rememberCoroutineScope()
     val close: () -> Unit = {
@@ -156,7 +156,13 @@ fun PatchSheet(title: String, onDismiss: () -> Unit, content: @Composable Column
         }
     ) {
         // Tall measurement ensures both partial and expanded anchors exist, even for short content.
-        Column(Modifier.fillMaxWidth().fillMaxHeight(.92f).imePadding()) {
+        BoxWithConstraints(Modifier.fillMaxWidth().fillMaxHeight(.92f).imePadding()) {
+        val density = androidx.compose.ui.platform.LocalDensity.current
+        val windowHeight = with(density) { androidx.compose.ui.platform.LocalView.current.rootView.height.toDp() }
+        val offset = with(density) { runCatching { sheetState.requireOffset() }.getOrDefault(0f).toDp() }
+        val bottomInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+        val visibleHeight = (windowHeight - offset - 48.dp - bottomInset).coerceIn(0.dp, maxHeight)
+        Column(Modifier.fillMaxWidth().then(if (footer != null) Modifier.height(visibleHeight) else Modifier.fillMaxHeight())) {
             Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = PatchTokens.ink,
@@ -168,6 +174,9 @@ fun PatchSheet(title: String, onDismiss: () -> Unit, content: @Composable Column
             Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
                 .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp), content = content)
+            if (footer != null) Box(Modifier.fillMaxWidth().background(PatchTokens.background)
+                .padding(horizontal = 20.dp, vertical = 12.dp)) { footer() }
+        }
         }
     }
 }

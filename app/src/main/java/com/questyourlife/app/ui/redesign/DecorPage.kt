@@ -48,6 +48,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.questyourlife.app.R
 import com.questyourlife.app.cosmetics.CosmeticCatalog
@@ -71,7 +72,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     val message by model.cosmeticMessage
     var tab by rememberSaveable { mutableStateOf(DecorTab.RECOMMENDED) }
     var selectedItemId by rememberSaveable { mutableStateOf<Int?>(null) }
-    var showAppearance by rememberSaveable { mutableStateOf(false) }
+    var previewId by rememberSaveable { mutableStateOf(equipped) }
     var showClanReward by rememberSaveable { mutableStateOf(false) }
 
     // Legacy purchases keep their identity and stored price in the inventory.
@@ -89,7 +90,6 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     val selectedItem = selectedItemId?.let { id ->
         inventory.firstOrNull { it.id == id } ?: CosmeticCatalog.find(id)
     }
-    val equippedItem = inventory.firstOrNull { it.id == equipped } ?: CosmeticCatalog.find(equipped)
 
     Column(Modifier.fillMaxSize().background(PatchTokens.background)) {
         DecorHeader(coins, onBack)
@@ -98,7 +98,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
                 .padding(horizontal = PatchTokens.space16)
                 .padding(bottom = PatchTokens.space8)
         ) {
-            DecorAppearancePreview(equipped)
+            DecorAppearancePreview(previewId)
             DecorTabs(tab) { tab = it }
             Spacer(Modifier.height(PatchTokens.space12))
             DecorClanReward { showClanReward = true }
@@ -114,10 +114,12 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
                                 item = item,
                                 owned = item.id in ownedIds,
                                 equipped = item.id == equipped,
+                                selected = item.id == previewId,
                                 modifier = Modifier.weight(1f),
                                 onClick = {
                                     model.cosmeticMessage.value = null
-                                    selectedItemId = item.id
+                                    previewId = item.id
+                                    if (item.id !in ownedIds) selectedItemId = item.id
                                 }
                             )
                         }
@@ -131,13 +133,17 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
                 .padding(horizontal = PatchTokens.space16)
                 .padding(top = PatchTokens.space8, bottom = PatchTokens.space12)
         ) {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            message?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted) }
             Button(
-                onClick = { showAppearance = true },
+                onClick = { model.chooseCosmetic(previewId) },
+                enabled = previewId in ownedIds && !busy && previewId != equipped,
                 modifier = Modifier.fillMaxWidth().heightIn(min = PatchTokens.control),
                 shape = RoundedCornerShape(PatchTokens.space12),
                 colors = ButtonDefaults.buttonColors(containerColor = PatchTokens.red)
             ) {
-                Text("착용 모습 보기", style = MaterialTheme.typography.titleMedium)
+                Text("적용하기", style = MaterialTheme.typography.labelLarge)
+            }
             }
         }
     }
@@ -151,22 +157,8 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
             busy = busy,
             message = message,
             onDismiss = { selectedItemId = null },
-            onChoose = { model.chooseCosmetic(item.id) }
+            onChoose = { model.chooseCosmetic(item.id, applyAfterPurchase = false) }
         )
-    }
-    if (showAppearance) {
-        PatchSheet("착용 모습", onDismiss = { showAppearance = false }) {
-            DecorAppearancePreview(equipped)
-            equippedItem?.let {
-                Text(it.name, style = MaterialTheme.typography.titleMedium, color = PatchTokens.ink)
-                Text("착용 중", style = MaterialTheme.typography.labelLarge, color = PatchTokens.red)
-            }
-            Text(
-                "선택한 꾸미기가 프로필에 적용돼요.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = PatchTokens.muted
-            )
-        }
     }
     if (showClanReward) {
         PatchSheet("이번 주 클랜 보상", onDismiss = { showClanReward = false }) {
@@ -194,9 +186,9 @@ private fun DecorHeader(coins: Int, onBack: () -> Unit) {
                     Icon(painterResource(R.drawable.ic_patch_arrow_left), "뒤로가기",
                         Modifier.size(24.dp), tint = PatchTokens.ink)
                 }
-                Text("꾸미기", style = MaterialTheme.typography.headlineSmall, color = PatchTokens.ink,
+                Text("꾸미기", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = PatchTokens.ink,
                     modifier = Modifier.weight(1f).semantics { heading() })
-                if (!stackCash) PatchMoney(coins)
+                if (!stackCash) PatchMoney(coins, compact = true)
             }
             if (stackCash) PatchMoney(coins, Modifier.align(Alignment.End)
                 .padding(horizontal = PatchTokens.space16).padding(bottom = PatchTokens.space8))
@@ -207,12 +199,12 @@ private fun DecorHeader(coins: Int, onBack: () -> Unit) {
 @Composable
 private fun DecorAppearancePreview(itemId: Int) {
     BoxWithConstraints(
-        Modifier.fillMaxWidth().aspectRatio(1.72f)
+        Modifier.fillMaxWidth().aspectRatio(2.15f)
             .clip(RoundedCornerShape(PatchTokens.space16)).background(PatchTokens.soft)
-            .semantics { contentDescription = "현재 착용 아바타" },
+            .semantics { contentDescription = "선택한 아바타 미리보기" },
         contentAlignment = Alignment.BottomCenter
     ) {
-        val faceSize = minOf(maxWidth * .52f, 192.dp)
+        val faceSize = minOf(maxWidth * .42f, 152.dp)
         DressedAvatar(itemId, Modifier.padding(bottom = PatchTokens.space12).size(faceSize))
     }
 }
@@ -248,16 +240,16 @@ private fun DecorClanReward(onClick: () -> Unit) {
     Row(
         Modifier.fillMaxWidth().clip(RoundedCornerShape(PatchTokens.space12))
             .background(PatchTokens.yellow).clickable(role = Role.Button, onClick = onClick)
-            .heightIn(min = 80.dp).padding(horizontal = PatchTokens.space16),
+            .heightIn(min = 52.dp).padding(horizontal = PatchTokens.space16),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
-            Text("이번 주 클랜 보상", style = MaterialTheme.typography.titleMedium,
+            Text("이번 주 클랜 보상", fontSize = 15.sp,
                 fontWeight = FontWeight.Bold, color = PatchTokens.ink)
             Text("함께 열어서 받는 꾸미기 · 데모", style = MaterialTheme.typography.bodySmall,
                 color = PatchTokens.ink)
         }
-        CosmeticImage(2, Modifier.width(80.dp).height(64.dp))
+        CosmeticImage(2, Modifier.width(64.dp).height(52.dp))
         Icon(painterResource(R.drawable.ic_patch_chevron_right), null,
             Modifier.size(20.dp), tint = PatchTokens.ink)
     }
@@ -268,24 +260,26 @@ private fun DecorItemTile(
     item: CosmeticItem,
     owned: Boolean,
     equipped: Boolean,
+    selected: Boolean,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(PatchTokens.space12)
     Column(
         modifier.clip(shape).background(PatchTokens.surface)
-            .then(if (equipped) Modifier.border(1.5.dp, PatchTokens.red, shape) else Modifier)
+            .then(if (selected) Modifier.border(1.5.dp, PatchTokens.red, shape) else Modifier)
             .clickable(role = Role.Button, onClick = onClick)
             .semantics {
                 stateDescription = when {
                     equipped -> "착용 중"
+                    selected -> "미리보기 선택됨"
                     owned -> "보유 중"
                     else -> "구매 가능"
                 }
             }
     ) {
         Box(
-            Modifier.fillMaxWidth().aspectRatio(1.58f).background(PatchTokens.soft)
+            Modifier.fillMaxWidth().aspectRatio(1.8f).background(PatchTokens.soft)
         ) {
             CosmeticImage(item.id, Modifier.fillMaxSize().padding(PatchTokens.space8))
             if (equipped) {
@@ -297,7 +291,7 @@ private fun DecorItemTile(
             }
         }
         Column(
-            Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(
+            Modifier.fillMaxWidth().heightIn(min = 52.dp).padding(
                 horizontal = PatchTokens.space12, vertical = PatchTokens.space8),
             verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)
         ) {
@@ -308,7 +302,7 @@ private fun DecorItemTile(
                     style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
                 item.price == 0 -> Text("무료", style = MaterialTheme.typography.labelMedium,
                     color = PatchTokens.muted)
-                else -> PatchMoney(item.price)
+                else -> PatchMoney(item.price, compact = true)
             }
         }
     }
@@ -326,10 +320,21 @@ private fun DecorItemSheet(
     onChoose: () -> Unit
 ) {
     val affordable = owned || item.price <= coins
-    PatchSheet(item.name, onDismiss = onDismiss) {
-        Box(Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(PatchTokens.space12))
+    PatchSheet(item.name, onDismiss = onDismiss, footer = {
+        Button(onClick = onChoose, enabled = !busy && !owned && affordable,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = PatchTokens.red)) {
+            if (busy) {
+                CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
+                Spacer(Modifier.width(8.dp))
+            }
+            Text("구매하기", style = MaterialTheme.typography.labelLarge)
+        }
+    }) {
+        Box(Modifier.fillMaxWidth().height(132.dp).clip(RoundedCornerShape(PatchTokens.space12))
             .background(PatchTokens.soft), contentAlignment = Alignment.Center) {
-            DressedAvatar(item.id, Modifier.size(156.dp))
+            CosmeticImage(item.id, Modifier.size(120.dp))
         }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(if (owned) "보유한 꾸미기" else "구매 가격",
@@ -339,45 +344,25 @@ private fun DecorItemSheet(
                 Text(if (equipped) "착용 중" else "보유 중",
                     style = MaterialTheme.typography.labelLarge,
                     color = if (equipped) PatchTokens.red else PatchTokens.ink)
-            } else PatchMoney(item.price)
+            } else PatchMoney(item.price, compact = true)
         }
-        Text("구매한 꾸미기는 보관함에서 다시 착용할 수 있어요.",
+        Text("구매 후 적용하기를 누르면 프로필에 반영돼요.",
             style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
         if (!owned) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text("보유 캐시", style = MaterialTheme.typography.bodyMedium,
                     color = PatchTokens.muted, modifier = Modifier.weight(1f))
-                PatchMoney(coins)
+                PatchMoney(coins, compact = true)
             }
             Text(
-                if (affordable) "구매하면 표시된 캐시를 사용하고 바로 착용해요."
+                if (affordable) "구매 후 잔액: ${coins - item.price} C"
                 else "캐시가 ${item.price.toLong() - coins.toLong()} C 부족해요.",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = if (affordable) PatchTokens.muted else PatchTokens.red
             )
         }
         message?.let {
-            Text(it, style = MaterialTheme.typography.bodyMedium, color = PatchTokens.red)
-        }
-        Button(
-            onClick = onChoose,
-            enabled = !busy && !equipped && affordable,
-            modifier = Modifier.fillMaxWidth().heightIn(min = PatchTokens.control),
-            shape = RoundedCornerShape(PatchTokens.space12),
-            colors = ButtonDefaults.buttonColors(containerColor = PatchTokens.red)
-        ) {
-            if (busy) {
-                CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp,
-                    color = PatchTokens.muted)
-                Spacer(Modifier.width(PatchTokens.space8))
-            }
-            Text(when {
-                busy -> "저장하는 중…"
-                equipped -> "착용 중"
-                owned -> "착용하기"
-                !affordable -> "캐시가 부족해요"
-                else -> "구매하고 착용하기"
-            }, style = MaterialTheme.typography.labelLarge)
+            Text(it, style = MaterialTheme.typography.bodySmall, color = if (owned) PatchTokens.muted else PatchTokens.red)
         }
     }
 }

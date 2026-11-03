@@ -20,7 +20,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 @Composable
-fun PatchAccountPage(onBack: () -> Unit) {
+fun PatchAccountPage(onBack: () -> Unit, onAuthenticated: () -> Unit = {}, initialSignup: Boolean = true) {
     val context=LocalContext.current
     val account=remember { AccountRepository.get(context) }
     val session by account.state.collectAsStateWithLifecycle()
@@ -30,9 +30,14 @@ fun PatchAccountPage(onBack: () -> Unit) {
     val pending by db.syncDao().observePendingCount().collectAsStateWithLifecycle(0)
     val pendingCash by db.syncDao().observePendingCash().collectAsStateWithLifecycle(0L)
     val problems by db.syncDao().observeProblems().collectAsStateWithLifecycle(emptyList())
+    val localGoals by db.goalDao().watchGoals().collectAsStateWithLifecycle(emptyList())
+    val localQuests by db.questDao().observeAll().collectAsStateWithLifecycle(emptyList())
+    val localHistory by db.dailyQuestDao().observeHistory().collectAsStateWithLifecycle(emptyList())
+    val hasGuestRecords = meta?.userId == null && (localGoals.any { it.id != "example-japanese" } || localQuests.isNotEmpty() || localHistory.any { it.accepted || it.completedAt != null || it.goalId != null })
+    var importGuest by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") } // Never saved to Bundle/Room/preferences.
-    var signup by remember { mutableStateOf(true) }
+    var signup by remember(initialSignup) { mutableStateOf(initialSignup) }
     var busy by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
     val scope=rememberCoroutineScope()
@@ -50,10 +55,20 @@ fun PatchAccountPage(onBack: () -> Unit) {
             OutlinedTextField(password,{ password=it },Modifier.fillMaxWidth(),label={ Text("비밀번호") },
                 supportingText={ Text("8~128자") },singleLine=true,enabled=!busy,visualTransformation=PasswordVisualTransformation(),
                 keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Password))
+            if (hasGuestRecords && signup) {
+                Row(verticalAlignment=androidx.compose.ui.Alignment.CenterVertically) {
+                    Checkbox(checked=importGuest,onCheckedChange={importGuest=it},enabled=!busy)
+                    Column {
+                        Text("이 기기 기록도 가져오기",style=MaterialTheme.typography.titleSmall,color=PatchTokens.ink)
+                        Text("선택하면 새 계정에 연결해요. 기존 계정으로 로그인할 때는 기록을 자동으로 합치지 않아요.",style=MaterialTheme.typography.bodySmall,color=PatchTokens.muted)
+                    }
+                }
+            }
+            if (hasGuestRecords && !signup) Text("기기 기록은 그대로 남아요. 로그인하는 계정과 자동으로 합치지 않아요.",style=MaterialTheme.typography.bodySmall,color=PatchTokens.muted)
             PatchButton(if(busy) "연결 중…" else if(signup) "회원가입" else "로그인",enabled=!busy&&AccountInput.username(name)!=null&&AccountInput.validPassword(password),onClick={
                 scope.launch {
                     busy=true; message=null
-                    try { account.signIn(name,password,signup); password="" }
+                    try { account.signIn(name,password,signup,importGuest = signup && importGuest); password=""; onAuthenticated() }
                     catch(e: CancellationException) { throw e }
                     catch(e: Exception) { message=when {
                         e is ApiFailure && e.status==429 -> "잠시 후 다시 시도해 주세요."
@@ -64,7 +79,7 @@ fun PatchAccountPage(onBack: () -> Unit) {
                     finally { busy=false }
                 }
             })
-            TextButton(onClick={signup=!signup;message=null},enabled=!busy) { Text(if(signup) "이미 계정이 있어요 · 로그인" else "새 계정 만들기") }
+            TextButton(onClick={signup=!signup;importGuest=false;message=null},enabled=!busy) { Text(if(signup) "이미 계정이 있어요 · 로그인" else "새 계정 만들기") }
             Text("기존 기록은 그대로 유지돼요. 서버 확정 캐쉬는 별도로 시작해요. 이메일을 등록하지 않으므로 아이디와 비밀번호를 잊지 않도록 보관해 주세요.",style=MaterialTheme.typography.bodySmall,color=PatchTokens.muted)
             TextButton(onClick=onBack) { Text("지금은 오프라인으로 사용하기",color=PatchTokens.muted) }
         } else {

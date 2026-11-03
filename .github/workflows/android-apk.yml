@@ -73,6 +73,9 @@ jobs:
       - name: Assemble preview APK
         run: gradle --no-daemon --build-cache :app:assembleDebug
 
+      - name: Run JVM/Robolectric regression tests
+        run: gradle --no-daemon --build-cache :app:testDebugUnitTest
+
       - name: Publish preview APK (main only)
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4

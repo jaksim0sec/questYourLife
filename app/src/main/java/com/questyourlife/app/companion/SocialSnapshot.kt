@@ -14,13 +14,17 @@ data class SocialChat(val id: String, val type: String, val name: String, val pe
 data class SocialClan(val id: String, val name: String, val members: List<SocialProfile>,
     val ownerId: String, val weeklyScore: Long?, val rank: Int?, val target: Long?)
 data class SocialChestRight(val clanId: String, val clanName: String, val weekStart: String, val reward: Long)
+data class SocialClanRank(val id: String, val name: String?, val score: Long, val rank: Int)
+data class SocialMemberScore(val userId: String, val score: Long)
 
 /** Only the RPC's public profile projection is mapped. Private user rows never become contacts. */
 data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> = emptyList(),
     val alarms: List<SocialAlarm> = emptyList(), val chats: List<SocialChat> = emptyList(),
     val messages: List<CompanionMessageEntity> = emptyList(), val clans: List<SocialClan> = emptyList(),
     val loaded: Boolean = false, val popularBooks: List<SocialPublicBook> = emptyList(),
-    val chestRights: List<SocialChestRight> = emptyList()) {
+    val chestRights: List<SocialChestRight> = emptyList(),
+    val clanRanking: List<SocialClanRank> = emptyList(),
+    val memberScores: List<SocialMemberScore> = emptyList()) {
     val clan: SocialClan? get() = clans.firstOrNull()
     companion object {
         fun parse(userId: String, body: JSONObject): SocialSnapshot {
@@ -66,6 +70,16 @@ data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> 
                         SocialChestRight(row.getString("id"), row.getString("name"), week, reward)
                 }.toList()
             }
+            val clansById = clanRows.associateBy { it.optString("id") }
+            val visibleRanking = rankings.mapNotNull { rank ->
+                val clanId = rank.optString("clan_id", rank.optString("id"))
+                if (clanId.isBlank() || !rank.has("score") || !rank.has("rank")) null
+                else SocialClanRank(clanId, clansById[clanId]?.optString("name"), rank.optLong("score"), rank.optInt("rank"))
+            }.sortedWith(compareBy({ it.rank }, { it.id }))
+            val memberScores = body.optJSONArray("clan_member_scores").objects().mapNotNull { row ->
+                val id = row.optString("user_id")
+                if (id.isBlank() || !row.has("score")) null else SocialMemberScore(id, row.optLong("score"))
+            }
             val clans = clanRows.filter { row ->
                 val own = row.optJSONObject("members")?.optJSONObject(userId)
                 own != null && own.isNull("left_at") && row.isNull("deleted_at")
@@ -85,7 +99,7 @@ data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> 
                 SocialPublicBook(book.getString("id"), book.getString("logical_id"), book.getString("name"), entry.optInt("active_participants"))
             }
             return SocialSnapshot(userId, profiles, alarms, chats,
-                posts.map { message(it, userId) }.sortedWith(compareBy({ it.createdAt }, { it.id })), clans, true, popular, chestRights)
+                posts.map { message(it, userId) }.sortedWith(compareBy({ it.createdAt }, { it.id })), clans, true, popular, chestRights, visibleRanking, memberScores)
         }
         fun message(row: JSONObject, userId: String): CompanionMessageEntity {
             val payload = row.optJSONObject("payload")

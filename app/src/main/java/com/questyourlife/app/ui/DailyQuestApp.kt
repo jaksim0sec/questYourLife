@@ -126,8 +126,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
     var profileName by rememberSaveable { mutableStateOf("") }
     var profileReturn by rememberSaveable { mutableStateOf("clan") }
-    var previewBookId by rememberSaveable { mutableStateOf("travel") }
-    var previewChapterId by rememberSaveable { mutableStateOf<String?>(null) }
+    var selectedBookId by rememberSaveable { mutableStateOf("") }
+    var selectedChapterId by rememberSaveable { mutableStateOf<String?>(null) }
     var chapterReturn by rememberSaveable { mutableStateOf("quests") }
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
@@ -168,8 +168,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         navigate("person")
     }
     val openPreview: (String, String?) -> Unit = { id, chapter ->
-        previewBookId = id
-        previewChapterId = chapter
+        selectedBookId = id
+        selectedChapterId = chapter
         chapterReturn = screen
         navigate("chapter")
     }
@@ -197,7 +197,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 val stateKey = when (page) {
                     "thread" -> "thread:$selectedThreadId"
                     "person" -> "person:$profileName"
-                    "chapter" -> "chapter:$previewBookId:${previewChapterId.orEmpty()}"
+                    "chapter" -> "chapter:$selectedBookId:${selectedChapterId.orEmpty()}"
                     else -> page
                 }
                 pageStates.SaveableStateProvider(stateKey) {
@@ -210,7 +210,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         onChapter = { book, chapter -> openPreview(book, chapter) },
                         onGoal = { goalId = it; navigate("detail") },
                         onDaily = { selectedDailyId = it.id; sheet = "daily" }, onCreate = { navigate("create") })
-                    "chapter" -> PatchChapterPage(model, previewBookId, initialChapterId = previewChapterId, onBack = back, onMenu = { sheet = "menu" })
+                    "chapter" -> PatchChapterPage(model, selectedBookId, initialChapterId = selectedChapterId, onBack = back, onMenu = { sheet = "menu" })
                     "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
                     "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
                         onProfile = openProfile, onMenu = { sheet = "menu" })

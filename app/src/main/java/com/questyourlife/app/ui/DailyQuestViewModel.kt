@@ -216,7 +216,6 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
                     hadPending = count > 0
                 }
         }
-        if (!signedIn.value) viewModelScope.launch(Dispatchers.IO) { goalRepo.seedDemoIfNew() }
     }
 
     fun refresh(){viewModelScope.launch(Dispatchers.IO){day.value=daily.ensureToday()}}

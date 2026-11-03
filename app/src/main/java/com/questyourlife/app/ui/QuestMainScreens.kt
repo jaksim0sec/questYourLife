@@ -303,8 +303,8 @@ fun GoalDetailPanel(goal:GoalEntity,steps:List<GoalStepEntity>,
 }
 
 @Composable
-fun NewGoalPanel(onBack:()->Unit,onCreate:(String)->Unit) {
-    var title by remember { mutableStateOf("") }
+fun NewGoalPanel(onBack:()->Unit,onCreate:(String)->Unit,initialTitle:String="") {
+    var title by remember(initialTitle) { mutableStateOf(initialTitle) }
     Column(verticalArrangement=Arrangement.spacedBy(21.dp)) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             IconButton(onClick=onBack) {

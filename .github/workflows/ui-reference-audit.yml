@@ -37,6 +37,25 @@ jobs:
         run: |
           sdkmanager "platforms;android-36" "build-tools;35.0.0"
           gradle --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+      # sdkmanager intermittently downloads corrupt emulator/system-image ZIPs.
+      # Installing with bounded retries before the runner avoids a single transient
+      # download failure aborting screenshot verification (upstream issue #496).
+      - name: Prepare emulator packages with bounded retries
+        shell: bash
+        run: |
+          set -euo pipefail
+          for package in 'emulator' 'system-images;android-35;google_apis;x86_64'; do
+            for attempt in 1 2 3; do
+              if sdkmanager --install "$package" --channel=0; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::SDK package install failed after three attempts: $package"
+                exit 1
+              fi
+              sleep "$((attempt * 10))"
+            done
+          done
       - name: Allow KVM access
         run: sudo chmod 666 /dev/kvm || true
       - name: Render genuine app on isolated emulator

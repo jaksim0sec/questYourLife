@@ -98,4 +98,29 @@ class SocialSnapshotTest {
             .chestRights.isEmpty())
     }
 
+    @Test fun onlyActualServerRanksAreShown() {
+        val data = JSONObject().put("clans", JSONArray().put(JSONObject()
+            .put("id", "clan-main").put("name", "느슨한 갓생단")
+            .put("owner_id", owner).put("members", JSONObject().put(owner, JSONObject())))
+            .put(JSONObject().put("id", "clan-other").put("name", "푸른 새싹단")
+                .put("owner_id", peer).put("members", JSONObject())))
+            .put("clan_ranking", JSONArray()
+                .put(JSONObject().put("clan_id", "clan-other").put("score", 920).put("rank", 1))
+                .put(JSONObject().put("clan_id", "clan-main").put("score", 780).put("rank", 2)))
+        val ranks = SocialSnapshot.parse(owner, data).clanRanking
+        assertEquals(listOf("푸른 새싹단", "느슨한 갓생단"), ranks.map { it.name })
+        assertEquals(listOf(920L, 780L), ranks.map { it.score })
+        assertEquals(listOf(1, 2), ranks.map { it.rank })
+        assertTrue(SocialSnapshot.parse(owner, JSONObject()).clanRanking.isEmpty())
+    }
+
+    @Test fun memberScoreRequiresExplicitServerProjection() {
+        val payload = JSONObject().put("clan_member_scores", JSONArray()
+            .put(JSONObject().put("user_id", owner).put("score", 200))
+            .put(JSONObject().put("user_id", peer).put("score", 80)))
+        val scores = SocialSnapshot.parse(owner, payload).memberScores
+        assertEquals(listOf(200L, 80L), scores.map { it.score })
+        assertTrue(SocialSnapshot.parse(owner, JSONObject()).memberScores.isEmpty())
+    }
+
 }

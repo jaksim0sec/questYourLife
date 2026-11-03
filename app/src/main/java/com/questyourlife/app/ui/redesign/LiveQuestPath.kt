@@ -31,10 +31,24 @@ data class LivePathBook(val id: String, val title: String, val chapters: List<Li
     fun current(): LivePathMission? = chapters.asSequence()
         .flatMap { it.missions.asSequence() }.firstOrNull { !it.completed }
     fun currentChapter(): LivePathChapter? = chapters.firstOrNull { !it.complete } ?: chapters.lastOrNull()
+    fun chapterById(id: String?): LivePathChapter? = chapters.firstOrNull { it.id == id }
 }
 
 /** Preserve the persisted chapter number and stable step id; do not invent extra missions. */
 object LiveQuestPath {
+    /** Hide the untouched legacy example but keep any user-completed records accessible. */
+    fun visibleBooks(goals: List<GoalEntity>, steps: List<GoalStepEntity>,
+                     daily: List<DailyQuestEntity> = emptyList()): List<LivePathBook> =
+        goals.filter { goal -> goal.id != "example-japanese" ||
+            steps.any { it.goalId == goal.id && it.completedAt != null && it.deletedAt == null } }
+            .map { from(it, steps, daily) }
+
+    fun featured(goals: List<GoalEntity>, steps: List<GoalStepEntity>,
+                 daily: List<DailyQuestEntity> = emptyList()): LivePathBook? {
+        val paths = visibleBooks(goals, steps, daily)
+        return paths.firstOrNull { it.current() != null } ?: paths.firstOrNull()
+    }
+
     fun from(goal: GoalEntity, steps: List<GoalStepEntity>,
              daily: List<DailyQuestEntity> = emptyList()): LivePathBook {
         val sorted = steps.asSequence()

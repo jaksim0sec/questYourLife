@@ -85,7 +85,7 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
             }
         }
 
-        ClanLiveChestPanel(clan)
+        ClanLiveChestPanel(clan, contributions.takeIf { it.isNotEmpty() }?.count { it.score > 0 })
 
         if (!signedIn) {
             ClanLandingCard("클랜을 만들고 함께 도전해요",
@@ -179,7 +179,7 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
                         fontSize = 26.sp, lineHeight = 31.sp,
                         fontWeight = FontWeight.ExtraBold, color = PatchTokens.ink)
                 }
-                Text("이번 주 서버 기준\\n클랜 순위 보기", fontSize = 12.sp,
+                Text("이번 주 서버 기준\n클랜 순위 보기", fontSize = 12.sp,
                     lineHeight = 18.sp, fontWeight = FontWeight.Bold, color = PatchTokens.muted)
                 Spacer(Modifier.width(6.dp))
                 QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(18.dp), PatchTokens.muted)
@@ -365,7 +365,7 @@ private fun ClanLandingCard(title: String, detail: String, cta: String, onClick:
 }
 
 @Composable
-private fun ClanLiveChestPanel(clan: SocialClan?) {
+private fun ClanLiveChestPanel(clan: SocialClan?, contributorCount: Int?) {
     val scale = LocalDensity.current.fontScale.coerceAtLeast(1f)
     val target = clan?.target
     val score = clan?.weeklyScore
@@ -377,9 +377,17 @@ private fun ClanLiveChestPanel(clan: SocialClan?) {
         Image(painterResource(R.drawable.box_gold), "클랜 공동 상자",
             Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = 12.dp)
                 .width(artWidth).height(130.dp), contentScale = ContentScale.Fit)
+        contributorCount?.let { count ->
+            Text("${count}명 기여 중", Modifier.align(Alignment.TopEnd)
+                .padding(top = 12.dp, end = 12.dp)
+                .clip(RoundedCornerShape(10.dp)).background(Color(0xFFD9E779))
+                .padding(horizontal = 10.dp, vertical = 6.dp),
+                fontSize = 12.sp, lineHeight = 16.sp,
+                fontWeight = FontWeight.Bold, color = Color(0xFF151715))
+        }
         Column(Modifier.width(textWidth).padding(start = 16.dp, top = 16.dp, bottom = 14.dp),
             verticalArrangement = Arrangement.spacedBy(7.dp)) {
-            Text("각자 해내고,\\n같이 열자",
+            Text("각자 해내고,\n같이 열자",
                 fontSize = 25.sp, lineHeight = 31.sp, fontWeight = FontWeight.Black,
                 color = Color.White)
             Text("이번 주 공동 상자", fontSize = 12.sp,

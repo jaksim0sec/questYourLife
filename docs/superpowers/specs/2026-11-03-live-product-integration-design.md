@@ -2,9 +2,9 @@
 
 - 작성: 2026-11-03 (Asia/Seoul)
 - 상태: **사용자 최종 승인 대기 / 설계 문서 / 구현 시작 아님**
-- 코드 기준: \`main@7de20547baddd7014c02cd22a4c58a9fe59b60ac\`
+- 코드 기준: `main@7de20547baddd7014c02cd22a4c58a9fe59b60ac`
 - 선행 문서: [제품 개편](2026-11-02-hyunsaengpatch-product-redesign-design.md), [DB 교정](../../development/corrective-database.md)
-- 기존 지침: \`AGENTS.md\` → \`AGENT.md\`, \`IDEA.md\`. 별도 합의 없이 이를 수정하지 않는다.
+- 기존 지침: `AGENTS.md` → `AGENT.md`, `IDEA.md`. 별도 합의 없이 이를 수정하지 않는다.
 - 참고 시연: 사용자 제공 홈/퀘스트/챕터/DM/클랜/마이/꾸미기/상자 이미지. **시각적 참고와 인터랙션 목표**이지 테스트 데이터나 고정 픽셀 복제 지시가 아니다.
 
 ## 1. 왜 만드는가
@@ -34,18 +34,18 @@
 
 ## 2. 근거: 최신 코드와 서버
 
-- \`MainActivity.kt\`: 오프닝 → \`DailyQuestApp\` 직접 진입. 로그인/온보딩 라우트가 없다.
-- \`ui/DailyQuestApp.kt\`: 홈/퀘스트/쪽지/클랜/마이 5탭과 계정 관리 진입이 존재. 기존 탭·상단바·전환·드로어/시트를 보존한다.
-- \`ui/redesign/AccountPage.kt\`: 아이디·비밀번호 기반 가입/로그인, 기존 기록·동기화 상태, 로그아웃. 계정 화면은 UI 표면일 뿐 온보딩이 아니다.
-- \`ui/redesign/HomePage.kt\`: \`signedIn\`일 때 \`SocialHomePage\`, 아니면 시연 홈으로 분기.
-- \`ui/redesign/ClanPage.kt\`: \`signedIn\`일 때 별도 \`SignedInClanPage\`를 사용, 로그인 전에는 클랜 시연.
-- \`ui/redesign/QuestsPage.kt\` / \`ChapterPage.kt\`: \`QuestPreviewCatalog\`/로컬 \`QuestPreviewStore\`와 실제 목표·일일 데이터가 공존. 챕터 시연 보상은 실제 보관함과 분리.
-- \`ui/redesign/DmPage.kt\`: 게스트 로컬 제안/친구 데모, 회원은 서버 메시지 저장 경로가 있지만 Gemini 응답이 없다.
-- \`ui/DailyQuestViewModel.kt\`: Room 데이터·동기화·SocialStore 상태가 이미 존재. 페이지 안에서 직접 DB/RPC 작업이 섞인 부분은 여기 또는 저장소로 이동한다.
-- \`sync/AccountRepository.kt\`, \`ProfileRegistry.kt\`, \`SessionVault.kt\`: Supabase 계정, 암호화된 토큰, DB 파일별 격리. 기존 게스트 데이터를 기기 계정에 합치는 모든 경우가 자동 해결된 것은 아니다.
-- \`sync/SyncWorker.kt\`, \`SyncCapture.kt\`, \`SyncApply.kt\`: 트랜잭션 Outbox·멱등 전송·서버 이벤트/스냅샷 투영, 네트워크 연결 시 WorkManager. 재활용이 최우선.
-- Supabase 실조회: 프로젝트 \`xpqjjfcyiirospxzykqd\` 활성; 앱 전용 9개 테이블 RLS 활성; \`questyourlife-account\` Edge Function 활성; 002~004 마이그레이션 적용. 이는 **스키마 존재 확인**이지 종단간 UX 통과의 증거가 아니다.
-- \`docs/development/corrective-database.md\`의 격리 테스트·빌드 통과 기록은 존중하되, 실제 설치/두 계정/오프라인 UI는 미검증으로 취급한다.
+- `MainActivity.kt`: 오프닝 → `DailyQuestApp` 직접 진입. 로그인/온보딩 라우트가 없다.
+- `ui/DailyQuestApp.kt`: 홈/퀘스트/쪽지/클랜/마이 5탭과 계정 관리 진입이 존재. 기존 탭·상단바·전환·드로어/시트를 보존한다.
+- `ui/redesign/AccountPage.kt`: 아이디·비밀번호 기반 가입/로그인, 기존 기록·동기화 상태, 로그아웃. 계정 화면은 UI 표면일 뿐 온보딩이 아니다.
+- `ui/redesign/HomePage.kt`: `signedIn`일 때 `SocialHomePage`, 아니면 시연 홈으로 분기.
+- `ui/redesign/ClanPage.kt`: `signedIn`일 때 별도 `SignedInClanPage`를 사용, 로그인 전에는 클랜 시연.
+- `ui/redesign/QuestsPage.kt` / `ChapterPage.kt`: `QuestPreviewCatalog`/로컬 `QuestPreviewStore`와 실제 목표·일일 데이터가 공존. 챕터 시연 보상은 실제 보관함과 분리.
+- `ui/redesign/DmPage.kt`: 게스트 로컬 제안/친구 데모, 회원은 서버 메시지 저장 경로가 있지만 Gemini 응답이 없다.
+- `ui/DailyQuestViewModel.kt`: Room 데이터·동기화·SocialStore 상태가 이미 존재. 페이지 안에서 직접 DB/RPC 작업이 섞인 부분은 여기 또는 저장소로 이동한다.
+- `sync/AccountRepository.kt`, `ProfileRegistry.kt`, `SessionVault.kt`: Supabase 계정, 암호화된 토큰, DB 파일별 격리. 기존 게스트 데이터를 기기 계정에 합치는 모든 경우가 자동 해결된 것은 아니다.
+- `sync/SyncWorker.kt`, `SyncCapture.kt`, `SyncApply.kt`: 트랜잭션 Outbox·멱등 전송·서버 이벤트/스냅샷 투영, 네트워크 연결 시 WorkManager. 재활용이 최우선.
+- Supabase 실조회: 프로젝트 `xpqjjfcyiirospxzykqd` 활성; 앱 전용 9개 테이블 RLS 활성; `questyourlife-account` Edge Function 활성; 002~004 마이그레이션 적용. 이는 **스키마 존재 확인**이지 종단간 UX 통과의 증거가 아니다.
+- `docs/development/corrective-database.md`의 격리 테스트·빌드 통과 기록은 존중하되, 실제 설치/두 계정/오프라인 UI는 미검증으로 취급한다.
 
 ## 3. 채택 후보와 비교
 
@@ -55,7 +55,7 @@
 | B. 게스트 우선, 필요 시 인증, 화면은 하나 | 기존 로컬 기반 보존, 진입 장벽 낮음, 실제 데이터 연결 | **권장안. 사용자 승인 전 제안 상태** |
 | C. 시연 화면과 회원 화면 각각 유지 | 당장 수정량 적음 | UI와 상태 로직 이중화가 현 문제의 원인. 기각 |
 
-핵심 구조는 **UI = 실제/게스트 데이터의 같은 시각적 표현**, 인증은 데이터·행동의 권한 조건이다. 화면 뭉치를 \`if(signedIn)\`으로 통째로 갈라서는 안 된다.
+핵심 구조는 **UI = 실제/게스트 데이터의 같은 시각적 표현**, 인증은 데이터·행동의 권한 조건이다. 화면 뭉치를 `if(signedIn)`으로 통째로 갈라서는 안 된다.
 
 ## 4. UX 고정 규칙
 
@@ -74,7 +74,7 @@
 
 ### 5.1 첫 실행(권장안 B)
 
-\`\`\`text
+```text
 앱 시작 → 브랜드 오프닝
        → 최초 실행 여부 체크
           ├─ 이미 사용: 마지막 탭/기존 로컬 내용 복구 → 홈
@@ -85,10 +85,10 @@
                   [계정 만들기 / 로그인 / 지금은 기기에서]
                     ↓
                    공통 홈
-\`\`\`
+```
 
 - 온보딩은 강제 5페이지 튜토리얼이 아니다. 입력한 첫 목표는 초안으로 유지되어 사용자가 확인·저장할 때만 실제 생성된다.
-- 인터넷이 없거나 계정을 원치 않아도 로컬 목표/일일 퀘스트/기본 타이머 접근 가능. 최초 생성에서 서버 AI가 필요하면 로그인 CTA와 로컬 수동 생성 대안을 나란히 제공.
+- 인터넷이 없거나 계정을 원치 않아도 로컬 목표와 일일 퀘스트를 수행할 수 있다. 실제 집중 타이머는 별도 구현·검증 대상이다. 최초 생성에서 서버 AI가 필요하면 로그인 CTA와 로컬 수동 생성 대안을 나란히 제공.
 - 앱 재시작 시 완료된 온보딩을 다시 보이지 않는다. 계정 전환·로그아웃도 온보딩을 반복하지 않는다.
 - 알림 권한은 실제 일일 알림을 활성화하려는 맥락에서만 요청. 최초 실행에 무더기 권한 요청 금지.
 
@@ -96,14 +96,14 @@
 
 - 계정 생성/로그인은 **최초 진입의 선택지 + 온라인 기능 시도 시 시트 + 마이 내 계정 설정**에서 동일한 인증 컴포넌트를 재사용한다.
 - 로그인 페이지를 운영 앱의 독립된 기본 홈으로 만들지 않는다. 인증 후 원래 보고 있던 탭/행동으로 복귀.
-- 회원가입·로그인 전환을 화면 안에서 제공. 기존 ID/비밀번호 \`AccountRepository.signIn\` 재활용; 비밀번호 저장/로깅 금지.
+- 회원가입·로그인 전환을 화면 안에서 제공. 기존 ID/비밀번호 `AccountRepository.signIn` 재활용; 비밀번호 저장/로깅 금지.
 - 서버 오류, 아이디 중복, 비밀번호 형식, 네트워크 연결 오류를 구별. 실패해도 입력한 목표나 게스트 기록 보존.
 - 이메일 복구가 없는 현재 구조에서 없는 복구 기능을 약속하지 않는다. 계정 복구 정책은 출시 전 별도 결정.
 - 카카오·네이버·구글 OAuth 추가는 이번 통합의 필수 범위가 아니다.
 
 ### 5.3 게스트 기록 귀속/계정 전환
 
-핵심 위험: \`ProfileRegistry.bind\`는 처음 계정에 연결할 때 미귀속 DB를 선택할 수 있지만, **다른 계정에 이미 연결된 DB/기존 계정으로 돌아오는 경우의 전체 병합**까지 보장한다고 가정하면 안 된다.
+핵심 위험: `ProfileRegistry.bind`는 처음 계정에 연결할 때 미귀속 DB를 선택할 수 있지만, **다른 계정에 이미 연결된 DB/기존 계정으로 돌아오는 경우의 전체 병합**까지 보장한다고 가정하면 안 된다.
 
 - 게스트 기록이 없으면 즉시 계정 진입.
 - 게스트 기록이 있고 새 계정에 묶는다면 **보존할 로컬 기록을 보여주고 명시적 확인**한 뒤 귀속. server UID 검증 후 연결. 동기화 완료 전 로컬 복사본 보존.
@@ -127,31 +127,31 @@
 
 - 렌더링 계층: **퀘스트북(프로젝트) → 챕터 → 메인 퀘스트 → 일일 실행**.
 - 본문은 카드/진행률/연결된 타임라인/오늘의 실행 CTA. 퀘스트 완료와 개봉 연출은 실제 상태 전이를 따라간다.
-- 서버 루트 \`questbook\` + 참여 \`quest_join\` + \`QuestTreeResolver\`/effective tree → 실제 챕터 및 메인 경로. 이미 있는 \`SyncApply.projectBook\`, Room \`GoalEntity\`/stable step, \`daily_quests\`를 재사용. 화면에서 전체 트리가 필요한 경우 \`sync_remote_records\` 캐시의 유효 트리를 읽되, 또 다른 진도/보상 저장소를 만들지 않는다.
+- 서버 루트 `questbook` + 참여 `quest_join` + `QuestTreeResolver`/effective tree → 실제 챕터 및 메인 경로. 이미 있는 `SyncApply.projectBook`, Room `GoalEntity`/stable step, `daily_quests`를 재사용. 화면에서 전체 트리가 필요한 경우 `sync_remote_records` 캐시의 유효 트리를 읽되, 또 다른 진도/보상 저장소를 만들지 않는다.
 - 참여하지 않은 공개 책은 미리보기/참여 CTA로만 표시. 실제 일일 실행과 누적 보상은 참가 이후 발생한다.
 - 참가한 책의 판본 고정과 개인 overlay 존중. 메인 단계 순서를 바꿨다고 완료 이벤트/안정 ID가 바뀌지 않는다.
 - '시작/수락/완료/내일로 미루기/그만하기/완료 취소'가 실제 저장소 이벤트를 호출. 단순 시연 체크로 실제 캐쉬를 올리는 것 금지.
-- \`QuestPreviewCatalog\`와 \`QuestPreviewStore\`의 참고 퀘스트는 실제 계정 트리와 자동 병합하지 않는다. 출시 화면 기본 목록에서 제거하고, 원한다면 사용자가 선택한 샘플/개발용 프리뷰로 격리.
+- `QuestPreviewCatalog`와 `QuestPreviewStore`의 참고 퀘스트는 실제 계정 트리와 자동 병합하지 않는다. 출시 화면 기본 목록에서 제거하고, 원한다면 사용자가 선택한 샘플/개발용 프리뷰로 격리.
 - 챕터 상자는 서버에서 확인된 수령 권리와 실제 소유권이 있을 때만 열기/받기 가능. 소유권 없는 장식 시연 금지.
 
 ### 6.3 DM·마스코트
 
 - 마스코트 DM은 항상 하단 쪽지 탭에서 접근 가능. 대화 목록 → 실제 개별 스레드; 이름/아이콘/메시지 버블 디자인 유지.
 - 게스트: 비공개 로컬 기록과 검증된 로컬 목표 제안. 네트워크 AI 응답인 척하지 않고 필요한 경우 **한 번만** 기능 안내. 가짜 친구를 실제 친구 목록으로 전시하지 않는다.
-- 회원: \`SocialStore\`의 실제 chat/post/snapshot 캐시로 같은 UI를 표시. 네트워크 단절에는 저장된 메시지와 전송 대기 표시.
+- 회원: `SocialStore`의 실제 chat/post/snapshot 캐시로 같은 UI를 표시. 네트워크 단절에는 저장된 메시지와 전송 대기 표시.
 - 실제 Gemini가 켜지면 '목표 말하기 → 제안 카드 → 수정 → 확정 → 퀘스트북/일일 투영 → 후속 대화' 전 과정 연결. 제안은 데이터 변경이 아니며, 사용자 명시적 확정 전에 SQL 반영 금지.
 - '내일로 미뤄줘' 등 명확한 단건 명령은 대상 확인·원장 기록·되돌리기 UI를 제공. 애매한 지시는 실행하지 않고 대상 확인.
 - 비회원 친구 DM/클랜 DM은 실제 서버 권한이 필요하므로 기능 진입 맥락에서 로그인 CTA를 보여준다.
 
 ### 6.4 클랜
 
-**현재 \`signedIn\`에 따라 시연 ClanPage와 SignedInClanPage로 갈라진 문제를 근본 해결한다.**
+**현재 `signedIn`에 따라 시연 ClanPage와 SignedInClanPage로 갈라진 문제를 근본 해결한다.**
 
 동일한 레이아웃: 클랜 정체성/엠블럼·초대 → 주간 공동 상자·기여 진행률 → 실제 멤버 아바타 → 클랜 주간 순위/활동. 시연의 검은 배너·노랑 포인트·캐릭터·시트 사용.
 
 - 비회원 또는 계정 없는 상태: 디자인의 핵심 헤더 구조는 유지하되 '내 클랜 만들기/초대받기' 진입 시트 제공. 가입에 필요한 입력은 시트 2단계에서만 표시. 계정 없는 사용자는 로그인 후 원래 클랜 진입으로 복귀.
-- 회원 소속 있음: \`questyourlife_social_snapshot\`의 실소속·기여·멤버·권리만 표시.
-- 초대: 서버의 실제 일회성 토큰을 사용자에게 복사·공유하도록 제공. 임의 \`PATCH-DEMO\` 코드는 배포 UI에서 제거. 토큰 원문을 공용 캐시에 저장하지 않는다.
+- 회원 소속 있음: `questyourlife_social_snapshot`의 실소속·기여·멤버·권리만 표시.
+- 초대: 서버의 실제 일회성 토큰을 사용자에게 복사·공유하도록 제공. 임의 `PATCH-DEMO` 코드는 배포 UI에서 제거. 토큰 원문을 공용 캐시에 저장하지 않는다.
 - 멤버 전체·주간 순위·상자 수령은 시트로 분리. 메인 화면을 수십 개 입력 필드/텍스트 버튼으로 채우지 않는다.
 - 데이터 없음/서버 오류 시 가짜 멤버·가짜 점수 대신 로컬 마지막 확인 시각/새로고침/가입 CTA 등 실제 상태를 표시.
 - 클랜은 1인 1소속, 초대 권한, 기여 기간·수령 권리·중복 수령을 서버 RPC에 위임. 사용자 목표명/대화/위치/개인 데이터는 클랜에 노출하지 않는다.
@@ -160,7 +160,7 @@
 ### 6.5 마이·꾸미기·보관함
 
 - 큰 프로필/마스코트·레벨·클랜, 실제 **보유 캐쉬 / 이번 주 서버 확정 획득**, 퀘스트북 성취, 꾸미기 미리보기, 보관함, 설정/계정 순서.
-- 기존 꾸미기 에셋과 \`CosmeticCatalog\`·\`OwnedItemEntity\`·장착 로직을 재활용.
+- 기존 꾸미기 에셋과 `CosmeticCatalog`·`OwnedItemEntity`·장착 로직을 재활용.
 - 미소유 아이템은 구매/획득 여부를 구분; 장착·구매는 서버 확정 및 기존 원장과 일치.
 - 상자 개봉 결과는 DB에서 먼저 확정하고 연출은 그 결과를 재생한다. 재탭/앱 종료/재접속으로 중복 지급 불가.
 - 일반 프로필 화면과 동기화 디버그 정보를 분리. 상세 충돌 해결 UI는 계정 설정 안에서 필요 시 접근한다.
@@ -173,7 +173,7 @@
 
 ## 7. 상태/데이터 아키텍처
 
-\`\`\`text
+```text
                      Compose 공통 화면 (게스트/회원 동일)
                                 ↓ 사용자 의도
                  DailyQuestViewModel / 화면별 상태 매핑
@@ -188,14 +188,14 @@
                  기존 Supabase Auth / Postgres / RPC
                                 ↑
                        Vercel AI 경계(별도 승인 항목)
-\`\`\`
+```
 
-- **데이터 모델 한 벌:** UI 모델은 Room Flow + 현존 \`SocialStore\` 스냅샷/동기화 상태에서 파생. 메모리에서만 존재하는 별도 시연 완료·진도·캐쉬를 운영 UI에서 계산하지 않는다.
+- **데이터 모델 한 벌:** UI 모델은 Room Flow + 현존 `SocialStore` 스냅샷/동기화 상태에서 파생. 메모리에서만 존재하는 별도 시연 완료·진도·캐쉬를 운영 UI에서 계산하지 않는다.
 - **권위 구분:** 로컬 체크는 즉시 저장, 서버 경쟁 점수·실제 보유재화·클랜 권리·온라인 메시지 상태는 확인된 응답에 따름. 대기 금액을 구매 가능 캐쉬로 표시하지 않는다.
-- **단일 UI 분기:** 페이지 자체를 \`signedIn\`으로 스왑하지 않는다. \`Guest / Loading / Ready / Empty / OfflineCached / Error\` 같은 필요한 최소 표시 상태를 화면에 투영하고 재사용 컴포넌트를 공유한다. 상태 클래스를 무분별하게 새로 만들지 않는다.
+- **단일 UI 분기:** 페이지 자체를 `signedIn`으로 스왑하지 않는다. `Guest / Loading / Ready / Empty / OfflineCached / Error` 같은 필요한 최소 표시 상태를 화면에 투영하고 재사용 컴포넌트를 공유한다. 상태 클래스를 무분별하게 새로 만들지 않는다.
 - **이벤트/동기화:** 기존 sealed Outbox, immutable event receipts, idempotency IDs, retries, cursor, version 충돌을 유지. 이벤트와 로컬 도메인 변경은 같은 트랜잭션. 동시 기기 완료 취소/미루기·재전송에도 보상 중복 불가.
-- **API 호출 경계:** 현재 \`QuestsPage.kt\`처럼 Composable에서 직접 DB 트랜잭션과 \`SyncCapture\`를 수행하는 부분은 ViewModel/Repository 이벤트로 이동. 그러나 대규모 일괄 아키텍처 재작성은 금지.
-- **서버 비용:** 기존 9개 앱 테이블과 RPC·\`sync_remote_records\`를 사용; 뷰/캐시/카운터 테이블 중복 추가 금지. 진입·복귀·명시적 새로고침·백그라운드 동기화에 갱신하고 과도한 주기 폴링은 두지 않는다.
+- **API 호출 경계:** 현재 `QuestsPage.kt`처럼 Composable에서 직접 DB 트랜잭션과 `SyncCapture`를 수행하는 부분은 ViewModel/Repository 이벤트로 이동. 그러나 대규모 일괄 아키텍처 재작성은 금지.
+- **서버 비용:** 기존 9개 앱 테이블과 RPC·`sync_remote_records`를 사용; 뷰/캐시/카운터 테이블 중복 추가 금지. 진입·복귀·명시적 새로고침·백그라운드 동기화에 갱신하고 과도한 주기 폴링은 두지 않는다.
 
 ### 7.1 온라인/오프라인 상태별 허용
 
@@ -205,18 +205,18 @@
 | 퀘스트북 실진도 | 로컬 목표만 | 캐시된 유효 트리 | 동기화·신규 참여 가능 |
 | 마스코트 DM | 로컬 제안 | 저장된 메시지/전송 대기 | 실제 AI 기능 연결 후 응답 |
 | 클랜 멤버·순위 | 로그인 안내 | 마지막 서버 확인 기록, 최신 아님 표시 | 실제 서버 스냅샷 |
-| 상자·아이템 구매 | 보상 확정 없이 지급 금지 | 미확정 구매 실행 금지 | 서버 확정 후 장착/수령 |
+| 상자·아이템 구매 | 기존 로컬 보유분의 꾸미기 기능 유지, 서버 상자 권리는 없음 | 서버 미확정 구매·상자 수령 금지 | 서버 확정 후 장착/수령 |
 | 알림/집중 실행 | 로컬 정책에 따름 | 로컬 정책에 따름 | 로컬+서버 알림 동기화 |
 
 오프라인에서 클랜·상자 등을 '없는 기능'으로 바꾸거나 가짜 보상을 연출해서는 안 된다.
 
 ## 8. 실제 Gemini 연결: 기존 정책과 충돌 표시
 
-- 이전 대화에서 사용자는 **Vercel Serverless로 Gemini 실행**을 희망/선택했다. 반면 현재 \`AGENT.md\`는 **Supabase Edge Functions에서 Gemini 호출**을 요구한다. 설계 문서는 이 충돌을 숨기지 않는다.
+- 이전 대화에서 사용자는 **Vercel Serverless로 Gemini 실행**을 희망/선택했다. 반면 현재 `AGENT.md`는 **Supabase Edge Functions에서 Gemini 호출**을 요구한다. 설계 문서는 이 충돌을 숨기지 않는다.
 - **권장 구성:** Supabase Auth/DB/RPC를 유일한 권위 기반으로 유지, Vercel은 *AI 생성·응답에만* 쓰는 최소 함수. AI 요청 시 사용자 세션을 검증하고 본인 채널·쿼터를 확인. Gemini 키·service role은 서버 비밀 환경에만 둔다.
-- 서버는 목표 입력·문맥 → 검증된 구조화 \`plan_draft\`/대화 응답을 반환. 보상 금액, 클랜 순위, 지급 권리 조작 권한 없음.
-- AI 메시지는 기존 \`post\`·\`questyourlife_assistant_post\` 경로에 적법하게 기록. 사용자 명시 동의 \`plan_confirm\`/기존 RPC만 실제 목표 변경. 중복 요청/재시도/중단에도 생성·확정 이벤트가 두 번 적용되지 않아야 함.
-- 데이터베이스 구조를 재작업할 이유는 없으며, API 계약·쿼터/과금 방어·서버 배포 범위 확인 후 구현. Vercel 확정 시 \`AGENT.md\`의 Edge 전용 규칙을 사용자 승인하에 변경. 기존 계정 Edge Function은 이전하지 않는다.
+- 서버는 목표 입력·문맥 → 검증된 구조화 `plan_draft`/대화 응답을 반환. 보상 금액, 클랜 순위, 지급 권리 조작 권한 없음.
+- AI 메시지는 기존 `post`·`questyourlife_assistant_post` 경로에 적법하게 기록. 사용자 명시 동의 `plan_confirm`/기존 RPC만 실제 목표 변경. 중복 요청/재시도/중단에도 생성·확정 이벤트가 두 번 적용되지 않아야 함.
+- 데이터베이스 구조를 재작업할 이유는 없으며, API 계약·쿼터/과금 방어·서버 배포 범위 확인 후 구현. Vercel 확정 시 `AGENT.md`의 Edge 전용 규칙을 사용자 승인하에 변경. 기존 계정 Edge Function은 이전하지 않는다.
 - **서비스 연결 완료 전:** 회원 DM에서 AI 답변 가능하다고 기만하지 않고, 제공 가능한 로컬 계획/대기·오류 상태만 제공한다.
 
 ## 9. 실행 순서: 소단위로 완료 기준 잠금
@@ -224,7 +224,7 @@
 ### Gate 0 — 기준점 확보(코드 변경 전)
 
 1. 기준 SHA, 기존 주요 페이지 캡처 및 참조 이미지 대응표 고정.
-2. \`AGENTS.md\`, \`AGENT.md\`, \`IDEA.md\`, 최신 마이그레이션·DB/SDK 확인.
+2. `AGENTS.md`, `AGENT.md`, `IDEA.md`, 최신 마이그레이션·DB/SDK 확인.
 3. 게스트·회원 진입 시 각 화면의 실제 분기/데이터 흐름 추적. 추가 스키마 필요성 검토.
 4. 배포 중 사용자 데이터와 preview APK 패키지/서명을 보존하는 방법 합의.
 
@@ -232,8 +232,8 @@
 
 ### Gate 1 — 온보딩·인증·계정 데이터 경계
 
-1. 기존 \`MainActivity\`/탭 내비게이션에 최초 실행 흐름 연결.
-2. \`PatchAccountPage\`를 재사용 가능한 인증 화면/시트로 구성. 기존 비밀번호/토큰/세션 재활용.
+1. 기존 `MainActivity`/탭 내비게이션에 최초 실행 흐름 연결.
+2. `PatchAccountPage`를 재사용 가능한 인증 화면/시트로 구성. 기존 비밀번호/토큰/세션 재활용.
 3. 게스트·회원 데이터 귀속 및 계정 전환 시나리오를 명시적으로 처리.
 4. 데이터 손실/중복 import/실패 복귀를 먼저 테스트.
 
@@ -241,7 +241,7 @@
 
 ### Gate 2 — 퀘스트·홈 UI 단일화
 
-1. 홈과 퀘스트북/챕터에서 운영용 \`QuestPreviewStore\` 직접 참조 제거.
+1. 홈과 퀘스트북/챕터에서 운영용 `QuestPreviewStore` 직접 참조 제거.
 2. 하나의 페이지에 실제 로컬/서버 투영 데이터 연결. 공통 레이아웃 유지.
 3. 수락/완료/취소/미루기/그만하기, 성취·상자 UI 상태 검증.
 4. 빈 상태/오프라인/불러오기 시에도 시각적 위계 유지.
@@ -250,7 +250,7 @@
 
 ### Gate 3 — DM 및 AI 계획의 완전 연결
 
-1. \`SocialStore\` 회원 채팅·게스트 로컬 제안과 동일 DM UI 연결.
+1. `SocialStore` 회원 채팅·게스트 로컬 제안과 동일 DM UI 연결.
 2. 선택한 서버리스 경계에서 Gemini 구조화 응답/대화 저장.
 3. 초안 편집·확정·추가, 단건 수정·되돌리기, 실패/재전송 검증.
 
@@ -258,7 +258,7 @@
 
 ### Gate 4 — 클랜·프로필·보상·상자 UI 단일화
 
-1. \`SignedInClanPage\` 임시 폼과 별도 게스트 시연 콘텐츠를 시각 구조가 같은 상태 구동형 화면으로 융합.
+1. `SignedInClanPage` 임시 폼과 별도 게스트 시연 콘텐츠를 시각 구조가 같은 상태 구동형 화면으로 융합.
 2. 초대/가입/탈퇴/멤버·실기여/주간 순위/상자 권리 실제 RPC 연결.
 3. 재화·XP·아이템 소유권·장착·상자 보상과 마이/꾸미기 UI 통합.
 
@@ -266,7 +266,7 @@
 
 ### Gate 5 — 검증·출시 전 정리
 
-- \`gradle --no-daemon --max-workers=2 :app:assembleDebug :app:testDebugUnitTest\`
+- `gradle --no-daemon --max-workers=2 :app:assembleDebug :app:testDebugUnitTest`
 - 기존 DB 마이그레이션·Outbox·계정 격리·보상/소유권·서버 RLS/RPC regression.
 - 기존/변경 화면과 첨부 참조의 비교: 계층, 간격, 순서, 폰트 무게, 일러스트 크기, 빈 화면·시트·전환 영상.
 - 가입 도중 네트워크 끊김, 두 계정 교대, 서버 4xx/5xx, AI 중복 응답, 재전송, 중복 탭, 프로세스 종료 후 복원.
@@ -278,19 +278,19 @@
 
 | 현존 파일/영역 | 변경 책임 |
 | --- | --- |
-| \`MainActivity.kt\`, \`ui/DailyQuestApp.kt\` | 온보딩 분기, 인증 시트/복귀, 통합 5탭 라우팅 |
-| \`ui/redesign/AccountPage.kt\` | 인증 정보 구조/화면 컴포넌트 재사용 |
-| \`sync/AccountRepository.kt\`, \`ProfileRegistry.kt\` | 안전한 귀속/복귀/계정 분리, 세션 처리 |
-| \`ui/DailyQuestViewModel.kt\`, \`daily/*\` | 단일 상태 매핑, 퀘스트 액션 및 상태 일관성 |
-| \`ui/redesign/HomePage.kt\`, \`QuestsPage.kt\`, \`ChapterPage.kt\` | 실제 퀘스트 모델 + 동일 디자인 UI |
-| \`companion/QuestPreview.kt\`, \`LocalCompanionGateway.kt\` | 운영 데이터/명시적 샘플/로컬 제안 경계 |
-| \`ui/redesign/DmPage.kt\`, \`companion/SocialStore.kt\` | 대화·계획·실제 AI 상태 |
-| \`ui/redesign/ClanPage.kt\`, \`SocialPages.kt\` | 한 벌의 클랜 UI와 서버 데이터·시트 |
-| \`ui/redesign/ProfilePage.kt\`, \`DecorPage.kt\`, \`NotificationCenter.kt\` | 실제 캐쉬/획득량/꾸미기/알림 |
-| \`supabase/functions\`, 신규 Vercel AI 함수(승인 시) | 키 비노출·AI 생성만, 기존 Auth/RPC 유지 |
-| \`app/src/test\`, \`tools\`, 관련 문서 | UI·동기화·권한·이관 회귀/검증 |
+| `MainActivity.kt`, `ui/DailyQuestApp.kt` | 온보딩 분기, 인증 시트/복귀, 통합 5탭 라우팅 |
+| `ui/redesign/AccountPage.kt` | 인증 정보 구조/화면 컴포넌트 재사용 |
+| `sync/AccountRepository.kt`, `ProfileRegistry.kt` | 안전한 귀속/복귀/계정 분리, 세션 처리 |
+| `ui/DailyQuestViewModel.kt`, `daily/*` | 단일 상태 매핑, 퀘스트 액션 및 상태 일관성 |
+| `ui/redesign/HomePage.kt`, `QuestsPage.kt`, `ChapterPage.kt` | 실제 퀘스트 모델 + 동일 디자인 UI |
+| `companion/QuestPreview.kt`, `LocalCompanionGateway.kt` | 운영 데이터/명시적 샘플/로컬 제안 경계 |
+| `ui/redesign/DmPage.kt`, `companion/SocialStore.kt` | 대화·계획·실제 AI 상태 |
+| `ui/redesign/ClanPage.kt`, `SocialPages.kt` | 한 벌의 클랜 UI와 서버 데이터·시트 |
+| `ui/redesign/ProfilePage.kt`, `DecorPage.kt`, `NotificationCenter.kt` | 실제 캐쉬/획득량/꾸미기/알림 |
+| `supabase/functions`, 신규 Vercel AI 함수(승인 시) | 키 비노출·AI 생성만, 기존 Auth/RPC 유지 |
+| `app/src/test`, `tools`, 관련 문서 | UI·동기화·권한·이관 회귀/검증 |
 
-*새 파일·구체 함수 시그니처·상세 테스트 명령은 **설계 승인 뒤** \`superpowers:writing-plans\`에서 지정한다. 큰 함수가 있다고 하여 관련 없는 코드까지 임의 분리하지 않는다.*
+*새 파일·구체 함수 시그니처·상세 테스트 명령은 **설계 승인 뒤** `superpowers:writing-plans`에서 지정한다. 큰 함수가 있다고 하여 관련 없는 코드까지 임의 분리하지 않는다.*
 
 ## 11. 이번 작업에서 하지 않을 것
 
@@ -304,7 +304,7 @@
 
 ## 12. 승인 전에 확정할 정책과 제안 기본값
 
-1. **공식 표기:** 사용자 첨부/대화는 '현생패치', 저장소 \`AGENT.md\`/\`IDEA.md\`는 '갓생패치'로 충돌. **확정 전 이름·패키지/DB 식별자 변경 금지**. UI 공개 명칭만 별도 선택 필요.
+1. **공식 표기:** 사용자 첨부/대화는 '현생패치', 저장소 `AGENT.md`/`IDEA.md`는 '갓생패치'로 충돌. **확정 전 이름·패키지/DB 식별자 변경 금지**. UI 공개 명칭만 별도 선택 필요.
 2. **인증 UX:** 게스트 우선 B안을 권장하며, 기록은 명시적으로 선택해 귀속. 게스트 기록이 있으면 신규 계정에 무조건 자동 연결하지 않음.
 3. **Gemini 호스팅:** 사용자 이전 Vercel 의사와 저장소 Edge 전용 규칙을 정리해 하나를 확정. 권장안은 기존 Supabase RPC + Vercel의 단일 AI 함수.
 4. **첫 배포 범위:** Gate 1~2부터 검증 가능한 앱을 만들고, 이후 Gate 3~4를 순차 통합. 미완료 서비스를 실제로 되는 듯 출시하지 않음.
@@ -312,4 +312,4 @@
 
 ## 13. 사용자 승인 및 다음 단계
 
-**이 문서는 설계 검토용이다.** 코드/SQL/자산/실사용 DB/빌드를 변경하지 않는다. 사용자 승인 후 \`superpowers:writing-plans\`로 각 Gate의 구체 수정 파일·인터페이스·실패 테스트·검증·커밋 단위까지 작성한다. 실제 구현 단계는 그 실행 계획을 다시 검토한 다음 시작한다.
+**이 문서는 설계 검토용이다.** 코드/SQL/자산/실사용 DB/빌드를 변경하지 않는다. 사용자 승인 후 `superpowers:writing-plans`로 각 Gate의 구체 수정 파일·인터페이스·실패 테스트·검증·커밋 단위까지 작성한다. 실제 구현 단계는 그 실행 계획을 다시 검토한 다음 시작한다.

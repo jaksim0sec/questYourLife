@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="152dp" android:height="112.46dp" android:gravity="center">
+        <bitmap android:src="@drawable/mascot_face_stamp" android:gravity="fill"
+            android:filter="true" android:tint="@android:color/white" android:tintMode="src_in" />
+    </item>
+</layer-list>

@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.QuestYourLife" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/opening_background</item>
+        <item name="android:statusBarColor">@color/brand_red</item>
+        <item name="android:navigationBarColor">@color/brand_red</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    <style name="Theme.QuestYourLife.Starting" parent="Theme.QuestYourLife" />
+</resources>

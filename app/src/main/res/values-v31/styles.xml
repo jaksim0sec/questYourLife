@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.QuestYourLife.Starting" parent="Theme.QuestYourLife">
+        <item name="android:windowSplashScreenBackground">@color/brand_red</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/opening_stamp</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/brand_red</item>
+    </style>
+</resources>

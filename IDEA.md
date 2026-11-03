@@ -93,4 +93,6 @@
 
 **현재 구현:** Android UI 홈·퀘스트·기록·설정, Room 로컬 저장과 v1→v2 마이그레이션, 로컬 일일 제안, 수락/완료/미루기 알림 액션, 보상 기록, GitHub Actions debug APK 빌드 설정. 실기기 검증은 별도.
 
-**아직 미구현:** Glance 위젯, 실제 집중 타이머, WorkManager 동기화, 계정, Gemini, Supabase, 실 랭킹/보상 백엔드.
+**2026-11-03 코드 구현:** Room v5·기존 데이터 보존, ID/비밀번호 Auth 클라이언트와 Edge Function, 트랜잭션 Outbox·WorkManager 증분 동기화, 개인 보상/구매 RPC·RLS. 원격 Supabase 배포와 실기기 검증은 아직 미완료. 상세는 [데이터 인프라 문서](docs/development/supabase-foundation.md).
+
+**아직 미구현:** Glance 위젯, 실제 집중 타이머, Gemini, 서버 클랜/채팅/랭킹/상자 보상.

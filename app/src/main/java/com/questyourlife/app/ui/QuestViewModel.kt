@@ -8,9 +8,13 @@ import com.questyourlife.app.data.QuestEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import androidx.room.withTransaction
+import com.questyourlife.app.sync.*
 
 class QuestViewModel(application: Application) : AndroidViewModel(application) {
-    private val dao = QuestDatabase.get(application).questDao()
+    private val app=application.applicationContext
+    private val db=QuestDatabase.get(app)
+    private val dao = db.questDao()
 
     val quests = dao.observeAll().stateIn(
         scope = viewModelScope,
@@ -21,10 +25,16 @@ class QuestViewModel(application: Application) : AndroidViewModel(application) {
     fun addQuest(title: String) {
         val clean = title.trim()
         if (clean.isEmpty() || clean.length > 120) return
-        viewModelScope.launch { dao.insert(QuestEntity(title = clean)) }
+        viewModelScope.launch {
+            db.withTransaction { val q=QuestEntity(title=clean); dao.insert(q); SyncCapture.quick(db,db.syncDao().quick(q.syncId)!!) }
+            SyncScheduler.enqueue(app)
+        }
     }
 
     fun toggleQuest(quest: QuestEntity) {
-        viewModelScope.launch { dao.setCompleted(quest.id, !quest.completed) }
+        viewModelScope.launch {
+            db.withTransaction { dao.setCompleted(quest.id,!quest.completed); SyncCapture.quick(db,db.syncDao().quick(quest.syncId)!!) }
+            SyncScheduler.enqueue(app)
+        }
     }
 }

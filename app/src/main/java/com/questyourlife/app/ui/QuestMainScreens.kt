@@ -36,7 +36,7 @@ fun HomePanel(
     onCreateGoal:()->Unit,onSettings:()->Unit
 ) {
     val goal=goals.firstOrNull()
-    val relevant=steps.filter{it.goalId==goal?.id}
+    val relevant=steps.filter{it.goalId==goal?.id && it.deletedAt==null}
     val completed=relevant.count{it.completedAt!=null}
     val ratio=if(relevant.isEmpty()) 0f else completed.toFloat()/relevant.size
     val date=remember { LocalDate.now().format(DateTimeFormatter.ofPattern("M월 d일 EEEE",Locale.KOREAN)) }
@@ -130,12 +130,12 @@ fun QuestListPanel(
         SegmentedTabs(listOf("메인 퀘스트","일일 퀘스트","완료"),tab,{tab=it})
         if(tab==0 || tab==2) {
             val visible=goals.filter { g ->
-                val list=steps.filter{it.goalId==g.id}
+                val list=steps.filter{it.goalId==g.id && it.deletedAt==null}
                 if(tab==0) list.any{it.completedAt==null} || list.isEmpty()
                 else list.isNotEmpty() && list.all{it.completedAt!=null}
             }
             visible.forEachIndexed { index,g ->
-                val current=steps.filter{it.goalId==g.id}
+                val current=steps.filter{it.goalId==g.id && it.deletedAt==null}
                 val done=current.count{it.completedAt!=null}
                 val ratio=if(current.isEmpty()) 0f else done.toFloat()/current.size
                 val bg=when(index%3) {

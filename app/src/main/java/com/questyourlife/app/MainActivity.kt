@@ -13,6 +13,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.key
+import com.questyourlife.app.sync.AccountRepository
+import com.questyourlife.app.sync.ProfileRegistry
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,7 +46,9 @@ class MainActivity : ComponentActivity() {
             var classic by rememberSaveable { mutableStateOf(false) }
             var opening by rememberSaveable { mutableStateOf(savedInstanceState == null) }
             val openingDeadline by rememberSaveable { mutableStateOf(SystemClock.elapsedRealtime() + 1000L) }
-            val daily: DailyQuestViewModel = viewModel()
+            AccountRepository.get(applicationContext)
+            val profile by ProfileRegistry.get(applicationContext).file.collectAsStateWithLifecycle()
+            val daily: DailyQuestViewModel = viewModel(key="daily:$profile")
             dailyModel = daily
             BackHandler(enabled = classic && !opening) { classic = false }
 
@@ -60,11 +65,11 @@ class MainActivity : ComponentActivity() {
                     when {
                         showOpening -> BrandOpening(openingDeadline) { opening = false }
                         classic -> {
-                            val model: QuestViewModel = viewModel()
+                            val model: QuestViewModel = viewModel(key="classic:$profile")
                             val quests by model.quests.collectAsStateWithLifecycle()
                             QuestHome(quests = quests, onAdd = model::addQuest, onToggle = model::toggleQuest)
                         }
-                        else -> DailyQuestApp(daily, onOpenClassicChecklist = { classic = true })
+                        else -> key(profile) { DailyQuestApp(daily, onOpenClassicChecklist = { classic = true }) }
                     }
                 }
             }

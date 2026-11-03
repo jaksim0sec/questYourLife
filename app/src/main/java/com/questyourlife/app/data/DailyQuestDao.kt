@@ -24,7 +24,7 @@ interface DailyQuestDao {
     @Query("UPDATE daily_quests SET dateKey = :today WHERE dateKey < :today AND completedAt IS NULL AND dismissed = 0")
     suspend fun carryUnfinished(today: String): Int
 
-    @Query("SELECT * FROM daily_quests WHERE goalId = :goalId AND stepPosition = :position AND dismissed = 0 AND completedAt IS NULL LIMIT 1")
+    @Query("SELECT * FROM daily_quests WHERE (stepSyncId=(SELECT syncId FROM stable_goal_steps WHERE goalId=:goalId AND position=:position AND deletedAt IS NULL) OR (stepSyncId IS NULL AND goalId=:goalId AND stepPosition=:position)) AND dismissed = 0 AND completedAt IS NULL LIMIT 1")
     suspend fun activeForStep(goalId: String, position: Int): DailyQuestEntity?
 
     @Query("SELECT COUNT(*) FROM daily_quests WHERE dateKey = :dateKey")
@@ -48,7 +48,7 @@ interface DailyQuestDao {
     @Query("UPDATE daily_quests SET dismissed = 1 WHERE id = :id AND completedAt IS NULL AND dismissed = 0")
     suspend fun abandon(id: String): Int
 
-    @Query("UPDATE goal_steps SET completedAt = :timestamp WHERE completedAt IS NULL AND EXISTS (SELECT 1 FROM daily_quests d WHERE d.id = :id AND d.goalId = goal_steps.goalId AND d.stepPosition = goal_steps.position AND d.completedAt IS NOT NULL)")
+    @Query("UPDATE stable_goal_steps SET completedAt = :timestamp WHERE completedAt IS NULL AND EXISTS (SELECT 1 FROM daily_quests d WHERE d.id = :id AND (d.stepSyncId = stable_goal_steps.syncId OR (d.stepSyncId IS NULL AND d.goalId = stable_goal_steps.goalId AND d.stepPosition = stable_goal_steps.position)) AND d.completedAt IS NOT NULL)")
     suspend fun advanceParent(id: String, timestamp: Long)
 
     @Transaction

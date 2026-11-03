@@ -21,3 +21,7 @@ local.properties
 # Local system
 .DS_Store
 Thumbs.db
+
+# Python tools
+__pycache__/
+*.pyc

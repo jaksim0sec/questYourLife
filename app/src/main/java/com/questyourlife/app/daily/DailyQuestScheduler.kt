@@ -58,14 +58,14 @@ object DailyQuestScheduler {
         )
     }
 
-    fun snooze(context: Context, id: String) {
+    fun snooze(context: Context, id: String, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
         val alarm = context.getSystemService(AlarmManager::class.java)
         val intent = PendingIntent.getBroadcast(
             context, id.hashCode(),
             Intent(context, DailyQuestAlarmReceiver::class.java)
                 .setAction(ACTION_SNOOZE_DUE)
-                .setData(android.net.Uri.parse("hyunsaengpatch://snooze/$id"))
-                .putExtra(EXTRA_ID, id),
+                .setData(android.net.Uri.Builder().scheme("hyunsaengpatch").authority("snooze").appendPath(profile).appendPath(id).build())
+                .putExtra(EXTRA_ID, id).putExtra("qyl_profile",profile),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         alarm.setAndAllowWhileIdle(

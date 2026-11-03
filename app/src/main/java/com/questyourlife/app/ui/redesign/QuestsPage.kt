@@ -45,7 +45,7 @@ fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
             if (tab == 2) state.current(book) == null else state.current(book) != null
     }
     val personal = goals.filter { goal ->
-        val relevant = steps.filter { it.goalId == goal.id }
+        val relevant = steps.filter { it.goalId == goal.id && it.deletedAt==null }
         scope != "클랜" && if (tab == 2) relevant.isNotEmpty() && relevant.all { it.completedAt != null }
         else relevant.isEmpty() || relevant.any { it.completedAt == null }
     }
@@ -131,7 +131,7 @@ fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
                 }
                 if (personal.isNotEmpty()) item { QuestSectionHeading("내 목표") }
                 items(personal, key = { "goal-${it.id}" }) { goal ->
-                    val relevant = steps.filter { it.goalId == goal.id }
+                    val relevant = steps.filter { it.goalId == goal.id && it.deletedAt==null }
                     val done = relevant.count { it.completedAt != null }
                     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button) { onGoal(goal.id) }
                         .padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {

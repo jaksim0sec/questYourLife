@@ -24,7 +24,7 @@ private fun AppMenuRow(@DrawableRes icon: Int, title: String, onClick: () -> Uni
 
 @Composable
 fun AppMenu(onCompanion: () -> Unit, onCreate: () -> Unit, onHistory: () -> Unit,
-    onNotes: () -> Unit, onTimer: () -> Unit, onTheme: () -> Unit, onSettings: () -> Unit) {
+    onNotes: () -> Unit, onAccount: () -> Unit, onTimer: () -> Unit, onTheme: () -> Unit, onSettings: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
     Text("목표와 실천", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
     Column {
@@ -41,6 +41,7 @@ fun AppMenu(onCompanion: () -> Unit, onCreate: () -> Unit, onHistory: () -> Unit
     HorizontalDivider(color = PatchTokens.line)
     Text("앱 설정", style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
     Column {
+        AppMenuRow(R.drawable.ic_patch_nav_inactive_my, "계정과 동기화", onAccount)
         AppMenuRow(R.drawable.ic_patch_moon, "화면 테마", onTheme)
         AppMenuRow(R.drawable.ic_patch_settings, "알림과 앱 설정", onSettings)
     }

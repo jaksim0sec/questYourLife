@@ -2,9 +2,12 @@ package com.questyourlife.app.companion
 
 import com.questyourlife.app.data.*
 import java.util.UUID
+import androidx.room.withTransaction
+import com.questyourlife.app.sync.SyncCapture
 
 /** Replace at the composition root with a remote gateway. No network or authentication. */
-class LocalCompanionGateway(private val dao: CompanionDao) : CompanionGateway {
+class LocalCompanionGateway(private val db: QuestDatabase) : CompanionGateway {
+    private val dao=db.companionDao()
     override fun watchMessages(thread: String) = dao.watch(thread)
     override fun contacts() = listOf(
         DemoContact("demo-night", "밤산책", "오늘도 하나씩, 같이 해보자", 220),
@@ -38,5 +41,7 @@ class LocalCompanionGateway(private val dao: CompanionDao) : CompanionGateway {
             "하루 ${plan.minutes}분으로 시작하는 제안이야. 아래 내용을 확인하고 마음에 들면 퀘스트에 추가해줘.",
             false, time + 1, plan.title, plan.actions.joinToString("\n")))
     }
-    override suspend fun applyPlan(messageId: String) = dao.applyPlan(messageId)
+    override suspend fun applyPlan(messageId: String) = db.withTransaction {
+        dao.applyPlan(messageId)?.also { SyncCapture.goal(db,it); db.syncDao().allDaily().filter { q -> q.goalId==it }.forEach { q -> SyncCapture.daily(db,q.id) } }
+    }
 }

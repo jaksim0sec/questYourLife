@@ -9,7 +9,7 @@ class DailyQuestBootReceiver : BroadcastReceiver() {
         when (intent.action) {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_TIME_CHANGED,
-            Intent.ACTION_TIMEZONE_CHANGED -> DailyQuestScheduler.scheduleNext(context)
+            Intent.ACTION_TIMEZONE_CHANGED -> { DailyQuestScheduler.scheduleNext(context); com.questyourlife.app.sync.SyncScheduler.enqueue(context) }
         }
     }
 }

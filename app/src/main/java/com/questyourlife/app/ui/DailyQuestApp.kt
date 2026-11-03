@@ -124,8 +124,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedDailyId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = androidx.compose.ui.platform.LocalContext.current
-    val themePrefs = remember(context) { context.getSharedPreferences("patch_appearance", android.content.Context.MODE_PRIVATE) }
-    var appearance by rememberSaveable { mutableStateOf(themePrefs.getString("mode", "system") ?: "system") }
+    val appearance by model.appearance.collectAsStateWithLifecycle()
     val dark = appearance == "dark" || (appearance == "system" && androidx.compose.foundation.isSystemInDarkTheme())
     val pageStates = rememberSaveableStateHolder()
     val reward = model.lastReward.value
@@ -209,6 +208,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     "clan" -> PatchClanPage(model, onProfile = openProfile)
                     "person" -> PatchPersonProfilePage(profileName, model.demoClan.name, back,
                         onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
+                    "account" -> PatchAccountPage(onBack = back)
                     "decor" -> PatchDecorPage(model, onBack = back)
                     "my" -> PatchProfilePage(model,
                         onHistory = { navigate("history") }, onDecor = { navigate("decor") },
@@ -225,8 +225,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                     showHeading = page == "legacyQuests")
                                 "detail" -> {
                                     val goal = goals.firstOrNull { it.id == goalId }
-                                    if (goal != null) GoalDetailPanel(goal, steps.filter { it.goalId == goalId },
-                                        onBack = back, onComplete = model::completeStep,
+                                    if (goal != null) GoalDetailPanel(goal, steps.filter { it.goalId == goalId && it.deletedAt==null },
+                                        onBack = back, onComplete = { id,position -> steps.firstOrNull { it.goalId==id && it.position==position && it.deletedAt==null }?.let { model.completeStep(it.syncId) } },
                                         onTimer = { navigate("focus") })
                                     else {
                                         Text("목표를 찾을 수 없어요", color = PatchTokens.muted)
@@ -274,10 +274,10 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     CashArtwork(Modifier.size(80.dp), pile = true)
-                    Text("+${reward.amount} C", color = PatchTokens.red,
+                    Text("보상 확인 대기", color = PatchTokens.red,
                         style = MaterialTheme.typography.headlineLarge)
                 }
-                Text("보상과 완료 기록이 이 기기에 저장됐어요.", style = MaterialTheme.typography.bodySmall,
+                Text("완료 기록을 저장했어요. 계정의 보상은 동기화 후 확정돼요.", style = MaterialTheme.typography.bodySmall,
                     color = PatchTokens.muted)
                 PatchButton("좋아요", model::clearReward)
             }
@@ -317,13 +317,12 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
             }
             "appearance" -> PatchSheet("화면 테마", onDismiss = { sheet = null }, initialHeight = 240.dp, startExpanded = true) {
                 AppearanceOptions(appearance) { mode ->
-                    appearance = mode
-                    themePrefs.edit().putString("mode", mode).apply()
+                    model.setAppearance(mode)
                 }
             }
             "menu" -> PatchSheet("메뉴", onDismiss = { sheet = null }, initialHeight = 620.dp, startExpanded = true) {
                 AppMenu(openCompanion, { navigate("create") }, { navigate("history") },
-                    { sheet = "recipients" }, { navigate("focus") }, { sheet = "appearance" }, { navigate("settings") })
+                    { sheet = "recipients" }, { navigate("account") }, { navigate("focus") }, { sheet = "appearance" }, { navigate("settings") })
             }
         }
     }

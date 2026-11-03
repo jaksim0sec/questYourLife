@@ -45,13 +45,14 @@ object DailyQuestNotifications {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-    private fun action(context: Context, id: String, type: String): PendingIntent =
+    private fun action(context: Context, id: String, type: String, profile: String): PendingIntent =
         PendingIntent.getBroadcast(
             context, 0,
             Intent(context, DailyQuestAlarmReceiver::class.java)
                 .setAction(type)
-                .setData(android.net.Uri.parse("hyunsaengpatch://daily/$type/$id"))
-                .putExtra(DailyQuestScheduler.EXTRA_ID, id),
+                .setData(android.net.Uri.Builder().scheme("hyunsaengpatch").authority("daily").appendPath(profile).appendPath(type).appendPath(id).build())
+                .putExtra(DailyQuestScheduler.EXTRA_ID, id)
+                .putExtra("qyl_profile",profile),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -62,55 +63,60 @@ object DailyQuestNotifications {
             .setContentIntent(openApp(context))
             .setAutoCancel(true)
 
-    fun proposal(context: Context, quest: DailyQuestEntity) {
+    fun proposal(context: Context, quest: DailyQuestEntity, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
+        if(profile!=com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) return
         if (!allowed(context)) return
         setup(context)
         val notification = builder(context, PROPOSALS)
             .setContentTitle("📬 오늘의 퀘스트 · ${quest.title}")
-            .setContentText("${quest.detail} · 완료하면 +${quest.reward} C · +${quest.reward} XP")
+            .setContentText("${quest.detail} · 예상 보상 +${quest.reward} C · 서버 확인 후 확정")
             .setStyle(Notification.BigTextStyle().bigText("${quest.detail}\n오늘 해볼까요? 수락하거나 거절할 수 있어요."))
             .addAction(Notification.Action.Builder(null, "✅ 수락",
-                action(context, quest.id, DailyQuestScheduler.ACTION_ACCEPT)).build())
+                action(context, quest.id, DailyQuestScheduler.ACTION_ACCEPT,profile)).build())
             .addAction(Notification.Action.Builder(null, "🙅 거절",
-                action(context, quest.id, DailyQuestScheduler.ACTION_REJECT)).build())
+                action(context, quest.id, DailyQuestScheduler.ACTION_REJECT,profile)).build())
             .build()
-        manager(context).notify(quest.id.hashCode(), notification)
+        manager(context).notify((profile+":"+quest.id).hashCode(), notification)
     }
 
-    fun active(context: Context, quest: DailyQuestEntity) {
+    fun active(context: Context, quest: DailyQuestEntity, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
+        if(profile!=com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) return
         if (!allowed(context)) return
         setup(context)
         val notification = builder(context, ACTIVE)
             .setContentTitle("🏃 진행 중 · ${quest.title}")
-            .setContentText("마쳤다면 완료를 눌러 +${quest.reward} C 받기")
+            .setContentText("실천했다면 완료하기 · 보상은 동기화 후 확정")
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setAutoCancel(false)
             .addAction(Notification.Action.Builder(
-                null, "완료", action(context, quest.id, DailyQuestScheduler.ACTION_COMPLETE)
+                null, "완료", action(context, quest.id, DailyQuestScheduler.ACTION_COMPLETE,profile)
             ).build())
             .addAction(Notification.Action.Builder(
-                null, "30분 후", action(context, quest.id, DailyQuestScheduler.ACTION_SNOOZE)
+                null, "30분 후", action(context, quest.id, DailyQuestScheduler.ACTION_SNOOZE,profile)
             ).build())
             .build()
-        manager(context).notify(quest.id.hashCode(), notification)
+        manager(context).notify((profile+":"+quest.id).hashCode(), notification)
     }
 
-    fun dismissActive(context: Context, id: String) {
-        manager(context).cancel(id.hashCode())
+    fun dismissActive(context: Context, id: String, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
+        if(profile!=com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) return
+        manager(context).cancel((profile+":"+id).hashCode())
     }
 
-    fun reward(context: Context, quest: DailyQuestEntity) {
-        dismissActive(context, quest.id)
+    fun reward(context: Context, quest: DailyQuestEntity, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
+        if(profile!=com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) return
+        dismissActive(context, quest.id,profile)
         if (!allowed(context)) return
         val notification = builder(context, COMPLETED)
-            .setContentTitle("🎉 퀘스트 완료! +${quest.reward} C · +${quest.reward} XP")
-            .setContentText(quest.title)
+            .setContentTitle("🎉 퀘스트 완료!")
+            .setContentText("${quest.title} · 연결된 계정의 보상은 동기화 후 확정돼요.")
             .build()
-        manager(context).notify(quest.id.hashCode(), notification)
+        manager(context).notify((profile+":"+quest.id).hashCode(), notification)
     }
 
-    fun clearOld(context: Context) {
+    fun clearOld(context: Context, profile: String = com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) {
+        if(profile!=com.questyourlife.app.sync.ProfileRegistry.get(context).file.value) return
         // All notifications belong to this app, not other apps.
         manager(context).cancelAll()
     }

@@ -52,7 +52,7 @@ class LocalPersistenceTest {
             old.version = 3
         }
         val db = Room.databaseBuilder(context, QuestDatabase::class.java, name)
-            .addMigrations(QuestDatabase.MIGRATION_3_4).build()
+            .addMigrations(QuestDatabase.MIGRATION_3_4, QuestDatabase.MIGRATION_4_5).build()
         try {
             runBlocking {
                 val preserved = db.dailyQuestDao().find("old")!!

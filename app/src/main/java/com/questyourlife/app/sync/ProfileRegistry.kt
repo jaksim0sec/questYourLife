@@ -13,11 +13,17 @@ class ProfileRegistry private constructor(private val context: Context) {
     private val prefs = context.getSharedPreferences("qyl_profiles", Context.MODE_PRIVATE)
     private val mutableFile = MutableStateFlow(prefs.getString("active", "quests.db")!!)
     val file = mutableFile.asStateFlow()
-    suspend fun bind(userId: String, profile: org.json.JSONObject? = null): Pair<QuestDatabase,String> {
+    suspend fun bind(userId: String, profile: org.json.JSONObject? = null, importGuest: Boolean = false): Pair<QuestDatabase,String> {
         UUID.fromString(userId)
         val active = QuestDatabase.open(context, file.value)
         val bound = active.syncDao().meta()?.userId
-        val next = prefs.getString("user:$userId", null) ?: if (bound == null || bound == userId) file.value else "quests-user-$userId.db"
+        val known = prefs.getString("user:$userId", null)
+        if (importGuest) {
+            check(known == null) { "existing_account_requires_explicit_merge" }
+            check(bound == null) { "guest_import_requires_unbound_profile" }
+        }
+        // Never attach anonymous data to a different account without an explicit choice.
+        val next = known ?: if (importGuest) file.value else "quests-user-$userId.db"
         val db = QuestDatabase.open(context, next)
         db.withTransaction {
             db.syncDao().ensureMeta()

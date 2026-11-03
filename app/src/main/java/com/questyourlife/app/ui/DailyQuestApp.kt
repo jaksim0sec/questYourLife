@@ -226,12 +226,13 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                 }
                                 SocialProfileContent(access, profileName)
                             }
-                        } else PatchPersonProfilePage(profileName, model.demoClan.name, back,
-                            onNotifications = { sheet = "notifications" },
-                            onMenu = { sheet = "menu" })
+                        } else Column(Modifier.fillMaxSize().padding(16.dp)) {
+                            Text("공개 프로필을 찾을 수 없어요", color = PatchTokens.muted)
+                            TextButton(onClick = back) { Text("돌아가기") }
+                        }
                     }
                     "account" -> PatchAccountPage(onBack = back)
-                    "decor" -> PatchDecorPage(model, onBack = back)
+                    "decor" -> PatchDecorPage(model, onBack = back, onClan = { navigate("clan") })
                     "my" -> PatchProfilePage(model,
                         onHistory = { navigate("history") }, onDecor = { navigate("decor") },
                         onSettings = { navigate("settings") })

@@ -45,8 +45,6 @@ fun AppMenu(onCompanion: () -> Unit, onCreate: () -> Unit, onHistory: () -> Unit
         AppMenuRow(R.drawable.ic_patch_moon, "화면 테마", onTheme)
         AppMenuRow(R.drawable.ic_patch_settings, "알림과 앱 설정", onSettings)
     }
-    Text("기록과 대화는 이 기기에 저장돼요. 친구와 클랜은 시연 데이터예요.",
-        style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
     }
 }
 

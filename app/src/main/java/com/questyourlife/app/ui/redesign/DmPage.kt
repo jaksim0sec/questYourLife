@@ -76,7 +76,7 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
     val query = search.trim()
     val contacts = (if (signedIn) social?.chats.orEmpty().filter { it.type != "ai" }.map {
         com.questyourlife.app.data.DemoContact(it.id, it.name, it.preview, 0)
-    } else model.contacts).filter {
+    } else emptyList<com.questyourlife.app.data.DemoContact>()).filter {
         it.id != "mascot" && (query.isEmpty() || it.name.contains(query, ignoreCase = true) ||
             it.preview.contains(query, ignoreCase = true))
     }
@@ -172,8 +172,8 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
                 model.socialError.value?.let { Text(it, color = PatchTokens.muted) }
                 SocialRequestProblems(model)
             }
-            Text(if (signedIn) "보낸 메시지는 기기에 저장한 뒤 연결되면 전송해요. AI 응답 기능은 아직 연결하지 않았어요."
-                else "실제 친구에게 전송되지 않는 데모 대화예요. 보낸 메시지는 이 기기에 저장돼요.",
+            Text(if (signedIn) "보낸 메시지는 기기에 저장한 뒤 연결되면 전송해요."
+                else "친구 대화는 계정 연결 후 이용할 수 있어요.",
                 Modifier.padding(vertical = 12.dp), color = PatchTokens.muted,
                 style = MaterialTheme.typography.bodySmall)
         }
@@ -192,7 +192,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
     val mascot = threadId == "mascot"
     val remoteChat = social?.chats?.firstOrNull { it.id == threadId }
     val name = if (mascot) "마스코트" else if (signedIn) remoteChat?.name ?: "대화"
-        else model.contacts.firstOrNull { it.id == threadId }?.name ?: "데모 친구"
+        else "대화"
     val avatarProfile: (String) -> Unit = if (signedIn) ({ _ -> remoteChat?.peerId?.let(onProfile) }) else onProfile
     val listState = rememberLazyListState()
     val keyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
@@ -251,7 +251,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
         ) {
             item(key = "local-notice") {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text(if (signedIn) "비공개 대화 · 연결되면 동기화" else if (mascot) "로컬 도우미 · 기기에 저장" else "데모 대화 · 기기에 저장",
+                    Text(if (signedIn) "비공개 대화 · 연결되면 동기화" else if (mascot) "로컬 도우미 · 기기에 저장" else "기기에 저장",
                         modifier = Modifier.clip(RoundedCornerShape(50))
                             .background(inputColor).clickable { showLocalInfo = true }
                             .padding(horizontal = 14.dp, vertical = 4.dp),
@@ -346,7 +346,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
             text = { Text(if (showAttachmentInfo) "파일 첨부는 아직 지원하지 않아요. 텍스트 메시지를 보낼 수 있어요."
                 else if (signedIn) "대화 참여자만 서버에 저장된 메시지를 볼 수 있어요. 전송은 연결되면 처리되며, 실패한 요청은 계정의 동기화 상태에서 확인해 주세요. AI 응답은 아직 지원하지 않아요."
                 else if (mascot) "준비된 로컬 제안으로 계획을 도와요. AI 서비스에 연결하지 않으며, 대화는 이 기기에 저장돼요."
-                else "실제 친구에게 전송되지 않는 데모 대화예요. 보낸 메시지는 이 기기에 저장돼요.") },
+                else "친구와의 대화는 계정 연결 후 시작할 수 있어요.") },
             confirmButton = { TextButton(onClick = { showAttachmentInfo = false; showLocalInfo = false }) { Text("확인") } })
     }
 }

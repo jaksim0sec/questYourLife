@@ -82,6 +82,32 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
             catch (_: Exception) { socialError.value = "요청을 저장하지 못했어요. 다시 시도해 주세요." }
         }
     }
+    val clanInvitation = mutableStateOf<ClanInvitation?>(null)
+    val clanInvitationBusy = mutableStateOf(false)
+    val clanInvitationError = mutableStateOf<String?>(null)
+
+    fun clearClanInvitation() {
+        clanInvitation.value = null
+        clanInvitationError.value = null
+    }
+
+    fun requestClanInvitation(clanId: String) {
+        if (!signedIn.value || clanInvitationBusy.value) return
+        clanInvitation.value = null
+        clanInvitationError.value = null
+        clanInvitationBusy.value = true
+        viewModelScope.launch {
+            try {
+                clanInvitation.value = withContext(Dispatchers.IO) {
+                    socialStore.createInvitation(clanId)
+                }
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) {
+                clanInvitationError.value = "초대 코드를 만들지 못했어요. 연결 상태와 권한을 확인해 주세요."
+            } finally { clanInvitationBusy.value = false }
+        }
+    }
+
     val joiningBook = mutableStateOf<String?>(null)
 
     /** Capture one participation intent in the existing transactional Outbox. */

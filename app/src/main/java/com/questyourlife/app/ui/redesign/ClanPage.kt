@@ -55,7 +55,6 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
     var name by rememberSaveable { mutableStateOf("") }
     var joiningId by rememberSaveable { mutableStateOf("") }
     var joiningToken by remember { mutableStateOf("") }
-    var pendingClaims by remember { mutableStateOf(setOf<String>()) }
     val invite = model.clanInvitation.value
     LaunchedEffect(signedIn) { if (signedIn) model.refreshSocial() }
     LaunchedEffect(sheet) { if (sheet != "invite") model.clearClanInvitation() }
@@ -193,7 +192,6 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
             Text("지난 주 공동 상자", fontSize = 17.sp, fontWeight = FontWeight.Black,
                 color = PatchTokens.ink)
             rights.forEach { right ->
-                val key = "${right.clanId}:${right.weekStart}"
                 Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp))
                     .background(PatchTokens.surface).padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically) {
@@ -203,15 +201,13 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
                         Text("${right.weekStart} 주간 · 서버 보상 ${right.reward} C",
                             fontSize = 11.sp, color = PatchTokens.muted)
                     }
-                    TextButton(enabled = key !in pendingClaims, onClick = {
-                        pendingClaims = pendingClaims + key
+                    TextButton(onClick = {
                         model.socialCommand("clan_chest_claim", right.clanId,
                             JSONObject().put("id", right.clanId).put("week_start", right.weekStart))
-                    }) { Text(if (key in pendingClaims) "확인 대기" else "수령 확인",
-                        fontSize = 12.sp, color = PatchTokens.red) }
+                    }) { Text("수령 요청", fontSize = 12.sp, color = PatchTokens.red) }
                 }
             }
-            Text("보상은 서버 승인 후 캐쉬에 반영돼요. 이미 받은 상자는 중복 지급되지 않아요.",
+            Text("수령 요청은 저장 후 서버에서 확인해요. 이미 받은 상자는 중복 지급되지 않아요.",
                 fontSize = 11.sp, color = PatchTokens.muted)
         }
         if (signedIn) {

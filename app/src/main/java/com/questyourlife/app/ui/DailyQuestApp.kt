@@ -112,6 +112,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val steps by model.steps.collectAsStateWithLifecycle()
     val cash by model.cash.collectAsStateWithLifecycle()
     val sessions by model.sessions.collectAsStateWithLifecycle()
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val social by model.social.collectAsStateWithLifecycle()
     var screen by rememberSaveable { mutableStateOf("home") }
     var firstGoalDraft by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(initialGoalDraft) {
@@ -280,9 +282,18 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         }
 
         if (sheet == "recipients") PatchSheet("새 쪽지", onDismiss = { sheet = null }) {
-            model.contacts.forEach { contact ->
-                TextButton(onClick = { openThread(contact.id) },
-                    modifier = Modifier.fillMaxWidth()) { Text(contact.name) }
+            if (!signedIn) {
+                Text("친구에게 쪽지를 보내려면 계정을 연결해 주세요.", color = PatchTokens.muted)
+            } else {
+                val realChats = social?.chats.orEmpty().filter { it.type != "ai" && it.peerId != null }
+                if (realChats.isEmpty()) {
+                    Text("아직 대화 상대가 없어요. DM 화면에서 대화를 시작해 주세요.",
+                        color = PatchTokens.muted)
+                }
+                realChats.forEach { chat ->
+                    TextButton(onClick = { openThread(chat.id) },
+                        modifier = Modifier.fillMaxWidth()) { Text(chat.name) }
+                }
             }
         }
         if (reward != null) {

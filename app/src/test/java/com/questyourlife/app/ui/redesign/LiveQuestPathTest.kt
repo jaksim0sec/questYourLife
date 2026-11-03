@@ -50,6 +50,29 @@ class LiveQuestPathTest {
         assertEquals(0, path.done)
     }
 
+    @Test fun featuredBookPrefersActualUnfinishedGoal() {
+        val finished = GoalEntity("done-book", "완주", "", 80)
+        val finishedStep = GoalStepEntity(finished.id, 0, 1, "완료", 20, completedAt = 120)
+        val result = LiveQuestPath.featured(listOf(finished, book),
+            listOf(finishedStep, first, next))
+        assertEquals(book.id, result?.id)
+        assertEquals("stable-two", result?.current()?.id)
+    }
+
+    @Test fun emptyGuestHasNoFeaturedOrSeededDemoBook() {
+        assertNull(LiveQuestPath.featured(emptyList(), emptyList()))
+        val example = GoalEntity("example-japanese", "자동 생성 예시", "", 90)
+        val untouched = GoalStepEntity(example.id, 0, 1, "시연", 20)
+        assertNull(LiveQuestPath.featured(listOf(example), listOf(untouched)))
+    }
+
+    @Test fun chapterRouteResolvesOnlyAnActualStoredChapter() {
+        val path = LiveQuestPath.from(book, listOf(first, next, last))
+        assertEquals(2, path.chapterById("chapter-2")?.number)
+        assertNull(path.chapterById("travel-2"))
+        assertNull(path.chapterById("chapter-3"))
+    }
+
     @Test fun completedBookHasNoPendingMission() {
         val path = LiveQuestPath.from(book, listOf(first, next.copy(completedAt = 400)))
         assertNull(path.current())

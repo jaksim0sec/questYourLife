@@ -27,11 +27,13 @@ fun PatchOnboardingPage(onFinished: (String) -> Unit) {
 
     PatchTheme {
         if (stage == "account") {
-            PatchAccountPage(
-                onBack = { stage = "connect" },
-                onAuthenticated = { onFinished(draft.trim()) },
-                initialSignup = createAccount
-            )
+            Box(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
+                PatchAccountPage(
+                    onBack = { stage = "connect" },
+                    onAuthenticated = { onFinished(draft.trim()) },
+                    initialSignup = createAccount
+                )
+            }
         } else {
             Column(
                 Modifier.fillMaxSize()

@@ -26,23 +26,7 @@ class DailyQuestRepository(context: Context, private val profile: String = Profi
                     goalId = step.goalId, stepPosition = step.position)
             })
         }
-        if(dao.countForDay(day)==0) {
-            val templates=listOf(
-                Triple("단어 10개 복습하기","작게 시작하는 학습",15),
-                Triple("일본어 영상 10분 보기","꾸준히 듣기 연습",20),
-                Triple("산책 20분 하기","가볍게 움직이기",20),
-                Triple("책 5쪽 읽기","부담 없는 독서",15),
-                Triple("25분 집중하기","방해 없는 집중",20),
-                Triple("오늘의 계획 정리하기","작은 하루를 관리하기",10),
-                Triple("간단한 스트레칭하기","쉬어가는 한 걸음",10)
-            )
-            val offset=LocalDate.parse(day).dayOfYear%templates.size
-            dao.insertAll((0 until 3).map { index->
-                val item=templates[(offset+index)%templates.size]
-                DailyQuestEntity(id="$day-${index+1}",dateKey=day,
-                    title=item.first,detail=item.second,reward=item.third)
-            })
-        }
+
         dao.snapshotDay(day).forEach { SyncCapture.daily(db,it.id) }
         SyncScheduler.enqueue(app,profile,db.syncDao().meta()?.userId)
         day

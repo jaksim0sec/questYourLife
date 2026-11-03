@@ -13,12 +13,14 @@ data class SocialChat(val id: String, val type: String, val name: String, val pe
     val itemId: Int, val preview: String)
 data class SocialClan(val id: String, val name: String, val members: List<SocialProfile>,
     val ownerId: String, val weeklyScore: Long?, val rank: Int?, val target: Long?)
+data class SocialChestRight(val clanId: String, val clanName: String, val weekStart: String, val reward: Long)
 
 /** Only the RPC's public profile projection is mapped. Private user rows never become contacts. */
 data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> = emptyList(),
     val alarms: List<SocialAlarm> = emptyList(), val chats: List<SocialChat> = emptyList(),
     val messages: List<CompanionMessageEntity> = emptyList(), val clans: List<SocialClan> = emptyList(),
-    val loaded: Boolean = false, val popularBooks: List<SocialPublicBook> = emptyList()) {
+    val loaded: Boolean = false, val popularBooks: List<SocialPublicBook> = emptyList(),
+    val chestRights: List<SocialChestRight> = emptyList()) {
     val clan: SocialClan? get() = clans.firstOrNull()
     companion object {
         fun parse(userId: String, body: JSONObject): SocialSnapshot {
@@ -53,7 +55,18 @@ data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> 
                     payload.optionalString("daily_id"), time(row.optString("created_at")))
             }
             val rankings = body.optJSONArray("clan_ranking").objects()
-            val clans = body.optJSONArray("clans").objects().filter { row ->
+            val clanRows = body.optJSONArray("clans").objects()
+            val chestRights = clanRows.flatMap { row ->
+                val chests = row.optJSONObject("chests") ?: return@flatMap emptyList()
+                chests.keys().asSequence().mapNotNull { week ->
+                    val entry = chests.optJSONObject(week) ?: return@mapNotNull null
+                    val eligible = entry.optJSONObject("eligible")?.has(userId) == true
+                    val reward = entry.optLong("reward")
+                    if (!eligible || reward <= 0L) null else
+                        SocialChestRight(row.getString("id"), row.getString("name"), week, reward)
+                }.toList()
+            }
+            val clans = clanRows.filter { row ->
                 val own = row.optJSONObject("members")?.optJSONObject(userId)
                 own != null && own.isNull("left_at") && row.isNull("deleted_at")
             }.map { row ->
@@ -65,14 +78,14 @@ data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> 
                 }.map { byId[it] ?: SocialProfile(it, "비공개 프로필", 0) }.toList(), row.getString("owner_id"),
                     rank?.let { if (it.has("score")) it.optLong("score") else null },
                     rank?.let { if (it.has("rank")) it.optInt("rank") else null },
-                    row.optJSONObject("chests")?.optLong("target")?.takeIf { it > 0 })
+                    row.optJSONObject("chest_policy")?.optLong("threshold")?.takeIf { it > 0 })
             }
             val popular = body.optJSONArray("popular_books").objects().mapNotNull { entry ->
                 val book = entry.optJSONObject("book") ?: return@mapNotNull null
                 SocialPublicBook(book.getString("id"), book.getString("logical_id"), book.getString("name"), entry.optInt("active_participants"))
             }
             return SocialSnapshot(userId, profiles, alarms, chats,
-                posts.map { message(it, userId) }.sortedWith(compareBy({ it.createdAt }, { it.id })), clans, true, popular)
+                posts.map { message(it, userId) }.sortedWith(compareBy({ it.createdAt }, { it.id })), clans, true, popular, chestRights)
         }
         fun message(row: JSONObject, userId: String): CompanionMessageEntity {
             val payload = row.optJSONObject("payload")

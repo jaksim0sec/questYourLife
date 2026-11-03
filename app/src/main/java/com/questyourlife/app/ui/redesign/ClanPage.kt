@@ -79,7 +79,7 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit, onAcc
                     contentPadding = PaddingValues(horizontal = 10.dp)) {
                     QuestGlyph(R.drawable.ic_patch_invite, Modifier.size(19.dp), PatchTokens.ink)
                     Spacer(Modifier.width(4.dp))
-                    Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("초대하기", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = PatchTokens.ink)
                 }
             }
         }

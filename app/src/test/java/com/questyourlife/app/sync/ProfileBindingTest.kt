@@ -71,6 +71,20 @@ class ProfileBindingTest {
         }
     }
 
+    @Test fun guestRecordsAreAccessibleAgainAfterLogout() = runBlocking {
+        val registry = ProfileRegistry.get(context)
+        val guestFile = "quests-guest-${UUID.randomUUID()}.db"
+        val uid = UUID.randomUUID().toString()
+        registry.activate(guestFile)
+        val guest = QuestDatabase.open(context, guestFile)
+        guest.goalDao().insertGoal(GoalEntity("guest-return", "돌아올 기록", "", 100))
+        val (_, accountFile) = registry.bind(uid, importGuest = false)
+        registry.activate(accountFile)
+        registry.guest()
+        assertEquals(guestFile, registry.file.value)
+        assertEquals(1, QuestDatabase.open(context, registry.file.value).goalDao().countGoals())
+    }
+
     @Test fun repeatedBindIsIdempotent() = runBlocking {
         val registry = ProfileRegistry.get(context)
         registry.guest()

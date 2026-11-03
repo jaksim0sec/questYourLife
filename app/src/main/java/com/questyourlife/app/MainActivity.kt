@@ -16,6 +16,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.key
 import com.questyourlife.app.sync.AccountRepository
 import com.questyourlife.app.sync.ProfileRegistry
+import com.questyourlife.app.ui.OnboardingEntry
+import com.questyourlife.app.ui.redesign.PatchOnboardingPage
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -42,8 +44,15 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
         )
 
+        // Detect existing installations before a ViewModel can create Room files.
+        val onboardingEntry = OnboardingEntry(applicationContext)
+        val priorDatabase = applicationContext.databaseList().any { it == "quests.db" || it.startsWith("quests-") }
+        val showFirstRun = onboardingEntry.shouldShow(priorDatabase)
+
         setContent {
             var classic by rememberSaveable { mutableStateOf(false) }
+            var showOnboarding by rememberSaveable { mutableStateOf(showFirstRun) }
+            var initialGoalDraft by rememberSaveable { mutableStateOf<String?>(null) }
             var opening by rememberSaveable { mutableStateOf(savedInstanceState == null) }
             val openingDeadline by rememberSaveable { mutableStateOf(SystemClock.elapsedRealtime() + 1000L) }
             AccountRepository.get(applicationContext)
@@ -64,12 +73,20 @@ class MainActivity : ComponentActivity() {
                 Crossfade(opening, animationSpec = tween(180), label = "opening to app") { showOpening ->
                     when {
                         showOpening -> BrandOpening(openingDeadline) { opening = false }
+                        showOnboarding -> PatchOnboardingPage { draft ->
+                            initialGoalDraft = draft.takeIf { it.isNotBlank() }
+                            onboardingEntry.complete()
+                            showOnboarding = false
+                        }
                         classic -> {
                             val model: QuestViewModel = viewModel(key="classic:$profile")
                             val quests by model.quests.collectAsStateWithLifecycle()
                             QuestHome(quests = quests, onAdd = model::addQuest, onToggle = model::toggleQuest)
                         }
-                        else -> key(profile) { DailyQuestApp(daily, onOpenClassicChecklist = { classic = true }) }
+                        else -> key(profile) { DailyQuestApp(daily,
+                            onOpenClassicChecklist = { classic = true },
+                            initialGoalDraft = initialGoalDraft,
+                            onInitialDraftConsumed = { initialGoalDraft = null }) }
                     }
                 }
             }

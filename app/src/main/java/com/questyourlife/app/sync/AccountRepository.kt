@@ -16,7 +16,7 @@ class AccountRepository private constructor(private val context: Context) {
     private val mutex = Mutex()
     private val api = SupabaseTransport()
     init { session.value?.let { ProfileRegistry.get(context).resume(it.userId) } }
-    suspend fun signIn(name: String, password: String, create: Boolean) = withContext(Dispatchers.IO) {
+    suspend fun signIn(name: String, password: String, create: Boolean, importGuest: Boolean = false) = withContext(Dispatchers.IO) {
         val username = AccountInput.username(name) ?: throw IllegalArgumentException("invalid_username")
         require(AccountInput.validPassword(password)) { "invalid_password" }
         mutex.withLock {
@@ -24,7 +24,7 @@ class AccountRepository private constructor(private val context: Context) {
             val next = decode(response, username)
             val bootstrap=api.post("/rest/v1/rpc/questyourlife_bootstrap", JSONObject(), next.accessToken)
             // Verify backend and ownership before activating another profile or persisting its session.
-            val (_,file) = ProfileRegistry.get(context).bind(next.userId,bootstrap.getJSONObject("user"))
+            val (_,file) = ProfileRegistry.get(context).bind(next.userId,bootstrap.getJSONObject("user"),importGuest = create && importGuest)
             vault.save(next)
             session.value = next
             com.questyourlife.app.daily.DailyQuestNotifications.serialized { ProfileRegistry.get(context).activate(file) }

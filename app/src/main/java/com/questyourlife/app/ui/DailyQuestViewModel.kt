@@ -30,7 +30,9 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     val history=daily.observeHistory().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<DailyQuestEntity>())
     val dailyCash=daily.observeCash().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
     val completedCount=daily.observeCompletionCount().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
-    val goals=goalRepo.watchGoals().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalEntity>())
+    val goals=combine(goalRepo.watchGoals(), AccountRepository.get(app).state) { rows, account ->
+        if (account == null) rows else rows.filter { it.id != "example-japanese" }
+    }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalEntity>())
     val steps=goalRepo.watchSteps().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalStepEntity>())
     val ownedItems=goalRepo.watchItems().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<OwnedItemEntity>())
     val sessions=goalRepo.watchSessions().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<FocusSessionEntity>())
@@ -48,38 +50,119 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     fun setAppearance(value: String) { viewModelScope.launch(Dispatchers.IO) { SyncCapture.appearance(syncDb,value); SyncScheduler.enqueue(app) } }
 
     private val companion: CompanionGateway = LocalCompanionGateway(QuestDatabase.get(app))
+    val socialStore = SocialStore(app, syncDb)
+    val signedIn = AccountRepository.get(app).state.map { it != null }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, AccountRepository.get(app).state.value != null)
+    val social = socialStore.snapshot.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    val ownProfile = socialStore.ownProfile.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    val confirmedWeeklyEarnings = socialStore.weeklyEarnings.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    val socialProblems = socialStore.problems
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val socialError = mutableStateOf<String?>(null)
+    val socialLoading = mutableStateOf(false)
+    private var socialRefreshJob: kotlinx.coroutines.Job? = null
+    private var messageCursor: org.json.JSONObject? = null
+    val hasOlderMessages = mutableStateOf(false)
+    fun refreshSocial() {
+        if (!signedIn.value || socialRefreshJob?.isActive == true) return
+        socialRefreshJob = viewModelScope.launch {
+            socialLoading.value = true
+            try { withContext(Dispatchers.IO) { socialStore.refresh() }; socialError.value = null }
+            catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { socialError.value = "연결하지 못했어요. 저장된 내용을 표시해요. 다시 시도해 주세요." }
+            finally { socialLoading.value = false }
+        }
+    }
+    fun socialCommand(operation: String, id: String, data: org.json.JSONObject) {
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { socialStore.command(operation, id, data); socialStore.schedule() }
+                socialError.value = "요청을 저장했어요. 연결되면 서버에서 확인해요."
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { socialError.value = "요청을 저장하지 못했어요. 다시 시도해 주세요." }
+        }
+    }
+    fun markAlarmsRead(ids: Set<String>) { viewModelScope.launch(Dispatchers.IO) {
+        try { socialStore.markRead(ids) }
+        catch (e: kotlinx.coroutines.CancellationException) { throw e }
+        catch (_: Exception) { socialError.value = "읽음 상태를 저장하지 못했어요." }
+    } }
     val questPreview = QuestPreviewStore(app)
     val contacts = companion.contacts()
     val demoClan = companion.demoClan()
     val nearbyClans = companion.nearbyClanRanks()
     fun clanPreview(previous: Boolean = false) = companion.clanPreview(previous)
     val activeThread = MutableStateFlow("")
-    val chatMessages = activeThread.flatMapLatest(companion::watchMessages)
+    val chatMessages = signedIn.flatMapLatest { authenticated ->
+        if (!authenticated) activeThread.flatMapLatest(companion::watchMessages)
+        else combine(activeThread, social) { thread, snapshot ->
+            val actual = if (thread == "mascot") snapshot?.chats?.firstOrNull { it.type == "ai" }?.id else thread
+            snapshot?.messages.orEmpty().filter { it.threadId == actual }.map { it.copy(threadId = thread) }
+        }
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     private val _chatBusy = MutableStateFlow(false)
     val chatBusy: StateFlow<Boolean> = _chatBusy.asStateFlow()
     val chatError = mutableStateOf<String?>(null)
+    val chatNotice = mutableStateOf<String?>(null)
     fun openThread(id: String) {
         activeThread.value = id
-        viewModelScope.launch(Dispatchers.IO) { companion.openThread(id) }
+        messageCursor = null
+        hasOlderMessages.value = false
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (signedIn.value) {
+                    val actual = if (id == "mascot") socialStore.openAi() else id
+                    if (id != "mascot" || social.value?.chats?.any { it.id == actual } == true) loadMessagePage(actual)
+                } else companion.openThread(id)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { chatError.value = "대화를 불러오지 못했어요. 저장된 내용은 유지돼요." }
+        }
     }
-    fun sendMessage(text: String) {
+    private suspend fun loadMessagePage(actual: String) {
+        val result = socialStore.messagesPage(actual, messageCursor)
+        messageCursor = result.optJSONObject("next_cursor")
+        hasOlderMessages.value = result.optBoolean("has_more")
+    }
+    fun loadOlderMessages() { viewModelScope.launch(Dispatchers.IO) {
+        val thread = activeThread.value
+        val actual = if (thread == "mascot") social.value?.chats?.firstOrNull { it.type == "ai" }?.id else thread
+        if (actual != null && hasOlderMessages.value) {
+            try { loadMessagePage(actual) }
+            catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { chatError.value = "이전 메시지를 불러오지 못했어요." }
+        }
+    } }
+    fun sendMessage(text: String, onStored: () -> Unit = {}) {
         if (_chatBusy.value || text.isBlank()) return
         val thread = activeThread.value
         if (thread.isBlank()) return
         _chatBusy.value = true
         chatError.value = null
         viewModelScope.launch {
-            try { withContext(Dispatchers.IO) { companion.send(thread, text) } }
+            try { withContext(Dispatchers.IO) {
+                if (signedIn.value) socialStore.send(if (thread == "mascot") socialStore.openAi() else thread, text)
+                else companion.send(thread, text)
+            }; onStored() }
             catch (e: kotlinx.coroutines.CancellationException) { throw e }
-            catch (e: Exception) { chatError.value = "계획을 저장하지 못했어요. 입력을 확인하고 다시 시도해 주세요." }
+            catch (e: Exception) { chatError.value = "메시지를 저장하지 못했어요. 입력을 확인하고 다시 시도해 주세요." }
             finally { _chatBusy.value = false }
         }
     }
     fun applyChatPlan(id: String) { viewModelScope.launch {
-        try { withContext(Dispatchers.IO) { companion.applyPlan(id) }; SyncScheduler.enqueue(app); refresh() }
+        if (_chatBusy.value) return@launch
+        _chatBusy.value = true
+        try {
+            if (signedIn.value) {
+                withContext(Dispatchers.IO) { socialStore.confirmPlan(id) }
+                chatNotice.value = "계획 추가 요청을 저장했어요. 서버에서 확정되면 퀘스트 탭에 표시돼요."
+            } else {
+                withContext(Dispatchers.IO) { companion.applyPlan(id) }; SyncScheduler.enqueue(app); refresh()
+            }
+        }
         catch (e: kotlinx.coroutines.CancellationException) { throw e }
         catch (e: Exception) { chatError.value = "계획을 추가하지 못했어요. 다시 시도해 주세요." }
+        finally { _chatBusy.value = false }
     } }
     fun deferQuest(id: String) { viewModelScope.launch(Dispatchers.IO) {
         DailyQuestNotifications.serialized {
@@ -125,7 +208,15 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
             syncDb.syncDao().observeMeta().collect { it?.let { meta -> equipped.intValue=meta.equipped } }
         }
         refresh()
-        viewModelScope.launch(Dispatchers.IO) { goalRepo.seedDemoIfNew() }
+        viewModelScope.launch {
+            var hadPending = false
+            combine(signedIn, syncDb.syncDao().observePendingCount()) { authenticated, count -> authenticated to count }
+                .collect { (authenticated, count) ->
+                    if (authenticated && (!hadPending || count == 0)) refreshSocial()
+                    hadPending = count > 0
+                }
+        }
+        if (!signedIn.value) viewModelScope.launch(Dispatchers.IO) { goalRepo.seedDemoIfNew() }
     }
 
     fun refresh(){viewModelScope.launch(Dispatchers.IO){day.value=daily.ensureToday()}}

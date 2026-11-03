@@ -25,13 +25,19 @@ object SyncApply {
     private suspend fun applyChanges(db: QuestDatabase, changes: JSONArray, operation: SyncOperation?, status: String, userBase: Long? = null) {
         val dao=db.syncDao()
         val affected = linkedSetOf<String>()
+        val participantBooks = dao.records("quest_join").map { JSONObject(it.body).optString("book_id") }.toMutableSet()
+        for (i in 0 until changes.length()) {
+            val c=changes.getJSONObject(i)
+            if(c.optString("entity")=="quest_join" && c.getJSONObject("data").optString("user_id")==dao.meta()?.userId)
+                participantBooks.add(c.getJSONObject("data").getString("book_id"))
+        }
         for (index in 0 until changes.length()) {
             val change = changes.getJSONObject(index); val kind = change.getString("entity"); val id = change.getString("id")
             val version = change.getLong("version"); val data = change.getJSONObject("data")
             val bound=dao.meta()?.userId
             if(bound!=null && kind in setOf("user","questbook","quest_join","daily","quick")) {
                 val owner=when(kind) { "user"->data.getString("id");"questbook"->data.getString("owner_id");else->data.getString("user_id") }
-                check(owner==bound) { "record_owner_mismatch" }
+                check(owner==bound || (kind=="questbook" && data.optString("book_id") in participantBooks)) { "record_owner_mismatch" }
             }
             val existing = dao.record(kind, id)
             val source=data.optString("source_id").takeUnless { it.isEmpty() || it=="null" }
@@ -58,7 +64,18 @@ object SyncApply {
                     }
                 }
             } else if (kind == "questbook") affected.add(data.getString("book_id"))
-            else if (kind == "quest_join") affected.add(data.getString("book_id"))
+            else if (kind == "quest_join") {
+                val newRoot=data.getString("book_id")
+                val previousRoot=existing?.body?.let { JSONObject(it).optString("book_id") }
+                if(previousRoot!=null && previousRoot!=newRoot) {
+                    // An explicitly accepted edition upgrade keeps the participant's
+                    // Room goal and completion history instead of creating a second goal.
+                    dao.goalBySync(previousRoot)?.let { oldGoal ->
+                        if(dao.goalBySync(newRoot)==null) dao.putGoal(oldGoal.copy(syncId=newRoot))
+                    }
+                }
+                affected.add(newRoot)
+            }
             else if(kind=="quick" && !pending) {
                 val old=dao.quick(id); val info=data.getJSONObject("content_snapshot")
                 dao.putQuick(QuestEntity(old?.id ?: 0,info.getString("title"),data.getString("status")=="completed",info.optLong("created_at",System.currentTimeMillis()),id))
@@ -74,34 +91,58 @@ object SyncApply {
             val v=ownChange?.getLong("version")
             if(v!=null && dao.record(operation.entity,operation.targetId)?.version==v)
                 dao.successorVersions(operation.entity,operation.targetId,operation.sequence,v)
+            if(operation.entity=="quest_join" && ownChange!=null) {
+                val previous=JSONObject(operation.body).optLong("edit_version",operation.baseVersion)
+                val next=ownChange.getJSONObject("data").getLong("edit_version")
+                dao.targetOperations("quest_join",operation.targetId).filter {
+                    it.sequence>operation.sequence && it.sealedRequest==null && it.state=="queued" && it.operation=="join_edit"
+                }.forEach { successor ->
+                    val body=JSONObject(successor.body)
+                    if(body.optLong("edit_version",successor.baseVersion)==previous)
+                        dao.updateOperation(successor.copy(body=body.put("edit_version",next).toString()))
+                }
+            }
         }
     }
     suspend fun projectBook(db: QuestDatabase, id: String) {
         val dao = db.syncDao(); val root = dao.record("questbook", id) ?: return
         if (root.dirty) return
-        val body = JSONObject(root.body)
+        val relatedJoins=dao.records("quest_join").filter { JSONObject(it.body).optString("book_id")==id }
+        val joinRecord=relatedJoins.firstOrNull { JSONObject(it.body).optString("status")!="left" && !it.deleted }
+        if(joinRecord?.dirty==true) return
+        val join=joinRecord?.let { JSONObject(it.body) }
+        val rawRows=dao.records("questbook").map { JSONObject(it.body) }.filter { it.optString("book_id")==id }
+        val effective=join?.optJSONArray("effective_tree") ?: QuestTreeResolver.resolve(JSONArray(rawRows),join?.optJSONObject("overrides") ?: JSONObject())
+        val rows=(0 until effective.length()).map { effective.getJSONObject(it) }
+        val body=rows.firstOrNull { it.optString("type")=="book" } ?: JSONObject(root.body)
         val existing = dao.goalBySync(id)
-        if (root.deleted) { if (existing != null) dao.putGoal(existing.copy(deletedAt=timestamp(body.optString("deleted_at")))); return }
+        if (root.deleted || (relatedJoins.isNotEmpty() && joinRecord==null)) {
+            if (existing != null) dao.putGoal(existing.copy(deletedAt=System.currentTimeMillis()))
+            return
+        }
         val localId = existing?.id ?: root.localId ?: id
         val goal = GoalEntity(localId, body.getString("name"), body.optJSONObject("data")?.optString("description") ?: "",
             existing?.createdAt ?: timestamp(body.optString("created_at")), id)
         dao.putGoal(goal)
-        val rows = dao.records("questbook").map { it to JSONObject(it.body) }.filter { it.second.optString("book_id") == id }
         val oldSteps = db.goalDao().getAllSteps(localId).associateBy { it.syncId }
-        val state = dao.record("quest_join", id)?.let { JSONObject(it.body).optJSONObject("node_state") } ?: JSONObject()
-        val steps = rows.filter { it.second.optString("type") == "main" }.map { (record, node) ->
-            val old = oldSteps[record.id]
-            val parent = rows.firstOrNull { it.first.id == node.optString("head") }?.second
-            val completed = if (state.optString(record.id) == "completed") old?.completedAt ?: System.currentTimeMillis() else old?.completedAt
-            GoalStepEntity(localId, node.getInt("sort_order"), parent?.optInt("sort_order", 1) ?: 1,
-                node.getString("name"), old?.reward ?: 0, completed, record.id, if(record.deleted) timestamp(node.optString("deleted_at")) else null)
+        val state = join?.optJSONObject("node_state") ?: JSONObject()
+        val steps = rows.filter { it.optString("type") == "main" }.map { node ->
+            val logical=node.optString("logical_id",node.getString("id"))
+            val old = oldSteps[logical]
+            val parent = rows.firstOrNull { it.optString("logical_id",it.getString("id")) == node.optString("head") }
+            val completed = if (state.optString(logical) == "completed") old?.completedAt ?: System.currentTimeMillis() else old?.completedAt
+            GoalStepEntity(localId, node.optInt("sort_order"), parent?.optInt("sort_order", 1) ?: 1,
+                node.getString("name"), old?.reward ?: 0, completed, logical)
         }
-        dao.putSteps(steps)
+        val visible=steps.map { it.syncId }.toSet()
+        // Retain hidden/deleted rows as history, but remove them from the active plan projection.
+        dao.putSteps(steps + oldSteps.values.filter { it.syncId !in visible }.map { it.copy(deletedAt=it.deletedAt ?: System.currentTimeMillis()) })
     }
     private suspend fun projectDaily(db: QuestDatabase, body: JSONObject, localId: String?) {
         val dao = db.syncDao(); val id = body.getString("id"); val old = dao.dailyBySync(id)
         val snapshot = body.getJSONObject("content_snapshot"); val source = body.optString("source_id").takeUnless { it.isEmpty() || it == "null" }
-        val step = source?.let { dao.stepBySync(it) }
+        val directStep=source?.let { dao.stepBySync(it) }
+        val step = directStep ?: body.optString("main_id").takeUnless { it.isEmpty() || it=="null" }?.let { dao.stepBySync(it) }
         val status = body.getString("status")
         val completed = if (status == "completed") old?.completedAt ?: timestamp(body.optString("client_occurred_at").takeUnless { it == "null" || it.isEmpty() } ?: body.optString("completed_at")) else null
         val day=completed?.let { java.time.Instant.ofEpochMilli(it).atZone(java.time.ZoneId.systemDefault()).toLocalDate().toString() } ?: body.getString("scheduled_date")
@@ -110,7 +151,11 @@ object SyncApply {
             accepted = status in setOf("accepted", "completed"), completedAt = completed,
             dismissed = status == "cancelled" || !body.isNull("deleted_at"), goalId = step?.goalId, stepPosition = step?.position,
             syncId = id, stepSyncId = source, legacyOrigin = old?.legacyOrigin ?: false))
-        if (step != null && completed != null && step.completedAt == null && dao.hasPending("questbook",step.syncId)==0) dao.putSteps(listOf(step.copy(completedAt = completed)))
+        if (directStep != null && completed != null && directStep.completedAt == null && dao.hasPending("questbook",directStep.syncId)==0) dao.putSteps(listOf(directStep.copy(completedAt = completed)))
+        if (directStep != null && completed == null && status=="accepted" && old?.completedAt!=null &&
+            dao.hasPending("questbook",directStep.syncId)==0 && dao.allDaily().none { it.stepSyncId==source && it.completedAt!=null }) {
+            dao.putSteps(listOf(directStep.copy(completedAt=null)))
+        }
     }
     private fun timestamp(value: String): Long = runCatching { Instant.parse(value).toEpochMilli() }.getOrDefault(System.currentTimeMillis())
 }

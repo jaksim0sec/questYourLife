@@ -69,7 +69,18 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 db.withTransaction { batch.forEach { dao.updateOperation(it) } }
                 try {
                     val events=JSONArray(); batch.forEach { events.put(JSONObject(it.sealedRequest!!)) }
-                    val response=rpc("questyourlife_apply_batch",JSONObject().put("p_events",events))
+                    val social = batch.first().entity=="social"
+                    val response=if(social) {
+                        val receipts=JSONArray()
+                        batch.forEach { op ->
+                            val result=rpc("questyourlife_social_command",JSONObject().put("p_event_id",op.eventId)
+                                .put("p_operation",op.operation).put("p_data",JSONObject(op.body)))
+                            val returned=result.getJSONArray("receipts")
+                            check(returned.length()==1) { "incomplete_social_receipt" }
+                            receipts.put(returned.getJSONObject(0))
+                        }
+                        JSONObject().put("receipts",receipts)
+                    } else rpc("questyourlife_apply_batch",JSONObject().put("p_events",events))
                     val receipts=response.getJSONArray("receipts")
                     check(receipts.length()==batch.size) { "incomplete_receipts" }
                     db.withTransaction {
@@ -100,6 +111,18 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                     dao.setMeta(dao.meta()!!.copy(cursor=page.getLong("cursor"),epoch=page.getString("epoch")))
                 }
                 if(!page.getBoolean("has_more")) {
+                    val books=rpc("questyourlife_joined_books",JSONObject())
+                    db.withTransaction { SyncApply.snapshot(db,books.getJSONArray("changes")) }
+                    val activeJoins=dao.records("quest_join").map { JSONObject(it.body) }.filter {
+                        it.optString("status")=="active" && it.isNull("deleted_at")
+                    }
+                    for(join in activeJoins) {
+                        val generated=rpc("questyourlife_generate_upcoming",JSONObject().put("p_join",join.getString("id")).put("p_limit",25))
+                        val receipts=generated.getJSONArray("receipts")
+                        db.withTransaction { for(index in 0 until receipts.length()) SyncApply.event(db,receipts.getJSONObject(index)) }
+                        if(generated.optInt("generated")>0 || generated.optBoolean("has_more")) SyncScheduler.enqueue(applicationContext,file,user)
+                    }
+                    com.questyourlife.app.companion.SocialStore(applicationContext,db).refresh()
                     if(sent>=200) SyncScheduler.enqueue(applicationContext,file,user)
                     SyncStatus.set(db,"idle")
                     return@withLock Result.success()
@@ -127,6 +150,8 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                     val root=goalId?.let { dao.goal(it)?.syncId } ?: body.optString("join_id").takeIf { it.isNotEmpty() && it!="null" }
                     if(root!=null && dao.blocked("questbook",root)>0) continue
                     if(source!=null && dao.blocked("questbook",source)>0) continue
+                    // Keep domains in separate wire batches; each retains its original event UUID.
+                    if(result.isNotEmpty() && (result.first().entity=="social") != (op.entity=="social")) return result
                     result.add(op)
                     if(result.size==25) break
                 }

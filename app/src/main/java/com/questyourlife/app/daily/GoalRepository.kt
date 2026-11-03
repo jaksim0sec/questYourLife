@@ -17,6 +17,7 @@ class GoalRepository(context: Context) {
     fun watchItems() = dao.watchItems()
     fun watchSessions() = dao.watchSessions()
     suspend fun seedDemoIfNew() {
+        if (db.syncDao().meta()?.userId != null) return
         if (prefs.getBoolean("example_seeded", false)) return
         if (dao.countGoals() == 0) {
             val id = "example-japanese"

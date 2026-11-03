@@ -5,7 +5,7 @@ import java.util.UUID
 import androidx.room.withTransaction
 import com.questyourlife.app.sync.SyncCapture
 
-/** Replace at the composition root with a remote gateway. No network or authentication. */
+/** Guest-only local suggestions and clearly labeled conversation previews. Never uploads demo messages. */
 class LocalCompanionGateway(private val db: QuestDatabase) : CompanionGateway {
     private val dao=db.companionDao()
     override fun watchMessages(thread: String) = dao.watch(thread)

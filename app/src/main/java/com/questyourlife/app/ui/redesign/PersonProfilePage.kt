@@ -38,6 +38,18 @@ fun PatchHeaderActions(onNotifications: () -> Unit, onMenu: () -> Unit) {
 @Composable
 fun PatchPersonProfilePage(name: String, clanName: String, onBack: () -> Unit,
     onNotifications: () -> Unit, onMenu: () -> Unit) {
+    val access = rememberSocialAccess()
+    if (access.signedIn) {
+        Column(Modifier.fillMaxSize()) {
+            Row(Modifier.fillMaxWidth().heightIn(min = 56.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) { Icon(painterResource(R.drawable.ic_patch_arrow_left), "뒤로가기") }
+                Text("프로필", Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
+                PatchHeaderActions(onNotifications, onMenu)
+            }
+            SocialProfileContent(access, name)
+        }
+        return
+    }
     val context = LocalContext.current
     val prefs = remember(context) { context.getSharedPreferences("quest_social_preview", Context.MODE_PRIVATE) }
     var requested by remember(name) { mutableStateOf(prefs.getBoolean("request:$name", false)) }

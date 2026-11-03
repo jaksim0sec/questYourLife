@@ -27,6 +27,13 @@ import com.questyourlife.app.R
 import com.questyourlife.app.companion.*
 import com.questyourlife.app.data.DailyQuestEntity
 import com.questyourlife.app.ui.DailyQuestViewModel
+import androidx.compose.ui.platform.LocalContext
+import com.questyourlife.app.data.QuestDatabase
+import com.questyourlife.app.sync.*
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.util.UUID
+import androidx.room.withTransaction
 
 @Composable
 fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
@@ -36,11 +43,20 @@ fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
     val steps by model.steps.collectAsStateWithLifecycle()
     val daily by model.quests.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val meta by model.syncMeta.collectAsStateWithLifecycle()
+    val context=LocalContext.current
+    val db=remember(context) { QuestDatabase.get(context) }
+    val server by remember(db,meta?.userId) { db.syncDao().observeRecord("social_snapshot",meta?.userId ?: "guest") }
+        .collectAsStateWithLifecycle(initialValue=null)
+    val popular=server?.body?.let { JSONObject(it).optJSONArray("popular_books") }
+    val actions=rememberCoroutineScope()
+    var joining by remember { mutableStateOf(false) }
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var scope by rememberSaveable { mutableStateOf("전체") }
     var filterMenu by remember { mutableStateOf(false) }
     var route by rememberSaveable { mutableStateOf(false) }
-    val previewBooks = QuestPreviewCatalog.books.filter { book ->
+    val previewBooks = QuestPreviewCatalog.books.filter { book -> !signedIn &&
         (scope == "전체" || (scope == "클랜") == book.clan) &&
             if (tab == 2) state.current(book) == null else state.current(book) != null
     }
@@ -142,6 +158,27 @@ fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
                             QuestProgress(if (relevant.isEmpty()) 0f else done.toFloat() / relevant.size, color = PatchTokens.red)
                         }
                         QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(20.dp))
+                    }
+                }
+            }
+            if(signedIn && tab==0 && popular!=null && scope!="클랜") {
+                item { QuestSectionHeading("인기 목표") }
+                items(popular.length(), key={ "public-${popular.getJSONObject(it).getString("logical_id")}" }) { index ->
+                    val entry=popular.getJSONObject(index)
+                    val book=entry.optJSONObject("book")
+                    if(book!=null) Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(book.getString("name"),fontWeight=FontWeight.Bold,color=PatchTokens.ink)
+                            Text("${entry.optLong("active_participants")}명 참여",style=MaterialTheme.typography.bodySmall,color=PatchTokens.muted)
+                        }
+                        TextButton(enabled=!joining,onClick={ actions.launch {
+                            joining=true
+                            try {
+                                val id=UUID.randomUUID().toString()
+                                db.withTransaction { SyncCapture.enqueue(db,"book_join","quest_join",id,"",JSONObject().put("id",id).put("book_id",book.getString("id"))) }
+                                SyncScheduler.enqueue(context)
+                            } finally { joining=false }
+                        } }) { Text("참여하기") }
                     }
                 }
             }

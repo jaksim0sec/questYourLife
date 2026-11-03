@@ -38,6 +38,11 @@ private val previewAlerts = listOf(
 fun NotificationCenter(quests: List<DailyQuestEntity>, onDismiss: () -> Unit, onSettings: () -> Unit,
     onProfile: (String) -> Unit, onClan: () -> Unit, onQuest: (String) -> Unit,
     onAccept: (String) -> Unit, onReject: (String) -> Unit) {
+    val social = rememberSocialAccess()
+    if (social.signedIn) {
+        SocialNotificationCenter(social, quests, onDismiss, onSettings, onProfile, onClan, onQuest, onAccept, onReject)
+        return
+    }
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val context = LocalContext.current
     val prefs = remember(context) { context.getSharedPreferences("patch_inbox_read", Context.MODE_PRIVATE) }

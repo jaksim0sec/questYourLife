@@ -28,6 +28,11 @@ import com.questyourlife.app.ui.DressedAvatar
 @Composable
 fun PatchHomePage(model: DailyQuestViewModel, onDaily: (DailyQuestEntity) -> Unit,
     onQuests: () -> Unit, onClan: () -> Unit, onPreview: (String) -> Unit, onMy: () -> Unit) {
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    if (signedIn) {
+        SocialHomePage(model, onDaily, onQuests, onClan, onMy)
+        return
+    }
     val balance by model.cash.collectAsStateWithLifecycle()
     val daily by model.quests.collectAsStateWithLifecycle()
     val preview by model.questPreview.state.collectAsStateWithLifecycle()

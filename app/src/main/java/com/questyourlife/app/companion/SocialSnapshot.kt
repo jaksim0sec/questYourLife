@@ -1,0 +1,93 @@
+package com.questyourlife.app.companion
+
+import com.questyourlife.app.data.CompanionMessageEntity
+import org.json.JSONArray
+import org.json.JSONObject
+import java.time.Instant
+
+data class SocialProfile(val id: String, val name: String, val itemId: Int)
+data class SocialPublicBook(val id: String, val logicalId: String, val name: String, val participants: Int)
+data class SocialAlarm(val id: String, val type: String, val title: String, val detail: String,
+    val read: Boolean, val profileId: String?, val questId: String?, val createdAt: Long)
+data class SocialChat(val id: String, val type: String, val name: String, val peerId: String?,
+    val itemId: Int, val preview: String)
+data class SocialClan(val id: String, val name: String, val members: List<SocialProfile>,
+    val ownerId: String, val weeklyScore: Long?, val rank: Int?, val target: Long?)
+
+/** Only the RPC's public profile projection is mapped. Private user rows never become contacts. */
+data class SocialSnapshot(val userId: String, val profiles: List<SocialProfile> = emptyList(),
+    val alarms: List<SocialAlarm> = emptyList(), val chats: List<SocialChat> = emptyList(),
+    val messages: List<CompanionMessageEntity> = emptyList(), val clans: List<SocialClan> = emptyList(),
+    val loaded: Boolean = false, val popularBooks: List<SocialPublicBook> = emptyList()) {
+    val clan: SocialClan? get() = clans.firstOrNull()
+    companion object {
+        fun parse(userId: String, body: JSONObject): SocialSnapshot {
+            val profiles = body.optJSONArray("public_profiles").objects().map { row ->
+                SocialProfile(row.getString("id"), row.optString("name", "사용자"),
+                    row.optJSONObject("equipped")?.optInt("item_id") ?: 0)
+            }
+            val byId = profiles.associateBy { it.id }
+            val chatRows = body.optJSONArray("chats").objects().filter { row ->
+                val members = row.optJSONObject("members") ?: return@filter false
+                val own = members.optJSONObject(userId) ?: return@filter false
+                own.isNull("left_at") && (row.optString("type") != "ai" || members.length() == 1) && row.isNull("deleted_at")
+            }
+            val allowed = chatRows.associateBy { it.getString("id") }
+            val posts = body.optJSONArray("posts").objects().filter {
+                it.optString("chat_id") in allowed && it.isNull("deleted_at") && it.optString("type", "chat") == "chat"
+            }
+            val chats = chatRows.map { row ->
+                val id = row.getString("id")
+                val peer = row.getJSONObject("members").keys().asSequence().firstOrNull { it != userId }
+                val profile = byId[peer]
+                SocialChat(id, row.getString("type"), if (row.getString("type") == "ai") "마스코트"
+                    else row.optString("name").takeUnless { it.isBlank() || it == "null" } ?: profile?.name ?: "대화",
+                    peer, profile?.itemId ?: 0,
+                    posts.filter { it.optString("chat_id") == id }.maxByOrNull { it.optString("created_at") }?.optString("content") ?: "")
+            }
+            val alarms = body.optJSONArray("alarms").objects().filter { it.optString("user_id", userId) == userId }.map { row ->
+                val payload = row.optJSONObject("payload") ?: JSONObject()
+                SocialAlarm(row.getString("id"), row.optString("type"), payload.optString("title", "새 알림"),
+                    payload.optString("body", payload.optString("text")), row.optInt("read") == 1,
+                    payload.optionalString("user_id") ?: payload.optionalString("profile_id"),
+                    payload.optionalString("daily_id"), time(row.optString("created_at")))
+            }
+            val rankings = body.optJSONArray("clan_ranking").objects()
+            val clans = body.optJSONArray("clans").objects().filter { row ->
+                val own = row.optJSONObject("members")?.optJSONObject(userId)
+                own != null && own.isNull("left_at") && row.isNull("deleted_at")
+            }.map { row ->
+                val members = row.getJSONObject("members")
+                val id = row.getString("id")
+                val rank = rankings.firstOrNull { it.optString("id", it.optString("clan_id")) == id }
+                SocialClan(id, row.getString("name"), members.keys().asSequence().filter {
+                    members.optJSONObject(it)?.isNull("left_at") == true
+                }.map { byId[it] ?: SocialProfile(it, "비공개 프로필", 0) }.toList(), row.getString("owner_id"),
+                    rank?.let { if (it.has("score")) it.optLong("score") else null },
+                    rank?.let { if (it.has("rank")) it.optInt("rank") else null },
+                    row.optJSONObject("chests")?.optLong("target")?.takeIf { it > 0 })
+            }
+            val popular = body.optJSONArray("popular_books").objects().mapNotNull { entry ->
+                val book = entry.optJSONObject("book") ?: return@mapNotNull null
+                SocialPublicBook(book.getString("id"), book.getString("logical_id"), book.getString("name"), entry.optInt("active_participants"))
+            }
+            return SocialSnapshot(userId, profiles, alarms, chats,
+                posts.map { message(it, userId) }.sortedWith(compareBy({ it.createdAt }, { it.id })), clans, true, popular)
+        }
+        fun message(row: JSONObject, userId: String): CompanionMessageEntity {
+            val payload = row.optJSONObject("payload")
+            val draft = if (row.optString("actor") == "assistant") payload?.optJSONObject("plan_draft") else null
+            return CompanionMessageEntity(row.getString("id"), row.getString("chat_id"), row.optString("content"),
+                row.optString("actor") == "user" && row.optString("author_id") == userId,
+                time(row.optString("created_at")),
+                draft?.let { it.optionalString("title") ?: it.optJSONObject("goal")?.optionalString("title") ?: "계획 초안" },
+                draft?.let { SocialPlanDraft.previewSteps(row.getString("id"), it) },
+                payload?.optionalString("applied_goal_id"))
+        }
+        fun time(value: String): Long = runCatching { Instant.parse(value).toEpochMilli() }.getOrDefault(0)
+    }
+}
+
+internal fun JSONArray?.objects(): List<JSONObject> = if (this == null) emptyList() else
+    (0 until length()).mapNotNull { optJSONObject(it) }
+internal fun JSONObject.optionalString(key: String): String? = optString(key).takeUnless { it.isBlank() || it == "null" }

@@ -16,6 +16,31 @@ ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / 'supabase/migrations/202611030001_personal_foundation.sql'
 
 
+def forward_sql(path):
+    """Use Supabase's existing migration history; no additional application table."""
+    version, name = path.stem.split('_', 1)
+    if not version.isdigit() or not name.replace('_', '').isalnum():
+        raise ValueError('Invalid migration identity.')
+    migration = path.read_text()
+    digest = hashlib.sha256(migration.encode()).hexdigest()
+    # Keep a digest in the migration name, so drift is rejected instead of silently skipped.
+    recorded = name + ':sha256:' + digest
+    return """BEGIN;
+DO $qyl_forward$
+DECLARE prior text;
+BEGIN
+ PERFORM pg_advisory_xact_lock(81399210002);
+ SELECT name INTO prior FROM supabase_migrations.schema_migrations WHERE version='%s';
+ IF prior='%s' THEN RETURN; END IF;
+ IF prior IS NOT NULL THEN RAISE EXCEPTION 'Applied migration differs; do not overwrite history'; END IF;
+ EXECUTE $qyl_forward_body$%s$qyl_forward_body$;
+ INSERT INTO supabase_migrations.schema_migrations(version,name,statements)
+ VALUES('%s','%s',ARRAY[$qyl_history$%s$qyl_history$]);
+END $qyl_forward$;
+NOTIFY pgrst, 'reload schema';
+COMMIT;""" % (version, recorded, migration, version, recorded, migration)
+
+
 def project_url(project):
     if project != PROJECT:
         raise ValueError('This deployment is restricted to the authorized project.')
@@ -56,6 +81,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--apply', action='store_true', help='Apply app DDL, preserve/provision ID secret, deploy Edge function.')
+    parser.add_argument('--database-only', action='store_true', help='With --apply, apply database migrations without redeploying unchanged Auth Edge code.')
     args = parser.parse_args()
     token = os.environ.get('SUPABASE_ACCESS_TOKEN')
     if not token:
@@ -84,6 +110,18 @@ def main():
         return
     api('/database/query', {'query': deployment_sql()})
     print('Foundation applied or verified as the identical migration.')
+    # Hosted Supabase already owns this infrastructure table. Refuse a missing table
+    # rather than introducing a tenth app table or improvising alternate history.
+    history = api('/database/query', {'query': "SELECT to_regclass('supabase_migrations.schema_migrations') IS NOT NULL AS present;", 'read_only': True})
+    if not history or not history[0].get('present'):
+        raise RuntimeError('Supabase migration history is unavailable; initialize it with the supported migration tool.')
+    for path in sorted((ROOT / 'supabase/migrations').glob('*.sql')):
+        if path == MIGRATION:
+            continue
+        api('/database/query', {'query': forward_sql(path)})
+        print('Forward migration applied or verified identical: ' + path.stem)
+    if args.database_only:
+        return
     registered = api('/secrets')
     if not isinstance(registered, list): raise RuntimeError('Unexpected secret metadata response.')
     if not any(item.get('name') == 'QUESTYOURLIFE_ID_SECRET' for item in registered):

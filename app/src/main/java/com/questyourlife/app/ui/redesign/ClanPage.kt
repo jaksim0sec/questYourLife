@@ -57,6 +57,11 @@ private object ClanStyle {
 
 @Composable
 fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
+    val signedIn by model.signedIn.collectAsState()
+    if (signedIn) {
+        SignedInClanPage(model, onProfile)
+        return
+    }
     var previous by rememberSaveable { mutableStateOf(false) }
     val clan = remember { model.clanPreview() }
     val contributionWeek = remember(previous) { model.clanPreview(previous) }

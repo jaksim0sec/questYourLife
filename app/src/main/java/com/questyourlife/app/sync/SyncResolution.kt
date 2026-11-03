@@ -10,10 +10,15 @@ object SyncResolution {
         db.withTransaction {
             val dao=db.syncDao(); val operations=dao.targetOperations(problem.entity,problem.targetId)
             val version=dao.record(problem.entity,problem.targetId)?.version ?: 0
+            val server=dao.record(problem.entity,problem.targetId)?.let { org.json.JSONObject(it.body) }
             check(operations.none { it.state=="in_flight" })
             operations.forEach { dao.acknowledge(it.sequence) }
-            operations.forEach { dao.enqueue(it.copy(sequence=0,eventId=UUID.randomUUID().toString(),baseVersion=version,
-                sealedRequest=null,state="queued",leaseUntil=0,attempts=0,error=null,conflictSnapshot=null)) }
+            operations.forEach {
+                val body=org.json.JSONObject(it.body)
+                if(it.operation=="join_edit" && server!=null) body.put("edit_version",server.getLong("edit_version"))
+                dao.enqueue(it.copy(sequence=0,eventId=UUID.randomUUID().toString(),baseVersion=version,body=body.toString(),
+                    sealedRequest=null,state="queued",leaseUntil=0,attempts=0,error=null,conflictSnapshot=null))
+            }
         }
     }
     suspend fun acceptRemote(db: QuestDatabase, problem: SyncOperation) = SyncWorker.gate.withLock {

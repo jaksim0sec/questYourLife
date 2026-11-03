@@ -66,10 +66,16 @@ fun PatchProfilePage(
     onDecor: () -> Unit,
     onSettings: () -> Unit
 ) {
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val social by model.social.collectAsStateWithLifecycle()
+    val ownProfile by model.ownProfile.collectAsStateWithLifecycle()
+    val confirmedWeeklyEarnings by model.confirmedWeeklyEarnings.collectAsStateWithLifecycle()
     val level by model.userLevel.collectAsStateWithLifecycle()
     val cash by model.cash.collectAsStateWithLifecycle()
-    val history by model.history.collectAsStateWithLifecycle()
-    val steps by model.steps.collectAsStateWithLifecycle()
+    val allHistory by model.history.collectAsStateWithLifecycle()
+    val allSteps by model.steps.collectAsStateWithLifecycle()
+    val history = if (signedIn) allHistory.filter { it.goalId != "example-japanese" } else allHistory
+    val steps = if (signedIn) allSteps.filter { it.goalId != "example-japanese" } else allSteps
     val ownedItems by model.ownedItems.collectAsStateWithLifecycle()
     var showStamps by rememberSaveable { mutableStateOf(false) }
     val today = LocalDate.now(ProfileZone)
@@ -80,8 +86,9 @@ fun PatchProfilePage(
 
     // Both tables contribute to the persisted balance, including linked reward rows.
     val rewardEvents = remember(history, steps) {
+        val linked = history.filter { it.completedAt != null }.mapNotNull { it.stepSyncId }.toSet()
         history.mapNotNull { quest -> quest.completedAt?.let { it to quest.reward } } +
-            steps.mapNotNull { step -> step.completedAt?.let { it to step.reward } }
+            steps.filter { it.syncId !in linked }.mapNotNull { step -> step.completedAt?.let { it to step.reward } }
     }
     val completions = remember(history, steps) {
         val completedDaily = history.filter { it.completedAt != null }
@@ -128,7 +135,8 @@ fun PatchProfilePage(
             .padding(top = PatchTokens.space4, bottom = PatchTokens.space12),
         verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
     ) {
-        ProfileHero(model.demoClan.name, model.equipped.intValue, onDecor)
+        ProfileHero(if (signedIn) social?.clan?.name ?: "참여한 클랜 없음" else model.demoClan.name,
+            model.equipped.intValue, onDecor, if (signedIn) ownProfile?.name ?: "나" else "나", signedIn)
         LevelProgress(level)
         Text("완료 보상 1 C = 1 XP · 100 XP마다 레벨 업", fontSize = 10.sp, color = PatchTokens.muted)
 
@@ -138,12 +146,12 @@ fun PatchProfilePage(
             if (stacked) {
                 Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
                     ProfileCash("보유 캐쉬", cash)
-                    ProfileCash("이번 주 획득", weeklyEarned, pile = true)
+                    ProfileCash("이번 주 획득", if (signedIn) confirmedWeeklyEarnings ?: 0 else weeklyEarned, pile = true)
                 }
             } else {
                 Row(horizontalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
                     ProfileCash("보유 캐쉬", cash, Modifier.weight(1f))
-                    ProfileCash("이번 주 획득", weeklyEarned, Modifier.weight(1f), pile = true)
+                    ProfileCash("이번 주 획득", if (signedIn) confirmedWeeklyEarnings ?: 0 else weeklyEarned, Modifier.weight(1f), pile = true)
                 }
             }
         }
@@ -217,7 +225,8 @@ fun PatchProfilePage(
             ProfileDivider()
             ProfileLink(R.drawable.ic_patch_bell, "알림 설정", onSettings)
         }
-        Text("목표와 기록은 이 기기에만 저장돼요.",
+        Text(if (signedIn) "목표와 기록은 기기에 저장한 뒤 계정에 동기화해요. 이번 주 획득은 서버 확정 내역이에요."
+            else "목표와 기록은 이 기기에만 저장돼요.",
             fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted)
     }
 
@@ -238,7 +247,7 @@ fun PatchProfilePage(
 }
 
 @Composable
-private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit) {
+private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit, name: String, signedIn: Boolean) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val availableWidth = maxWidth
         val stacked = availableWidth < 300.dp || LocalDensity.current.fontScale > 1.4f
@@ -246,13 +255,13 @@ private fun ProfileHero(clanName: String, itemId: Int, onDecor: () -> Unit) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
                 ProfileAvatar(itemId, Modifier.width(128.dp))
-                ProfileIdentity(clanName, onDecor, Modifier.fillMaxWidth())
+                ProfileIdentity(clanName, onDecor, Modifier.fillMaxWidth(), name, signedIn)
             }
         } else {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
                 ProfileAvatar(itemId, Modifier.width((availableWidth * .39f).coerceAtMost(136.dp)))
-                ProfileIdentity(clanName, onDecor, Modifier.weight(1f))
+                ProfileIdentity(clanName, onDecor, Modifier.weight(1f), name, signedIn)
             }
         }
     }
@@ -266,16 +275,16 @@ private fun ProfileAvatar(itemId: Int, modifier: Modifier) {
 }
 
 @Composable
-private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Modifier = Modifier) {
+private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Modifier = Modifier, name: String, signedIn: Boolean) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-        Text("나", fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.ExtraBold,
+        Text(name, fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.ExtraBold,
             color = PatchTokens.ink, modifier = Modifier.semantics { heading() })
         Row(verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
             com.questyourlife.app.ui.ClanMark(Modifier.size(24.dp))
             Column {
                 Text(clanName, fontSize = 12.sp, lineHeight = 17.sp, color = PatchTokens.ink)
-                Text("시연용 클랜", fontSize = 10.sp, lineHeight = 14.sp, color = PatchTokens.muted)
+                if (!signedIn) Text("시연용 클랜", fontSize = 10.sp, lineHeight = 14.sp, color = PatchTokens.muted)
             }
         }
         OutlinedButton(onClick = onDecor, modifier = Modifier.heightIn(min = 40.dp),

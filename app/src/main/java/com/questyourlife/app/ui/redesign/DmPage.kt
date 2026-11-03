@@ -70,12 +70,17 @@ fun PatchThreadPage(model: DailyQuestViewModel, threadId: String, onBack: () -> 
 
 @Composable
 private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -> Unit, onProfile: (String) -> Unit) {
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val social by model.social.collectAsStateWithLifecycle()
     var search by rememberSaveable { mutableStateOf("") }
     val query = search.trim()
-    val contacts = model.contacts.filter {
+    val contacts = (if (signedIn) social?.chats.orEmpty().filter { it.type != "ai" }.map {
+        com.questyourlife.app.data.DemoContact(it.id, it.name, it.preview, 0)
+    } else model.contacts).filter {
         it.id != "mascot" && (query.isEmpty() || it.name.contains(query, ignoreCase = true) ||
             it.preview.contains(query, ignoreCase = true))
     }
+    LaunchedEffect(signedIn) { if (signedIn) model.refreshSocial() }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
@@ -116,9 +121,9 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
                             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text("마스코트", style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold, color = PatchTokens.ink)
-                            DmLabel("로컬 도우미")
+                            DmLabel(if (signedIn) "비공개 채널" else "로컬 도우미")
                         }
-                        Text("목표를 작은 실천으로 나눠 봐요", color = PatchTokens.muted,
+                        Text(if (signedIn) "메시지를 저장해요 · AI 답변은 준비 중" else "목표를 작은 실천으로 나눠 봐요", color = PatchTokens.muted,
                             style = MaterialTheme.typography.bodyMedium,
                             maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
@@ -139,7 +144,12 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                DmFriendAvatar(contact.name, onProfile = onProfile)
+                if (signedIn) {
+                    val chat = social?.chats?.firstOrNull { it.id == contact.id }
+                    DressedAvatar(chat?.itemId ?: 0, Modifier.size(48.dp).clickable(enabled = chat?.peerId != null) {
+                        chat?.peerId?.let(onProfile)
+                    }, "${contact.name} 아바타")
+                } else DmFriendAvatar(contact.name, onProfile = onProfile)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(contact.name, style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold, color = PatchTokens.ink)
@@ -156,7 +166,14 @@ private fun DmConversations(model: DailyQuestViewModel, onOpenThread: (String) -
             }
         }
         item {
-            Text("실제 친구에게 전송되지 않는 데모 대화예요. 보낸 메시지는 이 기기에 저장돼요.",
+            if (signedIn) {
+                SocialNewChat(model)
+                TextButton(onClick = model::refreshSocial, enabled = !model.socialLoading.value) { Text("새로고침") }
+                model.socialError.value?.let { Text(it, color = PatchTokens.muted) }
+                SocialRequestProblems(model)
+            }
+            Text(if (signedIn) "보낸 메시지는 기기에 저장한 뒤 연결되면 전송해요. AI 응답 기능은 아직 연결하지 않았어요."
+                else "실제 친구에게 전송되지 않는 데모 대화예요. 보낸 메시지는 이 기기에 저장돼요.",
                 Modifier.padding(vertical = 12.dp), color = PatchTokens.muted,
                 style = MaterialTheme.typography.bodySmall)
         }
@@ -169,14 +186,20 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
     val allMessages by model.chatMessages.collectAsStateWithLifecycle()
     val busy by model.chatBusy.collectAsStateWithLifecycle()
     val activeThread by model.activeThread.collectAsStateWithLifecycle()
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val social by model.social.collectAsStateWithLifecycle()
     val messages = allMessages.filter { it.threadId == threadId }
     val mascot = threadId == "mascot"
-    val name = if (mascot) "마스코트" else model.contacts.firstOrNull { it.id == threadId }?.name ?: "데모 친구"
+    val remoteChat = social?.chats?.firstOrNull { it.id == threadId }
+    val name = if (mascot) "마스코트" else if (signedIn) remoteChat?.name ?: "대화"
+        else model.contacts.firstOrNull { it.id == threadId }?.name ?: "데모 친구"
+    val avatarProfile: (String) -> Unit = if (signedIn) ({ _ -> remoteChat?.peerId?.let(onProfile) }) else onProfile
     val listState = rememberLazyListState()
     val keyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
     var lastSeenMessage by rememberSaveable(threadId) { mutableStateOf<String?>(null) }
     var draft by rememberSaveable(threadId) { mutableStateOf("") }
-    val canSend = draft.isNotBlank() && !busy && activeThread == threadId
+    val channelReady = !signedIn || (if (mascot) social?.chats?.any { it.type == "ai" } == true else remoteChat != null)
+    val canSend = draft.isNotBlank() && !busy && activeThread == threadId && channelReady
     var showAttachmentInfo by remember { mutableStateOf(false) }
     var showLocalInfo by remember { mutableStateOf(false) }
     val conversationColor = if (LocalPatchDark.current) PatchTokens.background else Color(0xFFF8F8F7)
@@ -185,8 +208,7 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
     val lastItem = (messages.size + dayCount + if (busy) 1 else 0).coerceAtLeast(0)
     val send = {
         if (canSend) {
-            model.sendMessage(draft.trim())
-            draft = ""
+            model.sendMessage(draft.trim()) { draft = "" }
         }
     }
 
@@ -209,7 +231,11 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
                 Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "대화 목록으로",
                     tint = PatchTokens.ink)
             }
-            if (mascot) MascotArt(Modifier.size(36.dp)) else DmFriendAvatar(name, compact = true, onProfile = onProfile)
+            if (mascot) MascotArt(Modifier.size(36.dp))
+            else if (signedIn) DressedAvatar(remoteChat?.itemId ?: 0, Modifier.size(36.dp).clickable(enabled = remoteChat?.peerId != null) {
+                remoteChat?.peerId?.let(onProfile)
+            }, "$name 아바타")
+            else DmFriendAvatar(name, compact = true, onProfile = onProfile)
             Text(name, modifier = Modifier.weight(1f).padding(start = 8.dp).semantics { heading() },
                 style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold,
                 color = PatchTokens.ink, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -225,16 +251,20 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
         ) {
             item(key = "local-notice") {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text(if (mascot) "로컬 도우미 · 기기에 저장" else "데모 대화 · 기기에 저장",
+                    Text(if (signedIn) "비공개 대화 · 연결되면 동기화" else if (mascot) "로컬 도우미 · 기기에 저장" else "데모 대화 · 기기에 저장",
                         modifier = Modifier.clip(RoundedCornerShape(50))
                             .background(inputColor).clickable { showLocalInfo = true }
                             .padding(horizontal = 14.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
                 }
             }
+            if (signedIn && model.hasOlderMessages.value) {
+                item(key = "older-messages") { TextButton(onClick = model::loadOlderMessages) { Text("이전 메시지 더 보기") } }
+            }
             if (messages.isEmpty()) {
                 item(key = "empty-conversation") {
-                    Text(if (mascot) "이루고 싶은 목표를 말해 주세요.\n예: 하루 10분씩 책 읽기"
+                    Text(if (signedIn && mascot) "메시지는 비공개로 저장돼요.\nAI 답변은 아직 지원하지 않아요."
+                        else if (mascot) "이루고 싶은 목표를 말해 주세요.\n예: 하루 10분씩 책 읽기"
                         else "가볍게 인사를 건네 보세요.",
                         modifier = Modifier.padding(12.dp),
                         style = MaterialTheme.typography.bodyMedium, color = PatchTokens.muted)
@@ -252,7 +282,8 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
                 }
                 item(key = message.id) {
                     Box(Modifier.animateItem()) {
-                        DmMessage(message, mascot, name, busy, onProfile) { model.applyChatPlan(message.id) }
+                        DmMessage(message, mascot, name, busy, avatarProfile,
+                            remoteItem = if (signedIn) remoteChat?.itemId ?: 0 else null) { model.applyChatPlan(message.id) }
                     }
                 }
             }
@@ -272,6 +303,12 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
                     Icon(Icons.Rounded.Close, contentDescription = "오류 안내 닫기", tint = PatchTokens.muted)
                 }
             }
+        }
+        if (signedIn) {
+            SocialRequestProblems(model)
+            model.chatNotice.value?.let { Text(it, Modifier.padding(horizontal = 16.dp), color = PatchTokens.muted,
+                style = MaterialTheme.typography.bodySmall) }
+            TextButton(onClick = { model.refreshSocial(); model.openThread(threadId) }, enabled = !busy) { Text("새로고침") }
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp),
             verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -305,8 +342,9 @@ private fun DmConversation(model: DailyQuestViewModel, threadId: String, onBack:
     }
     if (showAttachmentInfo || showLocalInfo) {
         AlertDialog(onDismissRequest = { showAttachmentInfo = false; showLocalInfo = false },
-            title = { Text(if (showAttachmentInfo) "파일 첨부" else "이 기기에 저장되는 대화") },
+            title = { Text(if (showAttachmentInfo) "파일 첨부" else if (signedIn) "비공개 대화" else "이 기기에 저장되는 대화") },
             text = { Text(if (showAttachmentInfo) "파일 첨부는 아직 지원하지 않아요. 텍스트 메시지를 보낼 수 있어요."
+                else if (signedIn) "대화 참여자만 서버에 저장된 메시지를 볼 수 있어요. 전송은 연결되면 처리되며, 실패한 요청은 계정의 동기화 상태에서 확인해 주세요. AI 응답은 아직 지원하지 않아요."
                 else if (mascot) "준비된 로컬 제안으로 계획을 도와요. AI 서비스에 연결하지 않으며, 대화는 이 기기에 저장돼요."
                 else "실제 친구에게 전송되지 않는 데모 대화예요. 보낸 메시지는 이 기기에 저장돼요.") },
             confirmButton = { TextButton(onClick = { showAttachmentInfo = false; showLocalInfo = false }) { Text("확인") } })
@@ -320,6 +358,7 @@ private fun DmMessage(
     name: String,
     busy: Boolean,
     onProfile: (String) -> Unit,
+    remoteItem: Int? = null,
     onApply: () -> Unit
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -332,6 +371,7 @@ private fun DmMessage(
             if (!message.fromUser) {
                 Box(Modifier.align(Alignment.Top)) {
                     if (mascot) MascotArt(Modifier.size(40.dp))
+                    else if (remoteItem != null) DressedAvatar(remoteItem, Modifier.size(40.dp).clickable { onProfile(name) }, "$name 아바타")
                     else DmFriendAvatar(name, compact = true, onProfile = onProfile)
                 }
                 Spacer(Modifier.width(8.dp))
@@ -348,18 +388,20 @@ private fun DmMessage(
                 Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(message.body, style = MaterialTheme.typography.bodyLarge)
-                    if (!message.planTitle.isNullOrBlank() && !message.planSteps.isNullOrBlank()) {
+                    if (!message.planTitle.isNullOrBlank()) {
                         HorizontalDivider(color = PatchTokens.line)
-                        Text("계획 초안 · 로컬 제안", color = PatchTokens.red,
+                        Text(if (remoteItem != null) "계획 초안 · 확인 후 적용" else "계획 초안 · 로컬 제안", color = PatchTokens.red,
                             style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                         Text(message.planTitle, style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold)
-                        message.planSteps.lineSequence().filter { it.isNotBlank() }.forEachIndexed { index, step ->
+                        message.planSteps.orEmpty().lineSequence().filter { it.isNotBlank() }.forEachIndexed { index, step ->
                             Text("${index + 1}. $step", style = MaterialTheme.typography.bodyMedium)
                         }
                         val applied = message.appliedGoalId != null
-                        PatchButton(text = if (applied) "퀘스트에 추가했어요 ✓" else "이 계획으로 시작",
+                        if (!message.planSteps.isNullOrBlank()) PatchButton(text = if (applied) "퀘스트에 추가했어요 ✓" else "이 계획으로 시작",
                             onClick = onApply, enabled = !applied && !busy)
+                        else Text("구조화된 단계가 없어 이 초안은 아직 적용할 수 없어요.",
+                            style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
                         if (applied) Text("퀘스트 탭에서 확인할 수 있어요.",
                             style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
                     }

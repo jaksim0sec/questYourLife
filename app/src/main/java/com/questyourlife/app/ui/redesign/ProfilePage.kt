@@ -67,7 +67,7 @@ fun PatchProfilePage(
     onSettings: () -> Unit
 ) {
     val level by model.userLevel.collectAsStateWithLifecycle()
-    val coins by model.coins.collectAsStateWithLifecycle()
+    val cash by model.cash.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
     val ownedItems by model.ownedItems.collectAsStateWithLifecycle()
@@ -134,16 +134,16 @@ fun PatchProfilePage(
 
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             val stacked = maxWidth < 300.dp || LocalDensity.current.fontScale > 1.3f ||
-                coins.toString().length > 6 || weeklyEarned.toString().length > 6
+                cash.toString().length > 6 || weeklyEarned.toString().length > 6
             if (stacked) {
                 Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                    ProfileCash("보유 캐시", coins)
-                    ProfileCash("이번 주 획득", weeklyEarned)
+                    ProfileCash("보유 캐쉬", cash)
+                    ProfileCash("이번 주 획득", weeklyEarned, pile = true)
                 }
             } else {
                 Row(horizontalArrangement = Arrangement.spacedBy(PatchTokens.space8)) {
-                    ProfileCash("보유 캐시", coins, Modifier.weight(1f))
-                    ProfileCash("이번 주 획득", weeklyEarned, Modifier.weight(1f))
+                    ProfileCash("보유 캐쉬", cash, Modifier.weight(1f))
+                    ProfileCash("이번 주 획득", weeklyEarned, Modifier.weight(1f), pile = true)
                 }
             }
         }
@@ -290,11 +290,11 @@ private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Mod
 }
 
 @Composable
-private fun ProfileCash(title: String, amount: Int, modifier: Modifier = Modifier) {
+private fun ProfileCash(title: String, amount: Int, modifier: Modifier = Modifier, pile: Boolean = false) {
     Column(modifier.fillMaxWidth().clip(ProfileShape).background(PatchTokens.surface)
         .padding(PatchTokens.space12), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
         Text(title, fontSize = 11.sp, lineHeight = 16.sp, color = PatchTokens.muted)
-        PatchMoney(amount, compact = true)
+        PatchCash(amount, compact = true, pile = pile)
     }
 }
 

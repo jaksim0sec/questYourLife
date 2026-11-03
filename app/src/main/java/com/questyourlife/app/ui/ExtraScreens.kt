@@ -140,6 +140,8 @@ fun CompletionPanel(title:String,reward:Int,onClose:()->Unit,onNext:()->Unit) {
         Row(Modifier.clip(CircleShape).background(MutedSurface)
             .padding(horizontal=20.dp,vertical=8.dp),
             verticalAlignment=Alignment.CenterVertically) {
+            CashArtwork(Modifier.size(46.dp), pile = true)
+            Spacer(Modifier.width(8.dp))
             Text("+$reward C",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
         }
         Spacer(Modifier.height(2.dp))

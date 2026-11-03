@@ -35,7 +35,7 @@ import com.questyourlife.app.R
 private val Paper = Color(0xFFF6F2EB)
 private val Ink = Color(0xFF22201E)
 private val Muted = Color(0xFF89837F)
-private val StampRed = Color(0xFFD84340)
+private val StampRed = Color(com.questyourlife.app.brand.BrandColor.RED)
 
 @Composable
 fun BrandLanding(onOpenChecklist: () -> Unit) {

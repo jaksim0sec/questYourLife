@@ -72,7 +72,7 @@ interface GoalDao {
     @Transaction
     suspend fun removeGoal(id: String) {
         // Completed steps carry earned currency. Do not allow deleting a completed goal
-        // until history preservation is designed, to avoid silently altering earned coins.
+        // until history preservation is designed, to avoid silently altering earned cash.
         if (getSteps(id).any { it.completedAt != null }) return
         deleteSteps(id)
         deleteGoal(id)

@@ -171,7 +171,7 @@ fun PatchQuestsPage(model: DailyQuestViewModel, onPreview: (String) -> Unit,
                 ChapterJourney(state, QuestPreviewCatalog.books.first(), onOpen = { route = true })
                 QuestTextLink("전체 공략 경로 보기", { route = true })
             }
-            item { Text("예시 퀘스트는 로컬 시연이며 시연 보상은 내 캐시·보관함에 합산되지 않아요.",
+            item { Text("예시 퀘스트는 로컬 시연이며 시연 보상은 내 캐쉬·보관함에 합산되지 않아요.",
                 fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted) }
         }
     }

@@ -30,7 +30,7 @@ import java.util.Locale
 
 @Composable
 fun HomePanel(
-    coins:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,
+    cash:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,
     daily:List<DailyQuestEntity>,onGoal:(String)->Unit,onDaily:()->Unit,
     onAccept:(String)->Unit,onComplete:(String)->Unit,
     onCreateGoal:()->Unit,onSettings:()->Unit
@@ -44,7 +44,7 @@ fun HomePanel(
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
             Text("갓생패치",fontSize=23.sp,fontWeight=FontWeight.Black,color=TextInk)
             Spacer(Modifier.weight(1f))
-            CashBadge(coins)
+            CashBadge(cash)
             IconButton(onClick=onSettings,modifier=Modifier.size(44.dp)) {
                 Icon(Icons.Outlined.Settings,"설정",tint=TextGray,modifier=Modifier.size(19.dp))
             }
@@ -106,7 +106,7 @@ fun HomePanel(
 
 @Composable
 fun QuestListPanel(
-    coins:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,daily:List<DailyQuestEntity>,
+    cash:Int,goals:List<GoalEntity>,steps:List<GoalStepEntity>,daily:List<DailyQuestEntity>,
     onGoal:(String)->Unit,onDaily:()->Unit,onCreate:()->Unit,showHeading:Boolean=true
 ) {
     var tab by remember { mutableIntStateOf(0) }
@@ -288,7 +288,7 @@ fun GoalDetailPanel(goal:GoalEntity,steps:List<GoalStepEntity>,
                             maxLines=2,overflow=TextOverflow.Ellipsis)
                         if(locked) Text("이전 단계 완료 후 해금",fontSize=10.sp,color=TextGray)
                     }
-                    Text("+${step.reward} C",fontSize=10.sp,color=CoinGold)
+                    Text("+${step.reward} C",fontSize=10.sp,color=CashGold)
                     Spacer(Modifier.width(7.dp))
                     Icon(if(locked) Icons.Outlined.Lock else
                         Icons.AutoMirrored.Outlined.KeyboardArrowRight,

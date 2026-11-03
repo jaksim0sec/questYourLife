@@ -80,7 +80,7 @@ fun PatchChapterPage(model: DailyQuestViewModel, bookId: String, initialChapterI
                     { if (chapterComplete) completedMission = chapter.missions.last().id else missionOpen = true })
             }
             QuestTextLink("전체 공략 경로 보기", { route = true })
-            Text("시연 진행은 이 기기에 저장돼요. 실제 캐시·아이템 보관함과는 별개예요.",
+            Text("시연 진행은 이 기기에 저장돼요. 실제 캐쉬·아이템 보관함과는 별개예요.",
                 fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted)
         }
     }
@@ -124,7 +124,8 @@ fun PatchChapterPage(model: DailyQuestViewModel, bookId: String, initialChapterI
                 }
             }) {
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                QuestChest(Modifier.size(150.dp), "미션 완료 보상 상자")
+                if (chapterComplete) QuestChest(Modifier.size(150.dp), "챕터 완료 보상 상자")
+                else com.questyourlife.app.ui.CashArtwork(Modifier.size(150.dp), pile = true, description = "캐쉬 획득 보상")
             }
             Text(if (chapterComplete) "${chapter.title}\n상자를 열었어요" else "한 걸음 더 나아갔어요!",
                 style = MaterialTheme.typography.headlineSmall)
@@ -147,7 +148,7 @@ fun PatchChapterPage(model: DailyQuestViewModel, bookId: String, initialChapterI
                     }
                 }
             }
-            Text("시연 보상이에요. 실제 내 캐시와 꾸미기 보관함에는 합산되지 않아요.",
+            Text("시연 보상이에요. 실제 내 캐쉬와 꾸미기 보관함에는 합산되지 않아요.",
                 style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
         }
     }
@@ -194,10 +195,10 @@ private fun ChapterPath(state: QuestPreviewState, chapter: PreviewChapter, onMis
                 .clickable(enabled = active, role = Role.Button, onClickLabel = "${mission.action} 열기") { onMission(mission) }
                 .padding(5.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.size(29.dp).clip(CircleShape).background(if (active) QuestNightInk else Color.Transparent)
-                    .border(2.dp, if (done) Color(0xFFFF4E42) else if (active) QuestYellow else Color(0xFF959992), CircleShape),
+                    .border(2.dp, if (done) PatchTokens.red else if (active) QuestYellow else Color(0xFF959992), CircleShape),
                     contentAlignment = Alignment.Center) {
                     if (done || !active) QuestGlyph(if (done) R.drawable.ic_patch_check else R.drawable.ic_patch_lock,
-                        Modifier.size(18.dp), if (done) Color(0xFFFF4E42) else Color(0xFF777D75))
+                        Modifier.size(18.dp), if (done) PatchTokens.red else Color(0xFF777D75))
                     else Box(Modifier.size(15.dp).background(QuestYellow, CircleShape))
                 }
                 Text("${index + 1}. ${mission.label}", Modifier.weight(1f).padding(start = 4.dp, end = 2.dp),

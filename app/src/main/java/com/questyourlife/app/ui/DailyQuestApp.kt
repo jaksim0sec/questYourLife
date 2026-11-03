@@ -53,7 +53,7 @@ private fun PatchBottomNav(active: String, onSelect: (String) -> Unit) {
             patchTabs.forEach { tab ->
                 val isSelected = active == tab.route
                 val tint by animateColorAsState(
-                    if (isSelected) { if (LocalPatchDark.current) PatchTokens.red else Color(0xFFFF3B30) } else if (LocalPatchDark.current) PatchTokens.muted else Color(0xFF222222).copy(alpha = 0.55f),
+                    if (isSelected) PatchTokens.red else if (LocalPatchDark.current) PatchTokens.muted else Color(0xFF222222).copy(alpha = 0.55f),
                     animationSpec = tween(160), label = "${tab.route} tab color")
                 Column(Modifier.weight(1f).fillMaxHeight()
                     .clickable(role = Role.Tab) { onSelect(tab.route) }
@@ -109,7 +109,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val history by model.history.collectAsStateWithLifecycle()
     val goals by model.goals.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
-    val coins by model.coins.collectAsStateWithLifecycle()
+    val cash by model.cash.collectAsStateWithLifecycle()
     val sessions by model.sessions.collectAsStateWithLifecycle()
     var screen by rememberSaveable { mutableStateOf("home") }
     var returnTab by rememberSaveable { mutableStateOf("home") }
@@ -219,7 +219,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         verticalArrangement = Arrangement.spacedBy(PatchTokens.space16)) {
                         item {
                             when (page) {
-                                "legacyQuests" -> QuestListPanel(coins, goals, steps, daily,
+                                "legacyQuests" -> QuestListPanel(cash, goals, steps, daily,
                                     onGoal = { goalId = it; navigate("detail") },
                                     onDaily = { navigate("daily") }, onCreate = { navigate("create") },
                                     showHeading = page == "legacyQuests")
@@ -271,8 +271,12 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         Text(reward.title, style = MaterialTheme.typography.bodyMedium, color = PatchTokens.muted)
                     }
                 }
-                Text("+${reward.amount} C", color = PatchTokens.red,
-                    style = MaterialTheme.typography.headlineLarge)
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    CashArtwork(Modifier.size(80.dp), pile = true)
+                    Text("+${reward.amount} C", color = PatchTokens.red,
+                        style = MaterialTheme.typography.headlineLarge)
+                }
                 Text("보상과 완료 기록이 이 기기에 저장됐어요.", style = MaterialTheme.typography.bodySmall,
                     color = PatchTokens.muted)
                 PatchButton("좋아요", model::clearReward)

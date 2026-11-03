@@ -59,7 +59,7 @@ interface DailyQuestDao {
     }
 
     @Query("SELECT COALESCE(SUM(reward), 0) FROM daily_quests WHERE completedAt IS NOT NULL")
-    fun observeEarnedCoins(): Flow<Int>
+    fun observeEarnedCash(): Flow<Int>
 
     @Query("SELECT COUNT(*) FROM daily_quests WHERE completedAt IS NOT NULL")
     fun observeCompletedCount(): Flow<Int>

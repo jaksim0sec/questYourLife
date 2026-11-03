@@ -67,7 +67,7 @@ private enum class DecorTab(val label: String) {
 /** The shell supplies safe drawing insets; this page owns its header and pinned action. */
 @Composable
 fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
-    val coins by model.coins.collectAsStateWithLifecycle()
+    val cash by model.cash.collectAsStateWithLifecycle()
     val ownedItems by model.ownedItems.collectAsStateWithLifecycle()
     val equipped = model.equipped.intValue
     val busy by model.cosmeticBusy
@@ -94,7 +94,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     }
 
     Column(Modifier.fillMaxSize().background(PatchTokens.background)) {
-        DecorHeader(coins, onBack)
+        DecorHeader(cash, onBack)
         Column(
             Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
                 .padding(horizontal = PatchTokens.space16)
@@ -155,7 +155,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
             item = item,
             owned = item.id in ownedIds,
             equipped = item.id == equipped,
-            coins = coins,
+            cash = cash,
             busy = busy,
             message = message,
             onDismiss = { selectedItemId = null },
@@ -174,10 +174,10 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
 }
 
 @Composable
-private fun DecorHeader(coins: Int, onBack: () -> Unit) {
+private fun DecorHeader(cash: Int, onBack: () -> Unit) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val stackCash = maxWidth < 320.dp || LocalDensity.current.fontScale > 1.3f ||
-            coins.toString().length > 6
+            cash.toString().length > 6
         Column(Modifier.fillMaxWidth()) {
             Row(
                 Modifier.fillMaxWidth().heightIn(min = 56.dp)
@@ -190,9 +190,9 @@ private fun DecorHeader(coins: Int, onBack: () -> Unit) {
                 }
                 Text("꾸미기", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = PatchTokens.ink,
                     modifier = Modifier.weight(1f).semantics { heading() })
-                if (!stackCash) PatchMoney(coins, compact = true)
+                if (!stackCash) PatchCash(cash, compact = true)
             }
-            if (stackCash) PatchMoney(coins, Modifier.align(Alignment.End)
+            if (stackCash) PatchCash(cash, Modifier.align(Alignment.End)
                 .padding(horizontal = PatchTokens.space16).padding(bottom = PatchTokens.space8))
         }
     }
@@ -306,7 +306,7 @@ private fun DecorItemTile(
                     style = MaterialTheme.typography.labelMedium, color = PatchTokens.muted)
                 item.price == 0 -> Text("무료", style = MaterialTheme.typography.labelMedium,
                     color = PatchTokens.muted)
-                else -> PatchMoney(item.price, compact = true)
+                else -> PatchCash(item.price, compact = true)
             }
         }
     }
@@ -317,13 +317,13 @@ private fun DecorItemSheet(
     item: CosmeticItem,
     owned: Boolean,
     equipped: Boolean,
-    coins: Int,
+    cash: Int,
     busy: Boolean,
     message: String?,
     onDismiss: () -> Unit,
     onChoose: () -> Unit
 ) {
-    val affordable = owned || item.price <= coins
+    val affordable = owned || item.price <= cash
     PatchSheet(item.name, onDismiss = onDismiss, footer = {
         Button(onClick = onChoose, enabled = !busy && !owned && affordable,
             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
@@ -348,19 +348,19 @@ private fun DecorItemSheet(
                 Text(if (equipped) "착용 중" else "보유 중",
                     style = MaterialTheme.typography.labelLarge,
                     color = if (equipped) PatchTokens.red else PatchTokens.ink)
-            } else PatchMoney(item.price, compact = true)
+            } else PatchCash(item.price, compact = true)
         }
         Text("구매 후 적용하기를 누르면 프로필에 반영돼요.",
             style = MaterialTheme.typography.bodySmall, color = PatchTokens.muted)
         if (!owned) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text("보유 캐시", style = MaterialTheme.typography.bodyMedium,
+                Text("보유 캐쉬", style = MaterialTheme.typography.bodyMedium,
                     color = PatchTokens.muted, modifier = Modifier.weight(1f))
-                PatchMoney(coins, compact = true)
+                PatchCash(cash, compact = true)
             }
             Text(
-                if (affordable) "구매 후 잔액: ${coins - item.price} C"
-                else "캐시가 ${item.price.toLong() - coins.toLong()} C 부족해요.",
+                if (affordable) "구매 후 잔액: ${cash - item.price} C"
+                else "캐쉬가 ${item.price.toLong() - cash.toLong()} C 부족해요.",
                 style = MaterialTheme.typography.bodySmall,
                 color = if (affordable) PatchTokens.muted else PatchTokens.red
             )

@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,11 +34,11 @@ val Cream: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF15171
 val CardWhite: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF222522) else Color(0xFFFFFEFC)
 val TextInk: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF4F1EB) else Color(0xFF252321)
 val TextGray: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFB7B4AC) else Color(0xFF6B6862)
-val AccentRed: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF38A82) else Color(0xFFC83F3C)
+val AccentRed = Color(com.questyourlife.app.brand.BrandColor.RED)
 val LightRed: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF3C2727) else Color(0xFFF9E8E5)
 val WarmLine: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF70776F) else Color(0xFFE9E5DF)
 val MutedSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF2D312D) else Color(0xFFF3F0EB)
-val CoinGold = Color(0xFFBE8529)
+val CashGold = Color(0xFFBE8529)
 val InkSoft: Color @Composable get() = if (LocalPatchDark.current) Color(0xFFF4F1EB) else Color(0xFF363432)
 val LilacSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF312B35) else Color(0xFFF7EEF7)
 val GrassSurface: Color @Composable get() = if (LocalPatchDark.current) Color(0xFF283428) else Color(0xFFF0F5ED)
@@ -58,19 +57,16 @@ fun ScreenHeading(title: String, subtitle: String? = null, action: (@Composable 
 }
 
 @Composable
-fun CashBadge(coins: Int, onClick: (() -> Unit)? = null) {
+fun CashBadge(cash: Int, onClick: (() -> Unit)? = null) {
     Row(
         Modifier.clip(CircleShape).background(MutedSurface)
             .then(if(onClick!=null) Modifier.clickable(role=Role.Button,onClick=onClick) else Modifier)
             .padding(horizontal=12.dp,vertical=8.dp),
         verticalAlignment=Alignment.CenterVertically
     ) {
-        Box(Modifier.size(17.dp).background(Color(0xFFFFD577),CircleShape),
-            contentAlignment=Alignment.Center) {
-            Icon(Icons.Filled.Star,null,Modifier.size(11.dp),tint=if (LocalPatchDark.current) Color(0xFF261715) else Color.White)
-        }
+        CashArtwork(Modifier.size(20.dp))
         Spacer(Modifier.width(6.dp))
-        Text("${coins} C",fontSize=12.sp,fontWeight=FontWeight.Bold,color=TextInk)
+        Text("${cash} C",fontSize=12.sp,fontWeight=FontWeight.Bold,color=TextInk)
     }
 }
 
@@ -148,7 +144,7 @@ fun QuestTick(done: Boolean,modifier: Modifier=Modifier,locked: Boolean=false) {
         .border(if(done) 0.dp else 1.3.dp,
             if(locked) WarmLine else Color(0xFFB6B2AD),CircleShape),
         contentAlignment=Alignment.Center) {
-        if(done) Icon(Icons.Filled.Check,null,Modifier.size(17.dp),tint=if (LocalPatchDark.current) Color(0xFF261715) else Color.White)
+        if(done) Icon(Icons.Filled.Check,null,Modifier.size(17.dp),tint=Color.White)
     }
 }
 
@@ -175,7 +171,7 @@ fun DailyCompactRow(
             Text(if(done) "완료" else if(quest.accepted) "진행 중" else "수락해서 시작하기",
                 fontSize=10.sp,color=TextGray,maxLines=1)
         }
-        Text("+${quest.reward} C",fontSize=10.sp,color=CoinGold)
+        Text("+${quest.reward} C",fontSize=10.sp,color=CashGold)
         if(onOpen!=null) IconButton(onClick=onOpen,modifier=Modifier.size(40.dp)) {
             Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,"상세",tint=TextGray,
                 modifier=Modifier.size(18.dp))

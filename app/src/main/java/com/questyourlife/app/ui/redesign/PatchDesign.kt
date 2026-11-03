@@ -67,7 +67,7 @@ fun PatchTheme(dark: Boolean = false, content: @Composable () -> Unit) {
         }
     }
     val scheme = if (dark) darkColorScheme(
-        primary = PatchTokens.red, onPrimary = Color(0xFF261715),
+        primary = PatchTokens.red, onPrimary = Color.White,
         background = PatchTokens.background, onBackground = PatchTokens.ink,
         surface = PatchTokens.surface, onSurface = PatchTokens.ink,
         surfaceVariant = PatchTokens.soft, onSurfaceVariant = PatchTokens.muted,
@@ -135,14 +135,11 @@ fun PatchPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.(
 }
 
 @Composable
-fun PatchMoney(amount: Int, modifier: Modifier = Modifier, compact: Boolean = false) {
+fun PatchCash(amount: Int, modifier: Modifier = Modifier, compact: Boolean = false, pile: Boolean = false) {
     val formatted = remember(amount) { NumberFormat.getIntegerInstance(Locale.KOREA).format(amount) }
     Row(modifier.animateContentSize(), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        Box(Modifier.size(if (compact) 18.dp else 22.dp).clip(CircleShape).background(Color(0xFFFFE5A0)),
-            contentAlignment = Alignment.Center) {
-            Icon(painterResource(R.drawable.ic_patch_coin), null, Modifier.size(if (compact) 16.dp else 20.dp), tint = Color(0xFFBA8606))
-        }
+        CashArtwork(Modifier.size(if (compact) 24.dp else 30.dp), pile = pile)
         Text("$formatted C", fontSize = if (compact) 16.sp else 20.sp, lineHeight = if (compact) 22.sp else 26.sp,
             fontWeight = FontWeight.Bold, color = PatchTokens.ink)
     }

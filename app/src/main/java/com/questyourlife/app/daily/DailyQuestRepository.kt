@@ -49,7 +49,7 @@ class DailyQuestRepository(context: Context) {
     fun observeDay(dateKey:String)=dao.observeDay(dateKey)
     fun observeHistory()=dao.observeHistory()
     suspend fun snapshotDay(dateKey:String)=dao.snapshotDay(dateKey)
-    fun observeCoins()=dao.observeEarnedCoins()
+    fun observeCash()=dao.observeEarnedCash()
     fun observeCompletionCount()=dao.observeCompletedCount()
     suspend fun get(id:String)=dao.find(id)
     suspend fun accept(id:String):DailyQuestEntity? {

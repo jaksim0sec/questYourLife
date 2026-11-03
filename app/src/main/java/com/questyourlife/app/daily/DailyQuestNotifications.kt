@@ -58,7 +58,7 @@ object DailyQuestNotifications {
     private fun builder(context: Context, channel: String) =
         Notification.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_stat_quest)
-            .setColor(0xFFD84340.toInt())
+            .setColor(com.questyourlife.app.brand.BrandColor.RED.toInt())
             .setContentIntent(openApp(context))
             .setAutoCancel(true)
 

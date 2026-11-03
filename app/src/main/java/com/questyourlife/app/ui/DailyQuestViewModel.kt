@@ -25,7 +25,7 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
 
     val quests=day.flatMapLatest(daily::observeDay).stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     val history=daily.observeHistory().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<DailyQuestEntity>())
-    val dailyCoins=daily.observeCoins().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
+    val dailyCash=daily.observeCash().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
     val completedCount=daily.observeCompletionCount().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
     val goals=goalRepo.watchGoals().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalEntity>())
     val steps=goalRepo.watchSteps().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList<GoalStepEntity>())
@@ -38,7 +38,7 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000),
         com.questyourlife.app.progression.UserLevel.fromXp(0))
 
-    val coins=combine(dailyCoins,steps,ownedItems) { d,s,owned ->
+    val cash=combine(dailyCash,steps,ownedItems) { d,s,owned ->
         d+s.sumOf{if(it.completedAt!=null) it.reward else 0}-owned.sumOf{it.price}
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),0)
 
@@ -164,7 +164,7 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
                     cosmeticMessage.value = if (applyAfterPurchase) "적용했어요." else "구매했어요. 적용하기를 누르면 착용해요."
                 } else {
                     cosmeticMessage.value = if (CosmeticCatalog.find(id) == null) "보유한 아이템만 착용할 수 있어요."
-                        else "캐시가 부족해요. 잔액을 확인해 주세요."
+                        else "캐쉬가 부족해요. 잔액을 확인해 주세요."
                 }
             } catch (e: kotlinx.coroutines.CancellationException) { throw e }
             catch (e: Exception) { cosmeticMessage.value = "저장하지 못했어요. 다시 시도해 주세요." }

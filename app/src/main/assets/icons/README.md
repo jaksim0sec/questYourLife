@@ -21,3 +21,9 @@ Home/quest/chapter reference surfaces add `speech`, `shoe`, `lock`, `chest`,
 icons use the same 24×24 viewBox and 1.8 rounded strokes; vertical menu dots
 are filled circles. Generate their `ic_patch_*` vectors with the same compiler.
 The navigation's red active states are retained alongside yellow task/reward actions.
+
+Currency is called cash (캐쉬) throughout code and UI. The retired `coin.svg`
+and generated currency vector are removed. `ui/CashArtwork.kt` renders original
+`drawable-nodpi/cash.webp` for balances/prices and `pile_of_cash.webp` for earnings/rewards,
+without tint or cropping. Active navigation SVGs use #e0412f in both themes;
+Compose and notification accents share `brand/BrandColor.kt`.

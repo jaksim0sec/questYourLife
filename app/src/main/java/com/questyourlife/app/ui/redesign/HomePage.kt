@@ -28,7 +28,7 @@ import com.questyourlife.app.ui.DressedAvatar
 @Composable
 fun PatchHomePage(model: DailyQuestViewModel, onDaily: (DailyQuestEntity) -> Unit,
     onQuests: () -> Unit, onClan: () -> Unit, onPreview: (String) -> Unit, onMy: () -> Unit) {
-    val coins by model.coins.collectAsStateWithLifecycle()
+    val balance by model.cash.collectAsStateWithLifecycle()
     val daily by model.quests.collectAsStateWithLifecycle()
     val preview by model.questPreview.state.collectAsStateWithLifecycle()
     val clan = remember { model.clanPreview() }
@@ -56,7 +56,7 @@ fun PatchHomePage(model: DailyQuestViewModel, onDaily: (DailyQuestEntity) -> Uni
                         }
                     }
                 }
-                PatchMoney(coins, compact = true)
+                PatchCash(balance, compact = true)
             }
         }
         item {
@@ -135,7 +135,7 @@ fun PatchHomePage(model: DailyQuestViewModel, onDaily: (DailyQuestEntity) -> Uni
                 QuestGlyph(R.drawable.ic_patch_chevron_right, Modifier.size(18.dp))
             }
         }
-        item { Text("클랜·인기 퀘스트는 로컬 시연이에요. 내 캐시와 오늘의 데일리는 실제 기록이에요.",
+        item { Text("클랜·인기 퀘스트는 로컬 시연이에요. 내 캐쉬와 오늘의 데일리는 실제 기록이에요.",
             fontSize = 10.sp, lineHeight = 15.sp, color = PatchTokens.muted) }
     }
 }

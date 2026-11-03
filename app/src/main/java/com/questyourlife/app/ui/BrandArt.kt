@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.questyourlife.app.R
 
-private val ArtRed = Color(0xFFDA514D)
+private val ArtRed = Color(com.questyourlife.app.brand.BrandColor.RED)
 
 @Composable
 fun MascotArt(modifier: Modifier = Modifier, festive: Boolean = false) {

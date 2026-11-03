@@ -176,7 +176,7 @@ fun PatchClanPage(model: DailyQuestViewModel, onProfile: (String) -> Unit) {
             initialHeight = if (sheet == "members") (220 + ((clan.members.take(10).size + 4) / 5) * 100).dp else null,
             startExpanded = sheet == "members",
             footer = if (sheet == "members") ({ PatchButton("확인", { sheet = null }) }) else null) {
-            Text("시연용 클랜이에요. 멤버·기여도·순위는 준비된 예시이며 내 캐시에는 반영되지 않아요.",
+            Text("시연용 클랜이에요. 멤버·기여도·순위는 준비된 예시이며 내 캐쉬에는 반영되지 않아요.",
                 style = MaterialTheme.typography.bodyMedium)
             if (sheet == "members") {
                 clan.members.take(10).chunked(5).forEach { members ->

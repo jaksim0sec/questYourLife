@@ -74,11 +74,11 @@ jobs:
           keytool -list -v -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey | grep 'SHA256:' >> "$GITHUB_STEP_SUMMARY"
           echo "Package: com.questyourlife.app.preview" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Assemble preview APK
-        run: gradle --no-daemon --build-cache :app:assembleDebug
-
       - name: Run JVM/Robolectric regression tests
         run: gradle --no-daemon --build-cache :app:testDebugUnitTest
+
+      - name: Assemble preview APK
+        run: gradle --no-daemon --build-cache :app:assembleDebug
 
       - name: Publish preview APK (main only)
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

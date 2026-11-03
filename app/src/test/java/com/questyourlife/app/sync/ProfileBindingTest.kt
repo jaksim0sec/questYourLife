@@ -85,6 +85,32 @@ class ProfileBindingTest {
         assertEquals(1, QuestDatabase.open(context, registry.file.value).goalDao().countGoals())
     }
 
+    @Test fun importedAccountRecordsCannotBeReopenedAsGuest() = runBlocking {
+        val registry = ProfileRegistry.get(context)
+        val file = "quests-guest-${UUID.randomUUID()}.db"
+        val user = UUID.randomUUID().toString()
+        registry.activate(file)
+        val (_, boundFile) = registry.bind(user, importGuest = true)
+        registry.activate(boundFile)
+        registry.guest()
+        assertNotEquals(boundFile, registry.file.value)
+    }
+
+    @Test fun accountMappingCanBeRecoveredFromBoundDatabase() = runBlocking {
+        val registry = ProfileRegistry.get(context)
+        registry.guest()
+        val user = UUID.randomUUID().toString()
+        val (_, file) = registry.bind(user, importGuest = false)
+        registry.activate(file)
+        context.getSharedPreferences("qyl_profiles", Context.MODE_PRIVATE).edit()
+            .remove("user:$user").commit()
+        try {
+            assertEquals(file, registry.bind(user, importGuest = false).second)
+        } finally {
+            registry.guest()
+        }
+    }
+
     @Test fun repeatedBindIsIdempotent() = runBlocking {
         val registry = ProfileRegistry.get(context)
         registry.guest()

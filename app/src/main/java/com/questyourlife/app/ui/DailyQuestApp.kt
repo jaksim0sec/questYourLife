@@ -214,9 +214,22 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                     "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
                     "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
                         onProfile = openProfile, onMenu = { sheet = "menu" })
-                    "clan" -> PatchClanPage(model, onProfile = openProfile)
-                    "person" -> PatchPersonProfilePage(profileName, model.demoClan.name, back,
-                        onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
+                    "clan" -> PatchClanPage(model, onProfile = openProfile, onAccount = { navigate("account") })
+                    "person" -> {
+                        val validId = runCatching { java.util.UUID.fromString(profileName) }.isSuccess
+                        if (validId) {
+                            val access = rememberSocialAccess()
+                            Column(Modifier.fillMaxSize()) {
+                                IconButton(onClick = back) {
+                                    Icon(painterResource(R.drawable.ic_patch_arrow_left), "뒤로가기",
+                                        tint = PatchTokens.ink)
+                                }
+                                SocialProfileContent(access, profileName)
+                            }
+                        } else PatchPersonProfilePage(profileName, model.demoClan.name, back,
+                            onNotifications = { sheet = "notifications" },
+                            onMenu = { sheet = "menu" })
+                    }
                     "account" -> PatchAccountPage(onBack = back)
                     "decor" -> PatchDecorPage(model, onBack = back)
                     "my" -> PatchProfilePage(model,

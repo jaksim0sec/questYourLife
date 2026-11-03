@@ -66,7 +66,7 @@ private enum class DecorTab(val label: String) {
 
 /** The shell supplies safe drawing insets; this page owns its header and pinned action. */
 @Composable
-fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
+fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit, onClan: () -> Unit) {
     val cash by model.cash.collectAsStateWithLifecycle()
     val ownedItems by model.ownedItems.collectAsStateWithLifecycle()
     val equipped = model.equipped.intValue
@@ -75,7 +75,6 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
     var tab by rememberSaveable { mutableStateOf(DecorTab.RECOMMENDED) }
     var selectedItemId by rememberSaveable { mutableStateOf<Int?>(null) }
     var previewId by rememberSaveable { mutableStateOf(equipped) }
-    var showClanReward by rememberSaveable { mutableStateOf(false) }
 
     // Legacy purchases keep their identity and stored price in the inventory.
     val inventory = remember(ownedItems) {
@@ -103,7 +102,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
             DecorAppearancePreview(previewId)
             DecorTabs(tab) { tab = it }
             Spacer(Modifier.height(PatchTokens.space12))
-            DecorClanReward { showClanReward = true }
+            DecorClanReward(onClan)
             Spacer(Modifier.height(PatchTokens.space8))
             Column(verticalArrangement = Arrangement.spacedBy(PatchTokens.space12)) {
                 items.chunked(2).forEach { row ->
@@ -162,15 +161,7 @@ fun PatchDecorPage(model: DailyQuestViewModel, onBack: () -> Unit) {
             onChoose = { model.chooseCosmetic(item.id, applyAfterPurchase = false) }
         )
     }
-    if (showClanReward) {
-        PatchSheet("이번 주 클랜 보상", onDismiss = { showClanReward = false }) {
-            CosmeticImage(2, Modifier.fillMaxWidth().height(144.dp))
-            Text("함께 열어서 받는 꾸미기", style = MaterialTheme.typography.titleMedium,
-                color = PatchTokens.ink)
-            Text("클랜은 데모 화면이에요. 실제 보상 받기는 준비 중이에요.",
-                style = MaterialTheme.typography.bodyMedium, color = PatchTokens.muted)
-        }
-    }
+
 }
 
 @Composable
@@ -250,10 +241,10 @@ private fun DecorClanReward(onClick: () -> Unit) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatchTokens.space4)) {
             Text("이번 주 클랜 보상", fontSize = 15.sp,
                 fontWeight = FontWeight.Bold, color = androidx.compose.ui.graphics.Color(0xFF252321))
-            Text("함께 열어서 받는 꾸미기 · 데모", style = MaterialTheme.typography.bodySmall,
+            Text("클랜에서 지난 주 공동 상자 확인", style = MaterialTheme.typography.bodySmall,
                 color = androidx.compose.ui.graphics.Color(0xFF252321))
         }
-        CosmeticImage(2, Modifier.width(64.dp).height(52.dp))
+        QuestChest(Modifier.width(64.dp).height(52.dp), "클랜 공동 상자")
         Icon(painterResource(R.drawable.ic_patch_chevron_right), null,
             Modifier.size(20.dp), tint = androidx.compose.ui.graphics.Color(0xFF252321))
     }

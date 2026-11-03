@@ -135,7 +135,7 @@ fun PatchProfilePage(
             .padding(top = PatchTokens.space4, bottom = PatchTokens.space12),
         verticalArrangement = Arrangement.spacedBy(PatchTokens.space8)
     ) {
-        ProfileHero(if (signedIn) social?.clan?.name ?: "참여한 클랜 없음" else model.demoClan.name,
+        ProfileHero(social?.clan?.name ?: "참여한 클랜 없음",
             model.equipped.intValue, onDecor, if (signedIn) ownProfile?.name ?: "나" else "나", signedIn)
         LevelProgress(level)
         Text("완료 보상 1 C = 1 XP · 100 XP마다 레벨 업", fontSize = 10.sp, color = PatchTokens.muted)
@@ -284,7 +284,6 @@ private fun ProfileIdentity(clanName: String, onDecor: () -> Unit, modifier: Mod
             com.questyourlife.app.ui.ClanMark(Modifier.size(24.dp))
             Column {
                 Text(clanName, fontSize = 12.sp, lineHeight = 17.sp, color = PatchTokens.ink)
-                if (!signedIn) Text("시연용 클랜", fontSize = 10.sp, lineHeight = 14.sp, color = PatchTokens.muted)
             }
         }
         OutlinedButton(onClick = onDecor, modifier = Modifier.heightIn(min = 40.dp),

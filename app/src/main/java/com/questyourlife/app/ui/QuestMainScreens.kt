@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -303,8 +304,8 @@ fun GoalDetailPanel(goal:GoalEntity,steps:List<GoalStepEntity>,
 }
 
 @Composable
-fun NewGoalPanel(onBack:()->Unit,onCreate:(String)->Unit) {
-    var title by remember { mutableStateOf("") }
+fun NewGoalPanel(onBack:()->Unit,onCreate:(String)->Unit,initialTitle:String="") {
+    var title by rememberSaveable(initialTitle) { mutableStateOf(initialTitle) }
     Column(verticalArrangement=Arrangement.spacedBy(21.dp)) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             IconButton(onClick=onBack) {

@@ -67,4 +67,60 @@ class SocialSnapshotTest {
         val merged = SocialStore.mergePosts(listOf(deleted), listOf(original))
         assertEquals("[deleted]", merged.getJSONObject(0).getString("content"))
     }
+    @Test fun policyTargetComesFromServerChestPolicy() {
+        val clan = JSONObject().put("id", "my-clan").put("name", "실제 클랜").put("owner_id", owner)
+            .put("members", JSONObject().put(owner, JSONObject()))
+            .put("chest_policy", JSONObject().put("threshold", 100).put("reward", 50))
+            .put("chests", JSONObject())
+        val snapshot = SocialSnapshot.parse(owner, JSONObject().put("clans", JSONArray().put(clan)))
+        assertEquals(100L, snapshot.clan!!.target)
+    }
+
+    @Test fun formerMemberCanSeeSettledChestRight() {
+        val settled = JSONObject().put("reward", 50).put("week_start", "2026-10-26")
+            .put("eligible", JSONObject().put(owner, JSONObject().put("eligible_at", "2026-11-02T00:00:00Z")))
+        val clan = JSONObject().put("id", "former-clan").put("name", "예전 클랜")
+            .put("owner_id", peer).put("members", JSONObject())
+            .put("chests", JSONObject().put("2026-10-26", settled))
+        val snap = SocialSnapshot.parse(owner, JSONObject().put("clans", JSONArray().put(clan)))
+        assertNull(snap.clan)
+        assertEquals(listOf(SocialChestRight("former-clan", "예전 클랜", "2026-10-26", 50L)),
+            snap.chestRights)
+    }
+
+    @Test fun unrelatedMemberCannotSeeAnotherPersonsRights() {
+        val settled = JSONObject().put("reward", 50).put("week_start", "2026-10-26")
+            .put("eligible", JSONObject().put(peer, JSONObject()))
+        val clan = JSONObject().put("id", "foreign-clan").put("name", "공개 클랜")
+            .put("owner_id", peer).put("members", JSONObject())
+            .put("chests", JSONObject().put("2026-10-26", settled))
+        assertTrue(SocialSnapshot.parse(owner, JSONObject().put("clans", JSONArray().put(clan)))
+            .chestRights.isEmpty())
+    }
+
+    @Test fun onlyActualServerRanksAreShown() {
+        val data = JSONObject().put("clans", JSONArray().put(JSONObject()
+            .put("id", "clan-main").put("name", "느슨한 갓생단")
+            .put("owner_id", owner).put("members", JSONObject().put(owner, JSONObject())))
+            .put(JSONObject().put("id", "clan-other").put("name", "푸른 새싹단")
+                .put("owner_id", peer).put("members", JSONObject())))
+            .put("clan_ranking", JSONArray()
+                .put(JSONObject().put("clan_id", "clan-other").put("score", 920).put("rank", 1))
+                .put(JSONObject().put("clan_id", "clan-main").put("score", 780).put("rank", 2)))
+        val ranks = SocialSnapshot.parse(owner, data).clanRanking
+        assertEquals(listOf("푸른 새싹단", "느슨한 갓생단"), ranks.map { it.name })
+        assertEquals(listOf(920L, 780L), ranks.map { it.score })
+        assertEquals(listOf(1, 2), ranks.map { it.rank })
+        assertTrue(SocialSnapshot.parse(owner, JSONObject()).clanRanking.isEmpty())
+    }
+
+    @Test fun memberScoreRequiresExplicitServerProjection() {
+        val payload = JSONObject().put("clan_member_scores", JSONArray()
+            .put(JSONObject().put("user_id", owner).put("score", 200))
+            .put(JSONObject().put("user_id", peer).put("score", 80)))
+        val scores = SocialSnapshot.parse(owner, payload).memberScores
+        assertEquals(listOf(200L, 80L), scores.map { it.score })
+        assertTrue(SocialSnapshot.parse(owner, JSONObject()).memberScores.isEmpty())
+    }
+
 }

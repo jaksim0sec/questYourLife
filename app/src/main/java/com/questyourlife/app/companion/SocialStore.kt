@@ -87,6 +87,23 @@ class SocialStore(private val context: Context, private val db: QuestDatabase = 
             api.post("/rest/v1/rpc/$name", body, accounts.accessToken(user, true))
         }
     }
+    /** Invite capabilities are returned once outside receipts; background Outbox would lose them. */
+    suspend fun createInvitation(clanId: String): ClanInvitation {
+        UUID.fromString(clanId)
+        val user = owner()
+        val response = rpc("questyourlife_social_command", JSONObject()
+            .put("p_event_id", UUID.randomUUID().toString())
+            .put("p_operation", "clan_invite")
+            .put("p_data", JSONObject().put("id", clanId)), user)
+        val invitation = ClanInvitation.parse(response, clanId)
+        val receipt = response.getJSONArray("receipts").getJSONObject(0)
+        db.withTransaction {
+            check(owner() == user) { "account_scope_mismatch" }
+            SyncApply.event(db, receipt)
+        }
+        return invitation
+    }
+
     suspend fun refresh() = refreshGate.withLock {
         val user = owner()
         val result = rpc("questyourlife_social_snapshot", JSONObject(), user)

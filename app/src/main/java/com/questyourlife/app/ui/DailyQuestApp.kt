@@ -104,21 +104,32 @@ private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -
 }
 
 @Composable
-fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit) {
+fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit,
+    initialGoalDraft: String? = null, onInitialDraftConsumed: () -> Unit = {}) {
     val daily by model.quests.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
     val goals by model.goals.collectAsStateWithLifecycle()
     val steps by model.steps.collectAsStateWithLifecycle()
     val cash by model.cash.collectAsStateWithLifecycle()
     val sessions by model.sessions.collectAsStateWithLifecycle()
+    val signedIn by model.signedIn.collectAsStateWithLifecycle()
+    val social by model.social.collectAsStateWithLifecycle()
     var screen by rememberSaveable { mutableStateOf("home") }
+    var firstGoalDraft by rememberSaveable { mutableStateOf("") }
+    LaunchedEffect(initialGoalDraft) {
+        if (!initialGoalDraft.isNullOrBlank()) {
+            firstGoalDraft = initialGoalDraft
+            screen = "create"
+            onInitialDraftConsumed()
+        }
+    }
     var returnTab by rememberSaveable { mutableStateOf("home") }
     var focusReturn by rememberSaveable { mutableStateOf("home") }
     var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
     var profileName by rememberSaveable { mutableStateOf("") }
     var profileReturn by rememberSaveable { mutableStateOf("clan") }
-    var previewBookId by rememberSaveable { mutableStateOf("travel") }
-    var previewChapterId by rememberSaveable { mutableStateOf<String?>(null) }
+    var selectedBookId by rememberSaveable { mutableStateOf("") }
+    var selectedChapterId by rememberSaveable { mutableStateOf<String?>(null) }
     var chapterReturn by rememberSaveable { mutableStateOf("quests") }
     var goalId by rememberSaveable { mutableStateOf("") }
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
@@ -159,8 +170,8 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         navigate("person")
     }
     val openPreview: (String, String?) -> Unit = { id, chapter ->
-        previewBookId = id
-        previewChapterId = chapter
+        selectedBookId = id
+        selectedChapterId = chapter
         chapterReturn = screen
         navigate("chapter")
     }
@@ -188,7 +199,7 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                 val stateKey = when (page) {
                     "thread" -> "thread:$selectedThreadId"
                     "person" -> "person:$profileName"
-                    "chapter" -> "chapter:$previewBookId:${previewChapterId.orEmpty()}"
+                    "chapter" -> "chapter:$selectedBookId:${selectedChapterId.orEmpty()}"
                     else -> page
                 }
                 pageStates.SaveableStateProvider(stateKey) {
@@ -201,15 +212,29 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                         onChapter = { book, chapter -> openPreview(book, chapter) },
                         onGoal = { goalId = it; navigate("detail") },
                         onDaily = { selectedDailyId = it.id; sheet = "daily" }, onCreate = { navigate("create") })
-                    "chapter" -> PatchChapterPage(model, previewBookId, initialChapterId = previewChapterId, onBack = back, onMenu = { sheet = "menu" })
+                    "chapter" -> PatchChapterPage(model, selectedBookId, initialChapterId = selectedChapterId, onBack = back, onMenu = { sheet = "menu" })
                     "dm" -> PatchDmPage(model, onOpenThread = openThread, onProfile = openProfile)
                     "thread" -> PatchThreadPage(model, selectedThreadId, onBack = back,
                         onProfile = openProfile, onMenu = { sheet = "menu" })
-                    "clan" -> PatchClanPage(model, onProfile = openProfile)
-                    "person" -> PatchPersonProfilePage(profileName, model.demoClan.name, back,
-                        onNotifications = { sheet = "notifications" }, onMenu = { sheet = "menu" })
+                    "clan" -> PatchClanPage(model, onProfile = openProfile, onAccount = { navigate("account") })
+                    "person" -> {
+                        val validId = runCatching { java.util.UUID.fromString(profileName) }.isSuccess
+                        if (validId) {
+                            val access = rememberSocialAccess()
+                            Column(Modifier.fillMaxSize()) {
+                                IconButton(onClick = back) {
+                                    Icon(painterResource(R.drawable.ic_patch_arrow_left), "뒤로가기",
+                                        tint = PatchTokens.ink)
+                                }
+                                SocialProfileContent(access, profileName)
+                            }
+                        } else Column(Modifier.fillMaxSize().padding(16.dp)) {
+                            Text("공개 프로필을 찾을 수 없어요", color = PatchTokens.muted)
+                            TextButton(onClick = back) { Text("돌아가기") }
+                        }
+                    }
                     "account" -> PatchAccountPage(onBack = back)
-                    "decor" -> PatchDecorPage(model, onBack = back)
+                    "decor" -> PatchDecorPage(model, onBack = back, onClan = { navigate("clan") })
                     "my" -> PatchProfilePage(model,
                         onHistory = { navigate("history") }, onDecor = { navigate("decor") },
                         onSettings = { navigate("settings") })
@@ -242,10 +267,11 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                 }
                                 "focus" -> FocusPanel(back, model::finishFocus)
                                 "settings" -> SettingsPanel(model, back, onOpenClassicChecklist)
-                                "create" -> NewGoalPanel(back, {
+                                "create" -> NewGoalPanel(onBack = { firstGoalDraft = ""; back() }, onCreate = {
                                     model.addGoal(it)
+                                    firstGoalDraft = ""
                                     navigate("quests")
-                                })
+                                }, initialTitle = firstGoalDraft)
                             }
                         }
                     }
@@ -256,9 +282,18 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
         }
 
         if (sheet == "recipients") PatchSheet("새 쪽지", onDismiss = { sheet = null }) {
-            model.contacts.forEach { contact ->
-                TextButton(onClick = { openThread(contact.id) },
-                    modifier = Modifier.fillMaxWidth()) { Text(contact.name) }
+            if (!signedIn) {
+                Text("친구에게 쪽지를 보내려면 계정을 연결해 주세요.", color = PatchTokens.muted)
+            } else {
+                val realChats = social?.chats.orEmpty().filter { it.type != "ai" && it.peerId != null }
+                if (realChats.isEmpty()) {
+                    Text("아직 대화 상대가 없어요. DM 화면에서 대화를 시작해 주세요.",
+                        color = PatchTokens.muted)
+                }
+                realChats.forEach { chat ->
+                    TextButton(onClick = { openThread(chat.id) },
+                        modifier = Modifier.fillMaxWidth()) { Text(chat.name) }
+                }
             }
         }
         if (reward != null) {

@@ -13,11 +13,21 @@ class ProfileRegistry private constructor(private val context: Context) {
     private val prefs = context.getSharedPreferences("qyl_profiles", Context.MODE_PRIVATE)
     private val mutableFile = MutableStateFlow(prefs.getString("active", "quests.db")!!)
     val file = mutableFile.asStateFlow()
-    suspend fun bind(userId: String, profile: org.json.JSONObject? = null): Pair<QuestDatabase,String> {
+    suspend fun bind(userId: String, profile: org.json.JSONObject? = null, importGuest: Boolean = false): Pair<QuestDatabase,String> {
         UUID.fromString(userId)
         val active = QuestDatabase.open(context, file.value)
         val bound = active.syncDao().meta()?.userId
-        val next = prefs.getString("user:$userId", null) ?: if (bound == null || bound == userId) file.value else "quests-user-$userId.db"
+        val known = prefs.getString("user:$userId", null)
+        if (importGuest) {
+            check(known == null) { "existing_account_requires_explicit_merge" }
+            check(bound == null) { "guest_import_requires_unbound_profile" }
+        }
+        // Never attach anonymous data to a different account without an explicit choice.
+        val next = known ?: when {
+            bound == userId -> file.value
+            importGuest -> file.value
+            else -> "quests-user-$userId.db"
+        }
         val db = QuestDatabase.open(context, next)
         db.withTransaction {
             db.syncDao().ensureMeta()
@@ -49,7 +59,14 @@ class ProfileRegistry private constructor(private val context: Context) {
                 ordered.forEach { db.syncDao().enqueue(it.copy(sequence=0)) }
             }
         }
-        prefs.edit().putString("user:$userId",next).apply()
+        val edit = prefs.edit().putString("user:$userId", next)
+        if (importGuest) {
+            if (prefs.getString("last_guest", null) == next) edit.remove("last_guest")
+        } else if (bound == null && file.value != next) {
+            // A guest who skips import must be able to open the original records again.
+            edit.putString("last_guest", file.value)
+        }
+        edit.apply()
         return db to next
     }
     fun activate(file: String) {
@@ -59,8 +76,9 @@ class ProfileRegistry private constructor(private val context: Context) {
     }
     fun resume(userId: String) { prefs.getString("user:$userId",null)?.let { if(it!=file.value) activate(it) } }
     fun guest() {
-        val next = "quests-guest-${UUID.randomUUID()}.db"
-        prefs.edit().putString("active", next).apply()
+        // Only unbound profiles can be remembered here. Importing a guest clears this pointer.
+        val next = prefs.getString("last_guest", null) ?: "quests-guest-${UUID.randomUUID()}.db"
+        prefs.edit().putString("active", next).putString("last_guest", next).apply()
         context.getSystemService(NotificationManager::class.java).cancelAll()
         mutableFile.value = next
     }

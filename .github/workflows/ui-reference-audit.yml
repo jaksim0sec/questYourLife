@@ -1,0 +1,122 @@
+name: Android Screenshot Reference Audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ui-reference-audit.yml'
+      - 'app/src/main/**'
+      - 'app/src/androidTest/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshot:
+    if: github.head_ref == 'feat/superpowers-live-onboarding'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Android SDK
+        uses: android-actions/setup-android@v4
+      - name: Gradle 8.13
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Build test APKs
+        run: |
+          sdkmanager "platforms;android-36" "build-tools;35.0.0"
+          gradle --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+      # sdkmanager intermittently downloads corrupt emulator/system-image ZIPs.
+      # Installing with bounded retries before the runner avoids a single transient
+      # download failure aborting screenshot verification (upstream issue #496).
+      - name: Prepare emulator packages with bounded retries
+        shell: bash
+        run: |
+          set -euo pipefail
+          for package in 'emulator' 'system-images;android-35;google_apis;x86_64'; do
+            for attempt in 1 2 3; do
+              if sdkmanager --install "$package" --channel=0; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::SDK package install failed after three attempts: $package"
+                exit 1
+              fi
+              sleep "$((attempt * 10))"
+            done
+          done
+      - name: Allow KVM access
+        run: sudo chmod 666 /dev/kvm || true
+      - name: Render genuine app on isolated emulator
+        timeout-minutes: 14
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          # Ubuntu hosted runner has ~6.5 GB free after SDK setup; the
+          # emulator default 7.3 GB userdata image crashes before ADB starts.
+          disk-size: 3G
+          # Some system images ignore config.ini's disk-size and force a larger
+          # default userdata image. Override via the documented emulator CLI.
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -partition-size 2048
+          disable-animations: true
+          script: |
+            set -euo pipefail
+            mkdir -p app/build/ui-captures
+            adb shell wm size 1080x2340
+            adb shell wm density 420
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            adb shell am instrument -w -e class com.questyourlife.app.VisualAuditFixtureTest com.questyourlife.app.preview.test/androidx.test.runner.AndroidJUnitRunner
+            adb shell am force-stop com.questyourlife.app.preview
+            adb shell am start -n com.questyourlife.app.preview/com.questyourlife.app.MainActivity
+            sleep 6
+            adb exec-out screencap -p > app/build/ui-captures/home.png
+            SIZE=$(adb shell wm size | tail -n 1 | tr -d '\r' | awk '{print $NF}')
+            W=${SIZE%x*}
+            H=${SIZE#*x}
+            adb shell input tap $((W*7/10)) $((H-135))
+            sleep 3
+            adb exec-out screencap -p > app/build/ui-captures/clan.png
+            adb shell settings put system font_scale 1.3
+            adb shell am force-stop com.questyourlife.app.preview
+            adb shell am start -n com.questyourlife.app.preview/com.questyourlife.app.MainActivity
+            sleep 4
+            adb shell input tap $((W*7/10)) $((H-135))
+            sleep 2
+            adb exec-out screencap -p > app/build/ui-captures/clan-large-font.png
+            adb shell settings put system font_scale 1.0
+      - name: Publish capture evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: superpowers-private-ui-reference-audit
+          path: app/build/ui-captures/*.png
+          if-no-files-found: warn
+          retention-days: 3
+      - name: Emit compressed reference audit in private CI log
+        if: success()
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          import base64, pathlib, io
+          from PIL import Image
+          for f in pathlib.Path('app/build/ui-captures').glob('*.png'):
+              im = Image.open(f).convert('RGB')
+              im.thumbnail((450, 900))
+              out=io.BytesIO()
+              im.save(out,format='JPEG',quality=52,optimize=True)
+              print('UI_AUDIT_IMAGE_'+f.stem.replace('-','_')+'='+base64.b64encode(out.getvalue()).decode(),flush=True)
+          PY

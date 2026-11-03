@@ -82,6 +82,74 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
             catch (_: Exception) { socialError.value = "요청을 저장하지 못했어요. 다시 시도해 주세요." }
         }
     }
+    val clanInvitation = mutableStateOf<ClanInvitation?>(null)
+    val clanInvitationBusy = mutableStateOf(false)
+    val clanInvitationError = mutableStateOf<String?>(null)
+
+    fun clearClanInvitation() {
+        clanInvitation.value = null
+        clanInvitationError.value = null
+    }
+
+    fun requestClanInvitation(clanId: String) {
+        if (!signedIn.value || clanInvitationBusy.value) return
+        clanInvitation.value = null
+        clanInvitationError.value = null
+        clanInvitationBusy.value = true
+        viewModelScope.launch {
+            try {
+                clanInvitation.value = withContext(Dispatchers.IO) {
+                    socialStore.createInvitation(clanId)
+                }
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) {
+                clanInvitationError.value = "초대 코드를 만들지 못했어요. 연결 상태와 권한을 확인해 주세요."
+            } finally { clanInvitationBusy.value = false }
+        }
+    }
+
+    val joiningBook = mutableStateOf<String?>(null)
+
+    /** Capture one participation intent in the existing transactional Outbox. */
+    fun joinPublicBook(bookId: String) {
+        if (!signedIn.value) {
+            socialError.value = "퀘스트북 참여는 계정 연결 후 사용할 수 있어요."
+            return
+        }
+        if (joiningBook.value != null) return
+        if (runCatching { java.util.UUID.fromString(bookId) }.isFailure) {
+            socialError.value = "퀘스트북 정보를 다시 불러와 주세요."
+            return
+        }
+        if (goals.value.any { it.syncId == bookId }) return
+        joiningBook.value = bookId
+        viewModelScope.launch {
+            try {
+                val queued = withContext(Dispatchers.IO) {
+                    val pending = syncDb.syncDao().pending(1000).any { operation ->
+                        operation.operation == "book_join" &&
+                            runCatching {
+                                org.json.JSONObject(operation.body).optString("book_id") == bookId
+                            }.getOrDefault(false)
+                    }
+                    if (!pending) {
+                        val joinId = java.util.UUID.randomUUID().toString()
+                        syncDb.withTransaction {
+                            SyncCapture.enqueue(syncDb, "book_join", "quest_join", joinId, "",
+                                org.json.JSONObject().put("id", joinId).put("book_id", bookId))
+                        }
+                        SyncScheduler.enqueue(app, profileFile)
+                    }
+                    !pending
+                }
+                socialError.value = if (queued) "참여 요청을 저장했어요. 확인되면 퀘스트북에 표시돼요."
+                    else "이미 참여 요청을 확인하는 중이에요."
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { socialError.value = "참여 요청을 저장하지 못했어요." }
+            finally { joiningBook.value = null }
+        }
+    }
+
     fun markAlarmsRead(ids: Set<String>) { viewModelScope.launch(Dispatchers.IO) {
         try { socialStore.markRead(ids) }
         catch (e: kotlinx.coroutines.CancellationException) { throw e }
@@ -216,7 +284,6 @@ class DailyQuestViewModel(application: Application) : AndroidViewModel(applicati
                     hadPending = count > 0
                 }
         }
-        if (!signedIn.value) viewModelScope.launch(Dispatchers.IO) { goalRepo.seedDemoIfNew() }
     }
 
     fun refresh(){viewModelScope.launch(Dispatchers.IO){day.value=daily.ensureToday()}}

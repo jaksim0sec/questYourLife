@@ -104,7 +104,8 @@ private fun PatchTopBar(title: String, onNotifications: () -> Unit, onMenu: () -
 }
 
 @Composable
-fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit) {
+fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit,
+    initialGoalDraft: String? = null, onInitialDraftConsumed: () -> Unit = {}) {
     val daily by model.quests.collectAsStateWithLifecycle()
     val history by model.history.collectAsStateWithLifecycle()
     val goals by model.goals.collectAsStateWithLifecycle()
@@ -112,6 +113,14 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
     val cash by model.cash.collectAsStateWithLifecycle()
     val sessions by model.sessions.collectAsStateWithLifecycle()
     var screen by rememberSaveable { mutableStateOf("home") }
+    var firstGoalDraft by rememberSaveable { mutableStateOf("") }
+    LaunchedEffect(initialGoalDraft) {
+        if (!initialGoalDraft.isNullOrBlank()) {
+            firstGoalDraft = initialGoalDraft
+            screen = "create"
+            onInitialDraftConsumed()
+        }
+    }
     var returnTab by rememberSaveable { mutableStateOf("home") }
     var focusReturn by rememberSaveable { mutableStateOf("home") }
     var selectedThreadId by rememberSaveable { mutableStateOf("mascot") }
@@ -242,10 +251,11 @@ fun DailyQuestApp(model: DailyQuestViewModel, onOpenClassicChecklist: () -> Unit
                                 }
                                 "focus" -> FocusPanel(back, model::finishFocus)
                                 "settings" -> SettingsPanel(model, back, onOpenClassicChecklist)
-                                "create" -> NewGoalPanel(back, {
+                                "create" -> NewGoalPanel(onBack = { firstGoalDraft = ""; back() }, onCreate = {
                                     model.addGoal(it)
+                                    firstGoalDraft = ""
                                     navigate("quests")
-                                })
+                                }, initialTitle = firstGoalDraft)
                             }
                         }
                     }

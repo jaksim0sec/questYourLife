@@ -68,6 +68,9 @@ jobs:
           # Ubuntu hosted runner has ~6.5 GB free after SDK setup; the
           # emulator default 7.3 GB userdata image crashes before ADB starts.
           disk-size: 3G
+          # Some system images ignore config.ini's disk-size and force a larger
+          # default userdata image. Override via the documented emulator CLI.
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -partition-size 2048
           disable-animations: true
           script: |
             set -euo pipefail

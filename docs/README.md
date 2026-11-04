@@ -4,6 +4,7 @@
 
 - [확정사항](./DECISIONS.md) / [미결사항](./OPEN.md)
 - [제품 철학·퀘스트·소셜·보상·마스코트](./product/README.md)
+- [컨셉 이미지 → 디자인 시드 추출·분산 가이드](./design/SEED_AUTHORING_GUIDE.md)
 - [디자인 확정 · Top Navigation](./design/TOP_NAVIGATION.md)
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)

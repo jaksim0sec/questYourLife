@@ -1,7 +1,7 @@
 # Agent instructions · document routing
 
 > 적용 범위: 문서 전용 `new` 브랜치의 `docs/`. 기존 코드 저장소의 개발 규칙은 `main`의 `AGENT.md`에서 따로 확인. 이 파일은 **작업별 읽기 경로를 지정**한다. 개발 규칙을 재정의하지 않는다.
-> 디자인·제품 정의 문서는 현재 `docs/design-seed-research-2026-11-04` 브랜치에 있으며, `main` 병합 전에는 `main`에서 자동으로 보이지 않는다.
+> 디자인·제품 정의 문서는 문서 전용 `new` 브랜치에 있다. `main`에는 별도로 병합되지 않았다.
 
 ## 1. 작업 시작 순서
 
@@ -26,6 +26,7 @@
 | [docs/product/SOCIAL.md](./product/SOCIAL.md) | 친구·클랜·DM·경쟁·피드·공개 범위 | 관계의 목적과 공유·감시의 경계 |
 | [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
+| [docs/design/SEED_AUTHORING_GUIDE.md](./design/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
 | [docs/design/TOP_NAVIGATION.md](./design/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
 | [docs/research/SUMMARY.md](./research/SUMMARY.md) | 내비게이션·디자인 시스템·글래스·모션·텍스트 규칙 선정 | 검증된 외부 근거, **확신도 및 연구 공백** |
 | [docs/research/2026-11-04-gpt-design-research.md](./research/2026-11-04-gpt-design-research.md) | 원래 리서치 표현/맥락 복원, 출처 추적, 재검증 | **수정하지 않는 원문 아카이브**. 채팅 인용 태그는 독립 URL 아님 |
@@ -42,6 +43,7 @@
 
 | 요청 | 기본 경로 |
 |---|---|
+| **컨셉 이미지 → 새 시드 추출** | `DECISIONS` → `OPEN` → `design/SEED_AUTHORING_GUIDE` → (생성된 경우) `design/seed/INDEX` → 필요한 요소 문서만 |
 | **웹 디자인 시드·홈·전체 UX** | `DECISIONS` → `OPEN` → `product/README` → `VISION` → 관련 제품 문서 → `research/SUMMARY` |
 | **AI 퀘스트 기능** | `DECISIONS` → `OPEN` → `QUESTS` + `QUESTBOOKS`(공유·참여 시) |
 | **친구·클랜·퀘스트북 소셜** | `DECISIONS` → `OPEN` → `SOCIAL` + `QUESTBOOKS` |

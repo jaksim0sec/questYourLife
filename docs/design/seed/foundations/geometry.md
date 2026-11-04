@@ -24,10 +24,10 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | inline.gap | 8 | 짧은 아이콘·라벨 사이 |
 | surface.padding | 16 | 기본 그룹 내부 |
 | row.paddingY / .paddingX | 12 / 16 | 목록 내부 |
-| radius.control | 12 | 일반 버튼·입력 |
-| radius.surface | 16 | 카드·그룹 면 |
-| radius.image | 12 | 콘텐츠 썸네일 |
-| radius.overlay | 24 | 시트·다이얼로그 |
+| radius.control | 14 | 일반 버튼·입력 |
+| radius.surface | 18 | 카드·그룹 면 |
+| radius.image | 14 | 콘텐츠 썸네일 |
+| radius.overlay | 26 | 시트·다이얼로그 |
 | radius.pill | 999 | 의미상 칩·세그먼트 thumb |
 | stroke.default | 1 | 경계 |
 | stroke.selected | 2 | 선택 경계 |
@@ -36,12 +36,13 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | size.rowMin | 56 | 목록 행의 최소 높이 |
 | size.topBarMin / .bottomBarMin | 56 / 56 | OS inset 제외한 상·하단 content 최소 높이 |
 | action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 20 | 버튼 size별 좌우 padding |
-| action.paddingYSmall / .paddingYMedium / .paddingYLarge | 6 / 8 / 12 | 버튼 size별 상하 padding, Small의 6은 20 줄높이와 32 높이의 광학 예외 |
+| action.paddingYSmall / .paddingYMedium / .paddingYLarge | 7 / 9 / 13 | 버튼 size별 상하 padding, 줄높이를 줄인 만큼 여백 확보; 버튼 높이는 유지 |
 | segment.paddingX / .trackHeight | 12 / 36 | 세그먼트 좌우 padding·보이는 기본 높이 |
 | badge.paddingX / .paddingY | 8 / 4 | 배지 내부 padding |
 | field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
 | progress.height | 8 | 기본 진행 막대 높이 |
-| size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 24 | 아이콘 슬롯 |
+| size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 24 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
+| size.iconButtonContent / .iconButtonCompact | 18 / 14 | 텍스트 버튼 내부 아이콘, 일반/작은 size |
 | size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 80 / 120 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
 
 ## 적용 규칙

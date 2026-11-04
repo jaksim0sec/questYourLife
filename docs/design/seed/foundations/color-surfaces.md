@@ -25,10 +25,10 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 | fg.muted | #6E6A74 | #ABA7B2 | 낮은 강조, 읽혀야 하는 정보 |
 | stroke.subtle | #E8E4E7 | #44414B | 장식·그룹 구분, 조작 식별에 단독 사용 금지 |
 | stroke.control | #827A87 | #938B9C | 입력·선택의 필수 경계 |
-| accent.solid | #D63242 | #FF7180 | 핵심 Brand 행동 |
+| accent.solid | #D63D36 | #FF8173 | 핵심 Brand 행동 |
 | accent.onSolid | #FFFFFF | #17171B | Brand Solid 라벨·아이콘 |
-| accent.weak | #FFF0F2 | #3A2228 | 브랜드 보조 면 |
-| accent.onWeak | #A52231 | #FF9CA7 | 브랜드 보조 전경·현재 선택 텍스트 |
+| accent.weak | #FFF1ED | #3B2522 | 브랜드 보조 면 |
+| accent.onWeak | #A52A24 | #FFAA9C | 브랜드 보조 전경·현재 선택 텍스트 |
 | neutral.solid | #33313A | #E6E2EB | 중립적 High 행동, 필요할 때만 |
 | neutral.onSolid | #FFFFFF | #17171B | Neutral Solid 전경 |
 | positive.fg / .bg | #176C47 / #E9F6EE | #89DFB1 / #18382A | 긍정 결과 |
@@ -40,6 +40,8 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 | overlay.scrim | #000000, 40% | #000000, 56% | 모달 뒤 배경 |
 
 브랜드 빨강은 오류·미완료를 뜻하지 않는다. critical과 브랜드가 비슷한 색을 써도 아이콘·문구·맥락으로 구분한다. 캐시 코인 금색·클랜 지정색·이벤트색은 이 표의 전역 역할을 덮어쓰지 않는다.
+
+사용자 후속 피드백 U-04에 따라 브랜드 빨강에 주황기를 소폭 더한 따뜻한 매핑을 제안한다. 오류·파괴 행동의 critical 색은 독립된 의미 토큰으로 유지한다. 새 수치는 방향 조정에 대한 후보이며 최종 시각 승인을 뜻하지 않는다.
 
 ## 표면·깊이
 Surface는 정보 그룹이고 그 자체로 버튼이 아니다. 카드 여부는 독립된 콘텐츠 단위·클릭 동작으로 판단한다. 그룹 내부 행마다 별도 카드·그림자를 중첩하지 않는다.
@@ -56,10 +58,10 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 
 | 조합 | 계산 대비 |
 |---|---:|
-| Light accent.onSolid / accent.solid | 4.78:1 |
-| Light accent.onWeak / accent.weak | 6.61:1 |
-| Dark accent.onSolid / accent.solid | 6.75:1 |
-| Dark accent.onWeak / accent.weak | 7.34:1 |
+| Light accent.onSolid / accent.solid | 4.59:1 |
+| Light accent.onWeak / accent.weak | 6.45:1 |
+| Dark accent.onSolid / accent.solid | 7.35:1 |
+| Dark accent.onWeak / accent.weak | 7.79:1 |
 
 배경 이미지 위 텍스트는 별도 불투명 받침 또는 충분한 명암 영역을 확보한다. 직접 관찰 high: 두 테마의 중립 면과 빨강. 매핑·상태 overlay는 제안이며 렌더 검증 전이다.
 

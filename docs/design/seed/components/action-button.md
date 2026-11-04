@@ -33,7 +33,9 @@ Critical solid의 전경은 해당 테마 bg.surface를 사용하며 대비 검�
 SEED 현행 문서에는 Brand Weak가 기본 variant로 나열되지 않는다. 이 시드는 사용자 REF-006 제안 및 TDS weak의 구조를 참고한 별도 후보이며 SEED를 그대로 구현했다고 주장하지 않는다. Brand Solid와 Neutral Solid 모두 High가 될 수 있다.
 
 ## Size & Tokens
-높이·padding은 F-GEOMETRY의 size.action* 및 action.padding* 정본, label은 F-TYPE의 type.button/buttonCompact, radius는 radius.control을 쓴다. Small label은 buttonCompact와 iconSmall, Medium/Large는 button과 iconDefault를 사용한다. 아이콘을 강조하려고 label보다 과대하게 키우지 않는다. Icon Button은 size.touchMin의 정사각 조작 영역에 iconDefault 또는 iconNav를 담으며 상단은 D-011을 따른다.
+높이·padding은 F-GEOMETRY의 size.action* 및 action.padding* 정본, label은 F-TYPE의 type.button/buttonCompact, radius는 radius.control을 쓴다. Small label은 buttonCompact와 size.iconButtonCompact, Medium/Large는 button과 size.iconButtonContent를 사용한다. 아이콘을 강조하려고 label보다 과대하게 키우지 않는다. Icon Button은 size.touchMin의 정사각 조작 영역에 iconDefault 또는 iconNav를 담으며 상단은 D-011을 따른다.
+
+사용자 후속 피드백 U-04에 따라 Container의 높이·좌우 padding·최소 터치 영역은 유지하고 글자·아이콘을 소폭 축소한다. 줄높이 감소분은 상하 padding으로 돌려 버튼 내부의 숨 쉴 공간을 늘린다. 단독 Icon Button·상단·본문 아이콘의 크기는 함께 축소하지 않는다.
 
 너비는 내용과 맥락에 따라 hug/fill, 내부 정렬은 중앙이다. glyph와 label의 광학 중심을 맞춘다. 로딩·아이콘 유무·tone 변경으로 버튼 외곽을 바꾸지 않는다.
 

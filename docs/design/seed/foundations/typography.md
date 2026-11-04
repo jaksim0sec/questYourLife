@@ -22,8 +22,8 @@ references: [REF-001, REF-002, REF-004, REF-005]
 | type.body | 16 / 24 | 400 | 본문 |
 | type.support | 14 / 20 | 400 | 보조 설명·시간·기간 |
 | type.caption | 12 / 18 | 500 | 짧은 태그·매우 부차적인 수치 |
-| type.button | 16 / 24 | 600 | 기본·큰 버튼 |
-| type.buttonCompact | 14 / 20 | 600 | 작은 버튼 |
+| type.button | 15 / 22 | 600 | 기본·큰 버튼 |
+| type.buttonCompact | 13 / 18 | 600 | 작은 버튼 |
 | type.number | 24 / 32 | 700 | 핵심 수치 한 개 |
 | type.numberSmall | 16 / 24 | 600 | 목록·가격·기여 수치 |
 

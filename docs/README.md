@@ -5,6 +5,7 @@
 - [확정사항](./DECISIONS.md) / [미결사항](./OPEN.md)
 - [제품 철학·퀘스트·소셜·보상·마스코트](./product/README.md)
 - [컨셉 이미지 → 디자인 시드 추출·분산 가이드](./design/SEED_AUTHORING_GUIDE.md)
+- [디자인 시드 v0.1 · 선택 독해 INDEX](./design/seed/INDEX.md) — 컨셉 추출·교정 제안, 최종 시각 승인 전
 - [디자인 확정 · Top Navigation](./design/TOP_NAVIGATION.md)
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)
@@ -33,3 +34,4 @@
 - `docs/research/2026-11-04-gpt-design-research.md`는 원문을 수정하지 않고 옮긴다.
 - 원래 루트 `AGENTS.md`는 [원본 아카이브](./archive/AGENTS-original-2026-11-04.md)에 그대로 보존했고, 현재 `docs/AGENTS.md`는 문서 전용 경로에 맞게 링크만 보정했다.
 - 링크 목적지만 변경한 문서도 원래 제품 의미·인용문은 유지한다.
+

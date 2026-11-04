@@ -13,7 +13,7 @@ references: [REF-005, REF-006, REF-007, SRC-SEED-BUTTON, SRC-TDS-BUTTON]
 명시적 행동을 실행한다. 선택·탐색 탭·단순 상태 배지는 버튼 variant가 아니다. 다른 페이지로 이동하는 링크는 플랫폼의 link 의미를 유지한다. HTML 태그나 라이브러리 설치는 이 문서의 구현 지시가 아니다.
 
 ## Anatomy
-Container + Label + 선택적 Prefix 또는 Suffix + Loading indicator. 아이콘은 의미를 돕는 하나만 기본으로 사용한다. 장식 배지·코인·카운터를 모두 버튼에 밀어 넣지 않는다. Icon Button은 Label 대신 접근 가능한 이름을 가진다. Text Button은 배경 면 없이 같은 행동 의미와 터치 기준을 유지한다.
+Container + Label + 선택적 Prefix 또는 Suffix + Loading indicator. 아이콘은 의미를 돕는 하나만 기본으로 사용한다. 장식 배지·코인·카운터를 모두 버튼에 밀어 넣지 않는다. Icon Button의 독립 size/target·Badge·상단 규칙은 [C-ICON](icon-button.md)을 따른다. Text Button은 배경 면 없이 같은 행동 의미와 터치 기준을 유지한다.
 
 ## Properties / Variants
 role(action/iconAction/textAction/link), emphasis(high/medium/low), tone(neutral/brand/critical), treatment(solid/weak/outline/ghost), size(small/medium/large), width(hug/fill)을 별개 축으로 본다. 모든 조합을 만들지 않고 아래를 기본 허용 조합으로 제한한다.
@@ -33,7 +33,7 @@ Critical solid의 전경은 해당 테마 bg.surface를 사용하며 대비 검�
 SEED 현행 문서에는 Brand Weak가 기본 variant로 나열되지 않는다. 이 시드는 사용자 REF-006 제안 및 TDS weak의 구조를 참고한 별도 후보이며 SEED를 그대로 구현했다고 주장하지 않는다. Brand Solid와 Neutral Solid 모두 High가 될 수 있다.
 
 ## Size & Tokens
-높이·padding은 F-GEOMETRY의 size.action* 및 action.padding* 정본, label은 F-TYPE의 type.button/buttonCompact, radius는 radius.control을 쓴다. Small label은 buttonCompact와 size.iconButtonCompact, Medium/Large는 button과 size.iconButtonContent를 사용한다. 아이콘을 강조하려고 label보다 과대하게 키우지 않는다. Icon Button은 size.touchMin의 정사각 조작 영역에 iconDefault 또는 iconNav를 담으며 상단은 D-011을 따른다.
+높이·padding은 F-GEOMETRY의 size.action* 및 action.padding* 정본, label은 F-TYPE의 type.button/buttonCompact, radius는 radius.control을 쓴다. Small label은 buttonCompact와 size.iconButtonCompact, Medium/Large는 button과 size.iconButtonContent를 사용한다. 아이콘을 강조하려고 label보다 과대하게 키우지 않는다. Icon Button은 [C-ICON](icon-button.md) 정본을 따르며 상단은 D-011 우선이다.
 
 사용자 후속 피드백 U-04에 따라 Container의 높이·좌우 padding·최소 터치 영역은 유지하고 글자·아이콘을 소폭 축소한다. 줄높이 감소분은 상하 padding으로 돌려 버튼 내부의 숨 쉴 공간을 늘린다. 단독 Icon Button·상단·본문 아이콘의 크기는 함께 축소하지 않는다.
 

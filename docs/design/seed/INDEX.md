@@ -33,6 +33,13 @@ v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | C-SURFACE | Card·Surface·Avatar·프레임 | component | 그룹/미디어/배너/진열 | [components/surface-media.md](components/surface-media.md) | F-COLOR, F-TYPE, F-GEOMETRY | proposed | REF-001–004 |
 | C-STATUS | Badge·Tag·Progress·값 | component | 진행/상태/비교 수치 | [components/badge-progress.md](components/badge-progress.md) | F-COLOR, F-TYPE, F-GEOMETRY | proposed | REF-001–004 |
 | C-FIELD | Field·Input·검색·Textarea | component | 입력/검증/오류/키보드 | [components/field.md](components/field.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-005, SRC-TDS-SYSTEM |
+| C-ICON | Icon Button | component | 독립 아이콘 행동·상단 액션 | [components/icon-button.md](components/icon-button.md) | F-ICON-MOTION, F-GEOMETRY, F-COLOR, C-ACTION | proposed | S2-01/04/05/08 |
+| C-TABS | Tabs | component | 상위 콘텐츠 탐색 탭/밑줄 | [components/tabs.md](components/tabs.md) | F-TYPE, F-GEOMETRY, F-COLOR, F-ICON-MOTION | proposed | S2-04/05/07/08 |
+| C-SEGMENT | Segmented Control | component | 기간·뷰 변경의 좁은 선택 묶음 | [components/segmented-control.md](components/segmented-control.md) | F-TYPE, F-GEOMETRY, F-COLOR | proposed | S2-04/07 |
+| C-CHECK | Checkbox | component | 수동 완료/독립 목록 선택 | [components/checkbox.md](components/checkbox.md) | F-GEOMETRY, F-COLOR, F-ICON-MOTION | proposed | S2-04/05 |
+| C-AVATAR | Avatar / Transparent Mascot | component | 프로필·친구 얼굴·투명 캐릭터 | [components/avatar.md](components/avatar.md) | F-GEOMETRY, F-TYPE, F-COLOR | proposed | S2-04/07/08 |
+| C-IMAGE | Image Frame | component | 아이템 contain·콘텐츠 썸네일 cover | [components/image-frame.md](components/image-frame.md) | F-GEOMETRY, F-COLOR | proposed | S2-03/05/06/07/08 |
+| C-BOTTOM | Bottom Navigation (proposed) | component | 하단 전역 목적지·활성·크기 | [components/bottom-navigation.md](components/bottom-navigation.md) | F-ICON-MOTION, F-TYPE, F-GEOMETRY, F-COLOR, NAV-TOP | proposed | S2-04/05/07/08; O-003 |
 | C-OVERLAY | Sheet·Dialog·Snackbar·Skeleton | component | 모달/피드백/빈 상태/로딩 | [components/overlay-feedback.md](components/overlay-feedback.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION, C-ACTION | proposed | REF-003, SRC-TDS-SYSTEM |
 | P-ACTIONS | 버튼 그룹·수락/거절·Bottom CTA | pattern | 폭 비중/조합/하단 행동 | [patterns/action-layout.md](patterns/action-layout.md) | C-ACTION, C-SELECTION, F-GEOMETRY | proposed | REF-005/006/007, SRC-TDS-BOTTOM |
 | P-HIERARCHY | 콘텐츠 조합·비중·밀도 | pattern | 프로필/섹션/필터와 정렬 | [patterns/content-hierarchy.md](patterns/content-hierarchy.md) | C-LIST, C-SURFACE, C-STATUS, C-SELECTION, F-TYPE, F-GEOMETRY | proposed | REF-001–005 |
@@ -53,6 +60,8 @@ v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | 프로필·기록의 과장 교정 | P-HIERARCHY + C-LIST/C-SURFACE |
 | 보상 아이템 진열 | C-SURFACE + A-ART, 실제 상태면 C-STATUS |
 | 오프라인/실패 표현 | P-STATES → 관련 피드백 재료 |
+
+자세한 SEED 대조·우선순위는 [COVERAGE](COVERAGE.md), 원본 8장 전수 검토는 [AUDIT](AUDIT.md)에서 본다. **각 컴포넌트의 정본은 한 파일만 소유한다.**
 
 파일을 모두 만드는 것이 목적이 아니다. 새 변형은 기존 슬롯·토큰·조합으로 해결되는지 먼저 확인한다. 페이지마다 제품 데이터 이름을 붙인 컴포넌트를 늘리지 않는다.
 

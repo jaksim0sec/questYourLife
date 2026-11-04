@@ -12,6 +12,9 @@ references: [REF-001, REF-002, REF-003, REF-004]
 ## Purpose / Non-goals
 정보의 의미 있는 그룹, 독립 콘텐츠, 강조 아트의 경계를 구분한다. 모든 경계가 Card는 아니다. 정적 Surface에 불필요한 버튼 affordance를 주지 않는다.
 
+## 책임 분리 · v0.2
+기본 Surface/Card/Banner 슬롯은 여기서 유지한다. 원형 프레임 여부/마스코트 신원/장비 레이어는 [C-AVATAR](avatar.md), 미디어 fit·loading·fallback·ratio는 [C-IMAGE](image-frame.md)가 **정본**이다. 구형 요약표는 역할 식별을 위한 설명이고 독립 상태·크기를 이곳에서 재정의하지 않는다.
+
 ## Anatomy / Properties
 | 역할 | 슬롯·속성 | 경계 |
 |---|---|---|
@@ -24,7 +27,7 @@ references: [REF-001, REF-002, REF-003, REF-004]
 Grid와 horizontal rail은 이 재료들의 레이아웃 조합이며 '보상 카드', '퀘스트 카드'라는 새 기본 API를 강제하지 않는다. 본문 안에 Surface가 꼭 필요한지 먼저 확인한다.
 
 ## Tokens / Variants
-bg.surface/muted, radius.surface/image, surface.padding, item.gap, type.item/support 정본 참조. 일반 면은 flat. Image Frame 비율은 square(아이템·Avatar) / landscape(콘텐츠 썸네일) 후보로 정하며 구체적 hero 비율은 화면 목적에 맞춰 검토한다. 투명 아이템은 contain, 배경을 담은 썸네일은 cover를 사용한다. Avatar 원형 crop이 모자·귀를 잘라내면 crop 대신 별도 정체성 프레임을 검토한다.
+bg.surface/muted, radius.surface/image, surface.padding, item.gap, type.item/support 정본 참조. 일반 면은 flat. Image Frame 비율은 square(아이템·Avatar) / landscape(콘텐츠 썸네일) 후보로 정하며 구체적 hero 비율은 화면 목적에 맞춰 검토한다. 투명 아이템은 contain, 배경을 담은 썸네일은 cover를 사용한다. **마스코트의 기본 표시 후보는 투명 캐릭터 자체이며 흰 원형 배경은 필수가 아니다.** 세부표현은 C-AVATAR를 따르고, 모든 실제 소품은 잘리지 않게 contain.
 
 ## States / Behavior
 Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 대체 설명 제공. Selected item은 stroke.selected + 체크·착용 중 같은 실제 상태 라벨. owned/equipped/locked/unavailable은 서로 다른 데이터 상태로 구분하고 실제 정보가 있을 때만 노출한다. locked를 단순 회색 이미지로만 표현하지 않는다.

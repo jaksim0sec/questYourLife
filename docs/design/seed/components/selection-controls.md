@@ -12,13 +12,16 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 ## Purpose / Non-goals
 비슷한 알약 모양을 동작이 다른 컴포넌트로 구분한다. 이 문서는 관련 선택 family를 함께 라우팅하지만 하나의 만능 pill API로 합치지 않는다. 하단 목적지는 S-PAGE의 미결 사항이다.
 
+## 책임 분리 · v0.2
+이 파일은 Checkbox/Radio/Switch 등 선택 family의 **공통 원칙만** 소유한다. 독립된 역할·상태·접근성 계약은 [C-TABS](tabs.md) · [C-SEGMENT](segmented-control.md) · [C-CHECK](checkbox.md)가 정본이다. 같은 속성을 여기에서 다시 정의하지 않고 각 명세를 링크한다.
+
 ## Anatomy / Properties
 | 종류 | Anatomy·속성 | 의미·배치 |
 |---|---|---|
-| Tabs | Tab List + Label + Indicator, selectedKey | 관련 섹션 탐색, 아래 콘텐츠 영역과 직접 연결 |
-| Segmented | Track + Segment Label + Thumb, 단일 value | 같은 데이터의 보기·기간 등 2–4개 즉시 전환 |
+| Tabs → C-TABS | Tab List + Label + Indicator, selectedKey | 관련 섹션 탐색, 아래 콘텐츠 영역과 직접 연결; 상세 계약은 독립 정본 |
+| Segmented → C-SEGMENT | Track + Segment Label + Thumb, 단일 value | 같은 데이터의 보기·기간 등 즉시 전환; 상세 계약은 독립 정본 |
 | Filter Chip | Label + 선택적 Close/Icon, selected/value | 조건 적용, 복수 선택·해제 가능 여부 명시 |
-| Checkbox | Indicator + Label + 선택적 설명, checked/mixed | 독립 조건 또는 여러 항목 선택 |
+| Checkbox → C-CHECK | Indicator + Label + 선택적 설명, checked/mixed | 사용자 수동 완료/독립 선택; 상세 계약은 독립 정본 |
 | Radio | Indicator + Label, group value | 상호 배타적 선택 |
 | Switch | Track + Thumb + Label, checked | 즉시 적용되는 켜기/끄기 설정 |
 

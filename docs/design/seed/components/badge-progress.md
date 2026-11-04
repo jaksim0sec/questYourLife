@@ -22,6 +22,10 @@ Badge는 type.caption/support, radius.pill, badge.paddingX/Y 사용. 무채색�
 ## States / Behavior
 Badge는 정보 표시라 focus/pressed를 갖지 않는다. Progress는 zero / partial / complete / indeterminate / unavailable을 구분한다. 데이터가 없거나 오프라인 값이 오래되었으면 완주처럼 채우지 않는다. value는 유효 범위로 표시하되 이상 데이터 자체를 숨기지 않고 별도 오류를 남긴다. complete는 실제 완료 상태와 일치할 때만 표시한다.
 
+## S2-06/08 상태 강조의 선
+- 일상적인 '진행 중/완료/착용 중'은 작은 Badge와 실제 text로, 한정된 보상 순간의 강조는 A-ART로 분리한다. 아이템의 금색·보라를 모든 일반 UI의 semantic status로 복제하지 않음.
+- 퍼센트나 보유 캐시는 실제 데이터의 label을 붙이고 비교 가능해야 한다. 이미지를 보고 가상의 XP/Level을 만들지 않는다.
+
 ## Guidelines
 색만으로 진행·착용·제한을 구분하지 않는다. 보유 캐시와 획득 캐시는 별도 라벨을 둔다. 컨셉의 XP/시즌 레벨/HP/보석/가격 표시는 표현 예시이며 제품 요구를 추가하는 근거가 아니다. 진행 막대만으로 완료/수락 버튼 역할을 대신하지 않는다.
 

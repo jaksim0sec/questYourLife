@@ -37,6 +37,18 @@ Shell 한 곳이 Bottom Navigation·fixed CTA·OS bottom inset을 소유한다.
 - 키보드가 열리면 실제 visual viewport/IME inset을 기준으로 재계산한다. 화면이 이미 줄어드는 resize 모드에서 IME 높이를 다시 더하지 않는다. 입력과 오류·확정 조작이 보이는지 검토한다.
 - Snackbar·Sheet는 CTA·키보드와 겹치지 않게 하고 빈 safe-area를 장식 콘텐츠로 채우지 않는다.
 
+## Shell 검증 매트릭스 · 하단 간섭 문제
+
+| Shell | Bottom Nav | Fixed CTA | 실제 콘텐츠 패딩 계산 |
+|---|---|---|---|
+| Root | 표시 후보 | 일반적으로 inline | bottom bar content height + OS safe inset |
+| Detail | 플로우별 숨김 후보 | 중요 완료 행동이 있으면 | CTA wrapper height + OS inset |
+| Utility / 입력 | 필요 맥락에서만 | 키보드 위에서 접근 가능할 때만 | VisualViewport/IME resize 모드 중 하나를 기준으로 1회 |
+| Root + 예외적 Fixed CTA | 승인된 경우만 | 있으면 | bar + CTA + OS inset **한 번** |
+| Immersive / 보상 | 숨김 후보 | 이벤트 결과 받기 등 필요한 경우 | 실제 action height + inset, 모션 건너뛰기 제공 |
+
+S2-04 반례 02와 S2-05의 하단 CTA 충돌은 Shell 책임 문제다. 버튼 테두리·라운딩만 수정해 해결하지 않는다. 하단 둘의 동시 공존 자체를 자동 규칙으로 만들지 말고 콘텐츠 목적과 safe-area에서 판단한다. 하단 아이콘·활성 상태의 독립 스펙은 [C-BOTTOM](../components/bottom-navigation.md)이다.
+
 ## Bottom Navigation 제안 경계
 기본은 간단한 Outline glyph + 짧은 Label + 의미 있는 selected 표시. active Fill은 승인 전 후보이며 탭 수·목적지·중앙 +·라벨·최종 표시 정책은 모두 미결이다. 생성 +는 목적지와 실행의 의미가 달라 중간 탭으로 자동 채택하지 않는다. 아트 속 4탭·5탭을 공통 시스템으로 복사하지 않는다.
 

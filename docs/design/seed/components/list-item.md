@@ -23,6 +23,11 @@ row.paddingX/Y, size.rowMin, size.avatarRow, item.gap, type.item/body/support, f
 ## States / Behavior
 Default·Pressed·Focus·Disabled·Selected를 지원할 수 있으며 조작 없는 정적 행에는 pressed를 주지 않는다. 선택 행은 체크/현재 상태를 함께 표시한다. 로딩은 동일한 prefix/title/suffix 슬롯의 Skeleton을 사용한다. 빈 리스트·조회 오류·오프라인은 P-STATES의 그룹 피드백을 사용하며 가짜 멤버·수치를 채우지 않는다.
 
+## S2-07/08 반복 행 공통 검수
+- 클랜 공지·멤버 순위·채팅 진입·친구 활동에 같은 Prefix/Content/Suffix 축을 사용한다. **클랜 채팅만** 굵은 독립 테두리나 다른 반경으로 만들지 않는다.
+- '이름 + 내용 + 시간'과 '이름 + 기여 + 순위'는 서로 다른 데이터지만 typography, padding, icon rhythm은 공유한다. 메타데이터가 길어질 때 우측 수치·시간이 밀려 사라지지 않게 줄바꿈/2단 배치.
+- 아바타의 투명 표현은 C-AVATAR, 아이템 이미지는 C-IMAGE에서 결정한다. 이미지를 리스트마다 원형 배경 강제하지 않는다.
+
 ## Guidelines
 채팅 진입 행만 큰 배너·특이한 테두리·큰 아이콘으로 격상하지 않는다. 기능상 중요한 진입점이면 의미 있는 제목/배치로 해결하고 공통 슬롯을 유지한다. 순위·멤버명·기여 수치는 각각 비교 축을 고정한다. 구분선은 Prefix 아래까지 무조건 연장하지 않고 Content 시작선 기준을 통일한다.
 

@@ -26,6 +26,7 @@
 | [docs/product/SOCIAL.md](docs/product/SOCIAL.md) | 친구·클랜·DM·경쟁·피드·공개 범위 | 관계의 목적과 공유·감시의 경계 |
 | [docs/product/REWARDS.md](docs/product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](docs/product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
+| [docs/design/TOP_NAVIGATION.md](docs/design/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
 | [docs/research/SUMMARY.md](docs/research/SUMMARY.md) | 내비게이션·디자인 시스템·글래스·모션·텍스트 규칙 선정 | 검증된 외부 근거, **확신도 및 연구 공백** |
 | [docs/research/2026-11-04-gpt-design-research.md](docs/research/2026-11-04-gpt-design-research.md) | 원래 리서치 표현/맥락 복원, 출처 추적, 재검증 | **수정하지 않는 원문 아카이브**. 채팅 인용 태그는 독립 URL 아님 |
 

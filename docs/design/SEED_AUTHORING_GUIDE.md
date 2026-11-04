@@ -89,7 +89,7 @@
 
 ## 4. 문서 분산 구조 (제안, 지금은 빈 파일 생성 금지)
 
-\`\`\`text
+```text
 docs/design/
   SEED_AUTHORING_GUIDE.md          # 이 문서, 작업 방식만
   TOP_NAVIGATION.md                # 기존 확정 명세, 정본 유지
@@ -101,7 +101,7 @@ docs/design/
     shells/                        # Root/Detail/Utility/Immersive/Overlay, nav visibility
     assets/                        # 3D/2D 에셋 표시·일러스트 레벨
     references/                    # 입력 출처·채택·제외 및 근거
-\`\`\`
+```
 
 분리 기준은 **무엇이 바뀌었을 때 어떤 파일만 고치면 되는가**임.
 
@@ -148,7 +148,7 @@ INDEX는 **없는 파일을 가리키지 말 것**, 파일 이동·삭제 시 �
 
 각 컴포넌트 문서는 간단한 메타데이터와 공통 구조를 사용한다. **예시는 템플릿이지 확정된 컴포넌트 파일 생성 지시가 아니다.**
 
-\`\`\`md
+```md
 ---
 id: <stable-id>
 category: component
@@ -167,7 +167,7 @@ references: [REF-001]
 ## Accessibility           # 명칭·대비·터치·키보드·동적 글자
 ## Evidence & Confidence   # 참조 이미지 ID/영역, 근거의 강도
 ## Dependencies & Impact   # 변형/수정이 영향을 주는 곳
-\`\`\`
+```
 
 별도의 화면별 문서와 컴포넌트 자체의 명세를 혼동하지 않는다. 사용 예시는 데모 데이터로만 두고, 문구·보상·멤버명·퀘스트 의미를 컴포넌트 API에 고정하지 않는다.
 

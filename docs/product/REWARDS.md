@@ -24,6 +24,9 @@
 
 이 사례가 모든 화면을 금속·크림·입체 UI로 디자인하라는 뜻은 아님. 코인/상자/꾸미기 같은 **보상 에셋에 물성**을 주고, 인터페이스의 시각 언어는 별도로 설계할 수 있음.
 
+
+관련 기존 에셋: [cash.webp](../../app/src/main/res/drawable-nodpi/cash.webp) · [pile_of_cash.webp](../../app/src/main/res/drawable-nodpi/pile_of_cash.webp) · [box_gold.webp](../../app/src/main/res/drawable-nodpi/box_gold.webp) · [box_oak.webp](../../app/src/main/res/drawable-nodpi/box_oak.webp) · [box_paper.webp](../../app/src/main/res/drawable-nodpi/box_paper.webp) · [box_taped.webp](../../app/src/main/res/drawable-nodpi/box_taped.webp). 기존 파일의 경로 확인만 수행했고 이미지 동일성은 별도 검증 대상.
+
 ## 4. 현실 보상의 한계
 
 > “우리가 퀘스트 성취 조건을 완벽히 체크하고, 현실에서 보상을 주는 것은 불가능하므로”

@@ -38,6 +38,16 @@
 
 이미지는 채팅에 첨부된 참고 자료이며 **이번 문서 커밋에서 이미지 파일을 새로 등록하거나 기존 에셋을 수정하지 않았음**. 향후 웹 시연에서는 저장소의 실제 이미지 파일과 이 참고 이미지를 대조해야 함.
 
+
+### 저장소에 이미 존재하는 관련 에셋 (2026-11-04 경로 확인)
+
+- [도장 얼굴](../../app/src/main/res/drawable-nodpi/mascot_face_stamp.png) · [도장 스티커](../../app/src/main/res/drawable-nodpi/mascot_sticker.webp)
+- [캐시 코인](../../app/src/main/res/drawable-nodpi/cash.webp) · [캐시 더미](../../app/src/main/res/drawable-nodpi/pile_of_cash.webp)
+- [비니](../../app/src/main/res/drawable-nodpi/cosmetic_beanie.png) · [파란 캡](../../app/src/main/res/drawable-nodpi/cosmetic_blue_cap.png) · [검정 헤드폰](../../app/src/main/res/drawable-nodpi/cosmetic_black_headphones.png)
+- [기존 장식 PNG의 구성·연결 규칙](../assets/cosmetics.md)
+
+**주의:** 위 링크는 실제 저장소 경로 확인 결과임. 채팅 이미지와 파일의 픽셀 동일성 및 실제 장착 좌표까지 검증한 결과는 아님.
+
 ## 5. 미결 사항
 
 꾸미기 UI 구성, 개인·친구에게 보여지는 프로필 구성, 아이템 도감/상점, 실사풍 강도, 색상·질감, 에셋 재활용·조립 규칙과 가독성은 웹 프로토타입에서 합의해야 함.

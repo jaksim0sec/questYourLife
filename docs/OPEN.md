@@ -1,32 +1,47 @@
-# Design Seed · Open Questions / Hypotheses
+# 갓생패치 · 아직 논의할 문제
 
-> Discussion space, **not** an implementation directive. Updated: 2026-11-04.
-> Each hypothesis must be tested in a working web prototype before promotion to `DECISIONS.md`.
+> 2026-11-04 업데이트. 아래는 **확정된 개발 명세가 아님**.
+> 제품 철학은 [DECISIONS](./DECISIONS.md) 및 [product/](./product/README.md)에 기록.
+> 웹 시연에서 가설을 검증하고 승인한 뒤에만 확정 사항으로 이동.
 
-| ID | Topic / hypothesis | Evidence / risk | Decision needed |
-|---|---|---|---|
-| O-001 | Product UI identity: **social quest platform** vs. current repo's restrained checklist product | Current `AGENT.md` and `IDEA.md` conflict with the new brief | Approve new product direction and version existing requirements deliberately |
-| O-002 | Naming: repository's official **갓생패치** vs. discussion's **현생패치** | Existing app identifiers must stay unchanged during exploration | Final public brand and whether/when documents change |
-| O-003 | Navigation IA: root destinations, number of items, persistent DM entry, profile position | SEED/Apple specify semantics, not app-specific tab labels | Flow-tested mobile information architecture |
-| O-004 | Homepage: personal quest progress vs. friends/clan presence vs. next action | Checklist-only, dashboard-only and feed-only homes each miss something | Compare coherent variations with **identical underlying data** |
-| O-005 | Visual concept: content-led flat UI + restrained expressive glass + concentrated reward animation | Apple discourages Liquid Glass in content layers; Haze costs real GPU time | Test against at least two alternative visual seeds |
-| O-006 | Brand tokens: colors, Korean typography, radius, spacing, content density, icon grammar | Existing cream/red is a legacy implementation guideline, not a newly agreed seed | Approve tokens *after* prototype and accessibility review |
-| O-007 | Content and microcopy: standard navigational words vs. branded names for activities/rewards | Personality cannot outrank comprehension or accessibility | Define vocabulary and test comprehension |
-| O-008 | Social UX: friend activity visibility, clan shared goals, questbook sharing, DM entry | Teens' privacy, consent and accidental disclosure are high-impact | Agree on user-controlled sharing boundaries and safe defaults |
-| O-009 | Motion rules: utility feedback vs. major achievements and reduced-motion modes | Haze/SEED document distinct motion/effect costs; excessive effects distract | Approve timing and animation budget after device-like tests |
-| O-010 | Web → Android fidelity: rendering, font metrics, glass and navigation behavior | CSS glass and Haze/Compose are not pixel-perfect interchangeable | Define visual-diff acceptance, perf targets and fallbacks |
-| O-011 | Prototype scope and demo content: which screen sequence, empty/offline/error states, real-vs-fixture data | Static mockups concealed broken state flows in prior attempts | Approve fixed test script + interactions + test dataset |
-| O-012 | Source coverage: first-party app screenshots and Korean teen research | Some previous named-app claims are weakly sourced or changed after updates | Collect dated examples/screenshots and verify claims individually |
+## 기존 디자인·구현 미결 항목
 
-## Current research hypotheses (not approved)
-1. **Social Quest × Expressive Minimal** is a candidate, not the chosen design seed.
-2. Keep **content** visually dominant; restrict glass mainly to selected controls/navigation.
-3. Favor familiar root navigation labels, inventive reward/quest language only when its meaning is clear.
-4. One consistent design system can support different densities and layouts for Home / Questbook / Clan / DM.
-5. Test **content-first**, **social-first**, and **game-expression-first** variants under the same flows before choosing.
+| ID | 아직 미결인 사항 | 판단을 위해 필요한 것 |
+|---|---|---|
+| O-001 | 과거 `IDEA.md`의 '절제된 체크리스트' 지향과 새로운 '소셜 퀘스트 플랫폼' 정의의 **문서 우선순위·이관 시점** | 구현 전 AGENT/IDEA 개정 범위와 호환성 합의. **제품 철학은 이미 합의했으며 다시 투표할 사안이 아님** |
+| O-003 | 루트 내비게이션, 프로필 위치, DM 상시 진입, 뒤로가기 | 실제 흐름을 갖춘 웹 시연 |
+| O-004 | 홈에서 퀘스트·마스코트·친구·클랜·인기 콘텐츠의 노출 우선순위 | 같은 데이터로 여러 안 비교 |
+| O-005 | 플랫/익스프레시브/글래스 조합의 시각적 방향 | 여러 디자인 시드 실험 |
+| O-006 | 색상·폰트·라운딩·간격·밀도·아이콘·모션 디자인 토큰 | 화면 단위의 디자인 합의 |
+| O-007 | 메뉴/퀘스트/보상 등 콘텐츠 언어와 짧은 버튼 문구 | 이해도 점검·용어집 |
+| O-008 | 친구 활동/클랜 목표/퀘스트북/DM의 공유 범위 | 프라이버시와 자율 동의 정책 |
+| O-009 | 조작 피드백·상자·획득·완료의 모션과 접근성 | 접근성·실기기 성능 검증 |
+| O-010 | 웹 프로토타입과 네이티브 Compose/Haze 간 시각 일치 허용 범위 | 실제 비교·대체 효과 |
+| O-011 | 화면별 시연 데이터, 실패/빈 상태, 실제 기능과 모형 데이터 구분 | 검증 가능한 시나리오와 상태표 |
+| O-012 | 2026년 한국 청소년 앱별 UI 사례와 연령별 선호 자료 | 출처·날짜가 확인된 1차 자료 |
 
-## Explicitly unresolved
-- How quests, friends and clans are combined on Home.
-- Which social content is public, friend-only, clan-only, or private by default.
-- Whether a current legacy restriction (e.g. no extensive game systems) remains a binding requirement.
-- The extent of HIG/SEED/Haze documentation that has been fully inspected; do not claim exhaustive coverage.
+## 이번 제품 논의에서 추가된 열린 문제
+
+| ID | 아직 미결인 사항 | 합의해야 하는 기준 |
+|---|---|---|
+| O-013 | 퀘스트북 원본/참여/리믹스/편집 및 저작자 표시 | 원본 보호·버전·참여 기록·공개 권한 |
+| O-014 | 인기 퀘스트북의 트렌드·검색·추천·랭킹·커뮤니티 형성 방식 | 자생적 발견과 인기 측정, 경쟁 악용 방지 |
+| O-015 | 개인 프로필/마스코트가 가장 재미있을 때, 홈의 **즉시 실행성**과 표현의 균형 | 첫 방문·재방문 시나리오, 정보 중복 제거 |
+| O-016 | 캐시 표기(캐시/캐쉬), 경제 모델, 상자 획득/구성, 실제 장식 보유·구매·장착, 희소도 | 명칭과 보상 원칙, 비강제적 경험 |
+| O-017 | 현실적 모자·안경/이어폰과 단순 도장 캐릭터의 실제 조립·일관성 | 아이템 에셋·레이어·앵커·얼굴 동일성 |
+| O-018 | 친구·클랜의 응원/경쟁과 강제 감시가 되지 않도록 하는 설계 | 개인정보 노출, 초대·차단·DM/신고·미성년 이용 안전 |
+| O-019 | AI의 입력 경험·퀘스트 세분화·퀘스트북과의 관계 | 대화/입력 흐름, 수정·수락·완료 경계 |
+| O-020 | 참여율/완료율/보상과 '실제 목표 수행'의 관계 | 단순 반복 행동만 보상하는 왜곡 방지 |
+| O-021 | 이미지 기준 3종과 현재 저장소 리소스의 일치 범위 | 실제 에셋 확인과 웹→Android 이미지 규격 |
+
+## 기존 가설 · 아직 선택되지 않음
+
+- **Social Quest × Expressive Minimal**은 연구에서 나온 후보일 뿐 최종 디자인 시드가 아님.
+- 콘텐츠 중심/소셜 중심/게임 표현 강화형을 비교할 수 있음. **어떤 화면이 최우선인지 미정**.
+- 기본 탐색 용어를 이해하기 쉽게 하고 보상 언어를 독창적으로 한다는 방향은 제안이지 확정 문구가 아님.
+- 클랜 경쟁, 프로필 노출, 퀘스트북 공개를 **강제 기본값**으로 해석하면 안 됨.
+
+## 종료한 이전 논점
+
+- **O-002 (공개 브랜드명 갓생패치/현생패치)**: 이번 대화에서 사용자가 **갓생패치**를 명시했고 현행 `AGENT.md` / `IDEA.md`와도 일치. 제품 브랜드 혼동은 정리됨. 내부 저장소명·식별자는 그대로 유지.
+- 마스코트와 꾸미기의 중요성은 더 이상 가설이 아닌 제품의 명시된 중심 경험. 그러나 프로필의 **탭 위치/화면 비율**은 O-003·O-015에서 검증.

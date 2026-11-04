@@ -1,33 +1,54 @@
-# Design Seed · Confirmed Decisions
+# 갓생패치 · 확정된 제품·디자인 합의
 
-> Status: confirmed only. Updated: 2026-11-04. Keep this file within 1–2 pages.
-> Scope: **new design exploration**. This document does not silently supersede `AGENT.md` or `IDEA.md` for existing application development. Conflicts require explicit approval before implementation.
+> 2026-11-04 기준. **명시된 제품 철학만 확정**. UI 화면·토큰·구현·경제 수치까지 확정되었다는 뜻 아님.
+> 1~2페이지를 넘기지 않고 상세 내용은 [product/](./product/README.md)로 분리.
+> 현행 Android의 기술·기능 규칙은 [AGENT.md](../AGENT.md) / [IDEA.md](../IDEA.md)가 담당. 새로운 제품 철학과 충돌하는 항목은 **구현 전에 별도 조정**.
 
-## D-001 · Product direction (confirmed in current design discussion)
-- Primary audience: Korean teenagers; emphasize **real-life goals as quests**, friends, clans, shared participation, entertainment, and game-like rewards.
-- Do not reduce the new experience to a standard to-do checklist plus decorative game elements.
-- Clarity of core actions and user autonomy still matter. Quest completion is explicitly user-confirmed, not automatically asserted by AI or a timer.
+## 제품 정체성
 
-## D-002 · Preserve existing system assets
-- Keep the current Android app, database, authentication, API/RPC, local data/sync infrastructure and already approved graphical assets intact during design exploration.
-- No destructive migration, main-branch redesign, architecture rewrite, or speculative backend expansion as part of this research task.
-- A later UX implementation must evaluate compatibility and migration effects separately.
+**D-001 · 현실 자체가 게임 [확정]**
+- AI가 실제 상황·목표를 퀘스트로 바꾸고 현실의 행동을 '공략'하게 만든다.
+- “**내 인생이 공략 대상이자 게임임**”. 현실과 무관한 게임 시스템을 더하다 본질을 흐리지 않는다.
+- **“퀘스트는 수단임. 단, 동시에 이 앱의 본질임.”** 퀘스트 수행은 기반이고, 마스코트·마이페이지 꾸미기는 사용자가 체감하는 큰 즐거움. 하나를 다른 하나로 대체하지 않음.
+- 상세: [VISION](./product/VISION.md), [QUESTS](./product/QUESTS.md).
 
-## D-003 · Web-first design agreement
-- Explore and agree on the design through an **interactive, mobile-first web prototype**, not static mockups alone.
-- The agreed interactive prototype and its design-token/component specifications become the **design reference** for eventual Android reproduction; the web prototype is not automatically the production app.
-- Do not treat any proposed colors, typography, tabs, navigation destinations, glass intensity, screen composition, or visual style as approved until explicitly agreed.
+**D-006 · 퀘스트북의 콘텐츠화 [확정된 지향점]**
+- 퀘스트북은 개인 목표 묶음인 동시에 공유·참여·수정·참고·경쟁·소통할 수 있는 콘텐츠를 지향.
+- 플랫폼 안에서 사람들이 만들어 내는 **트렌드**를 목표로 한다. 구체적 공개 범위와 랭킹 로직은 미정.
+- 상세: [QUESTBOOKS](./product/QUESTBOOKS.md).
 
-## D-004 · Research and decision governance
-- `docs/DECISIONS.md`: confirmed outcomes only; short, dated, with stable IDs.
-- `docs/OPEN.md`: hypotheses, proposals, conflicting assumptions and questions.
-- `docs/research/2026-11-04-gpt-design-research.md`: original prior research response, preserved without rewriting its body.
-- `docs/research/SUMMARY.md`: checked takeaways, source URLs, confidence and documented gaps.
-- Promoting an item from OPEN to DECISIONS requires explicit user agreement and a traceable change; research findings are **evidence**, not product approval.
+**D-007 · 친구·클랜과 소셜 연결 [확정된 지향점]**
+- 친구와 클랜은 경쟁과 동료 의식, 공동 참여의 원천이다. 프로필·꾸미기와 퀘스트 경험을 연결한다.
+- '감시자'라는 원문 표현은 **관계의 비유**이지 강제 감시·개인 데이터 공개 정책으로 확정한 것이 아님.
+- 상세: [SOCIAL](./product/SOCIAL.md).
 
-## D-005 · Scope of this branch
-- Documentation/research only. Keep existing source code, assets and runtime configuration unchanged.
-- No merge to `main` is implied by creating these documents.
+**D-008 · 캐시·상자·꾸미기의 연결 [확정된 지향점]**
+- 통일된 **캐시**를 중심으로 상자, 장식, 캐릭터 꾸미기가 연결되는 보상 경험을 설계.
+- 현실 행동에 기반한 인앱 보상·성취감이 목적. 지급 규칙·확률형 보상·유료화는 미정.
+- 상세: [REWARDS](./product/REWARDS.md).
 
-## Important naming/strategy conflicts
-- Repository `AGENT.md` / `IDEA.md` currently say the public display name is **갓생패치** and emphasize a restrained checklist product, while this design discussion uses **현생패치** and a richer social-quest direction. **Neither the app name nor source-of-truth precedence is changed by this document.** See `OPEN.md`.
+**D-009 · 마스코트·마이페이지는 중심 경험 [확정]**
+- 단순한 붉은 도장 얼굴은 사용자의 개성을 담을 **그릇**이며 실제 패션 감각의 모자·안경 등을 착용.
+- 목표는 꾸미기에서 **“진짜 받은 것 같은 느낌”**과 자기표현. 얼굴 정체성은 일관되게 유지.
+- 마이페이지는 설정 화면의 부속이 아님. 상세: [AVATAR](./product/AVATAR.md).
+
+**D-010 · 명칭과 타깃 [확정/가설 구분]**
+- 현행 공개 이름은 **갓생패치**. 이번 제품 정의에서도 사용자가 이 이름을 명시했고 저장소 문서와 일치.
+- 한국 청소년 및 Z/MZ 중심은 **사용자가 지정한 지향 대상**이며 해당 집단의 선호를 실증한 것은 아님.
+
+## 진행 방식과 보존 규칙
+
+**D-002 · 기존 시스템 자산 보존**
+- Android 앱, DB, 계정·동기화 인프라, RPC/API 및 기존 그래픽은 디자인 탐색 중 변경하지 않음.
+- 신규 구현·마이그레이션·메인 브랜치 반영은 별도 검토.
+
+**D-003 · 실행 가능한 웹 시연으로 디자인 합의**
+- 모바일 웹 프로토타입에서 경험과 디자인 시드를 검증한 후 Android 재현의 기준으로 사용.
+- 색, 글래스, 내비게이션, 홈의 구성, 토큰, 효과는 **아직 확정하지 않음**.
+
+**D-004 · 문서 구분**
+- 이 파일은 확정, [OPEN](./OPEN.md)은 가설·미결, [product/](./product/README.md)는 원 발언 중심의 구조화된 제품 설명, [research/](./research/SUMMARY.md)은 외부 자료.
+- OPEN → DECISIONS 승격에는 명시적 합의가 필요.
+
+**D-005 · 현재 브랜치의 범위**
+- 문서화 전용. 코드·기존 에셋·실행 환경 유지, main 병합은 별도 승인.

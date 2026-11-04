@@ -1,0 +1,40 @@
+# 보상 체계 · 현실의 성취가 꾸미기로 이어지는 이유
+
+## 1. 왜 보상이 필요한가 [원칙]
+
+> “그러나 사용자를 붙잡고 게임적으로 느끼게 하는 요소가 필요 한것은 사실임.”
+
+보상은 실제 삶의 도전을 더 즐겁게 느끼고, 꾸미기와 자기표현으로 이어지게 하는 장치. **목표를 수행하기보다 재화를 얻는 행위 자체만 남게 해서는 안 됨.**
+
+> “상자 -> 각종 장식과 캐시 -> 꾸미기 와 같은 캐시에 묶여있는 언어이지만, 이 사이에 다양한 콘텐츠를 끼워 넣어 재미를 넣는 방식임.”
+
+## 2. 통일된 캐시와 다양한 경험 [구상]
+
+- **캐시(캐쉬)**: 여러 보상 콘텐츠를 연결하는 **통일된 인앱 재화**를 지향. 표기·가격 정책은 아직 상세 확정되지 않음.
+- **상자**: 재화와 장식 아이템을 획득하는 '받았다'는 감각을 만드는 콘텐츠 요소.
+- **장식 아이템**: 캐릭터에 직접 반영되는 획득물. 특히 현실의 패션과 연결된 소품이 중요.
+- **꾸미기**: 보상의 최종 사용처이자 개인 정체성 표현.
+- **사회적 맥락**: 친구·클랜과의 활동, 비교, 소통을 통해 성취와 획득물의 의미가 생김.
+
+퀘스트 외에도 다양한 콘텐츠가 보상 경험에 연결될 수 있다는 구상은 존재하지만, **지급 출처별 금액·빈도·유료화·랜덤/확률형 상자 여부는 합의되지 않았음**.
+
+## 3. '받았다'는 물성과 디자인 [원칙]
+
+사용자가 첨부한 **마스코트가 새겨진 골드 코인**은 보상 물성의 이미지 참고임. 작은 크기에서도 인식 가능한 얼굴, 금속으로 느껴지는 깊이와 광택이 존재함.
+
+이 사례가 모든 화면을 금속·크림·입체 UI로 디자인하라는 뜻은 아님. 코인/상자/꾸미기 같은 **보상 에셋에 물성**을 주고, 인터페이스의 시각 언어는 별도로 설계할 수 있음.
+
+
+관련 기존 에셋: [cash.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/cash.webp) · [pile_of_cash.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/pile_of_cash.webp) · [box_gold.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/box_gold.webp) · [box_oak.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/box_oak.webp) · [box_paper.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/box_paper.webp) · [box_taped.webp](https://github.com/jaksim0sec/questYourLife/blob/main/app/src/main/res/drawable-nodpi/box_taped.webp). 기존 파일의 경로 확인만 수행했고 이미지 동일성은 별도 검증 대상.
+
+## 4. 현실 보상의 한계
+
+> “우리가 퀘스트 성취 조건을 완벽히 체크하고, 현실에서 보상을 주는 것은 불가능하므로”
+
+이 프로젝트의 주된 제안은 **현실 활동에 대해 앱 안에서 쓸모 있는 보상**을 주는 것. 실제 현금 지급, 현실 행동의 완전한 증명, 과금·확률형 뽑기·보상 수식이 정해졌다는 뜻은 아님.
+
+친구와 클랜을 이용한 참여 동기도 **자율성과 부담**의 균형 속에서 설계해야 함. 경쟁을 통해 개인의 상태를 강제로 노출하거나 과도한 참여를 강제하는 장치로 이해하면 안 됨.
+
+## 5. 아직 정하지 않은 경제 세부 [미결]
+
+상자 획득/열기/내용물, 아이템 희소도, 꾸미기 구매·보유·착용, 캐시 잔액과 주간 랭킹 점수의 구분, 중복 아이템, 환불·취소·악용 처리, 보상 종류별 비용과 균형은 추후 별도 설계 대상.

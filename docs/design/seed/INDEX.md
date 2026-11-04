@@ -9,7 +9,7 @@ references: [U-01, U-02, D-011]
 
 # 갓생패치 · 디자인 시드 INDEX
 
-v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**. 문서화는 완료 대상이며 토큰의 최종 승인·실제 UI 검증·앱 구현 완료를 뜻하지 않는다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
+v0.2 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**. 문서화는 완료 대상이며 토큰의 최종 승인·실제 UI 검증·앱 구현 완료를 뜻하지 않는다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
 
 기준: 중립적이고 정돈된 조작 UI + 굵기 있는 명확한 정보 계층 + 붉은 도장 정체성 + 표현력 있는 3D 보상. 컨셉의 콘텐츠·탭 수·배치를 복제하지 않는다. 새 토큰/상태는 제안, 기존 상단은 승인 정본이다.
 
@@ -27,10 +27,10 @@ v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | F-TYPE | 글자 계층·한글·숫자 | foundation | 제목/본문/크기/줄바꿈 | [foundations/typography.md](foundations/typography.md) | F-PRINCIPLES | proposed | REF-001/002/004/005 |
 | F-GEOMETRY | 간격·padding·radius·크기 | foundation | 폭/높이/여백/터치/확대 | [foundations/geometry.md](foundations/geometry.md) | F-PRINCIPLES | proposed | REF-001/004/005/006 |
 | F-ICON-MOTION | Outline SVG·stroke·모션 | foundation | 아이콘/active/연출/감소 | [foundations/icons-motion.md](foundations/icons-motion.md) | F-COLOR, F-GEOMETRY | proposed | REF-001/002/004/005 |
-| C-ACTION | 버튼·CTA·텍스트/아이콘 버튼 | component | 핵심/보조/위험/로딩 행동 | [components/action-button.md](components/action-button.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-005/006/007, SRC-SEED-BUTTON, SRC-TDS-BUTTON |
-| C-SELECTION | Tabs·세그먼트·칩·체크 | component | 탐색/기간/필터/선택/설정 | [components/selection-controls.md](components/selection-controls.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-001/002/004/005, SRC-SEED-SEGMENT |
+| C-ACTION | 버튼·CTA·텍스트 액션 | component | 핵심/보조/위험/로딩 행동 | [components/action-button.md](components/action-button.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-005/006/007, SRC-SEED-BUTTON, SRC-TDS-BUTTON |
+| C-SELECTION | 선택 family 라우터·Chip·Radio·Switch | component | 탐색/기간/필터/선택/설정 | [components/selection-controls.md](components/selection-controls.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-001/002/004/005, SRC-SEED-SEGMENT |
 | C-LIST | List Item·Header·순위·행 | component | 반복 행/멤버/채팅/설정 | [components/list-item.md](components/list-item.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-001/002/004/005 |
-| C-SURFACE | Card·Surface·Avatar·프레임 | component | 그룹/미디어/배너/진열 | [components/surface-media.md](components/surface-media.md) | F-COLOR, F-TYPE, F-GEOMETRY | proposed | REF-001–004 |
+| C-SURFACE | Surface·Card·Banner 공통 표면 | component | 그룹/미디어/배너/진열 | [components/surface-media.md](components/surface-media.md) | F-COLOR, F-TYPE, F-GEOMETRY | proposed | REF-001–004 |
 | C-STATUS | Badge·Tag·Progress·값 | component | 진행/상태/비교 수치 | [components/badge-progress.md](components/badge-progress.md) | F-COLOR, F-TYPE, F-GEOMETRY | proposed | REF-001–004 |
 | C-FIELD | Field·Input·검색·Textarea | component | 입력/검증/오류/키보드 | [components/field.md](components/field.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION | proposed | REF-005, SRC-TDS-SYSTEM |
 | C-ICON | Icon Button | component | 독립 아이콘 행동·상단 액션 | [components/icon-button.md](components/icon-button.md) | F-ICON-MOTION, F-GEOMETRY, F-COLOR, C-ACTION | proposed | S2-01/04/05/08 |
@@ -47,7 +47,7 @@ v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | S-PAGE | Root·Detail·Utility·Overlay | shell | 헤더/스크롤/하단바/안전영역 | [shells/page-shells.md](shells/page-shells.md) | F-GEOMETRY, F-TYPE, F-COLOR, P-ACTIONS, NAV-TOP | proposed | REF-001/002/004/005, D-011, SRC-TDS-BOTTOM |
 | A-ART | 3D·보상·마스코트·광원 | asset | 아트 표시/소품/표현 레벨 | [assets/reward-art.md](assets/reward-art.md) | F-PRINCIPLES, C-SURFACE, P-HIERARCHY | proposed | REF-001–004 |
 | NAV-TOP | 확정 상단·Root/Standard | shell | 상단 구조/Back/Close/액션 | [../TOP_NAVIGATION.md](../TOP_NAVIGATION.md) | — | approved | D-011; 세부 수치 제외 |
-| R-INPUTS | 원본·평가·나쁜 예·출처 | reference | 근거/채택/제외/확신도 조회 | [references/inputs.md](references/inputs.md) | — | needs-validation | REF-001–007, U-01–03, SRC-* |
+| R-INPUTS | 원본·평가·나쁜 예·출처 | reference | 8장 전체·해시·채택/제외·반례 교정 조회 | [references/inputs.md](references/inputs.md) | — | needs-validation | REF-001–007, S2-01–08, U-01–04, SRC-* |
 | V-CHECKS | 검증·제안/미결·변경 영향 | governance | 완료 판단/시각 검수/승인 전 | [VALIDATION.md](VALIDATION.md) | R-INPUTS | needs-validation | U-02, D-002–005/011 |
 
 ## 최소 경로 예시
@@ -57,9 +57,11 @@ v0.1 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | 버튼 크기·색만 교정 | C-ACTION → 관련 Foundation |
 | 수락/거절의 비례·줄바꿈 | P-ACTIONS → C-ACTION/관련 Foundation |
 | 새 입력 페이지 | S-PAGE + C-FIELD + C-ACTION → 직접 의존성 |
-| 프로필·기록의 과장 교정 | P-HIERARCHY + C-LIST/C-SURFACE |
-| 보상 아이템 진열 | C-SURFACE + A-ART, 실제 상태면 C-STATUS |
+| 프로필·기록의 과장 교정 | P-HIERARCHY + C-AVATAR + C-LIST/F-TYPE |
+| 보상 아이템 진열 | C-IMAGE + A-ART + C-SURFACE, 실제 상태면 C-STATUS |
 | 오프라인/실패 표현 | P-STATES → 관련 피드백 재료 |
+| Root 하단/상세 fixed CTA 충돌 | S-PAGE → C-BOTTOM + P-ACTIONS |
+| 상위 탭과 기간 선택이 겹칠 때 | C-TABS + C-SEGMENT → P-HIERARCHY |
 
 자세한 SEED 대조·우선순위는 [COVERAGE](COVERAGE.md), 원본 8장 전수 검토는 [AUDIT](AUDIT.md)에서 본다. **각 컴포넌트의 정본은 한 파일만 소유한다.**
 

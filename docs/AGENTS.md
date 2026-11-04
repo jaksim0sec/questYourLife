@@ -27,6 +27,10 @@
 | [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
 | [docs/design/SEED_AUTHORING_GUIDE.md](./design/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
+| [docs/design/seed/INDEX.md](./design/seed/INDEX.md) | **기존 디자인 시드를 읽거나 새 페이지·컴포넌트에 재사용할 때** | 필요한 Component/Pattern/Shell만 라우팅. 전부 읽지 않음 |
+| [docs/design/seed/AUDIT.md](./design/seed/AUDIT.md) | **8장 레퍼런스 추적·디자인 개선 전후 비교 시** | S2-01~08 참조와 Keep/Refine/Merge/Split/Add 판단 |
+| [docs/design/seed/COVERAGE.md](./design/seed/COVERAGE.md) | **컴포넌트 누락·중복·SEED와의 비교 시** | 실제 필요한 컴포넌트만 보강, SEED 전체 복제 금지 |
+| [docs/design/seed/VALIDATION.md](./design/seed/VALIDATION.md) | **시드 승인·렌더 검증·완료 보고 전** | 실제 실행 검증과 미검증 사항을 구분 |
 | [docs/design/TOP_NAVIGATION.md](./design/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
 | [docs/research/SUMMARY.md](./research/SUMMARY.md) | 내비게이션·디자인 시스템·글래스·모션·텍스트 규칙 선정 | 검증된 외부 근거, **확신도 및 연구 공백** |
 | [docs/research/2026-11-04-gpt-design-research.md](./research/2026-11-04-gpt-design-research.md) | 원래 리서치 표현/맥락 복원, 출처 추적, 재검증 | **수정하지 않는 원문 아카이브**. 채팅 인용 태그는 독립 URL 아님 |
@@ -44,6 +48,7 @@
 | 요청 | 기본 경로 |
 |---|---|
 | **컨셉 이미지 → 새 시드 추출** | `DECISIONS` → `OPEN` → `design/SEED_AUTHORING_GUIDE` → (생성된 경우) `design/seed/INDEX` → 필요한 요소 문서만 |
+| **기존 디자인 시드 개선·확장** | `DECISIONS` → `OPEN` → `design/seed/INDEX` → 관련 기존 C/F/P/S 정본 → `design/seed/AUDIT`(참조 근거) → `VALIDATION` |
 | **웹 디자인 시드·홈·전체 UX** | `DECISIONS` → `OPEN` → `product/README` → `VISION` → 관련 제품 문서 → `research/SUMMARY` |
 | **AI 퀘스트 기능** | `DECISIONS` → `OPEN` → `QUESTS` + `QUESTBOOKS`(공유·참여 시) |
 | **친구·클랜·퀘스트북 소셜** | `DECISIONS` → `OPEN` → `SOCIAL` + `QUESTBOOKS` |

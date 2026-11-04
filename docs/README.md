@@ -6,7 +6,8 @@
 - [제품 철학·퀘스트·소셜·보상·마스코트](./product/README.md)
 - [컨셉 이미지 → 디자인 시드 추출·분산 가이드](./design/SEED_AUTHORING_GUIDE.md)
 - [Superpowers 디자인 시드 정합화 제안](./superpowers/specs/2026-11-05-design-seed-reconciliation-design.md) / [단계별 실행 계획](./superpowers/plans/2026-11-05-design-seed-reconciliation.md)
-- [디자인 시드 v0.1 · 선택 독해 INDEX](./design/seed/INDEX.md) — 컨셉 추출·교정 제안, 최종 시각 승인 전
+- [디자인 시드 v0.2 · 선택 독해 INDEX](./design/seed/INDEX.md) — 기존 규칙 개선 + 필수 컴포넌트 분리, 최종 시각 승인 전
+- [첨부 8장 전수 감사](./design/seed/AUDIT.md) / [SEED 컴포넌트 커버리지](./design/seed/COVERAGE.md) / [실제 검증·미결](./design/seed/VALIDATION.md)
 - [디자인 확정 · Top Navigation](./design/TOP_NAVIGATION.md)
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)

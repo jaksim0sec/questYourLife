@@ -10,9 +10,15 @@ references: [REF-001, REF-002, REF-004, REF-005]
 # 아이콘과 모션
 
 ## SVG 제안 규격
-기본 viewBox는 0 0 24 24, strokeWidth 2, fill none, round cap/join, currentColor를 사용한다. 기본 실제 도형은 약 18–20 범위에 담아 24 슬롯 안에서 선 굵기·면적·시각 중심을 맞춘다. glyph마다 빈 공간이 달라 같은 width만 맞추는 것으로 끝내지 않는다. 기본 슬롯은 F-GEOMETRY를 참조한다.
+기본 viewBox는 0 0 24 24, strokeWidth 1.8 (v0.2 제안), fill none, round cap/join, currentColor를 사용한다. 기본 실제 도형은 약 18–20 범위에 담아 24 슬롯 안에서 선 굵기·면적·시각 중심을 맞춘다. glyph마다 빈 공간이 달라 같은 width만 맞추는 것으로 끝내지 않는다. 기본 슬롯은 F-GEOMETRY를 참조한다.
 
 한 화면에서 다른 아이콘 라이브러리의 굵기·각진 모서리·그림자 스타일을 섞지 않는다. 검색·편집·추가·선물·메뉴는 같은 Outline family다. 페이지 제목보다 아이콘이 과도하게 커지지 않게 한다. 3D 코인·마스코트는 SVG UI 아이콘과 다른 에셋 family다.
+
+## S2-04/05/07/08 아이콘 오류 교정
+- 헤더·동일 아이콘 버튼·하단바의 glyph는 **같은 24 viewBox와 같은 stroke/cap/join 정본**을 사용하고, 보이는 크기만 역할에 따라 정한다. 임의의 각진 편집 아이콘, 넘치게 큰 gift/plus, 새 미니 획 두께는 로컬 SVG에서 금지.
+- 탭의 active 여부는 강조색+라벨+선택 affordance로 표시할 수 있다. 모든 네비 아이콘에 Fill을 강제하지 않는다. 다만 최종 active 스타일은 하단 정책 합의 전 proposed.
+- 자산 자체(금속 코인·캐릭터 얼굴·실물 모자)는 이 stroke 규격을 적용하지 않는다.
+- 비교 검수: Search·Bell·Menu·Edit·Gift·Plus 6개를 동일 canvas에서 16/20/24로 놓고 선 굵기·광학적 중심·baseline을 확인한다.
 
 ## 상태와 의미
 기본은 Outline. 선택/활성은 색 + 밑줄/체크/라벨 상태로 먼저 표시한다. Fill 활성은 컨셉에서 관찰되지만 전역 승인 규칙은 아니며 하단바는 미결이다. 새로 모든 아이콘의 Fill 버전을 만들지 않는다. 상단 액션은 D-011에 따라 Outline을 보존한다.

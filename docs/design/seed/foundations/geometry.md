@@ -35,15 +35,18 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | size.touchMin | 48 | 클릭·터치 영역 최소 |
 | size.rowMin | 56 | 목록 행의 최소 높이 |
 | size.topBarMin / .bottomBarMin | 56 / 56 | OS inset 제외한 상·하단 content 최소 높이 |
-| action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 20 | 버튼 size별 좌우 padding |
+| action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 18 | 버튼 size별 좌우 padding |
 | action.paddingYSmall / .paddingYMedium / .paddingYLarge | 7 / 9 / 13 | 버튼 size별 상하 padding, 줄높이를 줄인 만큼 여백 확보; 버튼 높이는 유지 |
 | segment.paddingX / .trackHeight | 12 / 36 | 세그먼트 좌우 padding·보이는 기본 높이 |
 | badge.paddingX / .paddingY | 8 / 4 | 배지 내부 padding |
 | field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
 | progress.height | 8 | 기본 진행 막대 높이 |
 | size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 24 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
-| size.iconButtonContent / .iconButtonCompact | 18 / 14 | 텍스트 버튼 내부 아이콘, 일반/작은 size |
-| size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 80 / 120 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
+| size.iconButtonContent / .iconButtonCompact | 16 / 14 | 텍스트 버튼 내부 아이콘, 일반/작은 size |
+| size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 64 / 104 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
+
+## 개선 변경의 근거 (제안값)
+S2-01/04/08에 나타나는 Button 내부 콘텐츠 과대·Avatar 과대를 줄이기 위해 `iconButtonContent=18→16`, `avatarProfile=80→64`, `avatarHeroMax=120→104`, `paddingXLarge=20→18`을 v0.2 후보로 조정. 전체 버튼 높이·터치 최소 48·페이지 여백은 보존한다. **수치 감소가 곧 합격은 아니며** 웹에서 동일 fixture 전후 비교가 필요하다. 48 미만 보이는 버튼은 비중첩 48 hit target을 별도로 확보한다.
 
 ## 적용 규칙
 같은 size는 tone·treatment가 바뀌어도 높이·padding·radius가 같다. radius는 의미별 family 토큰을 공유하며 같은 숫자를 모든 모양에 강제하지 않는다. 버튼과 카드 내부 패딩을 개별 화면에서 임의로 줄이지 않는다.

@@ -30,3 +30,7 @@ Default → Focus → Filled; Error / Success / Disabled / ReadOnly는 서로 �
 ## Evidence & Confidence / Dependencies & Impact
 시각적 직접 근거 low; REF-005의 padding·타이포·줄바꿈 교정 원칙을 적용한 proposed 보완. 입력 상태·동작은 웹 시연 전 needs-validation. 필드 변경은 폼 조합·하단 키보드 inset에 영향이 있다.
 
+
+## v0.15 Field Focus 룰 · 확정 표현
+
+Focused 입력은 Control 테두리에서 **한 번만** 명확한 상태 변화를 주고, 두꺼운 반투명 `box-shadow` / `outline`을 중복하지 않는다. 시연의 Control focus는 외부 outline=0, border 기반; 키보드 focus 표시 자체를 제거하라는 의미가 아니며 명도 대비와 상태 인지는 접근성 테스트를 요구한다. Disabled/ReadOnly/Error와 각 상태의 우선순위를 분리한다.

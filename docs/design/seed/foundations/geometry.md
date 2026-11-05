@@ -27,18 +27,18 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | radius.control | 16 | 일반 버튼·입력 |
 | radius.surface | 16 | 카드·그룹 면 |
 | radius.image | 14 | 콘텐츠 썸네일 |
-| radius.overlay | 26 | 시트·다이얼로그 |
+| radius.overlay | 24 | 시트·다이얼로그 |
 | radius.pill | 999 | 의미상 칩·세그먼트 thumb |
 | stroke.default | 1 | 경계 |
 | stroke.selected | 2 | 선택 경계 |
-| size.actionSmall / .actionMedium / .actionLarge | 32 / 40 / 48 | 기본 글자 크기에서 보이는 최소 버튼 높이 |
+| size.actionSmall / .actionMedium / .actionLarge | 34 / 43 / 48 | v0.15 시연의 표시 높이, 48 미만은 별도 비중첩 터치 타깃 필요 |
 | size.touchMin | 48 | 클릭·터치 영역 최소 |
 | size.rowMin | 56 | 목록 행의 최소 높이 |
 | size.topBarMin / .bottomBarMin | 60 / 76 | OS inset 제외한 상·하단 content 최소 높이 |
 | action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 18 | 버튼 size별 좌우 padding |
 | action.paddingYSmall / .paddingYMedium / .paddingYLarge | 7 / 9 / 13 | 버튼 size별 상하 padding, 줄높이를 줄인 만큼 여백 확보; 버튼 높이는 유지 |
-| segment.paddingX / .trackHeight | 12 / 36 | 세그먼트 좌우 padding·보이는 기본 높이 |
-| badge.paddingX / .paddingY | 8 / 4 | 배지 내부 padding |
+| segment.paddingX / .trackHeight | 12 / 43 | 세그먼트 좌우 padding·보이는 기본 높이 |
+| badge.paddingX / .paddingY | 11 / 3 | 기본 Badge 내부, XS는 X=8·높이 21 |
 | field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
 | progress.height | 10 | 기본 진행 막대 높이 |
 | size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 27 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
@@ -69,3 +69,7 @@ OS safe inset은 페이지 spacing과 별개다. 아래 inset·키보드·하단
 ## 상태·근거·영향
 Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오류·확대에서는 높이 증가를 허용한다. 둥근 면의 반복은 관찰 high, 숫자·폭 전환 기준은 proposed이며 실기기 미검증이다. 전역 변경 시 버튼·목록·시트·하단 고정 영역을 같이 확인한다.
 
+
+## v0.15 적용 우선 규격
+
+현재 사용자 채택 웹 시연의 기본 Button은 43px, Small 34px, Large 48px, Radius 16px. 클릭 영역은 Android에서 최소 48dp를 확보하며 hit 영역을 겹치지 않게 한다. 기본 7-tone Pill Badge 높이 26, XS 21, 아이콘 13, paddingX 기본 11 / XS 8. Sheet의 동적 min 기준·Safe Area 상세는 [C-SHEET](../components/bottom-sheet.md). SVG 획은 제공 원본의 **1.8**이 정본이며 이 문서에서 덧칠하지 않는다.

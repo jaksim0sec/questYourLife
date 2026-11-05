@@ -52,8 +52,8 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 ## v0.6 보상 2차 브랜드색 및 등급색 계약 (모두 proposed)
 | Token | Light | Dark | 규칙 |
 |---|---|---|---|
-| accent.secondary | #FFCC4D | #FFD76D | 보상·캐시 가치 표현, Primary Red를 대체하지 않음 |
-| accent.onSecondary | #292216 | #292216 | 노랑 위 진한 전경, 흰 글자 금지 |
+| accent.secondary | #FFCC4D | #957027 | **보상용 Secondary CTA** 전용 면. 다크는 흰 글자 대비 확보를 위해 톤 다운 |
+| accent.onSecondary | #352713 | #FFFFFF | 라이트는 진한 텍스트·SVG, **다크는 흰색 텍스트·SVG** |
 | itemRarity.common | #FAFAFA→#EDEDF1 | dark-specific mapping pending | 등급값 후보, 브랜드 변경과 독립 |
 | itemRarity.uncommon | #F5FCF7→#E2F2E8 | pending | 미세 그라데이션 |
 | itemRarity.rare | #F6F9FF→#E0ECFF | pending | 미세 그라데이션 |
@@ -88,3 +88,11 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 ## 영향
 여기서만 전역 색을 변경한다. 컴포넌트 문서에서 HEX를 재정의하지 않는다. 대비가 실패하면 tone을 유지하며 역할 토큰을 조정하고 전체 사용처를 확인한다.
 
+
+## v0.15 사용자 승인·대비 규격 (D-012)
+
+`accent.secondary` 위 표는 **CTA의 면**만 가리킨다. 금속 보상 이미지 및 의미 없는 노란 배경은 별도 A-ART. 웹 v0.15에서 Secondary CTA는 Light `#FFCC4D / #352713`, Dark `color-mix(#FFCC4D 40%,#4E330D 60%)` ≈ `#957027 / #FFFFFF`; 불투명 sRGB 기준 흰 글자 대비 약 **4.54:1** (반올림), 라이트 어두운 글자 대비 약 **10.7:1**. 실제 hover/반투명 합성은 배경별 추가 검증.
+
+현재 시연의 기본 표면: canvas Light `#FCFBFA` / Dark `#17181D`, surface `#FFFFFF` / `#242329`, soft `#FFF7F2` / `#2D292C`, subtle line `#F0E8E5` / `#373338`, primary text `#242126` / `#F6F3F3`. 나머지 의미색은 기존 제안 테이블의 역할을 유지한다.
+
+**브랜드 빨강은 Outline의 기본 foreground가 아님.** Neutral Outline은 중립 텍스트+중립 테두리, Brand Weak/Brand Outline만 명시적 브랜드 보조 액션. Switch OFF / Skeleton / Brand Weak는 Light 변형에 `opacity`를 일괄 덧씌우는 대신 Dark 전용 표면·경계·전경 사용. 보다 자세한 최종 범위는 [v0.15](../implementation/v015.md).

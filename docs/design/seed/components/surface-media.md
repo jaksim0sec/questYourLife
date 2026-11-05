@@ -43,3 +43,20 @@ Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 
 ## Evidence & Confidence / Impact
 둥근 그룹·아트 프레임·수집 슬롯은 관찰 high. contain/crop·실패·보유 상태는 proposed. 보상 이미지 표현은 A-ART, 주목도와 비중은 P-HIERARCHY에 의존한다. 정확한 아이템·열 수·카드 순서는 시드가 소유하지 않는다.
 
+
+## v0.15 Surface 10역할과 중첩 규칙 (D-012)
+
+| Role | 구조적 의미 | 허용 경계 |
+|---|---|---|
+| Plain | 섹션 간 간격으로만 구분 | 카드/배경 없음 |
+| Solid | 독립된 정보 묶음 | 중립 1px 경계·padding 16·radius 16 |
+| Outlined | 배경보다 선으로 낮게 구분 | 배경 투명·중립 테두리 |
+| Subtle | 힌트/설명 완충 | 연한 의미면, 그림자 금지 |
+| Inset | 카드 내부 2차 내용 | padding 12, 내부 중복 border 금지 |
+| Raised | 독립적으로 떠 있는 의미 있는 블록 | 그림자 단일 단계, raised→raised 금지 |
+| Interactive | 카드 전체가 실제 조작 대상 | Button semantics + pressed/focus/selected |
+| Media | 이미지/아트 프레임 | 썸네일 cover, 투명 마스코트·상품 contain |
+| Reward | 보상·이벤트에서만 표현력 있는 면 | 한 섹션의 한정 강조, reward→reward 금지 |
+| Overlay | Sheet/Dialog의 별도 층 | Focus/스크림/닫기/안전영역 |
+
+**금지:** 무의미한 Solid/Card 반복 중첩, 부모 Raised 내부 Raised, Reward 내부 Reward, 텍스트를 배경 상자로 감싸기만 하는 임시 구현. 각 Surface는 하나의 의미/행동을 가져야 한다. 실제 페이지/데이터 구성을 이 표에서 발명하지 않는다. 자세한 속성 정본은 [v0.15](../implementation/v015.md).

@@ -1,6 +1,6 @@
 # 갓생패치 · 확정된 제품·디자인 합의
 
-> 2026-11-04 기준. **명시된 제품 철학만 확정**. UI 화면·토큰·구현·경제 수치까지 확정되었다는 뜻 아님.
+> 2026-11-05 기준. 제품 철학·상단 내비 정본과 **D-012가 명시한 디자인 시드 표현 규칙만** 확정. 앱 기능·제품 IA·경제·Android 구현 완료를 뜻하지 않음.
 > 1~2페이지를 넘기지 않고 상세 내용은 [product/](./product/README.md)로 분리.
 > 현행 Android의 기술·기능 규칙은 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md) / [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)가 담당. 새로운 제품 철학과 충돌하는 항목은 **구현 전에 별도 조정**.
 
@@ -51,7 +51,7 @@
 
 **D-003 · 실행 가능한 웹 시연으로 디자인 합의**
 - 모바일 웹 프로토타입에서 경험과 디자인 시드를 검증한 후 Android 재현의 기준으로 사용.
-- 색, 글래스, **하단 내비게이션**, 홈의 구성, 기타 토큰과 효과는 **아직 확정하지 않음**. 상단 내비게이션은 D-011 별도 합의.
+- D-012가 정한 **시각 규격·컴포넌트·SVG 세트**는 확정 웹 시드 기준. 다만 하단 탭 목적지, 홈 콘텐츠의 실제 데이터·우선순위, 앱 기능, 네이티브 구현·실기기 검증은 계속 미결. 상단은 D-011 정본 우선.
 
 **D-004 · 문서 구분**
 - 이 파일은 확정, [OPEN](./OPEN.md)은 가설·미결, [product/](./product/README.md)는 원 발언 중심의 구조화된 제품 설명, [research/](./research/SUMMARY.md)은 외부 자료.
@@ -59,3 +59,12 @@
 
 **D-005 · 현재 브랜치의 범위**
 - 문서화 전용. 코드·기존 에셋·실행 환경 유지, main 병합은 별도 승인.
+
+## v0.15 디자인 시드 합의
+
+**D-012 · SVG·컴포넌트 시각 규격 [디자인 시드 확정 · 2026-11-05]**
+- 사용자가 직접 제공한 Soft SVG **56종**(32 Outline + 5 Fill + 19 추가 Outline)을 공식 시드 SVG로 채택. `24×24 viewBox`, `stroke-width=1.8`, round cap/join, `currentColor`. HTML 시연이 아니라 [개별 SVG 파일](./design/seed/assets/icons/v0.14/README.md)이 원본이다.
+- 기본 여백·Radius 16, 버튼 내부 아이콘 16–18, 아이콘/버튼 비율, 중립 Outline, 라이트/다크 의미색, 다크 보상용 노랑 CTA의 **흰색 텍스트·아이콘**, 7톤 Pill Badge, Progress 단일 컴포넌트, 10개 Surface 역할과 5개 텍스트 위계, 단일 트랙 Segmented를 **재사용 디자인 문법**으로 채택.
+- Bottom Sheet: 내용 기반 Min / Mid / Full / Closed, 손가락 실시간 추적, 놓은 위치 가까운 상태로 스냅. 내부 스크롤 상단↓/하단↑에서 이어서 시트 드래그. Footer 고정과 키보드/닫기 대체 조작 포함.
+- [최종 구현·검수 계약](./design/seed/implementation/v015.md)과 [기계 판독 규격](./design/seed/implementation/v015-tokens.json)을 채택 기준으로 등록. 승인 범위는 **웹으로 확인한 디자인 규칙**이며 독립 네이티브 앱 개발·CI·실기기 검증을 자동 승인하지 않는다.
+- 기존 `main` Android 앱의 클랜 **나침반** 아이콘과 마스코트/캐시 래스터, 확정 TOP_NAVIGATION은 보존한다. 실제 탭 목적지·화면 데이터·경제 정책은 변경하지 않는다.

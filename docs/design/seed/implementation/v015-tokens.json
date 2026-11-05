@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "gatsaengpatch-seed-v0.15",
+  "approval": "accepted-design-baseline-not-native-shipped",
+  "authority": "docs/design/seed/implementation/v015.md",
+  "platformUnits": "web-css-px / Android-dp; typography-scale in sp",
+  "color": {
+    "light": {
+      "canvas": "#FCFBFA",
+      "surface": "#FFFFFF",
+      "soft": "#FFF7F2",
+      "line": "#F0E8E5",
+      "text": "#242126",
+      "secondaryText": "#777079",
+      "brand": "#DB3040",
+      "brandWeak": "#FFF0F1",
+      "secondaryCTA": {
+        "bg": "#FFCC4D",
+        "on": "#352713"
+      }
+    },
+    "dark": {
+      "canvas": "#17181D",
+      "surface": "#242329",
+      "soft": "#2D292C",
+      "line": "#373338",
+      "text": "#F6F3F3",
+      "secondaryText": "#BAB0B5",
+      "brand": "#DB3040",
+      "brandWeak": "#3E272A",
+      "secondaryCTA": {
+        "bg": "#957027",
+        "on": "#FFFFFF"
+      }
+    }
+  },
+  "space": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32
+  },
+  "radius": {
+    "control": 16,
+    "surface": 16,
+    "overlay": 24,
+    "pill": 999
+  },
+  "container": {
+    "kinds": [
+      "plain",
+      "solid",
+      "outlined",
+      "subtle",
+      "inset",
+      "raised",
+      "interactive",
+      "media",
+      "reward",
+      "overlay"
+    ],
+    "defaultPadding": 16,
+    "insetPadding": 12,
+    "defaultBorder": 1,
+    "nestingProhibitions": [
+      "raised>raised",
+      "reward>reward",
+      "unnecessary-card>card"
+    ]
+  },
+  "button": {
+    "smallVisibleHeight": 34,
+    "defaultVisibleHeight": 43,
+    "largeVisibleHeight": 48,
+    "touchTargetMin": 48,
+    "iconMin": 16,
+    "iconDefault": 17,
+    "iconMax": 18,
+    "contentGap": 7,
+    "defaultOutlineForeground": "neutral",
+    "darkSecondaryOn": "#FFFFFF",
+    "pressedContentReflow": false
+  },
+  "segmented": {
+    "containerCount": 1,
+    "thumbCount": 1,
+    "visibleHeight": 43,
+    "minOptions": 2,
+    "maxOptions": 4,
+    "preferredWidth": "hug"
+  },
+  "svg": {
+    "source": "docs/design/seed/assets/icons/v0.14",
+    "total": 56,
+    "outlineCore": 32,
+    "fill": 5,
+    "outlineAdditional": 19,
+    "viewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "strokeWidth": 1.8,
+    "lineCap": "round",
+    "lineJoin": "round",
+    "color": "currentColor",
+    "outputSize": {
+      "badge": 13,
+      "inlineButton": 17,
+      "row": 20,
+      "header": 24,
+      "bottomNav": 27
+    },
+    "touchTargetMin": 48,
+    "fillNames": [
+      "home-fill",
+      "chat-fill",
+      "users-fill",
+      "user-fill",
+      "check-circle-fill"
+    ],
+    "specialAndroidConversion": [
+      "check-circle-fill: mask unsupported without conversion"
+    ]
+  },
+  "badge": {
+    "tones": [
+      "neutral",
+      "brand",
+      "success",
+      "info",
+      "warning",
+      "danger",
+      "reward"
+    ],
+    "height": 26,
+    "heightXS": 21,
+    "paddingX": 11,
+    "paddingX_XS": 8,
+    "iconSize": 13,
+    "borderAlphaLight": 0.12,
+    "borderAlphaDark": 0.24,
+    "optionalAdornment": [
+      "icon",
+      "dot"
+    ]
+  },
+  "progress": {
+    "oneReusableComponent": true,
+    "heightMicro": 6,
+    "heightDefault": 10,
+    "heightFeatured": 12,
+    "trackRadius": "pill"
+  },
+  "textHierarchy": [
+    "display",
+    "title",
+    "section",
+    "body",
+    "caption"
+  ],
+  "cash": {
+    "imageFamily": "canonical-cash-raster",
+    "imageIsNotSvg": true,
+    "iconLabelAlign": "optical-baseline",
+    "numberFormatting": "tabular-nums,localized"
+  },
+  "bottomSheet": {
+    "states": [
+      "closed",
+      "min",
+      "mid",
+      "full"
+    ],
+    "initial": "min",
+    "minHeightFloor": 185,
+    "minHeightCapVh": 40,
+    "minHeightCapPx": 380,
+    "midVh": 65,
+    "full": "viewport minus insets",
+    "footer": "fixed",
+    "body": "native scroll",
+    "dragTracking": "continuous finger tracking",
+    "release": "nearest allowed snap",
+    "overscrollTop": "drag down shrinks sheet",
+    "overscrollBottom": "drag up expands sheet",
+    "cancel": "restore stable snap",
+    "closeMethods": [
+      "backdrop",
+      "close",
+      "Escape",
+      "Back"
+    ],
+    "keyboard": [
+      "ArrowUp",
+      "ArrowDown"
+    ],
+    "skipDuplicateSnapPoints": true
+  },
+  "verification": {
+    "browser": "Chromium",
+    "viewports": [
+      320,
+      390,
+      430,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "catalogViews": 7,
+    "combinations": 56,
+    "horizontalOverflowCount": 0,
+    "pageErrorCount": 0,
+    "sheetEdgeMouseValidated": true,
+    "androidDeviceValidated": false,
+    "touchGesturePhysicalDeviceValidated": false
+  }
+}

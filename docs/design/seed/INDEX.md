@@ -9,7 +9,7 @@ references: [U-01, U-02, D-011]
 
 # 갓생패치 · 디자인 시드 INDEX
 
-v0.6 proposed · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**. 문서화는 완료 대상이며 토큰의 최종 승인·실제 UI 검증·앱 구현 완료를 뜻하지 않는다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
+v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에서 명시적으로 확정한 시각 규격에 한정해 approved.** 개별 문서의 기존 proposed 항목 및 Android 앱 동작·계정·경제·IA는 계속 미검증이다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
 
 기준: 중립적이고 정돈된 조작 UI + 굵기 있는 명확한 정보 계층 + 붉은 도장 정체성 + 표현력 있는 3D 보상. 컨셉의 콘텐츠·탭 수·배치를 복제하지 않는다. 새 토큰/상태는 제안, 기존 상단은 승인 정본이다.
 
@@ -99,3 +99,12 @@ v0.6 proposed · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안
 - **[사용자 제공 최신 SVG 56개](assets/icons/v0.14/README.md)**: 기본 Outline 32 · Fill 5 · 추가 19, 24×24 / Stroke 1.8, 기존 37개 원본 경로 덮어쓰기
 - [v0.14 구현 인수인계](implementation/v014.md): 라운딩·획·실루엣·Android 적용 주의·검증 구분
 - v0.13은 롤백/비교 자료로 유지하며, main의 확정 클랜 나침반 네비는 교체하지 않는다.
+
+## v0.15 최종 정본 · 다른 세션의 첫 진입점
+
+1. **[v0.15 확정 디자인·검증·적용 계약](implementation/v015.md)** — 결정의 범위, 컴포넌트/제스처/컨테이너 사용 규칙, 실제 검증·미검증 분리
+2. **[v0.15 디자인 토큰 JSON](implementation/v015-tokens.json)** — 앱 구현 시 숫자·의미색·아이콘 크기·Surface·Sheet 상태를 한 곳에서 읽음
+3. **[사용자 제공 SVG 56종 원본](assets/icons/v0.14/README.md)** + [manifest](assets/icons/v0.14/manifest.json) — 반드시 이 소스를 인용. v0.13 및 최초 v0.14는 비교 이력
+4. 화면별 구현에는 C-ACTION/C-SURFACE/C-SHEET 등 필요한 **직접 의존 문서만** 추가로 읽는다. 기존 `AGENT.md`, 제품 D-001~D-011, 앱 리소스 정본과 충돌 시 자동 이식하지 않는다.
+
+**상태 구분:** [Seed confirmed] 웹/디자인 규격 승인 · [Native pending] Compose/VectorDrawable/실기기/탭 IA 등 구현 미완료. 새 시드 문서를 늘리기보다 여기의 원칙을 재사용한다.

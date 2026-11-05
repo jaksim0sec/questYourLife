@@ -28,3 +28,7 @@ Closed→Min→Mid→Full (역방향 포함), Pending, Error, Keyboard Open. Sna
 Do: Footer CTA margin + OS inset single owner, handle keyboard alternative. Don't: 본문 전체를 움직여 입력 내용 삭제, CTA와 Bottom Nav 동시 하단 점유, 전면 다이얼로그처럼 모든 상황에 3단 시트 강제. 320·390·430폭/200%/drag cancel/Esc/backdrop/IME 검증.
 
 > 수치는 v0.6 실험 후보이며 사용자 시각 승인 및 Android 검증 전에는 approved로 변경하지 않는다.
+
+## v0.15 내부 스크롤 경계 인계
+
+Body의 native scroll이 가능한 동안은 시트 높이를 변경하지 않는다. 본문 최상단에서 아래로 당기기 / 최하단에서 위로 밀기 때 동일 제스처의 잔여 변위만 시트로 넘긴다. Release는 현재 물리 높이에서 가장 가까운 유효 Snap으로 settle. 고정 Footer CTA는 Body 바깥, OS inset은 Shell 한 곳에서 합산. 정확한 C-GESTURE/C-SHEET가 우선한다.

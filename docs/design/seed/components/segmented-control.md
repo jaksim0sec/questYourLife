@@ -31,3 +31,7 @@ radio-group 또는 tab의 의미를 기능에 따라 정하되 중복 의미 선
 S2-04 반례 09. Period switch는 개별 버튼의 high/low 강조 차이가 아니라 하나의 상태 토글. C-TABS/P-HIERARCHY와 영향 범위 정렬.
 
 > 숫자 및 신규 상태는 사용자 미승인 후보. 제품 데이터·탭 목적지·도메인 기능을 이 문서에서 발명하지 않는다.
+
+## v0.15 단일 알약 세그먼트 · 확정 표현
+
+**하나의 트랙 → 하나의 선택 알약(thumb) → 2–4개 Label.** 트랙을 다시 큰 컨테이너/카드로 감싸지 않으며 버튼별 추가 테두리/칩을 겹치지 않는다. 선택 컨트롤의 폭은 기본 `hug-content`, 같은 비중의 콘텐츠 보기 전환에서만 `fill`. 시연 visible height ≈43px; native touch는 48dp의 비중첩 target 보장. selected만 thumb/foreground 차이, unselected는 중립; 선택 상태를 `aria-pressed` 또는 radio semantics 한 체계로만 노출.

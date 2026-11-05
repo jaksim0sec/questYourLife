@@ -73,3 +73,10 @@ REF-006은 제안, REF-007은 실앱 한 화면 관찰 medium. REF-005는 명시
 ## Dependencies & Impact
 Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 suffix, 고정 하단 CTA에 영향을 준다. 이름이 다른 기능별 버튼을 별도 컴포넌트로 만들지 않는다.
 
+
+## v0.15 Outline / Reward CTA 우선 규칙 (D-012)
+
+- `Outline` 기본은 **Neutral Foreground + Neutral Border**. Brand Red를 자동 상속하지 않는다. `Brand Weak`는 명시적 보조색 액션이고 `Brand Outline`은 별도 이름을 사용할 때만 허용; 기본 Outline과 혼동하지 않는다.
+- Secondary Gold CTA: Light `#FFCC4D` + dark `#352713` label/icon, **Dark `#957027` + white label/icon**. 단독 카드/배경에 노랑 CTA 톤을 전파하지 않는다.
+- Label + Icon 하나의 중앙 정렬 그룹, Icon 16–18(기본 17), 간격 6–8(기본 7), control radius 16. Pressed/Loading은 label center·외곽 크기 보존.
+- Button 실제 표시 높이 Small 34 / Default 43 / Large 48. Android는 어떤 크기든 비중첩 최소 48dp touch target 필요.

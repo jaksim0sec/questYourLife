@@ -40,3 +40,9 @@ Progress의 이름·현재 값·최댓값을 전달한다. indeterminate는 알 
 ## Evidence & Confidence / Impact
 진행·수치·작은 태그는 관찰 high. 정확한 상태 및 토큰은 proposed. 기본 값·모양 변경은 목록·배너·수집 화면의 비교 가능성에 영향이 있다.
 
+
+## v0.15 Badge/Progress 확정 시각 규격 (D-012)
+
+Badge 톤 = `neutral|brand|success|info|warning|danger|reward` 7종. `label` 필수, `icon|dot`은 선택적. 높이 26px, XS 21px, Radius Pill; 기본 paddingX=11, XS=8, 아이콘 13px, 미세 outline(시연 기준 Light 약 12% / Dark 약 24% 전경색 혼합). 의미색 토큰을 적용하고 한 화면의 모든 Badge를 Brand로 채우지 않음. Badge는 정보 표시, 필터/선택은 C-SELECTION을 사용.
+
+Progress는 **공통 컴포넌트 하나**, thickness=6/10(default)/12(feature) 속성. 같은 도메인 값을 다른 Progress component로 중복 선언 금지. 실재 수치·완료 여부 및 스크린리더 Value는 앱 데이터에서 전달.

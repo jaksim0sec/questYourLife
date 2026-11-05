@@ -117,3 +117,19 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 - **29/29 브라우저 검수 항목 통과**, 포인터 Grip swipe 상향→mid / 하향→min 추가 확인.
 - 실제 웹 렌더와 Android Native 동작·접근성은 다르다. 200% 글자·TalkBack·실제 OS/IME safe-area·성능·데이터 E2E 및 사용자 최종 시각 승인 **미완료**. 수치/스타일 status=proposed 유지.
 - 설계 원칙 검증: [SEED Bottom Sheet](https://seed-design.io/components/bottom-sheet) / [SEED Segmented](https://seed-design.io/components/segmented-control) 참조. SEED 숫자를 그대로 복제했다는 뜻은 아니다.
+
+## v0.15 최종 검증 · 2026-11-05
+
+**아티팩트**: `gatsaengpatch-seed-v15-final-review.html` (대화 첨부, 저장소 미등록), SHA-256 `172670119092e8a3246cdad0ca9e112efbbb401fd3e5f8cd062ecc44baac96f3`. **SVG 공식 원본**: `assets/icons/v0.14/*.svg` 56개, 사용자 ZIP SHA-256 `247ed44a7ba18920a7fd5c575c38cb7e6d7d00ac47eb1800bba56d2b87891ee9`.
+
+| 검증 ID | 내용·범위 | 결과 |
+|---|---|---|
+| V15-01 | SVG 56개 ZIP 원본 대비 Git SHA-1 일치, XML·CairoSVG 렌더 | 통과 |
+| V15-02 | Chromium 4 폭(320·390·430·1440) × 2 테마 × 7 카탈로그 화면 | 56 조합, 가로 넘침 0, JS pageerror 0 |
+| V15-03 | SVG 필터 Fill 5 / Outline 51, 이름 검색, 독립 소스 생성 | 통과 |
+| V15-04 | Sheet handle 드래그 후 근접 snap, ArrowUp Min→Mid→Full, Escape 닫기 | 통과 |
+| V15-05 | 긴 본문에서 native wheel로 콘텐츠 스크롤 시 시트 고정; 스크롤 최상단에서 아래로 드래그→Min, 최하단에서 위로 드래그→Full | 통과, Chromium 마우스 |
+| V15-06 | Dark Secondary CTA 글자·아이콘 `#FFF`, 배경 dark gold, Field Focus 두꺼운 외곽 링 없음 | CSS 계산값 검증 |
+| V15-07 | Android APK 빌드·Compose 실제 렌더·물리 터치·IME·TalkBack·데이터·네트워크 | **미검증/범위 외** |
+
+**정책:** 사용자 D-012에 따라 이 시드의 규격은 디자인 측면에서 채택. 정확한 앱 품질 검증은 네이티브 적용 후 별도로 진행. 특히 `check-circle-fill.svg` mask는 VectorDrawable 변환 불가 가능성이 있어 검증 필요. 이전 v0.1~v0.6 보고를 최신 검증처럼 재사용하지 않는다.

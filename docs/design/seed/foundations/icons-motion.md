@@ -10,20 +10,20 @@ references: [REF-001, REF-002, REF-004, REF-005]
 # 아이콘과 모션
 
 ## SVG 제안 규격
-기본 viewBox는 0 0 24 24, strokeWidth 1.95 (v0.6 후보), fill none, round cap/join, currentColor를 사용한다. 기본 실제 도형은 약 18–20 범위에 담아 24 슬롯 안에서 선 굵기·면적·시각 중심을 맞춘다. glyph마다 빈 공간이 달라 같은 width만 맞추는 것으로 끝내지 않는다. 기본 슬롯은 F-GEOMETRY를 참조한다.
+최종 채택된 사용자 제공 UI 아이콘 56종은 `viewBox=0 0 24 24`, `strokeWidth=1.8`, 기본 `fill=none`, round cap/join, `currentColor`를 사용한다. 이전 v0.6의 1.95 수치는 이 자산군에 적용하지 않는다. 기본 실제 도형은 약 18–20 범위에 담아 24 슬롯 안에서 선 굵기·면적·시각 중심을 맞춘다. glyph마다 빈 공간이 달라 같은 width만 맞추는 것으로 끝내지 않는다. 기본 슬롯은 F-GEOMETRY를 참조한다.
 
 한 화면에서 다른 아이콘 라이브러리의 굵기·각진 모서리·그림자 스타일을 섞지 않는다. 검색·편집·추가·선물·메뉴는 같은 Outline family다. 페이지 제목보다 아이콘이 과도하게 커지지 않게 한다. 3D 코인·마스코트는 SVG UI 아이콘과 다른 에셋 family다.
 
 ## S2-04/05/07/08 아이콘 오류 교정
 - 헤더·동일 아이콘 버튼·하단바의 glyph는 **같은 24 viewBox와 같은 stroke/cap/join 정본**을 사용하고, 보이는 크기만 역할에 따라 정한다. 임의의 각진 편집 아이콘, 넘치게 큰 gift/plus, 새 미니 획 두께는 로컬 SVG에서 금지.
-- 탭의 active 여부는 강조색+라벨+선택 affordance로 표시할 수 있다. 모든 네비 아이콘에 Fill을 강제하지 않는다. 다만 최종 active 스타일은 하단 정책 합의 전 proposed.
+- 하단의 **해당 Fill 자산이 있는 아이콘**은 active 시 독립 Fill + 강조색 + 라벨, inactive 시 Outline + 중립 전경. 추가 Fill이 없는 자산은 자동 채우지 않는다. 최종 탭 목적지는 O-003 미결.
 - 자산 자체(금속 코인·캐릭터 얼굴·실물 모자)는 이 stroke 규격을 적용하지 않는다.
 - 비교 검수: Search·Bell·Menu·Edit·Gift·Plus 6개를 동일 canvas에서 16/20/24로 놓고 선 굵기·광학적 중심·baseline을 확인한다.
 
 ## v0.6 Outline / Fill 자산 구분
 - C-SVG가 실제 별도 경로 `home`/`home-fill`, `check-circle`/`check-circle-fill`, `chat`/`chat-fill`, `users`/`users-fill`, `user`/`user-fill`의 도형 계약을 정의한다.
 - 하단 Root에서 비활성은 Outline·활성은 Fill. 모든 상단 SVG는 기본 Outline 유지(D-011). Fill을 Outline에 CSS만 입힌 것으로 대체 금지.
-- Menu의 세 가로선은 세로 높이 균형(y≈4.8/12/19.2), Home 외곽은 둥근 corner. 글자에 비해 지나치게 크게 만들지 않고 기능별 optical size를 검사한다.
+- Menu의 세 가로선은 사용자 제공 원본의 y=6/12/18에 맞춘다, Home 외곽은 둥근 corner. 글자에 비해 지나치게 크게 만들지 않고 기능별 optical size를 검사한다.
 - 버튼에 SVG가 들어갈 경우 P-BTN-ICON의 안정적인 슬롯·라벨 규칙을 반드시 따른다.
 
 ## 상태와 의미
@@ -44,3 +44,7 @@ references: [REF-001, REF-002, REF-004, REF-005]
 ## 근거·영향
 선 중심 아이콘은 반복 관찰 high 및 D-011 확정 방향. SVG 수치·모션 시간·미노출 focus/loading은 설계 제안이다. 아이콘 교체 시 슬롯·이름·선의 무게를 함께 확인한다. 연출 품질은 아직 구현·측정하지 않았다.
 
+
+## v0.15 원본 우선순위
+
+[사용자 제공 Soft SVG 56종](../assets/icons/v0.14/README.md)은 시드의 **유일한 현행 UI 아이콘 정본**. 기존 37개 assistant-drawn SVG 및 고정 1.95/2.15 stroke 후보를 우선 사용하지 않는다. 다른 브랜드의 SVG를 찾아 대체하지 않는다. 보상 코인 이미지는 별도 art이고 `coins.svg`는 일반 pictogram임. Native 앱의 이미 승인된 클랜 나침반 등은 자동 변경 금지.

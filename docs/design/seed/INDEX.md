@@ -86,3 +86,10 @@ v0.6 proposed · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안
 - **아이콘이 있는 버튼:** P-BTN-ICON → C-ACTION + C-SVG.
 - **마이/꾸미기 아이템 등급:** C-RARITY + C-IMAGE + A-ART, 등급명·새 화폐 임의 생성 금지.
 - 실제 v0.6 웹 실험은 검증용 시연이며 자동으로 approved가 되지 않는다.
+
+## v0.13 재사용 리소스 (2026-11-05, proposed)
+
+- [v0.13 구현 인수인계](implementation/v013.md): Surface 10, Badge/CTA/Sheet/아이콘 계약 요약과 Android 이식 한계
+- [37개 실제 SVG 소스](assets/icons/v0.13/README.md): 24×24, Outline/Fill 및 v0.13 홈·그룹 교정
+- [기계 판독 토큰](implementation/v013-tokens.json): 제안 색상·간격·radius·스냅·뱃지·아이콘 속성
+- 이 항목은 기존 Component 정본을 덮지 않으며, 코드 이식 전 앱의 확정 아이콘 규칙을 확인한다.

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "gatsaengpatch-seed-v0.13",
+  "status": "proposed",
+  "scope": "design seed only; not deployed Android",
+  "color": {
+    "light": {
+      "canvas": "#FCFBFA",
+      "surface": "#FFFFFF",
+      "soft": "#FFF7F2",
+      "line": "#F0E8E5",
+      "text": "#242126",
+      "secondaryText": "#777079",
+      "brand": "#DB3040",
+      "brandWeak": "#FFF0F1",
+      "secondary": "#FFCC4D",
+      "onSecondary": "#24211C"
+    },
+    "dark": {
+      "canvas": "#17181D",
+      "surface": "#242329",
+      "soft": "#2D292C",
+      "line": "#373338",
+      "text": "#F6F3F3",
+      "secondaryText": "#BAB0B5",
+      "brand": "#DB3040",
+      "brandWeak": "#3E272A",
+      "secondaryCTA": "color-mix(in srgb,#FFCC4D 40%,#4E330D)",
+      "onSecondaryCTA": "#FFFFFF"
+    }
+  },
+  "spacing": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32
+  },
+  "radius": {
+    "small": 12,
+    "default": 16,
+    "large": 20,
+    "pill": 999
+  },
+  "padding": {
+    "small": 12,
+    "default": 16,
+    "large": 20
+  },
+  "icon": {
+    "viewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "stroke": 2,
+    "lineCap": "round",
+    "lineJoin": "round",
+    "defaultMode": "outline",
+    "activeSuffix": "-fill",
+    "size": {
+      "badge": 13,
+      "button": 17,
+      "row": 20,
+      "top": 24,
+      "bottom": 27
+    },
+    "touchTargetMin": 48
+  },
+  "progress": {
+    "singleDefaultHeight": 10,
+    "featureHeight": 12,
+    "radius": "pill"
+  },
+  "badge": {
+    "tones": [
+      "neutral",
+      "brand",
+      "success",
+      "info",
+      "warning",
+      "danger",
+      "reward"
+    ],
+    "height": 26,
+    "heightXS": 21,
+    "horizontalPadding": 11,
+    "horizontalPaddingXS": 8,
+    "iconSize": 13,
+    "borderAlphaLight": 0.12,
+    "borderAlphaDark": 0.24
+  },
+  "sheet": {
+    "states": [
+      "closed",
+      "min",
+      "mid",
+      "full"
+    ],
+    "minMaxFraction": 0.47,
+    "midFraction": 0.67,
+    "bodyScrollable": true,
+    "footerFixed": true,
+    "handOffAtScrollBoundary": true,
+    "dragFollowsPointer": true,
+    "snap": "nearest release height"
+  },
+  "componentRoles": [
+    "Button",
+    "Surface",
+    "Container",
+    "Checkbox",
+    "RadioChoice",
+    "SegmentedControl",
+    "TextHierarchy",
+    "CreditValue",
+    "Badge",
+    "Progress",
+    "BottomSheet",
+    "Icon"
+  ],
+  "source": "v0.13 HTML design lab and v0.9-v0.10 contracts; design asset candidates, not applied Compose"
+}

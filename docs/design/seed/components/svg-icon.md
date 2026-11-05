@@ -25,3 +25,7 @@ Badge 12–14, Inline Button 16–18, Row 20, Top 24, Bottom 27dp (같은 24 vie
 Default/Active/Disabled/Pressed/Focused. 장식 SVG는 읽기에서 숨기고, 단독 클릭 버튼에는 행동 기반 accessible label. 활성은 색 외에도 Fill/weight/label로 구분. 스크린리더/키보드/광학적 중심/다크 대비·200% 검수.
 
 > 수치는 v0.6 실험 후보이며 사용자 시각 승인 및 Android 검증 전에는 approved로 변경하지 않는다.
+
+## v0.13 SVG source (proposed)
+
+[37개 실제 SVG 파일](../assets/icons/v0.13/README.md)을 제공한다. v0.13 `home/users`의 Outline·Fill은 각각 같은 지붕/인물 실루엣을 공유한다. 모든 아이콘을 같은 모양으로 만들기보다 24×24 그리드에서 시각적 크기·여백을 개별 보정. 기존 앱의 확정 나침반 클랜 네비는 **변경하지 않음**. `stroke-width=2.0`은 해당 아이콘 소스의 후보값이며 기존 Android 자산의 확정치와 혼동하지 않는다.

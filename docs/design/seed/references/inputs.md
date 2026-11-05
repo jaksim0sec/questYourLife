@@ -104,3 +104,13 @@ REF-001~004는 사용자 지정 **컨셉**이므로 실제 UI 동작의 증거�
 - 사용자가 원본 손글씨의 50:50에 대해 '카드 사이 간격이 아니라 **하단 두 버튼의 동일 너비 배분**'이라고 명시적으로 교정함.
 - 수락/넘기기는 반례 01과 달리 의미·길이·배치의 자연스러운 **선택형 동작 그룹**을 설계해야 하며 무조건 같은 너비로 강제하지 않음.
 - 08번 보조 인사말은 핵심 기능이 아닌데도 주 콘텐츠보다 크게 차지하는 타이포 위계 오류이며 단순 색 문제로 해석하지 않음.
+
+
+## U-05 · 2026-11-05 후속 사용자 컴포넌트/패턴 교정 요구
+> 출처: 현재 대화의 사용자 직접 지시. 이미지 바이너리 및 원문은 대화 첨부에 있고 본 docs-only 브랜치에는 복제되지 않음. 기존 REF/S2 ID를 재배정하지 않는다.
+
+- **시연의 실제 수정 지시**: v0.5의 Checkbox/Radio 기본형, 중복 Progress, 코인/값 미공통화, Menu 세로면적, Home 모서리, 하단 아이콘 광학크기, 일부 화면의 16px Radius 이탈, 다크 모드의 Pills/Switch Off/Skeleton/Brand Weak/Outline, Segmented 이중 구조를 교정.
+- **후속 확장 지시**: Root Bottom Navigation은 별도 Active Fill SVG / Inactive Outline SVG. Secondary Brand Gold·Brand Weak Action Button, 기본 텍스트 계층 5종, Bottom Sheet 컴포넌트 및 Footer/텍스트/고정 CTA의 Pattern, 높이의 내용 기반 Min·Mid·Full 및 닫기 Gesture, Gesture 정본, 둥근 SVG/Icon 정본, Button+SVG 배치 Pattern 등록.
+- 코인 첨부는 투명 골드 마스코트 코인의 사용자 이미지이며 생성/편집을 요구한 게 아님. 크기 최적화된 UI 표현은 동일 이미지 기반이어야 한다.
+- SEED: [Bottom Sheet](https://seed-design.io/components/bottom-sheet), [Segmented Control](https://seed-design.io/components/segmented-control) 등의 Anatomy/Properties/States/Guidelines를 참고. Snap 비율/gesture px/s 수치는 앱 자체의 proposed 시연값이지 SEED와 동일하다고 주장하지 않는다.
+- **Status:** docs/design/seed의 컴포넌트·패턴 및 v0.6 웹 시연 보정안. 실제 Android·서버·경제 체계 변경 없음. 사용자 시각 최종 승인 전.

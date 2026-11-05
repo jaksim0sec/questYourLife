@@ -29,3 +29,7 @@ Default/Active/Disabled/Pressed/Focused. 장식 SVG는 읽기에서 숨기고, �
 ## v0.13 SVG source (proposed)
 
 [37개 실제 SVG 파일](../assets/icons/v0.13/README.md)을 제공한다. v0.13 `home/users`의 Outline·Fill은 각각 같은 지붕/인물 실루엣을 공유한다. 모든 아이콘을 같은 모양으로 만들기보다 24×24 그리드에서 시각적 크기·여백을 개별 보정. 기존 앱의 확정 나침반 클랜 네비는 **변경하지 않음**. `stroke-width=2.0`은 해당 아이콘 소스의 후보값이며 기존 Android 자산의 확정치와 혼동하지 않는다.
+
+## v0.14 reference-derived geometry (proposed)
+
+[37개 원본 SVG](../assets/icons/v0.14/README.md). 사용자 제공 4장 한국 서비스 사이드바 시안에 맞춰 선 끝/여백/실루엣을 다시 그렸다. `viewBox=24×24`, 기본 `stroke-width=2.15`, `round` cap/join 후보. v0.13의 ID와 활성 Fill 쌍은 보존. 단순 가로/세로 늘림 금지. 실제 앱 적용 전에 `C-BOTTOM`의 확정 클랜 나침반 등 기존 승인 자산과 충돌하지 않도록 검토한다.

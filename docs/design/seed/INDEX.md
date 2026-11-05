@@ -93,3 +93,9 @@ v0.6 proposed · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안
 - [37개 실제 SVG 소스](assets/icons/v0.13/README.md): 24×24, Outline/Fill 및 v0.13 홈·그룹 교정
 - [기계 판독 토큰](implementation/v013-tokens.json): 제안 색상·간격·radius·스냅·뱃지·아이콘 속성
 - 이 항목은 기존 Component 정본을 덮지 않으며, 코드 이식 전 앱의 확정 아이콘 규칙을 확인한다.
+
+## v0.14 SVG source · 2026-11-05 (proposed)
+
+- [37개 재설계 SVG 원본](assets/icons/v0.14/README.md): 사용자 제공 4장 사이드바 아이콘 레퍼런스 기반 새 도형, 기존 ID/활성 5쌍 보존
+- [v0.14 구현 인수인계](implementation/v014.md): 라운딩·획·실루엣·Android 적용 주의·검증 구분
+- v0.13은 롤백/비교 자료로 유지하며, main의 확정 클랜 나침반 네비는 교체하지 않는다.

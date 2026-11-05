@@ -1,0 +1,35 @@
+{
+  "count": 56,
+  "xml_valid": true,
+  "stroke_width": 1.8,
+  "all_raster_bounds_inside_canvas": true,
+  "symmetry_checked": [
+    "settings",
+    "shirt",
+    "home"
+  ],
+  "latest_revision": {
+    "changed_icons": [
+      "more",
+      "share",
+      "calendar",
+      "send"
+    ],
+    "share_bounds_at_240px": {
+      "before": [
+        33,
+        28,
+        197,
+        212
+      ],
+      "after": [
+        33,
+        28,
+        197,
+        212
+      ]
+    },
+    "other_52_svgs_byte_identical": true
+  },
+  "prior_revision_raster_checks_passed": true
+}

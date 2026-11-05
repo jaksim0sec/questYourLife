@@ -15,6 +15,12 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 ## 책임 분리 · v0.2
 이 파일은 Checkbox/Radio/Switch 등 선택 family의 **공통 원칙만** 소유한다. 독립된 역할·상태·접근성 계약은 [C-TABS](tabs.md) · [C-SEGMENT](segmented-control.md) · [C-CHECK](checkbox.md)가 정본이다. 같은 속성을 여기에서 다시 정의하지 않고 각 명세를 링크한다.
 
+## v0.6 책임 분리
+- 상호 배타적 Radio Choice의 Group/Indicator/Checked·Focus·Disabled는 [C-RADIO](radio-choice.md)가 정본이다.
+- Checkbox는 [C-CHECK](checkbox.md), 상위 탐색은 [C-TABS](tabs.md), 기간/보기는 [C-SEGMENT](segmented-control.md) 정본을 따른다.
+- Segmented는 Chip을 두 겹으로 감싸지 않는다. 하나의 컨테이너 + 선택 Thumb + Label. 실용적인 선택값 2~4개, 콘텐츠 바로 위에 위치. `Tabs`의 네비게이션과 목적이 다르다.
+- 다크 OFF Switch는 독립 `disabled` 값이 아니라 off 상태의 대비를 보장해야 하며, 라이트 전용 회색을 그대로 재사용하지 않는다.
+
 ## Anatomy / Properties
 | 종류 | Anatomy·속성 | 의미·배치 |
 |---|---|---|

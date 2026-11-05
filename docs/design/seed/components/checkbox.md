@@ -12,6 +12,9 @@ references: [S2-04, S2-05, D-011]
 ## Purpose / Non-goals
 사용자의 **실제 완료 확인** 또는 선택 여부를 표현한다. 퀘스트 완료의 근거는 도메인 상태이며 타이머/AI/애니메이션이 자동 완료시키면 안 된다.
 
+## v0.6 시각적 선택 계약
+기본 브라우저 Checkbox를 스타일을 지정하지 않은 채 노출하지 않는다. 21dp 체크 도형 / 선택 시 선명한 브랜드 채움 + 대비되는 체크 / Mixed는 브랜드 면 위 짧은 수평선 / Disabled는 중립 약한 색상. Label까지 포함한 최소 터치 타깃 48dp, native input의 checked/indeterminate/disabled와 시각 상태가 반드시 같아야 한다. 상태 변화 중 indicator의 outer width/height와 text baseline 유지.
+
 ## Anatomy / Properties
 Indicator + Label + optional Description; checked / unchecked / mixed, disabled, pending. 실제 퀘스트 완료 액션과 UI 일반 선택을 동일한 서버 연산으로 가정하지 않는다.
 

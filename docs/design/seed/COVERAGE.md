@@ -10,7 +10,7 @@
 | Top Navigation | NAV-TOP | approved, 기존 D-011 정본 |
 | Tabs / Segmented Control | C-TABS / C-SEGMENT | split. 탐색과 보기 전환 분리 |
 | Chip / Tag Group | C-SELECTION / C-STATUS | covered; 실제 필터·태그 사용 시 |
-| Checkbox / Radio / Switch | C-CHECK / C-SELECTION | split/covered. 완료·선택·설정의 의미 구별 |
+| Checkbox / Radio / Switch | C-CHECK / C-RADIO / C-SELECTION | covered/split. 완료·선택·설정의 의미 구별 |
 | Avatar | C-AVATAR | split. 투명 캐릭터와 사진 프레임 분리 |
 | Image Frame | C-IMAGE | split. contain/cover·폴백 |
 | List / Divider / Footer | C-LIST / F-GEOMETRY / S-PAGE | covered. 리스트 중첩 카드 개선 |
@@ -20,7 +20,7 @@
 | Select / Select Box | C-FIELD + C-SELECTION | later. 실제 항목 선택·접근성 계약 필요 시 분리 |
 | Date Picker / Time Picker | C-FIELD + S-PAGE | later. 실제 예약 일정 작업에서만 |
 | Alert Dialog / Dialog | C-OVERLAY | covered (bundled), 실제 확인 플로우 전 독립 계약 필요성 판단 |
-| Bottom Sheet / Menu Sheet / Menu | C-OVERLAY | covered (bundled). 작업 종류 늘면 분리 |
+| Bottom Sheet / Menu Sheet / Menu | C-SHEET / C-OVERLAY | split. Bottom Sheet Snap·Footer·Gesture 별도 정본 |
 | Snackbar / Callout / Result Section | C-OVERLAY / P-STATES | covered (bundled). 상태 전환부터 개선 |
 | Skeleton / Content Placeholder / Identity Placeholder | C-OVERLAY / P-STATES | covered (bundled); 로딩 위치별 조건 필요 |
 | Page Banner | C-SURFACE / A-ART | covered. 과한 UI 스타일 전염 금지 |
@@ -35,3 +35,6 @@
 | Help Bubble | C-OVERLAY | later. 별도 상태·레이블 필요 시 |
 
 **문서 수 목표 없음.** 새로운 화면을 만들기 전에 INDEX에서 이미 있는 컴포넌트와 조합으로 충분한지 판단. 미흡한 기존 정의를 Refine/Merge로 해결한 뒤에만 Add. 독립된 동작 계약을 증명하지 못하면 통합 문서 그대로 둔다.
+
+## v0.6 추가 정본
+C-CREDIT(실제 코인 이미지+숫자), C-RARITY(등급별 미세 그라데이션), C-TEXT(5개 텍스트 배치 역할), C-SVG(Outline/Fill 자산 별개), C-GESTURE(명시적 제스처 계약), C-SHEET(3단 snap), C-RADIO(라디오 그룹), P-SHEET(시트 Footer/본문 조합), P-BTN-ICON(버튼+SVG 위치 안정성). 새 기능의 추가가 아니라 기존 디자인 시연 재사용 규칙의 보완임.

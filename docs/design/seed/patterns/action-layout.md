@@ -40,6 +40,9 @@ references: [REF-005, REF-006, REF-007, SRC-TDS-BOTTOM]
 
 **반례 검증:** 좁은 320 폭, '이 퀘스트 제안 수락하기' 같은 긴 라벨, 200% 글자, 비활성·로딩을 개별 fixture로 비교한다. <50:50 교정>과 <의미상 비대칭>은 서로 다른 테스트다.
 
+## v0.6 Button + SVG Pattern
+[**P-BTN-ICON**](button-icon-layout.md)이 인라인 SVG와 텍스트의 분량·간격·로딩 상태를 정의한다. SVG 24 viewBox, 버튼 inline 보이는 크기 16~18dp, gap 6~8dp 후보. 로딩 시 Label 위치가 변경되면 실패. Pressed/Disabled에서 font-weight·border-width·padding을 변경하지 않는다. 50:50 교정 규칙은 기존 특정 사례로 유지.
+
 ## Bottom CTA
 Single/Double과 fixed/inline은 서로 다른 축이다. 토스 공식 자료는 이 구분과 safe-area 처리의 근거이며 특정 비율·색상·수치는 이 시드의 제안이다.
 

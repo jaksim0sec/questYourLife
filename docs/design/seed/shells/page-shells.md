@@ -49,6 +49,9 @@ Shell 한 곳이 Bottom Navigation·fixed CTA·OS bottom inset을 소유한다.
 
 S2-04 반례 02와 S2-05의 하단 CTA 충돌은 Shell 책임 문제다. 버튼 테두리·라운딩만 수정해 해결하지 않는다. 하단 둘의 동시 공존 자체를 자동 규칙으로 만들지 말고 콘텐츠 목적과 safe-area에서 판단한다. 하단 아이콘·활성 상태의 독립 스펙은 [C-BOTTOM](../components/bottom-navigation.md)이다.
 
+## v0.6 Bottom Sheet / Gesture와의 경계
+Sheet는 [C-SHEET](../components/bottom-sheet.md) 및 [P-SHEET](../patterns/bottom-sheet-flow.md) 계약을 따른다. 이 Shell은 OS Safe Insets/IME/Root·Detail Bottom Nav 가시성의 **최종 소유자**다. Full Sheet가 열려도 헤더/하단바의 reserved height를 두 번 더하지 않는다. Sheet Footer는 Body 스크롤에서 제외하며, swipe는 앱/OS edge navigation을 가로채지 않는다. 내용이 짧으면 최소 높이 우선이고 3 Snap 단계를 무조건 노출하지 않는다.
+
 ## Bottom Navigation 제안 경계
 기본은 간단한 Outline glyph + 짧은 Label + 의미 있는 selected 표시. active Fill은 승인 전 후보이며 탭 수·목적지·중앙 +·라벨·최종 표시 정책은 모두 미결이다. 생성 +는 목적지와 실행의 의미가 달라 중간 탭으로 자동 채택하지 않는다. 아트 속 4탭·5탭을 공통 시스템으로 복사하지 않는다.
 

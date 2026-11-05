@@ -12,6 +12,11 @@ references: [REF-003, SRC-TDS-SYSTEM]
 ## Purpose / Non-goals
 컨셉의 보상 장면과 일반 조작 피드백을 분리한다. Sheet·Dialog·Snackbar·Skeleton은 **이미지에서 확인되지 않은 보완 제안**이며 새로운 기능 요구가 아니다.
 
+## v0.6 Bottom Sheet 독립 정본
+Modal, Snackbar, Skeleton의 공통 역할만 여기에서 관리하고 **min/mid/full Snap, Body Scroll, Footer Sticky, Drag Handle, Close Gesture는 [C-SHEET](bottom-sheet.md)와 [C-GESTURE](gesture.md)**가 독립 소유한다. 중복된 높이·스크롤 정책은 이 문서에서 재선언하지 않는다.
+- Dark Skeleton은 표면에서 구분되는 dark `skel.a/b` 토큰 사용, 라이트 회색 그라데이션 상속 금지.
+- Dialog는 콘텐츠 중간의 승인/위험 제어, Bottom Sheet는 하단에서 맥락을 유지하는 보조 플로우. 둘을 같은 height/padding만 다른 Variant로 보지 않는다.
+
 ## Anatomy / Properties
 | 재료 | Anatomy | 목적 |
 |---|---|---|

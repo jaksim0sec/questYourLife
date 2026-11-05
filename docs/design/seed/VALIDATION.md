@@ -97,3 +97,23 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 - 미확정: 브랜드/색상 라운딩 실제 값, bottom 목적지/활성 스타일, 테마 채택, UI 모션 수치.
 
 **승인 게이트:** 위 결과는 기술 검증의 일부 통과만 의미한다. 사용자 시각 합의 전 기존 토큰과 새 컴포넌트 `status: proposed`를 유지한다. DECISIONS와 D-011은 수정하지 않는다.
+
+## v0.6 시연 및 문서 검증 · 2026-11-05
+
+### 사용자 피드백 보정
+- 기본 Checkbox/Radio를 커스텀 Native Input/Indicator로 교체. checked, unchecked, mixed, disabled, focus 상태.
+- **Progress 2종 중복 제거:** C-STATUS 한 개 + thickness 6/10/12 변형. Track/Indicator 함께 증가.
+- 첨부 사용자 코인 이미지(투명 PNG)를 디코딩·축소하여 오프라인 HTML에 내장. 가격·보유량·획득량을 C-CREDIT 하나로 표시. **GitHub docs-only에는 원본 바이너리 저장하지 않음.**
+- 햄버거 SVG 세로 높이, 둥근 Home 외형, 하단 아이콘 27dp; 하단 기본 Outline과 활성 Fill을 각각 별도 SVG symbol로 관리.
+- 등급별 프레임은 미세 그라데이션, 내부 등급 이름 없음, 브랜드색 변경은 선택 outline에만 반영. 등급/아이템 경제 정책 확정 아님.
+- Brand Weak, Brand Outline, Secondary Gold와 다크 mode 대응, Skeleton/Switch Off/Badge의 테마별 색 분리.
+- Segmented를 중첩 Chip 기반에서 단일 트랙 + selected Thumb으로 변경.
+- C-TEXT의 배치 5종, P-BTN-ICON의 인라인 SVG 규칙, C-GESTURE와 P-SHEET의 min/mid/full Snap/고정 Footer/닫기·스크롤 규칙 등록.
+- 밝은 프로모션 아트의 전경 텍스트가 Dark Theme 본문색을 잘못 상속하던 문제 보정.
+
+### 브라우저 실행 확인
+- 단일 HTML v0.6 디자인 실험에서 Chromium headless: 스크립트 오류 없음, **컴포넌트 30개/패턴 10개**, 시연 화면 7개 보존.
+- Checkbox 선택/Radio 배타 선택/Segmented 단일 active/coin 이미지 디코드/Progress 10·6·12 높이/다크 테마 토큰/Sheet min→mid→full→닫기/Bottom Nav Fill-Outline 분리/Detail Bottom Nav 숨김/Backdrop 닫힘, 320·360·390·430·768px 가로 넘침 0 검사.
+- **29/29 브라우저 검수 항목 통과**, 포인터 Grip swipe 상향→mid / 하향→min 추가 확인.
+- 실제 웹 렌더와 Android Native 동작·접근성은 다르다. 200% 글자·TalkBack·실제 OS/IME safe-area·성능·데이터 E2E 및 사용자 최종 시각 승인 **미완료**. 수치/스타일 status=proposed 유지.
+- 설계 원칙 검증: [SEED Bottom Sheet](https://seed-design.io/components/bottom-sheet) / [SEED Segmented](https://seed-design.io/components/segmented-control) 참조. SEED 숫자를 그대로 복제했다는 뜻은 아니다.

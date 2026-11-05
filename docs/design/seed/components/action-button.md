@@ -23,6 +23,8 @@ role(action/iconAction/textAction/link), emphasis(high/medium/low), tone(neutral
 | Primary / Brand Solid | High | brand / solid | accent.solid / accent.onSolid | 화면 목적을 완결하는 대표 행동 |
 | Neutral Solid | High | neutral / solid | neutral.solid / neutral.onSolid | 중립적 확정이 대표 행동일 때, 강제 기본 아님 |
 | Secondary | Medium | neutral / weak | bg.muted / fg.primary | 대부분의 일반·보조 실행 |
+| Secondary Brand / Reward | Medium, 보상 시 High 후보 | secondary / solid | accent.secondary / accent.onSecondary | 보상 수령·보관 등 제한된 가치 관련 행동 |
+| Brand Outline | Low | brand / outline | transparent / accent.onWeak + 독립 stroke | Brand Weak와 다른 강조의 브랜드 보조 행동 |
 | Brand Weak | Medium 후보 | brand / weak | accent.weak / accent.onWeak | 브랜드 맥락의 보조 실행, REF-006 제안 유지 |
 | Neutral Outline | Low | neutral / outline | transparent / fg.primary, stroke.control | 면이 많을 때 부가 행동 |
 | Tertiary / Ghost | Low | neutral / ghost | transparent / fg.secondary | 전체 보기·미루기·추가 설명 등 맥락별 보조 |
@@ -38,6 +40,13 @@ SEED 현행 문서에는 Brand Weak가 기본 variant로 나열되지 않는다.
 사용자 후속 피드백 U-04에 따라 Container의 높이·좌우 padding·최소 터치 영역은 유지하고 글자·아이콘을 소폭 축소한다. 줄높이 감소분은 상하 padding으로 돌려 버튼 내부의 숨 쉴 공간을 늘린다. 단독 Icon Button·상단·본문 아이콘의 크기는 함께 축소하지 않는다.
 
 너비는 내용과 맥락에 따라 hug/fill, 내부 정렬은 중앙이다. glyph와 label의 광학 중심을 맞춘다. 로딩·아이콘 유무·tone 변경으로 버튼 외곽을 바꾸지 않는다.
+
+## v0.6 내부 콘텐츠 튕김 방지
+- Label/Prefix/Suffix는 가운데로 정렬된 **하나의 그룹**. Button inline icon 16–18dp, gap 6–8dp, 24 viewBox 기반 C-SVG glyph 사용.
+- Pressed 시 scale/font-weight/letter-spacing/padding/border-width를 바꾸지 않는다. 색상/opacity만 전환한다.
+- Loading 시 Label의 너비와 중심 좌표를 유지하고 spinner만 position overlay; Icon slot 너비도 보존. Disabled 시 text+icon의 상대 위치 유지.
+- 상태 전환 전후 동일 크기 버튼의 outer rect와 label center 이동은 1px 이하를 QA 기준으로 삼는다. 200% font scale에 의한 의도적 reflow는 예외. 선택 의미는 C-SELECTION.
+- Button+SVG 조합의 자세한 Anatomy는 [P-BTN-ICON](../patterns/button-icon-layout.md).
 
 ## States / Behavior
 | 상태 | 표현·동작 |

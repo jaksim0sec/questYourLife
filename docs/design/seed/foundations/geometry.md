@@ -24,8 +24,8 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | inline.gap | 8 | 짧은 아이콘·라벨 사이 |
 | surface.padding | 16 | 기본 그룹 내부 |
 | row.paddingY / .paddingX | 12 / 16 | 목록 내부 |
-| radius.control | 14 | 일반 버튼·입력 |
-| radius.surface | 18 | 카드·그룹 면 |
+| radius.control | 16 | 일반 버튼·입력 |
+| radius.surface | 16 | 카드·그룹 면 |
 | radius.image | 14 | 콘텐츠 썸네일 |
 | radius.overlay | 26 | 시트·다이얼로그 |
 | radius.pill | 999 | 의미상 칩·세그먼트 thumb |
@@ -34,19 +34,25 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | size.actionSmall / .actionMedium / .actionLarge | 32 / 40 / 48 | 기본 글자 크기에서 보이는 최소 버튼 높이 |
 | size.touchMin | 48 | 클릭·터치 영역 최소 |
 | size.rowMin | 56 | 목록 행의 최소 높이 |
-| size.topBarMin / .bottomBarMin | 56 / 56 | OS inset 제외한 상·하단 content 최소 높이 |
+| size.topBarMin / .bottomBarMin | 60 / 76 | OS inset 제외한 상·하단 content 최소 높이 |
 | action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 18 | 버튼 size별 좌우 padding |
 | action.paddingYSmall / .paddingYMedium / .paddingYLarge | 7 / 9 / 13 | 버튼 size별 상하 padding, 줄높이를 줄인 만큼 여백 확보; 버튼 높이는 유지 |
 | segment.paddingX / .trackHeight | 12 / 36 | 세그먼트 좌우 padding·보이는 기본 높이 |
 | badge.paddingX / .paddingY | 8 / 4 | 배지 내부 padding |
 | field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
-| progress.height | 8 | 기본 진행 막대 높이 |
-| size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 24 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
+| progress.height | 10 | 기본 진행 막대 높이 |
+| size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 27 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
 | size.iconButtonContent / .iconButtonCompact | 16 / 14 | 텍스트 버튼 내부 아이콘, 일반/작은 size |
 | size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 64 / 104 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
 
 ## 개선 변경의 근거 (제안값)
 S2-01/04/08에 나타나는 Button 내부 콘텐츠 과대·Avatar 과대를 줄이기 위해 `iconButtonContent=18→16`, `avatarProfile=80→64`, `avatarHeroMax=120→104`, `paddingXLarge=20→18`을 v0.2 후보로 조정. 전체 버튼 높이·터치 최소 48·페이지 여백은 보존한다. **수치 감소가 곧 합격은 아니며** 웹에서 동일 fixture 전후 비교가 필요하다. 48 미만 보이는 버튼은 비중첩 48 hit target을 별도로 확보한다.
+
+## v0.6 변형 규격
+- Progress는 C-STATUS **한 종류**, `micro=6`, `default=10`, `featured=12`의 높이 속성으로 표현한다. 별도 Progress 컴포넌트를 만들지 않는다.
+- Top Nav 60dp(상태바 제외), glyph 24dp, hit target 48dp. Bottom Nav 76dp(inset 제외), glyph 27dp, 라벨 11–12sp, Gap 4dp. 실제 탭 수는 O-003 미결.
+- Button 16dp radius를 기준으로 하고 로딩/프레스 시 Label center·Icon slot·border box 이동 금지. 내장 아이콘은 16–18dp, Label/Icon Gap 6–8dp.
+- Rarity Surface에도 16dp radius를 공유하지만 등급색과 이미지 속성은 별도 C-RARITY에 소유. 3단 Bottom Sheet는 C-SHEET의 content-driven snap과 S-PAGE 안전영역 참조.
 
 ## 적용 규칙
 같은 size는 tone·treatment가 바뀌어도 높이·padding·radius가 같다. radius는 의미별 family 토큰을 공유하며 같은 숫자를 모든 모양에 강제하지 않는다. 버튼과 카드 내부 패딩을 개별 화면에서 임의로 줄이지 않는다.

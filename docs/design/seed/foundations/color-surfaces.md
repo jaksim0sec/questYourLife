@@ -16,7 +16,7 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 
 | Token | Light | Dark | 용도 |
 |---|---|---|---|
-| bg.canvas | #FAF9F8 | #17171B | 페이지 바탕, Light를 조금 더 중립적으로 교정 |
+| bg.canvas | #FCFBFA | #17171B | 페이지 바탕, Light를 조금 더 중립적으로 교정 |
 | bg.surface | #FFFFFF | #232329 | 기본 그룹 면 |
 | bg.muted | #F1F0F3 | #303038 | 약한 그룹·보조 행동 |
 | bg.floating | #FFFFFF | #2C2C34 | 시트·팝오버 |
@@ -25,10 +25,10 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 | fg.muted | #6E6A74 | #ABA7B2 | 낮은 강조, 읽혀야 하는 정보 |
 | stroke.subtle | #E8E4E7 | #44414B | 장식·그룹 구분, 조작 식별에 단독 사용 금지 |
 | stroke.control | #827A87 | #938B9C | 입력·선택의 필수 경계 |
-| accent.solid | #D93B3B | #FF8173 | 핵심 Brand 행동, 더 따뜻한 레드 v0.2 후보 |
+| accent.solid | #DB3040 | #FF8173 | 핵심 Brand 행동, 더 따뜻한 레드 v0.2 후보 |
 | accent.onSolid | #FFFFFF | #17171B | Brand Solid 라벨·아이콘 |
-| accent.weak | #FFF1ED | #3B2522 | 브랜드 보조 면 |
-| accent.onWeak | #A52A24 | #FFAA9C | 브랜드 보조 전경·현재 선택 텍스트 |
+| accent.weak | #FFF0F2 | #452831 | 브랜드 보조 면 |
+| accent.onWeak | #A71C2E | #FFADBA | 브랜드 보조 전경·현재 선택 텍스트 |
 | neutral.solid | #33313A | #E6E2EB | 중립적 High 행동, 필요할 때만 |
 | neutral.onSolid | #FFFFFF | #17171B | Neutral Solid 전경 |
 | positive.fg / .bg | #176C47 / #E9F6EE | #89DFB1 / #18382A | 긍정 결과 |
@@ -49,6 +49,20 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 - 배경·카드·버튼의 그라데이션을 기본 구성에서 제거한다. A2/A3의 보상 이미지 자체에만 3D 조명·광택을 보존한다.
 - 새로운 HEX 매핑은 모두 proposed. 실제 웹 테마·장시간 화면 사용·브랜드 일관성 검증 후 승인한다.
 
+## v0.6 보상 2차 브랜드색 및 등급색 계약 (모두 proposed)
+| Token | Light | Dark | 규칙 |
+|---|---|---|---|
+| accent.secondary | #FFCC4D | #FFD76D | 보상·캐시 가치 표현, Primary Red를 대체하지 않음 |
+| accent.onSecondary | #292216 | #292216 | 노랑 위 진한 전경, 흰 글자 금지 |
+| itemRarity.common | #FAFAFA→#EDEDF1 | dark-specific mapping pending | 등급값 후보, 브랜드 변경과 독립 |
+| itemRarity.uncommon | #F5FCF7→#E2F2E8 | pending | 미세 그라데이션 |
+| itemRarity.rare | #F6F9FF→#E0ECFF | pending | 미세 그라데이션 |
+| itemRarity.epic | #FCF8FF→#EDDEFA | pending | 미세 그라데이션 |
+| itemRarity.legendary | #FFFCF3→#FFE9BD | pending | 미세 그라데이션 |
+| itemRarity.special | #FFF7F7→#FFE2E7 | pending | 미세 그라데이션 |
+
+Dark에서는 일률 brightness/filter로 처리하지 말고 전경/배경 대비를 함께 조절한다. 코인 이미지는 사용자 제공 투명 골드 원본을 별도 에셋으로 소유하며 HEX 토큰으로 재생성하지 않는다. 밝은 아트 배경 위 글자는 전체 다크 테마 본문색을 상속시키지 않는다. Brand Weak·Brand Outline·Switch OFF·Skeleton은 다크 전용 의미 토큰을 적용한다.
+
 ## 표면·깊이
 Surface는 정보 그룹이고 그 자체로 버튼이 아니다. 카드 여부는 독립된 콘텐츠 단위·클릭 동작으로 판단한다. 그룹 내부 행마다 별도 카드·그림자를 중첩하지 않는다.
 - elevation.flat: 그림자 없음, 기본.
@@ -64,10 +78,10 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 
 | 조합 | 계산 대비 |
 |---|---:|
-| Light accent.onSolid / accent.solid | 약 4.53:1 (v0.2 계산값) |
-| Light accent.onWeak / accent.weak | 6.45:1 |
+| Light accent.onSolid / accent.solid | 약 4.66:1 (v0.6 후보 계산값) |
+| Light accent.onWeak / accent.weak | 약 6.67:1 (v0.6 후보) |
 | Dark accent.onSolid / accent.solid | 7.35:1 |
-| Dark accent.onWeak / accent.weak | 7.79:1 |
+| Dark accent.onWeak / accent.weak | 약 7.46:1 (v0.6 후보) |
 
 배경 이미지 위 텍스트는 별도 불투명 받침 또는 충분한 명암 영역을 확보한다. 직접 관찰 high: 두 테마의 중립 면과 빨강. 매핑·상태 overlay는 제안이며 렌더 검증 전이다.
 

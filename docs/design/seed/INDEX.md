@@ -9,7 +9,7 @@ references: [U-01, U-02, D-011]
 
 # 갓생패치 · 디자인 시드 INDEX
 
-v0.2 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**. 문서화는 완료 대상이며 토큰의 최종 승인·실제 UI 검증·앱 구현 완료를 뜻하지 않는다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
+v0.6 proposed · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**. 문서화는 완료 대상이며 토큰의 최종 승인·실제 UI 검증·앱 구현 완료를 뜻하지 않는다. 정책은 [DECISIONS](../../DECISIONS.md) / [OPEN](../../OPEN.md), 추출 방식은 [AUTHORING GUIDE](../SEED_AUTHORING_GUIDE.md) 정본을 따른다.
 
 기준: 중립적이고 정돈된 조작 UI + 굵기 있는 명확한 정보 계층 + 붉은 도장 정체성 + 표현력 있는 3D 보상. 컨셉의 콘텐츠·탭 수·배치를 복제하지 않는다. 새 토큰/상태는 제안, 기존 상단은 승인 정본이다.
 
@@ -40,10 +40,19 @@ v0.2 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 | C-AVATAR | Avatar / Transparent Mascot | component | 프로필·친구 얼굴·투명 캐릭터 | [components/avatar.md](components/avatar.md) | F-GEOMETRY, F-TYPE, F-COLOR | proposed | S2-04/07/08 |
 | C-IMAGE | Image Frame | component | 아이템 contain·콘텐츠 썸네일 cover | [components/image-frame.md](components/image-frame.md) | F-GEOMETRY, F-COLOR | proposed | S2-03/05/06/07/08 |
 | C-BOTTOM | Bottom Navigation (proposed) | component | 하단 전역 목적지·활성·크기 | [components/bottom-navigation.md](components/bottom-navigation.md) | F-ICON-MOTION, F-TYPE, F-GEOMETRY, F-COLOR, NAV-TOP | proposed | S2-04/05/07/08; O-003 |
+| C-CREDIT | Credit Value | component | 캐시 코인 이미지+금액 한 덩어리 | [components/credit-value.md](components/credit-value.md) | F-TYPE, F-COLOR, F-GEOMETRY, C-IMAGE | proposed | U-05, S2-08 |
+| C-RADIO | Radio Choice | component | 상호 배타적 선택/그룹 | [components/radio-choice.md](components/radio-choice.md) | F-COLOR, F-GEOMETRY, F-TYPE, C-SELECTION | proposed | U-05, S2-08 |
+| C-TEXT | Text Hierarchy | component | 5단계 텍스트 표현 배치 | [components/text-hierarchy.md](components/text-hierarchy.md) | F-TYPE, F-GEOMETRY, F-COLOR | proposed | U-05, S2-08 |
+| C-SVG | SVG Icon Contract | component | 둥근 Outline 및 활성 Fill의 별도 경로 | [components/svg-icon.md](components/svg-icon.md) | F-ICON-MOTION, F-GEOMETRY, F-TYPE, F-COLOR | proposed | U-05, S2-08 |
+| C-GESTURE | Gesture Contract | component | 스와이프·드래그·탭·취소·키보드 대안 | [components/gesture.md](components/gesture.md) | F-ICON-MOTION, F-GEOMETRY | proposed | U-05, S2-08 |
+| C-SHEET | Bottom Sheet | component | 컨텐츠 가변 높이·3단 스냅·Footer | [components/bottom-sheet.md](components/bottom-sheet.md) | F-GEOMETRY, F-TYPE, F-COLOR, C-GESTURE, C-ACTION | proposed | U-05, S2-08 |
+| C-RARITY | Item Rarity Surface | component | 등급별 은은한 미세 그라데이션 프레임 | [components/item-rarity-surface.md](components/item-rarity-surface.md) | F-COLOR, F-GEOMETRY, C-IMAGE, A-ART | proposed | U-05, S2-08 |
 | C-OVERLAY | Sheet·Dialog·Snackbar·Skeleton | component | 모달/피드백/빈 상태/로딩 | [components/overlay-feedback.md](components/overlay-feedback.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION, C-ACTION | proposed | REF-003, SRC-TDS-SYSTEM |
 | P-ACTIONS | 버튼 그룹·수락/거절·Bottom CTA | pattern | 폭 비중/조합/하단 행동 | [patterns/action-layout.md](patterns/action-layout.md) | C-ACTION, C-SELECTION, F-GEOMETRY | proposed | REF-005/006/007, SRC-TDS-BOTTOM |
 | P-HIERARCHY | 콘텐츠 조합·비중·밀도 | pattern | 프로필/섹션/필터와 정렬 | [patterns/content-hierarchy.md](patterns/content-hierarchy.md) | C-LIST, C-SURFACE, C-STATUS, C-SELECTION, F-TYPE, F-GEOMETRY | proposed | REF-001–005 |
 | P-STATES | 빈·오류·오프라인·대기·복구 | pattern | 상태별 표현/실제 결과 | [patterns/state-feedback.md](patterns/state-feedback.md) | C-OVERLAY, C-STATUS, C-ACTION, C-FIELD | proposed | REF-001/003, U-02 |
+| P-SHEET | Bottom Sheet Flow | pattern | Sheet Footer·본문·Snap 조합 | [patterns/bottom-sheet-flow.md](patterns/bottom-sheet-flow.md) | C-SHEET, C-ACTION, C-TEXT, C-GESTURE, S-PAGE | proposed | U-05 |
+| P-BTN-ICON | Button + SVG Layout | pattern | 버튼 SVG/Label/Loading의 안정 배치 | [patterns/button-icon-layout.md](patterns/button-icon-layout.md) | C-ACTION, C-SVG, F-GEOMETRY, F-TYPE | proposed | U-05 |
 | S-PAGE | Root·Detail·Utility·Overlay | shell | 헤더/스크롤/하단바/안전영역 | [shells/page-shells.md](shells/page-shells.md) | F-GEOMETRY, F-TYPE, F-COLOR, P-ACTIONS, NAV-TOP | proposed | REF-001/002/004/005, D-011, SRC-TDS-BOTTOM |
 | A-ART | 3D·보상·마스코트·광원 | asset | 아트 표시/소품/표현 레벨 | [assets/reward-art.md](assets/reward-art.md) | F-PRINCIPLES, C-SURFACE, P-HIERARCHY | proposed | REF-001–004 |
 | NAV-TOP | 확정 상단·Root/Standard | shell | 상단 구조/Back/Close/액션 | [../TOP_NAVIGATION.md](../TOP_NAVIGATION.md) | — | approved | D-011; 세부 수치 제외 |
@@ -67,3 +76,13 @@ v0.2 · 2026-11-05 Asia/Seoul · **컨셉을 교정해 추출한 제안 사양**
 
 파일을 모두 만드는 것이 목적이 아니다. 새 변형은 기존 슬롯·토큰·조합으로 해결되는지 먼저 확인한다. 페이지마다 제품 데이터 이름을 붙인 컴포넌트를 늘리지 않는다.
 
+
+## v0.6 작업별 선택적 라우팅
+
+- **코인·획득 금액:** C-CREDIT → C-STATUS / C-IMAGE / F-COLOR.
+- **체크·라디오·기간 선택:** C-CHECK + C-RADIO + C-SEGMENT, 탭은 별도 C-TABS.
+- **하단 활성 Fill / 비활성 Outline:** C-BOTTOM → C-SVG → F-ICON-MOTION.
+- **시트 스냅·제스처·고정 Footer:** P-SHEET → C-SHEET + C-GESTURE + S-PAGE.
+- **아이콘이 있는 버튼:** P-BTN-ICON → C-ACTION + C-SVG.
+- **마이/꾸미기 아이템 등급:** C-RARITY + C-IMAGE + A-ART, 등급명·새 화폐 임의 생성 금지.
+- 실제 v0.6 웹 실험은 검증용 시연이며 자동으로 approved가 되지 않는다.

@@ -19,6 +19,11 @@ Progress: Track + Indicator + Value label + 선택적 목표 설명, mode(determ
 ## Tokens
 Badge는 type.caption/support, radius.pill, badge.paddingX/Y 사용. 무채색이 기본, 의미 있을 때 semantic 색 사용. Badge의 작은 면과 글자가 주변 제목보다 튀지 않게 한다. Progress는 progress.height, radius.pill, bg.muted track과 accent.solid indicator를 기본 제안한다. 이벤트의 금색·보라는 A-ART의 맥락별 표현이며 전역 진행률 기본색이 아니다.
 
+## Progress v0.6 정리
+독립 컴포넌트 **Progress 한 개**가 `thickness=micro(6)|default(10)|featured(12)`을 속성으로 제공. Track과 Indicator의 높이·rounded cap을 함께 맞춘다. 0/49/99/100%, indeterminate, offline stale의 퍼센트 표기를 의미에 따라 구별. 등급색을 진행률 기본색에 혼입하지 않는다.
+
+Credit Value는 [C-CREDIT](credit-value.md)에서 이미지를 포함한 숫자 슬롯을 정의한다. Badge/Progress를 코인+수치의 정본으로 겸용하지 않는다.
+
 ## States / Behavior
 Badge는 정보 표시라 focus/pressed를 갖지 않는다. Progress는 zero / partial / complete / indeterminate / unavailable을 구분한다. 데이터가 없거나 오프라인 값이 오래되었으면 완주처럼 채우지 않는다. value는 유효 범위로 표시하되 이상 데이터 자체를 숨기지 않고 별도 오류를 남긴다. complete는 실제 완료 상태와 일치할 때만 표시한다.
 

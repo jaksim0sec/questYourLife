@@ -2,11 +2,39 @@
 
 이 브랜치는 **문서만 보관**한다. 기존 Android 코드·API·데이터·에셋은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 남아 있다.
 
+## 다음 작업에서 먼저 볼 곳
+
+갓생패치는 현실의 목표를 AI로 실행 가능한 퀘스트로 바꾸고, 실제 수행을 기록해 성취를 쌓는 소셜 퀘스트 앱이다. 퀘스트북은 발견·참여·공유·리믹스를 통해 사람들 사이에서 유행할 수 있는 콘텐츠를 지향한다. 친구·클랜과 함께한 도전, 캐시·상자·옷과 소품은 붉은 도장 마스코트와 마이페이지를 꾸미는 즐거움으로 이어진다.
+
+| 작업 | 필요한 문서부터 읽기 |
+|---|---|
+| 제품 의도·화면 흐름 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [제품 색인](./product/README.md)의 관련 항목. 앱 정체성이나 전체 UX를 다루면 [VISION](./product/VISION.md)도 읽는다. |
+| 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](./design/seed/implementation/v015.md)과 [토큰](./design/seed/implementation/v015-tokens.json) → [INDEX](./design/seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](./design/seed/assets/icons/v0.14/README.md). |
+| 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](./design/SEED_AUTHORING_GUIDE.md) → [INDEX](./design/seed/INDEX.md)에서 기존 규칙과 대조. |
+| Android 코드 수정 | 먼저 `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md), 이어서 관련 코드와 해당 작업 문서. |
+
+SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Components(재사용 부품과 상태), Patterns(부품 조합), Shells(화면 골격과 안전영역), Assets(아트와 SVG)로 나뉜다. 수치와 시각 규칙은 v0.15 적용 계약과 토큰에서 확인한다. 화면별 데이터·하단 탭 목적지·테마 기본값·글래스 채택·네이티브 적용은 결정 및 구현 상태를 따로 확인한다. 리서치·이전 시드·감사 기록은 근거를 추적할 때 연다.
+
+## 컨셉 이미지 4장 · 디자인 감성
+
+**차분한 앱 안에서 현실의 행동은 손쉽게 읽히고, 내가 모은 것은 실제 물건처럼 느껴진다.** 굵고 짧은 한글 제목, 낮은 대비의 보조 정보, 둥근 중립 표면과 얇고 부드러운 선 아이콘이 공통 골격이다. 따뜻한 붉은색은 선택·실행·진행과 도장 마스코트에 집중한다. 평소에는 사진·일러스트·소품이 표현을 맡고, 금빛·보라·리본·광원은 특별한 보상 장면에서 강해진다.
+
+| 참조 | 화면이 주는 느낌과 가져올 원리 |
+|---|---|
+| 라이트 클랜·마이·꾸미기 (S2-08) | 따뜻하고 또렷한 생활 앱. 거친 붉은 도장 얼굴에 골지 비니나 헤드폰처럼 손에 잡힐 듯한 소품을 겹친다. 클랜에서는 함께 쌓은 성취, 마이에서는 내 기록과 취향, 꾸미기에서는 모으고 싶은 물건이 먼저 보인다. 아이템 진열에서는 실루엣이 잘리지 않게 한다. |
+| 다크 홈·라이트 퀘스트 (S2-05) | 홈은 책상 조명·운동기구·밤하늘처럼 각기 다른 분위기의 썸네일을 둘러보는 재미가 있다. 퀘스트는 오늘 할 일·남은 분량·다음 행동이 바로 읽히는 실행 화면이다. 같은 시각 문법 안에서 콘텐츠 역할에 따라 밀도를 조절한다. |
+| 다크 탐색·클랜 피드·퀘스트북 상세 (S2-07) | 어두운 바탕에서 썸네일과 활동 사진이 먼저 눈에 들어온다. 상세는 큰 대표 이미지에서 목표·기간·진행·참여로 읽는 순서가 이어진다. 사람의 활동이 보이고, 보조 수치와 액션은 그 흐름을 받친다. |
+| 시즌·레이드·획득 이미지 (S2-06) | 금속 테두리, 보석, 광원과 그림자로 상자와 획득물에 무게가 생긴다. 획득 연출에서 허용할 표현 강도의 상한을 보여준다. |
+
+이미지의 탭 구성, 화면별 명암 배정, 문구·수치·시즌 패스·가격·레이드·XP·보석은 시안의 예시다. 적용 범위는 [DECISIONS](./DECISIONS.md)와 [OPEN](./OPEN.md), 참조 추적은 [입력 기록](./design/seed/references/inputs.md)의 S2-05~08을 따른다.
+
+## 전체 문서 색인
+
 - [확정사항](./DECISIONS.md) / [미결사항](./OPEN.md)
 - [제품 철학·퀘스트·소셜·보상·마스코트](./product/README.md)
 - [컨셉 이미지 → 디자인 시드 추출·분산 가이드](./design/SEED_AUTHORING_GUIDE.md)
 - [Superpowers 디자인 시드 정합화 제안](./superpowers/specs/2026-11-05-design-seed-reconciliation-design.md) / [단계별 실행 계획](./superpowers/plans/2026-11-05-design-seed-reconciliation.md)
-- [디자인 시드 v0.2 · 선택 독해 INDEX](./design/seed/INDEX.md) — 기존 규칙 개선 + 필수 컴포넌트 분리, 최종 시각 승인 전
+- [디자인 시드 · 선택 독해 INDEX](./design/seed/INDEX.md) — 영역별 문서와 v0.15 확정 범위
 - [첨부 8장 전수 감사](./design/seed/AUDIT.md) / [SEED 컴포넌트 커버리지](./design/seed/COVERAGE.md) / [실제 검증·미결](./design/seed/VALIDATION.md)
 - [디자인 확정 · Top Navigation](./design/TOP_NAVIGATION.md)
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)

@@ -108,3 +108,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 4. 화면별 구현에는 C-ACTION/C-SURFACE/C-SHEET 등 필요한 **직접 의존 문서만** 추가로 읽는다. 기존 `AGENT.md`, 제품 D-001~D-011, 앱 리소스 정본과 충돌 시 자동 이식하지 않는다.
 
 **상태 구분:** [Seed confirmed] 웹/디자인 규격 승인 · [Native pending] Compose/VectorDrawable/실기기/탭 IA 등 구현 미완료. 새 시드 문서를 늘리기보다 여기의 원칙을 재사용한다.
+
+## 2026-11-07 · 컬러 팔레트 시연
+
+기준색 Blue `#3987FF` · Green `#19C98A` · Orange `#FFAD32` · Purple `#A078FF`. 확장 HEX와 Light/Dark 의미색은 [F-COLOR](foundations/color-surfaces.md) → [v015-tokens.json](implementation/v015-tokens.json) `color.palette` / `color.semanticPalette`에서 관리. **웹 시연용 임시 채택**, v0.15 승인된 브랜드·보상·SVG 규격 변경 아님.

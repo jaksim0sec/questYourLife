@@ -31,11 +31,11 @@ references: [REF-001, REF-002, REF-004, REF-006, SRC-SEED-BUTTON, SRC-TDS-BUTTON
 | accent.onWeak | #A71C2E | #FFADBA | 브랜드 보조 전경·현재 선택 텍스트 |
 | neutral.solid | #33313A | #E6E2EB | 중립적 High 행동, 필요할 때만 |
 | neutral.onSolid | #FFFFFF | #17171B | Neutral Solid 전경 |
-| positive.fg / .bg | #176C47 / #E9F6EE | #89DFB1 / #18382A | 긍정 결과 |
-| warning.fg / .bg | #7B5100 / #FFF4D8 | #F3CF76 / #3C311B | 주의 |
+| positive.fg / .bg | #087E55 / #E6FFF4 | #76EABD / #0B5038 | 성공·완료 (시연 팔레트) |
+| warning.fg / .bg | #985500 / #FFF6E5 | #FFD27D / #653700 | 주의 (시연 팔레트) |
 | critical.fg / .bg | #A92135 / #FFF0F2 | #FF9CA7 / #3A2228 | 오류·파괴 행동 |
-| info.fg / .bg | #245AA5 / #EAF2FF | #A6C9FF / #203149 | 안내 |
-| focus.ring | #245AA5 | #A6C9FF | 키보드 포커스 |
+| info.fg / .bg | #0B63D8 / #EAF3FF | #99C4FF / #123B79 | 안내·상승 (시연 팔레트) |
+| focus.ring | #0B63D8 | #99C4FF | 키보드 포커스 (시연 팔레트) |
 | disabled.bg / .fg | #EFEDF0 / #827D88 | #302D35 / #8E8896 | 비활성 전용 |
 | overlay.scrim | #000000, 40% | #000000, 56% | 모달 뒤 배경 |
 
@@ -96,3 +96,22 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 현재 시연의 기본 표면: canvas Light `#FCFBFA` / Dark `#17181D`, surface `#FFFFFF` / `#242329`, soft `#FFF7F2` / `#2D292C`, subtle line `#F0E8E5` / `#373338`, primary text `#242126` / `#F6F3F3`. 나머지 의미색은 기존 제안 테이블의 역할을 유지한다.
 
 **브랜드 빨강은 Outline의 기본 foreground가 아님.** Neutral Outline은 중립 텍스트+중립 테두리, Brand Weak/Brand Outline만 명시적 브랜드 보조 액션. Switch OFF / Skeleton / Brand Weak는 Light 변형에 `opacity`를 일괄 덧씌우는 대신 Dark 전용 표면·경계·전경 사용. 보다 자세한 최종 범위는 [v0.15](../implementation/v015.md).
+
+
+## 2026-11-07 선명한 컬러 팔레트 · 웹 시연에 임시 채택
+
+기존 승인된 Brand Red `#DB3040`와 Reward Gold `#FFCC4D`는 **그대로 보존**한다. Blue/Green/Orange/Purple의 기준색 500은 이번 대화에서 **우선 적용할 값**으로 선택했으며, 100/300/700/900은 시각·대비 검증을 위한 파생 후보이다. 최종 Android/제품 전역 확정과 구분한다.
+
+| 계열 | 100 | 300 | **500 기준색** | 700 | 900 |
+|---|---|---|---|---|---|
+| blue | #EAF3FF | #99C4FF | **#3987FF** | #0B63D8 | #123B79 |
+| green | #E6FFF4 | #76EABD | **#19C98A** | #087E55 | #0B5038 |
+| orange | #FFF6E5 | #FFD27D | **#FFAD32** | #985500 | #653700 |
+| purple | #F3ECFF | #C5ADFF | **#A078FF** | #7445D6 | #48238F |
+
+- `palette.{family}.{level}` → `semanticPalette.{role}.{theme}.{foreground|background|accent}` → 컴포넌트. 페이지별 직접 HEX 입력 금지.
+- 시각 의미: Blue=`trendUp`/정보, Green=`success`/완료, Orange=`warning`/주의, Purple=`special`/이벤트. Red=브랜드, Gold=보상으로 분리.
+- 라이트: foreground 700 + background 100 + 작은 장식/도트 accent 500. 다크: foreground 300 + background 900 + accent 500. 배경은 필요한 상태에서만 사용.
+- 채도가 높은 500을 라이트 테마 작은 본문에 바로 사용하면 대비 부족이므로 텍스트에는 의미색 foreground를 사용한다.
+- 색상은 보조 신호로만 쓰고 상승 화살표·숫자·진행률처럼 형태/텍스트도 함께 사용한다. 상승률의 산식과 대상은 미확정.
+- 토큰의 단일 데이터 원본은 [v015-tokens.json](../implementation/v015-tokens.json)의 `color.palette` 및 `color.semanticPalette`이다. 기존 의미색 표의 success/warning/info/focus는 이번 웹 시연 trial mapping으로 업데이트했다. 이전 제안은 Git 이력에 남는다.

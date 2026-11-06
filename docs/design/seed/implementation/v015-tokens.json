@@ -32,6 +32,118 @@
         "bg": "#957027",
         "on": "#FFFFFF"
       }
+    },
+    "palette": {
+      "status": "provisional-web-preview-2026-11-07",
+      "levels": [
+        100,
+        300,
+        500,
+        700,
+        900
+      ],
+      "families": {
+        "blue": {
+          "100": "#EAF3FF",
+          "300": "#99C4FF",
+          "500": "#3987FF",
+          "700": "#0B63D8",
+          "900": "#123B79"
+        },
+        "green": {
+          "100": "#E6FFF4",
+          "300": "#76EABD",
+          "500": "#19C98A",
+          "700": "#087E55",
+          "900": "#0B5038"
+        },
+        "orange": {
+          "100": "#FFF6E5",
+          "300": "#FFD27D",
+          "500": "#FFAD32",
+          "700": "#985500",
+          "900": "#653700"
+        },
+        "purple": {
+          "100": "#F3ECFF",
+          "300": "#C5ADFF",
+          "500": "#A078FF",
+          "700": "#7445D6",
+          "900": "#48238F"
+        }
+      },
+      "notes": "500 base colors accepted for trial; derived scale/mappings are proposals. Existing brand/red and reward/gold remain unchanged."
+    },
+    "semanticPalette": {
+      "status": "trial",
+      "mappings": {
+        "trendUp": {
+          "family": "blue",
+          "light": {
+            "foreground": "blue.700",
+            "background": "blue.100",
+            "accent": "blue.500"
+          },
+          "dark": {
+            "foreground": "blue.300",
+            "background": "blue.900",
+            "accent": "blue.500"
+          }
+        },
+        "info": {
+          "family": "blue",
+          "light": {
+            "foreground": "blue.700",
+            "background": "blue.100",
+            "accent": "blue.500"
+          },
+          "dark": {
+            "foreground": "blue.300",
+            "background": "blue.900",
+            "accent": "blue.500"
+          }
+        },
+        "success": {
+          "family": "green",
+          "light": {
+            "foreground": "green.700",
+            "background": "green.100",
+            "accent": "green.500"
+          },
+          "dark": {
+            "foreground": "green.300",
+            "background": "green.900",
+            "accent": "green.500"
+          }
+        },
+        "warning": {
+          "family": "orange",
+          "light": {
+            "foreground": "orange.700",
+            "background": "orange.100",
+            "accent": "orange.500"
+          },
+          "dark": {
+            "foreground": "orange.300",
+            "background": "orange.900",
+            "accent": "orange.500"
+          }
+        },
+        "special": {
+          "family": "purple",
+          "light": {
+            "foreground": "purple.700",
+            "background": "purple.100",
+            "accent": "purple.500"
+          },
+          "dark": {
+            "foreground": "purple.300",
+            "background": "purple.900",
+            "accent": "purple.500"
+          }
+        }
+      },
+      "rule": "semantic role -> family+level by theme; keep 500 for pictorial accents, use foreground 700 on light and 300 on dark for small text."
     }
   },
   "space": {

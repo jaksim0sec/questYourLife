@@ -61,10 +61,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 700; }
 
-.nav-link .glyph, .nav-link svg, .nav-link .glyph img { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
-
- /* The original inactive compass has a dark intrinsic stroke; use a neutral in dark mode. */
-:root[data-theme="dark"] .nav-link:not([aria-current]) img[data-nav-icon="clan"] { filter: grayscale(1) brightness(0) invert(0.73); }
+.nav-link .glyph, .nav-link svg { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
 
 .nav-link[aria-current] { color: var(--brand); font-weight: 850; }
 

@@ -55,6 +55,11 @@
       outline: '<path d="M6.73 19.83C8.14 20.61 9.93 21 11.91 21 17.1 21 21 17.1 21 12S17.1 3 12 3 3 6.9 3 12C3 13.94 3.49 15.5 4.29 16.86L3.55 20.13Q3.39 20.82 4.08 20.65Z"/>',
       fill: '<g fill="currentColor"><path d="M6.73 19.83C8.14 20.61 9.93 21 11.91 21 17.1 21 21 17.1 21 12S17.1 3 12 3 3 6.9 3 12C3 13.94 3.49 15.5 4.29 16.86L3.55 20.13Q3.39 20.82 4.08 20.65Z"/></g>'
     },
+    clan: {
+      // Preserve the original MHTML / SEED bookmark geometry, including its 24×24 canvas.
+      outline: '<path d="M7 3.5h10q2 0 2 2V20q0 .8-.7.4L12 16.8l-6.3 3.6q-.7.4-.7-.4V5.5q0-2 2-2Z"/>',
+      fill: '<path d="M7 3.5h10q2 0 2 2V20q0 .8-.7.4L12 16.8l-6.3 3.6q-.7.4-.7-.4V5.5q0-2 2-2Z" fill="currentColor" stroke="currentColor"/>'
+    },
     me: {
       outline: '<circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="8.9" r="3.1"/><path d="M5.92 18.84C6.82 15.83 9.07 14.37 12 14.37S17.18 15.83 18.08 18.84"/>',
       fill: '<circle cx="12" cy="12" r="9.2"/><g fill="currentColor" stroke="none"><circle cx="12" cy="8.9" r="3.1"/><path d="M5.9 18.85C6.9 15.75 9.1 14.5 12 14.5S17.1 15.75 18.1 18.85A9.2 9.2 0 0 1 5.9 18.85Z"/></g>'
@@ -66,12 +71,6 @@
       const key = link.getAttribute('href').slice(1);
       if (key === active) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
-      if (key === 'clan') {
-        // Keep the original Android compass SVG assets byte-for-byte, including their fill/outline states.
-        const compass = link.querySelector('img[data-nav-icon="clan"]');
-        if (compass) compass.src = key === active ? 'assets/nav-active-clan.svg' : 'assets/nav-inactive-clan.svg';
-        return;
-      }
       const icon = link.querySelector('svg');
       if (icon && navIconStates[key]) {
         icon.innerHTML = navIconStates[key][key === active ? 'fill' : 'outline'];

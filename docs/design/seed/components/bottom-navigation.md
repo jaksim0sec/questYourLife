@@ -42,6 +42,6 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 
 별도 Fill을 제공하는 nav asset은 활성=Fill + 강조색 + 라벨, 비활성=Outline + 중립. SVG 출력 27dp, `viewBox=24`, 원본 획 1.8. 사용자의 승인된 Soft SVG 소스를 사용하되 **앱의 기존 클랜 탭 나침반 교체 금지**. 탭 목적지 및 특정 아이콘 매핑 결정은 O-003. Root/Detail 시 Bottom Nav 가시성과 Bottom CTA 충돌은 S-PAGE가 소유.
 
-## 2026-11-07 클랜 시연 에셋 회귀 복원
+## 2026-11-07 클랜 시연 아이콘 보정
 
-`main/app/src/main/assets/icons/svg/nav-active-clan.svg` (blob `c730e34ae6af6780275282b5227062c04357caf6`)과 `nav-inactive-clan.svg` (blob `98bcd4941b8786eac5833bb80f48dff797c639f6`)는 **기존 클랜 나침반 SVG 정본**이다. `new/web/preview/assets/`에 동일 Git 객체를 연결하고 `aria-current=page`에 따라 교체한다. 원본 MHTML에 저장된 책갈피 모양을 클랜의 정본으로 확정하지 않는다. 다크 테마 비활성 검정 stroke의 화면 표시 보정은 CSS 필터로 처리한다. 다른 탭/IA 변경 없음.
+`new/web/preview`에서 클랜 탭은 최초 MHTML에 보존된 **책갈피**이며 SEED v0.14 `bookmark.svg`와 같은 외곽 경로다. 선택 시 활성용 Fill 경로로 전환하되 같은 실루엣을 유지한다. 이전에 `main` 앱의 나침반을 가져온 시도는 잘못된 해석으로 철회했다. `main`의 기존 나침반 SVG와 제품용 디자인 결정은 손대지 않으며 웹 시연에서만 책갈피를 사용한다.

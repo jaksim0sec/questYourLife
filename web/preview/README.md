@@ -41,6 +41,15 @@
 - **상태 전환은 헤더의 메뉴 바텀시트 안에서만 제공**한다. 시연용 상태 버튼이 일반 페이지 콘텐츠인 것처럼 노출되지 않게 함. 두 상태 모두 클랜 탐색·랭킹 접근 가능.
 - `#clan-my`(본인 클랜 기록), `#clan-activity`, `#clan-discover`, `#clan-detail`(탐색 중 선택한 공개 클랜), `#clan-rank`, `#clan-reward`, `#clan-war`, `#clan-shop`, `#clan-invite`는 Standard/Global Inner 구조 검사용 라우트.
 - `#clan-create`: 기존 짧은 이름·깃발·한 줄 소개 생성 폼 및 `#clan-created` 완료 시연. 실제 서버 생성·초대 링크·지급·경제·클랜전 매칭은 구현하지 않음.
-- **시각 원칙**: 이미지·그라데이션·과한 Reward 카드 없음. 아이콘은 SEED v0.14 Outline 경로. 색은 브랜드/기존 의미색만 최소 사용하며, **모든 기본 `.clan-section` 배경은 헤더의 `--surface`와 동일**. 섹션 구획은 `--canvas`의 8px 간격으로 구분. 역할 없는 카드 중첩 없음.
-- 멤버 이니셜 아바타, 실시간처럼 보이는 도트, 활동과 보상 수치는 모두 **예시 데이터**다. 실제 계정 정보·위치·퀘스트 상세를 노출하지 않으며 시연 내 상태만 바뀐다.
+- **시각 원칙**: 보상·장식용 새 일러스트, 그라데이션, 과한 Reward 카드 없음. 멤버 아바타는 기존 공식 마스코트와 장착 장비의 원본 PNG만 예외로 사용. 아이콘은 SEED v0.14 Outline 경로. 색은 브랜드/기존 의미색만 최소 사용하며, **모든 기본 `.clan-section` 배경은 헤더의 `--surface`와 동일**. 섹션 구획은 `--canvas`의 8px 간격으로 구분. 역할 없는 카드 중첩 없음.
+- 원본 도장 얼굴과 서로 다른 4종 장착 아이템을 사용한 예시 멤버 아바타, 실시간처럼 보이는 도트, 활동과 보상 수치는 모두 **예시 데이터**다. 실제 계정 정보·위치·퀘스트 상세를 노출하지 않으며 시연 내 상태만 바뀐다.
 - 원본 MHTML의 홈 및 클랜 북마크 네비 SVG, RootFontSize, 글로벌 탐색 상태는 변경하지 않음. 실제 웹/Android E2E 테스트 별도.
+
+### 2026-11-08 · 아바타 규격 회귀 수정
+
+- 이니셜이 들어간 원형 뱃지를 멤버 얼굴로 쓰던 시도는 잘못됨. **C-AVATAR / DressedAvatar**에 맞춰 이미지에 원형 crop이나 컬러 배경을 강제하지 않고 투명 마스코트와 장비를 포개는 방식으로 정정.
+- 아래 PNG는 원본 `main/app/src/main/res/drawable-nodpi/`의 **Git Blob SHA 그대로** `new/web/preview/assets/`에 연결. 화질·재질·원본은 변경하지 않음.
+  - `mascot_face_stamp.png` / `cosmetic_beanie.png` / `cosmetic_black_headphones.png` / `cosmetic_cream_cap.png` / `cosmetic_blue_cap.png`.
+- 얼굴 프레임은 `AvatarComposer.face = (x=0,y=.233,width=1,height=.734)`이며 장비 위치와 크기는 `main/cosmetics/AvatarComposition.kt`의 각 아이템 ID와 1:1 대응. 화면·사람 이름에 따라 합성 좌표를 임의 변경하지 않음.
+- 데모 착장은 기존 `CosmeticArt.kt`의 고정값과 일치: 이모리(0 비니), 밤산책(1003 검정 헤드폰), 모찌(1 크림 캡), 다온(2 블루 캡). 실제 계정 장착 정보를 읽는 기능은 이 시연에서 구현하지 않음.
+- 클랜 페이지·피드·클랜 상세에서 같은 아바타 함수를 사용하고, 온라인 표시만 별도 dot으로 처리. 다른 페이지/기존 홈 이미지/하단 네비게이션 변경 없음.

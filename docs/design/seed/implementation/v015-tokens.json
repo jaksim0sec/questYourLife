@@ -334,18 +334,18 @@
     "touchGesturePhysicalDeviceValidated": false
   },
   "rootFontSize": {
-    "status": "preview-only-trial-2026-11-07",
+    "status": "preview-mobile-scale-adjustment-2026-11-07",
     "baseline": "100% of browser initial font size",
     "units": "CSS viewport px; never hardware DPI or user-agent",
     "ranges": [
       {
         "maxCssViewport": 479,
-        "rule": "clamp(0.94rem, calc(1rem + 1.43vw - 5.58px), 1.06rem)"
+        "rule": "clamp(1rem, calc(1rem + 1.43vw - 4.58px), 1.13rem)"
       },
       {
         "minCssViewport": 480,
         "maxCssViewport": 767,
-        "rule": "clamp(1rem, calc(1.06rem + 1.63px - 0.34vw), 1.06rem)"
+        "rule": "clamp(1rem, calc(1.13rem + 3.46px - 0.72vw), 1.13rem)"
       },
       {
         "minCssViewport": 768,
@@ -354,10 +354,11 @@
     ],
     "reference": {
       "cssViewportWidth": 390,
-      "approxCssPxAtBrowserDefault16": 16
+      "approxCssPxAtBrowserDefault16": 17
     },
     "textSizeAdjust": "100%",
     "applicability": "web/preview only",
-    "a11y": "Preserve user browser font preferences and zoom; verify large text and mobile devices separately"
+    "a11y": "Preserve user browser font preferences and zoom; verify large text and mobile devices separately",
+    "notes": "Mobile rem scale raised ~6% vs previous trial. Baseline remains browser initial font; no device-specific UA or physical pixel assumption."
   }
 }

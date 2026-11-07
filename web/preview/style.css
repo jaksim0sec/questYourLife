@@ -7,10 +7,10 @@
 /* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
 :root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (max-width: 479px) {
-  :root { font-size: clamp(0.94rem, calc(1rem + 1.43vw - 5.58px), 1.06rem); }
+  :root { font-size: clamp(1rem, calc(1rem + 1.43vw - 4.58px), 1.13rem); }
 }
 @media (min-width: 480px) and (max-width: 767px) {
-  :root { font-size: clamp(1rem, calc(1.06rem + 1.63px - 0.34vw), 1.06rem); }
+  :root { font-size: clamp(1rem, calc(1.13rem + 3.46px - 0.72vw), 1.13rem); }
 }
 
 * { box-sizing: border-box; }

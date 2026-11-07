@@ -28,3 +28,8 @@
 - 순위 예시의 `+%`는 구체적 정의가 아직 없는 상승 지표 예시로 취급해 Blue semantic(`--trend-up-fg/bg`) 및 기존 v0.14 Chevron SVG 회전 사용. 실제 데이터 정의는 미확정.
 - 오늘의 퀘스트 1/3에 공통 Progress 표현 추가. 원래 컴포넌트 갤러리에도 의미색 샘플 추가.
 - `docs/design/seed/foundations/color-surfaces.md`와 `implementation/v015-tokens.json`에 연결되는 **시연용 임시 채택**이며 Android 제품 전체 적용 확정은 아님.
+## 2026-11-07 보정 · 클랜 아이콘과 반응형 글자
+
+- 클랜 네비게이션은 `main/app/src/main/assets/icons/svg/nav-{active,inactive}-clan.svg`에서 가져온 **원본 Git Blob 그대로** 사용한다. 기존 시연의 책갈피 SVG 대신 나침반의 두 상태를 연결한다. 어두운 테마의 비활성 검정 획만 표시용 CSS 필터로 중립화한다 (원본 수정 없음).
+- `:root` 글자 크기는 브라우저/OS 글자 설정(`100%`)을 기준으로 한다. CSS viewport 폭 ≤479px에서는 `clamp(0.94rem, calc(1rem + 1.43vw - 5.58px), 1.06rem)`, 480~767px에서는 `clamp(1rem, calc(1.06rem + 1.63px - 0.34vw), 1.06rem)`, 768px 이상은 브라우저 기본 크기를 사용한다. 390px에서는 약 16px, 430px에서는 약 16.57px (기본 글자 16px 가정). 태블릿 경계에서 급격한 크기 변화를 방지한다.
+- CSS 뷰포트 폭만 사용한다. 기기 이름·DPR·실제 물리적 픽셀을 이용한 감지는 하지 않는다. 디자인 시연에만 적용하며 Android 구현·기존 문서 승인 범위는 변경하지 않는다.

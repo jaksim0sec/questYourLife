@@ -4,6 +4,15 @@
 
 :root[data-theme="dark"] { color-scheme: dark; --canvas: #17181d; --surface: #242329; --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
+/* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
+:root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@media (max-width: 479px) {
+  :root { font-size: clamp(0.94rem, calc(1rem + 1.43vw - 5.58px), 1.06rem); }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  :root { font-size: clamp(1rem, calc(1.06rem + 1.63px - 0.34vw), 1.06rem); }
+}
+
 * { box-sizing: border-box; }
 
 body { margin: 0px; min-height: 100dvh; }
@@ -52,7 +61,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 700; }
 
-.nav-link .glyph, .nav-link svg { width: calc(1.56938rem); height: calc(1.56938rem); }
+.nav-link .glyph, .nav-link svg, .nav-link .glyph img { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
+
+ /* The original inactive compass has a dark intrinsic stroke; use a neutral in dark mode. */
+:root[data-theme="dark"] .nav-link:not([aria-current]) img[data-nav-icon="clan"] { filter: grayscale(1) brightness(0) invert(0.73); }
 
 .nav-link[aria-current] { color: var(--brand); font-weight: 850; }
 

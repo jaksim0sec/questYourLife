@@ -66,12 +66,16 @@
       const key = link.getAttribute('href').slice(1);
       if (key === active) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
+      if (key === 'clan') {
+        // Keep the original Android compass SVG assets byte-for-byte, including their fill/outline states.
+        const compass = link.querySelector('img[data-nav-icon="clan"]');
+        if (compass) compass.src = key === active ? 'assets/nav-active-clan.svg' : 'assets/nav-inactive-clan.svg';
+        return;
+      }
       const icon = link.querySelector('svg');
       if (icon && navIconStates[key]) {
         icon.innerHTML = navIconStates[key][key === active ? 'fill' : 'outline'];
       }
-      // The saved Clan icon is a bookmark, not the v0.14 users symbol.
-      // Preserve its exact outline rather than inventing a new fill asset.
     });
   }
 

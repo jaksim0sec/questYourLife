@@ -27,10 +27,13 @@
     'clan-create': ['클랜 만들기', 'clan', 'global-inner'],
     'clan-created': ['클랜 생성 시연', 'clan', 'global-inner'],
     'clan-invite': ['클랜 초대', 'clan', 'global-inner'],
+    'clan-my': ['내 클랜', 'clan', 'global-inner'],
     'clan-activity': ['클랜 활동', 'clan', 'global-inner'],
     'clan-discover': ['클랜 둘러보기', 'clan', 'global-inner'],
     'clan-rank': ['클랜 랭킹', 'clan', 'global-inner'],
     'clan-reward': ['공동 보상', 'clan', 'global-inner'],
+    'clan-war': ['클랜전', 'clan', 'global-inner'],
+    'clan-shop': ['클랜 상점', 'clan', 'global-inner'],
     me: ['마이', 'me', 'global'],
     explore: ['퀘스트북 탐색', 'home', 'global-inner'],
     daily: ['일일 퀘스트', 'quests', 'global-inner'],
@@ -138,6 +141,10 @@
       sheetTitle.textContent = '메뉴';
       sheetBody.innerHTML = `<button class="menu-row" type="button" data-theme-switch="light">${icon('sun')} 라이트 테마 <span class="menu-state">${document.documentElement.dataset.theme === 'light' ? '사용 중' : ''}</span></button>
       <button class="menu-row" type="button" data-theme-switch="dark" style="margin-top:.5rem">${icon('moon')} 다크 테마 <span class="menu-state">${document.documentElement.dataset.theme === 'dark' ? '사용 중' : ''}</span></button>`;
+      // The preview-only membership switch belongs in the existing menu, not the content hierarchy.
+      if (routeName() === 'clan' && window.PreviewClan?.previewMenu) {
+        sheetBody.insertAdjacentHTML('beforeend', window.PreviewClan.previewMenu());
+      }
     } else {
       sheetTitle.textContent = '알림';
       sheetBody.replaceChildren(); // Original snapshot contained no notification content.

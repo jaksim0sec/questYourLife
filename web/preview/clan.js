@@ -1,136 +1,129 @@
-/* Clan structure preview. All displayed activity is illustrative; no API or persistence. */
+/* Clan UI-only prototype. All fixtures are illustrative and stay in session memory. */
 (() => {
   'use strict';
-  const draft = { joined: true, name: '느슨한 갓생단', about: '각자의 속도로 꾸준히 성장하는 모임', flag: '#DB3040' };
-  const shapes = {
-    flag: '<path d="M4.5 21V4.5c3.5-3 7 1.9 10.5-.5 1.5-1 3-1 4.5-.5v10c-1.5-.5-3-.5-4.5.5-3.5 2.4-7-2.5-10.5.5"/>',
-    users: '<circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1.4C3 15.7 5.2 14 9 14s6 1.7 6 4.6V20M16 5.2a3 3 0 0 1 0 5.6M18 14.2c2 .6 3 2 3 4.4V20"/>',
-    book: '<path d="M12 21V6.6C10.75 4.73 9.16 3.34 7.55 2.92Q6.6 2.66 6.6 3.72V17.25C8.62 17.55 10.42 18.77 12 21Z"/><path d="M6.6 6.48 4.35 5.98Q2.8 5.63 2.8 7.2V18.9Q2.8 19.98 3.9 19.99C7.2 20.01 9.8 20.62 12 21 15.05 19.25 17.22 18.93 20.12 18.82Q21.2 18.79 21.2 17.7V6.35Q21.2 5.25 20.1 5.38C16.9 5.74 14.5 6.58 12 8.45"/>',
-    heart: '<path d="M12 6.1C7.8.6 1.5 4.8 3.1 10.3c1.1 3.6 5.1 7.5 8.9 10 3.8-2.5 7.8-6.4 8.9-10C22.5 4.8 16.2.6 12 6.1Z"/>',
-    check: '<circle cx="12" cy="12" r="9.2"/><path d="m7.7 12 2.8 2.8 5.8-5.8"/>',
-    gift: '<rect x="3" y="8.5" width="18" height="4.2" rx="1.3"/><path d="M5 12.7v6.1q0 1.7 1.7 1.7h10.6q1.7 0 1.7-1.7v-6.1M12 8.5v12M12 8.4C7 8.4 5.2 6.8 5.5 4.8c.4-2.6 5.8-2.6 6.5 3.6ZM12 8.4c5 0 6.8-1.6 6.5-3.6-.4-2.6-5.8-2.6-6.5 3.6Z"/>',
-    chevron: '<path d="m9 5.5 6.5 6.5L9 18.5"/>',
-    plus: '<path d="M12 4.5v15M4.5 12h15"/>',
-    message: '<path d="M6.73 19.83C8.14 20.61 9.93 21 11.91 21 17.1 21 21 17.1 21 12S17.1 3 12 3 3 6.9 3 12C3 13.94 3.49 15.5 4.29 16.86L3.55 20.13Q3.39 20.82 4.08 20.65Z"/>',
-    search: '<circle cx="10.6" cy="10.6" r="6.9"/><path d="m15.8 15.8 4.7 4.7"/>'
+  const draft = { joined: true, name: '느슨한 갓생단', about: '조금씩이라도 함께 꾸준히', flag: '#DB3040', selectedPublic: 'study' };
+  const icons = {
+    flag:'<path d="M4.5 21V4.5c3.5-3 7 1.9 10.5-.5 1.5-1 3-1 4.5-.5v10c-1.5-.5-3-.5-4.5.5-3.5 2.4-7-2.5-10.5.5"/>',
+    users:'<circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1.4C3 15.7 5.2 14 9 14s6 1.7 6 4.6V20M16 5.2a3 3 0 0 1 0 5.6M18 14.2c2 .6 3 2 3 4.4V20"/>',
+    book:'<path d="M12 21V6.6C10.75 4.73 9.16 3.34 7.55 2.92Q6.6 2.66 6.6 3.72V17.25C8.62 17.55 10.42 18.77 12 21Z"/><path d="M6.6 6.48 4.35 5.98Q2.8 5.63 2.8 7.2V18.9Q2.8 19.98 3.9 19.99C7.2 20.01 9.8 20.62 12 21 15.05 19.25 17.22 18.93 20.12 18.82Q21.2 18.79 21.2 17.7V6.35Q21.2 5.25 20.1 5.38C16.9 5.74 14.5 6.58 12 8.45"/>',
+    heart:'<path d="M12 6.1C7.8.6 1.5 4.8 3.1 10.3c1.1 3.6 5.1 7.5 8.9 10 3.8-2.5 7.8-6.4 8.9-10C22.5 4.8 16.2.6 12 6.1Z"/>',
+    check:'<circle cx="12" cy="12" r="9.2"/><path d="m7.7 12 2.8 2.8 5.8-5.8"/>',
+    gift:'<rect x="3" y="8.5" width="18" height="4.2" rx="1.3"/><path d="M5 12.7v6.1q0 1.7 1.7 1.7h10.6q1.7 0 1.7-1.7v-6.1M12 8.5v12M12 8.4C7 8.4 5.2 6.8 5.5 4.8c.4-2.6 5.8-2.6 6.5 3.6ZM12 8.4c5 0 6.8-1.6 6.5-3.6-.4-2.6-5.8-2.6-6.5 3.6Z"/>',
+    chevron:'<path d="m9 5.5 6.5 6.5L9 18.5"/>',
+    plus:'<path d="M12 4.5v15M4.5 12h15"/>',
+    message:'<path d="M6.73 19.83C8.14 20.61 9.93 21 11.91 21 17.1 21 21 17.1 21 12S17.1 3 12 3 3 6.9 3 12C3 13.94 3.49 15.5 4.29 16.86L3.55 20.13Q3.39 20.82 4.08 20.65Z"/>',
+    activity:'<path d="M3 12h4l2.4-6.5 4.1 13 2.5-6.5h5"/>',
+    flame:'<path d="M12.4 2.8c.5 4.1 4.1 5 4.1 8.1 1.1-.8 1.7-1.8 1.9-3.1 2 2.5 2.6 4.7 2 7.1-.8 3.9-3.6 6.3-7.9 6.3-4.8 0-8-3.3-8-7.6 0-2.4 1.3-4.7 3.2-6.1-.1 2 .5 3.2 1.6 4 0-4.7 3.1-5.1 3.1-8.7Z"/>',
+    trophy:'<path d="M7 3.5h10V9a5 5 0 0 1-10 0ZM7 5H3.5v2.5Q3.5 12 8 12M17 5h3.5v2.5q0 4.5-4.5 4.5M12 14v6M7.5 20.5h9"/>',
+    shop:'<rect x="4" y="7.5" width="16" height="13" rx="2.5"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/>',
+    target:'<circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.1"/>',
+    userPlus:'<circle cx="8.5" cy="7.2" r="2.9"/><path d="M2.5 20v-1.2c0-2.8 2.2-4.5 6-4.5s6 1.7 6 4.5V20M19 8v5M16.5 10.5h5"/>',
+    clock:'<circle cx="12" cy="12" r="9.2"/><path d="M12 6.8v5.5l-3.3 2.5"/>',
+    ranking:'<path d="M2.5 20.5h19M4 20.5v-8q0-1.5 1.5-1.5H9M9 20.5V5q0-1.5 1.5-1.5h3Q15 3.5 15 5v15.5M15 14h3.5q1.5 0 1.5 1.5v5"/>'
   };
-  const icon = (name, cls = '') => '<svg class="clan-svg '+cls+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(shapes[name] || '')+'</svg>';
-  const escapeText = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const name = () => escapeText(draft.name.trim() || '클랜 이름');
-  const flag = () => '<span class="clan-emblem" style="--clan-flag-ink:'+draft.flag+'">'+icon('flag')+'</span>';
-  const line = (left, right) => '<div class="clan-title-row"><h2>'+left+'</h2>'+right+'</div>';
-  const more = (url, text) => '<a class="clan-more" href="#'+url+'">'+text+' '+icon('chevron')+'</a>';
-  const note = '<p class="clan-demo-note">구조 확인용 예시 데이터 · 실제 계정 및 보상과 연결되지 않음</p>';
-  const publicClans = [
-    { title: '갓생 스터디단', label: '공부 · 멤버 24명', details:'이번 주 17명 활동 중', glyph:'book' },
-    { title: '매일 1% 더', label: '습관 · 멤버 18명', details:'이번 주 12명 활동 중', glyph:'check' },
-    { title: '주말 운동 모임', label: '운동 · 멤버 12명', details:'이번 주 9명 활동 중', glyph:'users' }
+  const svg = (key,cls='') => `<svg class="clan-svg ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[key]||''}</svg>`;
+  const safe = text => String(text).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const title = () => safe(draft.name.trim()||'클랜 이름');
+  const emblem = (color=draft.flag) => `<span class="clan-emblem" style="--clan-flag:${color}">${svg('flag')}</span>`;
+  const heading = (label,url,text='전체 보기') => `<div class="clan-heading"><h2>${label}</h2>${url?`<a href="#${url}" class="clan-more">${text}${svg('chevron')}</a>`:''}</div>`;
+  const avatar = (char,tone='red',active=false) => `<span class="clan-avatar clan-avatar-${tone}${active?' clan-avatar-active':''}" aria-hidden="true">${char}</span>`;
+  const clubData = [
+    {id:'study',name:'갓생 스터디단',label:'공부',members:24,active:12,icon:'book'},
+    {id:'daily',name:'매일 1% 더',label:'습관',members:18,active:9,icon:'activity'},
+    {id:'fitness',name:'주말 운동 모임',label:'운동',members:12,active:6,icon:'target'}
   ];
-  const publicRow = entry => '<a href="#clan-detail" class="clan-list-row"><span class="clan-row-mark">'+icon(entry.glyph)+'</span><span class="clan-row-copy"><strong>'+entry.title+'</strong><small>'+entry.label+'</small></span><span class="clan-row-end">'+entry.details+icon('chevron')+'</span></a>';
-  const stateBar = () => '<div class="clan-preview-switch" aria-label="시연 가입 상태 선택"><span>화면 상태</span><button type="button" data-clan-view="joined" aria-pressed="'+draft.joined+'">가입 중</button><button type="button" data-clan-view="guest" aria-pressed="'+(!draft.joined)+'">미가입</button></div>';
-  const myClan = () => '<section class="clan-section clan-owned">'+
-    '<a href="#clan-detail" class="clan-identity">'+flag()+'<span class="clan-identity-copy"><strong>'+name()+'</strong><small>멤버 8명 · 이번 주 6명 활동 중</small></span>'+icon('chevron')+'</a>'+
-    '<div class="clan-tools-row"><a href="#dm">'+icon('message')+' 클랜 채팅</a><a href="#clan-invite">'+icon('users')+' 친구 초대</a></div>'+
-    '<div class="clan-progress-head"><strong>이번 주 함께한 기록</strong><span>620 / 1,000</span></div>'+
-    '<div class="clan-meter" role="progressbar" aria-label="공동 기록 진행도" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span></span></div>'+
-    '<div class="clan-progress-bottom"><span>공동 보상까지 380</span><a href="#clan-reward">보상 보기 '+icon('chevron')+'</a></div>'+
-  '</section>';
-  const guestIntro = () => '<section class="clan-section clan-guest">'+
-    '<div class="clan-guest-title">'+flag()+'<div><h2>친구들과 함께할 클랜을 찾아봐</h2><p>함께 달성하고 기록을 쌓는 공간</p></div></div>'+
-    '<div class="clan-action-grid"><a class="clan-btn clan-btn-primary" href="#clan-create">'+icon('plus')+' 클랜 만들기</a><a class="clan-btn clan-btn-outline" href="#clan-invite">친구 클랜 참여</a></div>'+
-  '</section>';
-  const activityRows = () =>
-    '<div class="clan-activity-row"><span class="clan-action-mark clan-mark-check">'+icon('check')+'</span><span class="clan-row-copy"><strong>밤산책이 오늘의 퀘스트 완료</strong><small>12분 전 · 3명이 응원했어요</small></span><button class="clan-heart" type="button" aria-label="응원 표시 예시" data-clan-heart aria-pressed="false">'+icon('heart')+'</button></div>'+
-    '<div class="clan-activity-row"><span class="clan-action-mark clan-mark-book">'+icon('book')+'</span><span class="clan-row-copy"><strong>이모리가 새 챕터를 시작했어요</strong><small>1시간 전 · 일본어 마스터하기</small></span><button class="clan-heart" type="button" aria-label="응원 표시 예시" data-clan-heart aria-pressed="false">'+icon('heart')+'</button></div>';
-  const activities = () => '<section class="clan-section">'+line('지금 우리 클랜',more('clan-activity','활동 전체 보기'))+activityRows()+'</section>';
-  const discovery = () => '<section class="clan-section">'+line('요즘 활동적인 클랜',more('clan-discover','전체 보기'))+
-    publicClans.slice(0,2).map(publicRow).join('')+'</section>';
-  const rankRows = () => '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">1</span><span class="clan-row-copy"><strong>갓생 스터디단</strong><small>공부 · 24명</small></span><span class="clan-rank-meta">이번 주 1위 '+icon('chevron')+'</span></a>'+
-    '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">2</span><span class="clan-row-copy"><strong>매일 1% 더</strong><small>습관 · 18명</small></span><span class="clan-rank-meta">이번 주 2위 '+icon('chevron')+'</span></a>';
-  const ranking = () => '<section class="clan-section">'+line('공개 클랜 랭킹',more('clan-rank','전체 랭킹'))+rankRows()+'</section>';
-  function renderHome() {
-    return '<div class="clan-layout clan-layout-root">'+stateBar()+
-      (draft.joined ? myClan()+activities() : guestIntro())+
-      discovery()+ranking()+note+'</div>';
+  const publicRow = (entry,compact=false) => `<a href="#clan-detail" data-clan-public="${entry.id}" class="clan-public-row"><span class="clan-public-symbol">${svg(entry.icon)}</span><span class="clan-row-copy"><strong>${entry.name}</strong><small>${entry.label} · 멤버 ${entry.members}명</small></span><span class="clan-public-presence"><i aria-hidden="true"></i>${compact?entry.active+'명 활동':'오늘 '+entry.active+'명 활동 중'}</span>${svg('chevron','clan-row-chevron')}</a>`;
+  const badge = (icon,label,caption,tone) => `<span class="clan-achievement"><span class="clan-achievement-symbol clan-tone-${tone}">${svg(icon)}</span><strong>${label}</strong><small>${caption}</small></span>`;
+  const feedRow = (initial,tone,who,what,when,reaction) => `<div class="clan-feed-row">${avatar(initial,tone)}<div class="clan-feed-copy"><div><strong>${who}</strong><span>${when}</span></div><p>${what}</p></div><button type="button" data-clan-heart class="clan-reaction" aria-pressed="false" aria-label="${who}에게 응원 보내기">${svg('heart')}<span>${reaction}</span></button></div>`;
+  const feed = () => feedRow('밤','red','밤산책','오늘의 퀘스트 2개 완료','12분 전','3')+
+    feedRow('모','blue','모찌','4일 연속 도전 성공','38분 전','5')+
+    feedRow('이','purple','이모리','첫 공동 보상에 기여했어요','2시간 전','2');
+  const progressBody = () => `<div class="clan-reward-summary"><div class="clan-reward-icon">${svg('gift')}</div><div class="clan-reward-copy"><strong>함께 만든 기록이 보상으로</strong><small>이번 주 6명이 힘을 보태고 있어요</small></div><span class="clan-reward-percent">62%</span></div>
+    <div class="clan-meter-head"><span>공동 기록</span><strong>620 <small>/ 1,000</small></strong></div>
+    <div class="clan-meter" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span></span></div>
+    <div class="clan-meter-foot"><span>완료까지 380 남음</span><span>${svg('clock')} 일요일까지</span></div>`;
+  const progressSection = () => `<section class="clan-section clan-progress-section">${heading('이번 주 함께 여는 상자','clan-reward','보상 보기')}${progressBody()}</section>`;
+  const ownedTop = () => `<section class="clan-section clan-my-top"><a href="#clan-my" class="clan-identity">${emblem()}<span class="clan-row-copy"><strong class="clan-club-name">${title()}</strong><small>멤버 8명 · 이번 주 6명 참여</small></span>${svg('chevron','clan-row-chevron')}</a>
+    <div class="clan-presence"><div class="clan-presence-faces">${avatar('이','red',true)}${avatar('밤','blue',true)}${avatar('모','purple',true)}${avatar('다','green',true)}</div><div class="clan-presence-info"><strong>오늘도 같이 도전 중</strong><small>4명이 기록을 남겼어요</small></div><a href="#clan-activity" aria-label="클랜 활동 보기">${svg('chevron')}</a></div>
+    <div class="clan-quick-actions"><a href="#dm">${svg('message')}<span>클랜 채팅</span></a><a href="#clan-invite">${svg('userPlus')}<span>친구 초대</span></a></div></section>`;
+  const activitySection = () => `<section class="clan-section">${heading('방금 올라온 클랜 소식','clan-activity','소식 전체')}
+    ${feedRow('밤','red','밤산책','오늘의 퀘스트 2개 완료','12분 전','3')}
+    ${feedRow('모','blue','모찌','4일 연속 도전 성공','38분 전','5')}
+    <a href="#clan-activity" class="clan-text-link">최근 활동 더 보기 ${svg('chevron')}</a></section>`;
+  const badgeRail = () => `<div class="clan-badge-rail">${badge('flame','7일 연속','함께 출석','orange')}${badge('trophy','100회 달성','누적 도전','blue')}${badge('flag','첫 클랜','함께한 시작','purple')}</div>`;
+  const achievementSection = () => `<section class="clan-section">${heading('우리 클랜의 발자국','clan-my','기록 보기')}${badgeRail()}</section>`;
+  const publicSection = () => `<section class="clan-section">${heading('요즘 활동적인 클랜','clan-discover')}${publicRow(clubData[0],true)}${publicRow(clubData[1],true)}</section>`;
+  const rankingSection = () => `<section class="clan-section clan-ranking-section">${heading('공개 클랜 랭킹','clan-rank','전체 랭킹')}
+    <a class="clan-rank-row" data-clan-public="study" href="#clan-detail"><span class="clan-rank-num clan-rank-first">1</span><span>갓생 스터디단</span><small>이번 주 1위</small>${svg('chevron')}</a>
+    <a class="clan-rank-row" data-clan-public="daily" href="#clan-detail"><span class="clan-rank-num">2</span><span>매일 1% 더</span><small>이번 주 2위</small>${svg('chevron')}</a></section>`;
+  const extraSection = () => `<section class="clan-section">${heading('같이 즐기는 클랜')}
+    <div class="clan-extra-grid"><a href="#clan-war">${svg('target')}<span><strong>클랜전</strong><small>다른 클랜과 겨뤄보기</small></span>${svg('chevron')}</a><a href="#clan-shop">${svg('shop')}<span><strong>클랜 상점</strong><small>함께 모은 보상 활용하기</small></span>${svg('chevron')}</a></div></section>`;
+  const guestIntro = () => `<section class="clan-section clan-guest-intro"><div class="clan-guest-lead">${emblem()}<div><h2>같이할 때 더 재밌는 도전</h2><p>친구들과 작은 목표부터 함께 시작해봐</p></div></div><div class="clan-guest-actions"><a class="clan-btn clan-btn-main" href="#clan-create">${svg('plus')}클랜 만들기</a><a class="clan-btn clan-btn-alt" href="#clan-invite">친구 클랜 참여</a></div></section>`;
+  const guestHelp = () => `<section class="clan-section">${heading('클랜에서는 이런 걸 해요')}
+    <div class="clan-intro-features"><div><span>${svg('users')}</span><strong>같이 도전</strong><small>서로 응원하기</small></div><div><span>${svg('gift')}</span><strong>공동 보상</strong><small>함께 모으기</small></div><div><span>${svg('trophy')}</span><strong>우리의 기록</strong><small>업적 쌓기</small></div></div></section>`;
+  const renderRoot = () => `<div class="clan-layout clan-root">${draft.joined?ownedTop()+progressSection()+activitySection()+achievementSection()+extraSection():guestIntro()+publicSection()+rankingSection()+guestHelp()}${draft.joined?publicSection()+rankingSection():''}</div>`;
+  const renderCreate = () => {const colors=[['#DB3040','빨강'],['#3987FF','파랑'],['#19C98A','초록'],['#FFAD32','주황'],['#A078FF','보라']];return `<div class="clan-layout clan-inner"><section class="clan-section clan-create"><h2>우리만의 클랜을 만들어봐</h2><p class="clan-helper">이름과 깃발만 정하면 시작할 수 있어</p>
+    <div class="clan-create-preview">${emblem()}<div><strong data-clan-preview-name>${title()}</strong><small>클랜 깃발 미리보기</small></div></div>
+    <form id="clan-create-form"><fieldset class="clan-color-field"><legend>깃발 색상</legend><div class="clan-color-options">${colors.map(([color,label])=>`<button type="button" class="clan-color" data-clan-color="${color}" aria-pressed="${draft.flag===color}" aria-label="${label}" style="--swatch:${color}"><span></span></button>`).join('')}</div></fieldset>
+      <label class="clan-field"><span>클랜 이름 <em>필수</em></span><input id="clan-name" name="name" required minlength="2" maxlength="20" placeholder="이름을 입력해줘" value="${safe(draft.name)}"><small>2~20자</small></label>
+      <label class="clan-field"><span>한 줄 소개 <em>선택</em></span><textarea id="clan-about" name="about" rows="2" maxlength="80" placeholder="우리 클랜을 소개해봐">${safe(draft.about)}</textarea></label>
+      <div class="clan-form-hint">${svg('users')}친구 초대는 만든 뒤에 해도 돼</div>
+      <button type="submit" class="clan-btn clan-btn-main clan-submit">클랜 만들기${svg('chevron')}</button></form></section></div>`;};
+  const renderCreated = () => `<div class="clan-layout clan-inner"><section class="clan-section clan-created">${emblem()}<h2>${title()}</h2><p>클랜을 만들었어! 친구들과 함께 시작해봐</p><small>이 화면은 시연이며 실제 저장되지는 않아</small><a href="#clan" class="clan-btn clan-btn-main" data-clan-activate>내 클랜으로 이동${svg('chevron')}</a><a href="#clan-invite" class="clan-btn clan-btn-alt">친구 초대하기</a></section></div>`;
+  const inner = (headingText,content,action='') => `<div class="clan-layout clan-inner"><section class="clan-section clan-inner-section"><h2 class="clan-inner-title">${headingText}</h2>${content}${action?`<div class="clan-inner-action">${action}</div>`:''}</section></div>`;
+  function renderDetails(page){
+    if(page==='clan-my')return inner(title(),`<div class="clan-detail-heading">${emblem()}<p>${safe(draft.about||'각자의 속도로 함께')}</p></div><div class="clan-detail-facts"><span>8명 참여</span><span>이번 주 6명 활동</span></div><h3 class="clan-detail-subheading">함께한 업적</h3>${badgeRail()}<h3 class="clan-detail-subheading">최근 활동</h3>${feed()}`,`<a href="#clan-invite" class="clan-btn clan-btn-alt">친구 초대</a>`);
+    if(page==='clan-activity')return inner('클랜의 오늘',`<p class="clan-detail-sub">최근 함께 쌓아 온 기록</p>${feed()}`);
+    if(page==='clan-discover')return inner('공개 클랜 둘러보기',`<p class="clan-detail-sub">다른 클랜의 활동을 찾아봐</p>${clubData.map(x=>publicRow(x)).join('')}`,`<a href="#clan-create" class="clan-btn clan-btn-alt">새 클랜 만들기</a>`);
+    if(page==='clan-rank')return inner('이번 주 공개 랭킹',`<p class="clan-detail-sub">점수와 순위는 시연용 예시</p>${clubData.map((x,i)=>`<a href="#clan-detail" data-clan-public="${x.id}" class="clan-rank-row"><span class="clan-rank-num">${i+1}</span><span>${x.name}</span><small>멤버 ${x.members}명</small>${svg('chevron')}</a>`).join('')}`);
+    if(page==='clan-detail'){const c=clubData.find(x=>x.id===draft.selectedPublic)||clubData[0];return inner(c.name,`<div class="clan-detail-heading"><span class="clan-emblem">${svg(c.icon)}</span><p>${c.label} · 멤버 ${c.members}명</p></div><div class="clan-detail-facts"><span>오늘 ${c.active}명 활동</span><span>공개 클랜</span></div><div class="clan-form-hint">${svg('users')}참여 및 공개 범위는 추후 설계</div>`, `<a href="#clan-discover" class="clan-btn clan-btn-alt">다른 클랜 보기</a>`);}
+    if(page==='clan-reward')return inner('이번 주 공동 보상',`<p class="clan-detail-sub">6명이 함께 620의 기록을 쌓았어</p>${progressBody()}<div class="clan-form-hint">${svg('gift')}구체적인 보상 지급 규칙은 아직 정해지지 않았어</div>`);
+    if(page==='clan-invite')return inner('친구 초대',`<p class="clan-detail-sub">클랜은 함께할수록 즐거워</p><div class="clan-form-hint">${svg('userPlus')}초대 링크와 QR 코드는 추후 연결 예정</div>`, `<a href="#clan" class="clan-btn clan-btn-alt">클랜 홈으로</a>`);
+    if(page==='clan-shop')return inner('클랜 상점',`<div class="clan-detail-lead">${svg('shop')}<p>함께 얻은 보상을 사용할 공간</p></div><div class="clan-form-hint">아이템과 재화 정책은 아직 기획 중</div>`);
+    if(page==='clan-war')return inner('클랜전',`<div class="clan-detail-lead">${svg('target')}<p>규모에 상관없이 즐기는 클랜 간 도전</p></div><div class="clan-form-hint">매칭·점수·승리 조건은 아직 기획 중</div>`);
+    return '';
   }
-  function create() {
-    const colors = [['#DB3040','빨강'],['#3987FF','파랑'],['#19C98A','초록'],['#FFAD32','주황'],['#A078FF','보라']];
-    return '<div class="clan-layout clan-layout-inner">'+
-      '<section class="clan-section clan-create-section">'+
-      '<p class="clan-eyebrow">새 클랜</p><h2 class="clan-page-heading">우리만의 클랜을 만들어봐</h2><p class="clan-lede">깃발과 이름을 정하면 시작할 준비 끝</p>'+
-      '<div class="clan-create-preview">'+flag()+'<div><strong data-clan-preview-name>'+name()+'</strong><small>클랜을 대표하는 이름과 깃발</small></div></div>'+
-      '<form id="clan-create-form"><fieldset class="clan-color-fieldset"><legend>깃발 색상</legend><div class="clan-color-row">'+
-        colors.map(row => '<button type="button" class="clan-color-swatch" data-clan-color="'+row[0]+'" aria-label="'+row[1]+'" aria-pressed="'+(draft.flag===row[0])+'" style="--swatch:'+row[0]+'"><span></span></button>').join('')+
-      '</div></fieldset>'+
-      '<label class="clan-field"><span>클랜 이름 <em>필수</em></span><input id="clan-name" type="text" required minlength="2" maxlength="20" autocomplete="off" placeholder="클랜 이름을 입력해줘" value="'+escapeText(draft.name)+'"><small>2~20자</small></label>'+
-      '<label class="clan-field"><span>한 줄 소개 <em>선택</em></span><textarea id="clan-about" maxlength="80" rows="2" placeholder="우리 클랜은 어떤 모임일까?">'+escapeText(draft.about)+'</textarea><small>최대 80자 · 생성 후에도 수정할 수 있어요</small></label>'+
-      '<div class="clan-quiet-hint">'+icon('users')+' 멤버 초대는 만든 뒤에 할 수 있어요</div>'+
-      '<button class="clan-btn clan-btn-primary clan-submit" type="submit">클랜 만들기 '+icon('chevron')+'</button>'+
-      '</form></section>'+note+'</div>';
-  }
-  function created() {
-    return '<div class="clan-layout clan-layout-inner"><section class="clan-section clan-done">'+
-      '<div class="clan-done-emblem">'+flag()+'</div><h2>'+name()+'</h2><p>클랜 화면 시연이 준비됐어</p>'+
-      '<div class="clan-quiet-hint">실제 클랜 생성이나 서버 저장은 수행되지 않았어요</div>'+
-      '<a class="clan-btn clan-btn-primary" href="#clan" data-clan-activate>시연 클랜으로 이동 '+icon('chevron')+'</a>'+
-      '<a class="clan-btn clan-btn-outline" href="#clan-invite">초대 화면 구조 보기</a>'+
-    '</section></div>';
-  }
-  function simple(page) {
-    let title='',body='',button='';
-    if(page==='clan-invite'){
-      title='친구와 함께 시작하기';body='<p>친구 클랜 초대 또는 새 클랜의 멤버 초대를 위한 자리야.</p><div class="clan-list-row">'+icon('users')+'<span class="clan-row-copy"><strong>초대 링크 · QR 코드</strong><small>실제 초대 발급과 가입은 아직 미구현</small></span></div>';
-      button='<a class="clan-btn clan-btn-outline" href="#clan">클랜으로 돌아가기</a>';
-    }else if(page==='clan-activity'){
-      title='클랜 활동';body='<p>우리가 함께 쌓아 온 기록</p>'+activityRows();button='<a class="clan-btn clan-btn-outline" href="#dm">클랜 채팅으로 이동</a>';
-    }else if(page==='clan-discover'){
-      title='클랜 둘러보기';body='<p>각자 다른 목표를 함께 이루는 클랜</p>'+publicClans.map(publicRow).join('');button='<a class="clan-btn clan-btn-outline" href="#clan-create">직접 만들기</a>';
-    }else if(page==='clan-rank'){
-      title='공개 클랜 랭킹';body='<p>순위 데이터는 화면 설계를 위한 예시야</p>'+rankRows();button='<a class="clan-btn clan-btn-outline" href="#clan-discover">클랜 둘러보기</a>';
-    }else if(page==='clan-detail'){
-      title='갓생 스터디단';body='<p>공부 · 멤버 24명 · 이번 주 17명 활동 중</p><div class="clan-list-row">'+icon('book')+'<span class="clan-row-copy"><strong>하루 20분씩 함께 공부하기</strong><small>공개 클랜 상세 구조 예시</small></span></div>';button='<a class="clan-btn clan-btn-outline" href="#clan-invite">참여 절차 살펴보기</a>';
-    }else{
-      title='공동 보상';body='<p>이번 주 클랜 기록 620 / 1,000</p><div class="clan-meter" role="progressbar" aria-label="공동 기록 진행도" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span></span></div><div class="clan-quiet-hint">'+icon('gift')+' 보상 구성과 지급 규칙은 미확정</div>';button='<a class="clan-btn clan-btn-outline" href="#clan">클랜으로 돌아가기</a>';
-    }
-    return '<div class="clan-layout clan-layout-inner"><section class="clan-section"><h2 class="clan-page-heading">'+title+'</h2><div class="clan-simple-body">'+body+'</div><div class="clan-simple-action">'+button+'</div></section>'+note+'</div>';
-  }
-  const supported = new Set(['clan','clan-create','clan-created','clan-invite','clan-activity','clan-discover','clan-rank','clan-detail','clan-reward']);
-  window.PreviewClan = { supports: p => supported.has(p), render: p => p==='clan'?renderHome():p==='clan-create'?create():p==='clan-created'?created():simple(p) };
-  function refresh() {
-    const route = decodeURIComponent(location.hash.slice(1) || 'clan');
-    if(supported.has(route))document.getElementById('main').innerHTML=window.PreviewClan.render(route);
-  }
-  document.addEventListener('click', event => {
-    const pressed = event.target.closest('[data-clan-view],[data-clan-color],[data-clan-heart],[data-clan-activate]');
-    if(!pressed)return;
-    if(pressed.hasAttribute('data-clan-view')){
-      draft.joined = pressed.dataset.clanView === 'joined';
-      refresh();
-    }else if(pressed.hasAttribute('data-clan-color')){
-      draft.flag = pressed.dataset.clanColor;
-      refresh();
-    }else if(pressed.hasAttribute('data-clan-heart')){
-      pressed.setAttribute('aria-pressed',pressed.getAttribute('aria-pressed')!=='true'?'true':'false');
-    }else if(pressed.hasAttribute('data-clan-activate')){
-      draft.joined = true;
+  const supported = new Set(['clan','clan-create','clan-created','clan-my','clan-activity','clan-discover','clan-rank','clan-detail','clan-reward','clan-invite','clan-shop','clan-war']);
+  window.PreviewClan = {
+    supports: page => supported.has(page),
+    render: page => page==='clan'?renderRoot():page==='clan-create'?renderCreate():page==='clan-created'?renderCreated():renderDetails(page),
+    previewMenu: () => `<div class="clan-preview-menu"><div>클랜 시연 상태</div><div class="clan-preview-choices"><button type="button" data-clan-view="joined" aria-pressed="${draft.joined}">가입 중</button><button type="button" data-clan-view="guest" aria-pressed="${!draft.joined}">미가입</button></div></div>`
+  };
+  const rerender = () => {const page=decodeURIComponent(location.hash.slice(1)||'clan');if(supported.has(page)){const main=document.getElementById('main');if(main)main.innerHTML=window.PreviewClan.render(page);window.scrollTo({top:0,behavior:'instant'});}};
+  document.addEventListener('click',e=>{
+    const trigger=e.target.closest('[data-clan-view], [data-clan-color], [data-clan-heart], [data-clan-activate], [data-clan-public]');
+    if(!trigger)return;
+    if(trigger.hasAttribute('data-clan-view')){
+      draft.joined = trigger.dataset.clanView==='joined';
+      const sheet=document.getElementById('sheet');if(sheet?.open)sheet.close();
+      if(location.hash!=='#clan'){location.hash='#clan';}else rerender();
+    }else if(trigger.hasAttribute('data-clan-color')){
+      draft.flag=trigger.dataset.clanColor;
+      // Keep the form values and keyboard focus during swatch changes.
+      document.querySelectorAll('[data-clan-color]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.clanColor===draft.flag)));
+      const mark=document.querySelector('.clan-create-preview .clan-emblem');if(mark)mark.style.setProperty('--clan-flag',draft.flag);
+    }else if(trigger.hasAttribute('data-clan-heart')){
+      const active=trigger.getAttribute('aria-pressed')==='true';trigger.setAttribute('aria-pressed',String(!active));
+      const count=trigger.querySelector('span');if(count)count.textContent=String(Number(count.textContent)+(active?-1:1));
+    }else if(trigger.hasAttribute('data-clan-activate')){
+      draft.joined=true;
+    }else if(trigger.hasAttribute('data-clan-public')){
+      draft.selectedPublic=trigger.dataset.clanPublic;
     }
   });
-  document.addEventListener('input', event => {
-    if(event.target.id==='clan-name'){
-      draft.name=event.target.value;
-      const label=document.querySelector('[data-clan-preview-name]');
-      if(label)label.textContent=draft.name.trim()||'클랜 이름';
-    }
-    if(event.target.id==='clan-about')draft.about=event.target.value;
+  document.addEventListener('input',e=>{
+    if(e.target.id==='clan-name'){
+      draft.name=e.target.value;e.target.setCustomValidity('');
+      const preview=document.querySelector('[data-clan-preview-name]');if(preview)preview.textContent=draft.name.trim()||'클랜 이름';
+    }else if(e.target.id==='clan-about')draft.about=e.target.value;
   });
-  document.addEventListener('submit', event => {
-    if(event.target.id!=='clan-create-form')return;
-    event.preventDefault();
-    if(!event.target.reportValidity())return;
-    const value=document.getElementById('clan-name').value.trim();
-    if(value.length<2){document.getElementById('clan-name').setCustomValidity('두 글자 이상 입력해줘');document.getElementById('clan-name').reportValidity();return;}
+  document.addEventListener('submit',e=>{
+    if(e.target.id!=='clan-create-form')return;
+    e.preventDefault();
+    if(!e.target.reportValidity())return;
+    const value=e.target.querySelector('#clan-name').value.trim();
+    if(value.length<2){const field=e.target.querySelector('#clan-name');field.setCustomValidity('2글자 이상 입력해줘');field.reportValidity();return;}
     draft.name=value;
     location.hash='#clan-created';
   });
-  document.addEventListener('input',event=>{if(event.target.id==='clan-name')event.target.setCustomValidity('');});
 })();

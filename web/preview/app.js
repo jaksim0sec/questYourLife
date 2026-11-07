@@ -24,6 +24,13 @@
     quests: ['퀘스트', 'quests', 'global'],
     dm: ['디엠', 'dm', 'global'],
     clan: ['클랜', 'clan', 'global'],
+    'clan-create': ['클랜 만들기', 'clan', 'global-inner'],
+    'clan-created': ['클랜 생성 시연', 'clan', 'global-inner'],
+    'clan-invite': ['클랜 초대', 'clan', 'global-inner'],
+    'clan-activity': ['클랜 활동', 'clan', 'global-inner'],
+    'clan-discover': ['클랜 둘러보기', 'clan', 'global-inner'],
+    'clan-rank': ['클랜 랭킹', 'clan', 'global-inner'],
+    'clan-reward': ['공동 보상', 'clan', 'global-inner'],
     me: ['마이', 'me', 'global'],
     explore: ['퀘스트북 탐색', 'home', 'global-inner'],
     daily: ['일일 퀘스트', 'quests', 'global-inner'],
@@ -93,6 +100,11 @@
     if (page === 'home') {
       header.innerHTML = homeHeader;
       main.innerHTML = homeMain;
+    } else if (window.PreviewClan && window.PreviewClan.supports(page)) {
+      header.innerHTML = page === 'clan' ? homeHeader : standardHeader;
+      header.querySelector('h1').textContent = title;
+      if (page === 'clan') header.querySelector('[data-go="explore"]')?.remove();
+      main.innerHTML = window.PreviewClan.render(page);
     } else if (page === 'explore') {
       header.innerHTML = exploreHeader;
       main.replaceChildren(); // Explicitly empty in original MHTML.

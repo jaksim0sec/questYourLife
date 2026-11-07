@@ -39,16 +39,15 @@
     '<div class="clan-guest-title">'+flag()+'<div><h2>친구들과 함께할 클랜을 찾아봐</h2><p>함께 달성하고 기록을 쌓는 공간</p></div></div>'+
     '<div class="clan-action-grid"><a class="clan-btn clan-btn-primary" href="#clan-create">'+icon('plus')+' 클랜 만들기</a><a class="clan-btn clan-btn-outline" href="#clan-invite">친구 클랜 참여</a></div>'+
   '</section>';
-  const activities = () => '<section class="clan-section">'+line('지금 우리 클랜',more('clan-activity','활동 전체 보기'))+
+  const activityRows = () =>
     '<div class="clan-activity-row"><span class="clan-action-mark clan-mark-check">'+icon('check')+'</span><span class="clan-row-copy"><strong>밤산책이 오늘의 퀘스트 완료</strong><small>12분 전 · 3명이 응원했어요</small></span><button class="clan-heart" type="button" aria-label="응원 표시 예시" data-clan-heart aria-pressed="false">'+icon('heart')+'</button></div>'+
-    '<div class="clan-activity-row"><span class="clan-action-mark clan-mark-book">'+icon('book')+'</span><span class="clan-row-copy"><strong>이모리가 새 챕터를 시작했어요</strong><small>1시간 전 · 일본어 마스터하기</small></span><button class="clan-heart" type="button" aria-label="응원 표시 예시" data-clan-heart aria-pressed="false">'+icon('heart')+'</button></div>'+
-  '</section>';
+    '<div class="clan-activity-row"><span class="clan-action-mark clan-mark-book">'+icon('book')+'</span><span class="clan-row-copy"><strong>이모리가 새 챕터를 시작했어요</strong><small>1시간 전 · 일본어 마스터하기</small></span><button class="clan-heart" type="button" aria-label="응원 표시 예시" data-clan-heart aria-pressed="false">'+icon('heart')+'</button></div>';
+  const activities = () => '<section class="clan-section">'+line('지금 우리 클랜',more('clan-activity','활동 전체 보기'))+activityRows()+'</section>';
   const discovery = () => '<section class="clan-section">'+line('요즘 활동적인 클랜',more('clan-discover','전체 보기'))+
     publicClans.slice(0,2).map(publicRow).join('')+'</section>';
-  const ranking = () => '<section class="clan-section">'+line('공개 클랜 랭킹',more('clan-rank','전체 랭킹'))+
-    '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">1</span><span class="clan-row-copy"><strong>갓생 스터디단</strong><small>공부 · 24명</small></span><span class="clan-rank-meta">이번 주 1위 '+icon('chevron')+'</span></a>'+
-    '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">2</span><span class="clan-row-copy"><strong>매일 1% 더</strong><small>습관 · 18명</small></span><span class="clan-rank-meta">이번 주 2위 '+icon('chevron')+'</span></a>'+
-  '</section>';
+  const rankRows = () => '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">1</span><span class="clan-row-copy"><strong>갓생 스터디단</strong><small>공부 · 24명</small></span><span class="clan-rank-meta">이번 주 1위 '+icon('chevron')+'</span></a>'+
+    '<a href="#clan-detail" class="clan-list-row"><span class="clan-rank">2</span><span class="clan-row-copy"><strong>매일 1% 더</strong><small>습관 · 18명</small></span><span class="clan-rank-meta">이번 주 2위 '+icon('chevron')+'</span></a>';
+  const ranking = () => '<section class="clan-section">'+line('공개 클랜 랭킹',more('clan-rank','전체 랭킹'))+rankRows()+'</section>';
   function renderHome() {
     return '<div class="clan-layout clan-layout-root">'+stateBar()+
       (draft.joined ? myClan()+activities() : guestIntro())+
@@ -83,11 +82,11 @@
       title='친구와 함께 시작하기';body='<p>친구 클랜 초대 또는 새 클랜의 멤버 초대를 위한 자리야.</p><div class="clan-list-row">'+icon('users')+'<span class="clan-row-copy"><strong>초대 링크 · QR 코드</strong><small>실제 초대 발급과 가입은 아직 미구현</small></span></div>';
       button='<a class="clan-btn clan-btn-outline" href="#clan">클랜으로 돌아가기</a>';
     }else if(page==='clan-activity'){
-      title='클랜 활동';body='<p>우리가 함께 쌓아 온 기록</p>'+activities();button='<a class="clan-btn clan-btn-outline" href="#dm">클랜 채팅으로 이동</a>';
+      title='클랜 활동';body='<p>우리가 함께 쌓아 온 기록</p>'+activityRows();button='<a class="clan-btn clan-btn-outline" href="#dm">클랜 채팅으로 이동</a>';
     }else if(page==='clan-discover'){
       title='클랜 둘러보기';body='<p>각자 다른 목표를 함께 이루는 클랜</p>'+publicClans.map(publicRow).join('');button='<a class="clan-btn clan-btn-outline" href="#clan-create">직접 만들기</a>';
     }else if(page==='clan-rank'){
-      title='공개 클랜 랭킹';body='<p>순위 데이터는 화면 설계를 위한 예시야</p>'+ranking();button='<a class="clan-btn clan-btn-outline" href="#clan-discover">클랜 둘러보기</a>';
+      title='공개 클랜 랭킹';body='<p>순위 데이터는 화면 설계를 위한 예시야</p>'+rankRows();button='<a class="clan-btn clan-btn-outline" href="#clan-discover">클랜 둘러보기</a>';
     }else if(page==='clan-detail'){
       title='갓생 스터디단';body='<p>공부 · 멤버 24명 · 이번 주 17명 활동 중</p><div class="clan-list-row">'+icon('book')+'<span class="clan-row-copy"><strong>하루 20분씩 함께 공부하기</strong><small>공개 클랜 상세 구조 예시</small></span></div>';button='<a class="clan-btn clan-btn-outline" href="#clan-invite">참여 절차 살펴보기</a>';
     }else{

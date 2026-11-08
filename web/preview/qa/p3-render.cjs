@@ -22,7 +22,7 @@ async function guest(page){
   const response=await page.goto(base+'#'+route,{waitUntil:'load'});assert.equal(response.status(),200,'HTTP');
   await page.evaluate(theme=>{document.documentElement.dataset.theme=theme},theme);
   if(!joined)await guest(page);
-  await page.evaluate(()=>document.fonts.ready);
+  await page.evaluate(async()=>{await Promise.all([...document.querySelectorAll('#main img')].map(async e=>{e.loading='eager';try{await e.decode()}catch(_){}}));await document.fonts.ready});
   const m=await page.evaluate(()=>{
     const main=document.getElementById('main'),nav=document.getElementById('nav');
     const fonts=[...document.querySelectorAll('.clan-layout h1,.clan-layout h2,.clan-layout h3,.clan-layout p,.clan-layout a,.clan-layout button,.clan-layout span,.clan-layout strong,.clan-layout small,.clan-layout time,#nav .nav-link')].filter(e=>e.getClientRects().length && getComputedStyle(e).display!=='none' && getComputedStyle(e).visibility!=='hidden').map(e=>({text:e.textContent.trim().slice(0,23),size:parseFloat(getComputedStyle(e).fontSize),weight:parseInt(getComputedStyle(e).fontWeight)||400})).filter(e=>e.text);

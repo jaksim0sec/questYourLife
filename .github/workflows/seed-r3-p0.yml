@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/checkout@v4
         with:
-          ref: new
+          ref: 3e59cdac4594a552aaa6bf903a7935ef71eebf21
           path: _baseline_source
           persist-credentials: false
       - uses: actions/setup-node@v4

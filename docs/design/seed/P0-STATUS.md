@@ -21,3 +21,9 @@
 - P0-5: `new@3e59cdac4594a552aaa6bf903a7935ef71eebf21`를 별도 checkout, 5상태 × 4폭 × 2테마 = **40장의 PNG 실제 렌더**를 `docs/design/evidence/baseline/`에 commit `2732fd25182d8f831452c2804b3263c8e22a45a0`로 저장. 최솟값 42,350B, 최댓값 312,323B. `manifest.json` 포함.
 - P0-3: 47절 / 원문 인용 585행, 각 절 행 수 1 이상. 섹션별 coverage는 LEDGER 정본 참조.
 - 실패/복귀: 서버 준비 중 초기 curl 1회 연결 실패 후 재시도 성공, 검증 실행 자체는 0실패. 스크린샷과 Playwright 외의 Android/TalkBack은 미검증. **P1 착수 허용, P2는 G-P1 통과 전 금지.**
+
+## 연결 복구 후 P0-3 원문 추적 보강
+
+- 기존 원문 47절·585행 외에 **계획서 원래 L01–L38 38행**을 ID 변경 없이 별도 표에 추가. 기존 전수 장부의 네 자리 ID와 별도임. 이전 '번호 재매핑 불가' 진술을 원문 행 소실로 오해하지 않도록 구분함.
+- P0 베이스라인 촬영 대상 `new@3e59cdac4594a552aaa6bf903a7935ef71eebf21`을 checkout **커밋 SHA로 고정**해 재실행 때 원본이 달라지지 않도록 수정.
+- 실제 CI 재시험 이전에는 P0-3 증거 보강을 새로 통과 처리하지 않음. 기존 [P0 Action 42501506946](https://github.com/jaksim0sec/questYourLife/actions/runs/42501506946)은 별도 유지.

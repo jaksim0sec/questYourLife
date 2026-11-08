@@ -24,12 +24,14 @@ for(const r of ['Display','Title','Section','Body','Caption'])assert.ok(roles.in
 assert.ok(type.includes('12px')&&type.includes('600 이하'));assert.ok(geo.includes('page.inset'));assert.ok(norms('pages/page-types.md').includes('논글로벌'));assert.ok(read('components/badge-progress.md').includes('10'));
 console.log('T3 structural PASS: roles/type/gutter/track have declared owner paths');
 const ledger=read('LEDGER.md');let coverage=0,p1=0,missing=[],stage={};
-for(const row of ledger.split('\n').filter(x=>x.startsWith('| L'))){
+for(const row of ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x))){
  const a=row.split(' | ');const sec=a[1],owner=a[6],phase=a[7];
  stage[phase]=(stage[phase]||0)+1;
  if(phase==='P1'){p1++;let pathname=(owner||'').split('#')[0];try{let s=read(pathname);assert.ok(s.includes('## 현행 계약'));}catch(e){missing.push({id:a[0],sec,owner,error:String(e.message)});}}
 }
-assert.ok(p1>100,'expected comprehensive P1 ledger');assert.equal(missing.length,0,'T4 missing owners: '+JSON.stringify(missing.slice(0,5)));
+assert.ok(p1>100,'expected comprehensive P1 ledger');
+for(let n=1;n<=38;n++){const id='L'+String(n).padStart(2,'0');assert.ok(new RegExp('^\\| '+id+' \\| ', 'm').test(ledger),'missing original plan '+id);}
+assert.equal(ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x)).length,585,'lossless report ledger rows');assert.equal(missing.length,0,'T4 missing owners: '+JSON.stringify(missing.slice(0,5)));
 for(const sec of ['3.3','3.4','4.1','4.2','4.3','4.4','4.5','5.1','5.2','5.3','6.1','6.5','6.6',...Array.from({length:21},(_,i)=>'7.'+(i+1)),'8.2','8.3','8.4','8.5','8.6','9.3','9.5','10.2','10.3','A.1','A.2','A.3','A.4']){assert.ok(ledger.includes('| '+sec+' | '),'coverage '+sec);coverage++;}
 console.log('T4 ownership/coverage PASS: '+p1+' P1 rows / '+coverage+' sections; stages='+JSON.stringify(stage));
 console.log('T2 BLOCKED: an independent new-session design reproduction has not been performed; G-P1 NOT PASSED.');

@@ -12,11 +12,11 @@
 | P1-8 | 작성 | INDEX A/B 경로 및 구 입구/이력 HISTORY로 격리 |
 | P1-9 | 작성 | C-TEXT 기존 K03 5역할, F-TYPE 12px 및 14px 미만 굵기 상한 |
 | P1-10 | 작성 | VALIDATION R-01~R-10 검출 경로 |
-| G-P1 T1 | 게이트 대기 | 브라우저/문서 정본의 경로 검사 실행 전 |
-| G-P1 T2 | 차단 | **독립적으로 착수하지 않은 새 세션**의 클랜 홈/논글로벌 꾸미기 재현 아직 없음. 대체 시험만으로 통과 불가 |
-| G-P1 T3 | 게이트 대기 | 역할/유형/gutter/Progress 기본 두께의 규범 중복 검사 |
-| G-P1 T4 | 게이트 대기 | LEDGER P1 각 행 계약 소유 확인 |
-| G-P1 | 차단 | **T2 독립 재현 미실시**, T1/T3/T4 실제 검증까지 P2 진입 금지 |
+| G-P1 T1 | 통과(경로검사) | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) R-01~R-10 10개 대응 경로 확인 |
+| G-P1 T2 | 차단 | 독립 신규 세션 재현 증거 없음. [Issue #8](https://github.com/jaksim0sec/questYourLife/issues/8)에 별도 검수 과제 등록. 등록만으로 통과 불가 |
+| G-P1 T3 | 부분검증 | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) 단일 소유 경로 선언 확인. 다른 정본에 남은 규범 문장 중복 여부 의미 검토 미완료 |
+| G-P1 T4 | 부분검증 | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) P1 178행의 담당 경로 존재 및 47절 커버리지 확인. **수치·반례 내용 반영 판정은 미완료** |
+| G-P1 | 차단 | T2 독립 재현 미실시 및 T3 규범 문장·T4 개별 입력의 의미 검토 미완료. P2 진입 금지 |
 
 ## 실패/복귀
 
@@ -28,3 +28,9 @@
 - [Action 42503415758](https://github.com/jaksim0sec/questYourLife/actions/runs/42503415758): T1 10/10, 24 Routes·21 Components, T3 정적 소유 위치 PASS. **T4 테스트 자체가 FAIL**: 검증 스크립트가 `'\\n'` 문자 두 개를 기준으로 분할해 LEDGER 행을 0개 인식했다.
 - 원인: QA 스크립트의 이스케이프 버그. 정본이나 585개 원문 인용의 데이터 불량으로 간주하지 않음.
 - 조치: 실제 줄바꿈으로 분할하고 `| L` 행 시작으로 인식, 절별 coverage도 단순 키로 점검. Action 재검증 전 T4는 여전히 미통과. T2는 별도 차단.
+
+## 연결 복구 근거 · 2026-11-09
+
+- 확인한 Head: `0ba610ab923173c75d4f96e3a82221928a7eaf9e`. `new`를 덮어쓰지 않고 `seed-r3` 전용 Draft PR [#9](https://github.com/jaksim0sec/questYourLife/pull/9) 생성.
+- P0 Chromium 전체 성공 [42503557364](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557364), P1 T1/소유·경로/커버리지 테스트 성공 [42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395).
+- 게이트 요구와 이미 통과한 자동검사의 수준을 구분함. 자동 성공 = T2/T3/T4 본질 판정 완료가 아님.

@@ -45,7 +45,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-chest-img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 14px #211a1680)}
 .clan-reward-progress{position:relative;z-index:2;padding:0 .95rem .9rem}
 .clan-reward-progress .clan-progress-meta>div>span{display:none}
-.clan-reward-progress .clan-progress-meta strong{font-size:.82rem;color:#fff}
+.clan-reward-progress .clan-progress-meta strong{font-size:.82rem;color:#fff;font-weight:600}
 .clan-reward-progress .clan-progress-meta strong small,.clan-reward-progress .clan-remaining{color:#f4d9c1}
 .clan-reward-progress .progress-track{background:#ffffff45;margin:.45rem 0 .24rem}
 .clan-reward-progress .progress-track>span{background:#ffcc4d}
@@ -95,7 +95,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-contributor-rank{display:grid;place-items:center;width:1rem;color:var(--clan-muted);font-size:.78rem;font-weight:600}
 .clan-contributor:first-child .clan-contributor-rank{color:#d6a431}
 .clan-contributor-name{flex:1;font-size:.8rem;font-weight:600}
-.clan-contributor>strong{font-variant-numeric:tabular-nums;font-size:.8rem;color:var(--clan-ink)}
+.clan-contributor>strong{font-variant-numeric:tabular-nums;font-size:.8rem;color:var(--clan-ink);font-weight:600}
 /* Social/feed: face & readable activity take priority; reaction is suffix. */
 .clan-feed-item{display:flex;align-items:center;gap:.7rem;padding:.68rem 0}
 .clan-feed-item+.clan-feed-item{border-top:1px solid var(--clan-stroke)}
@@ -150,7 +150,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-order.is-first{color:#d3a134}
 .clan-rank-icon{width:2rem;height:2rem;display:grid;place-items:center;color:var(--clan-muted);background:var(--clan-canvas);border-radius:.62rem;flex-shrink:0}
 .clan-rank-info{flex:1;display:grid;gap:.19rem}
-.clan-rank-info strong{font-size:.78rem}
+.clan-rank-info strong{font-size:.78rem;font-weight:600}
 .clan-rank-info small{font-size:.75rem;color:var(--clan-muted)}
 .clan-rank-value{font-size:.75rem;font-weight:600;color:var(--clan-muted)}
 /* Guest state: simple hero and a distinct media/people focus. */
@@ -172,7 +172,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-guest-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem}
 .clan-guest-benefits>span{display:grid;justify-items:center;gap:.5rem;padding:.7rem 0;font-size:.75rem}
 .clan-guest-benefits .clan-svg{color:var(--brand);width:1.5rem;height:1.5rem}
-.clan-guest-benefits strong{font-size:.75rem}
+.clan-guest-benefits strong{font-size:.75rem;font-weight:600}
 .clan-mock-note{font-size:.75rem;text-align:center;color:var(--clan-muted);padding:.65rem 1rem .1rem}
 /* Inner pages reuse same Page Shell + content, without cloning another global nav. */
 .clan-inner{padding-top:.35rem}
@@ -187,21 +187,21 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-detail-stats span{border-radius:999px;background:var(--clan-canvas);padding:.42rem .6rem;font-size:.75rem;color:var(--clan-muted)}
 .clan-member-detail{display:flex;gap:.65rem;align-items:center;padding:.53rem 0;border-bottom:1px solid var(--clan-stroke)}
 .clan-member-detail>span:last-child{display:grid;gap:.14rem}
-.clan-member-detail strong{font-size:.79rem}
+.clan-member-detail strong{font-size:.79rem;font-weight:600}
 .clan-member-detail small{font-size:.75rem;color:var(--clan-muted)}
 .clan-public-detail-banner{min-height:8rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem}
 .clan-public-detail-banner .clan-emblem{width:3.8rem;height:3.8rem}
-.clan-public-detail-banner strong{font-size:.85rem}
+.clan-public-detail-banner strong{font-size:.85rem;font-weight:600}
 .clan-public-line{display:flex;align-items:center;gap:.7rem;padding:.8rem 0;color:var(--clan-ink);border-bottom:1px solid var(--clan-stroke)}
 .clan-public-line>span:nth-child(2){display:grid;gap:.2rem;flex:1}
-.clan-public-line strong{font-size:.82rem}
+.clan-public-line strong{font-size:.82rem;font-weight:600}
 .clan-public-line small{color:var(--clan-muted);font-size:.75rem}
 .clan-public-line-icon{display:grid;place-items:center;border-radius:.75rem;width:2.5rem;height:2.5rem;background:var(--clan-canvas);color:var(--clan-muted)}
 .clan-invite-preview{display:flex;align-items:center;gap:.4rem;justify-content:flex-start;margin:1rem 0}
-.clan-invite-preview strong{font-size:.77rem}
+.clan-invite-preview strong{font-size:.77rem;font-weight:600}
 .clan-coming-soon{display:grid;justify-items:center;gap:.55rem;color:var(--clan-muted);padding:2.5rem .3rem}
 .clan-coming-soon>.clan-svg{width:2.65rem;height:2.65rem;color:var(--brand)}
-.clan-coming-soon strong{font-size:.85rem;color:var(--clan-ink)}
+.clan-coming-soon strong{font-size:.85rem;color:var(--clan-ink);font-weight:600}
 .clan-coming-soon p{font-size:.75rem;text-align:center}
 .clan-form-hint{display:flex;align-items:center;gap:.43rem;border-radius:.78rem;background:var(--clan-canvas);color:var(--clan-muted);padding:.77rem .8rem;font-size:.75rem;line-height:1.35}
 .clan-form-hint .clan-svg{width:1rem;height:1rem}
@@ -338,7 +338,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-my-page .clan-subheading{margin:1.1rem 0 .6rem!important}
 .clan-contrib-title{margin-top:1.2rem}
 .clan-my-page .clan-inner-action{margin-top:.8rem}
-@media(max-width:360px){.clan-members-presence{gap:.35rem;padding:.55rem .35rem}.clan-members-presence strong{font-size:.75rem}.clan-members-presence .clan-avatar-stack{width:1.6rem;height:1.6rem}}
+@media(max-width:360px){.clan-members-presence{gap:.35rem;padding:.55rem .35rem}.clan-members-presence strong{font-size:.75rem;font-weight:600}.clan-members-presence .clan-avatar-stack{width:1.6rem;height:1.6rem}}
 
 /* P3 composition layout only. Objects own their semantics; shared tokens own style values. */
 .clan-record-home{padding-block:.9rem 1rem}

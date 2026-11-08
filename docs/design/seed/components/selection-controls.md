@@ -24,6 +24,22 @@ C-TABS는 실제 패널 전환과 `role=tab/tabpanel` 연결을 제공한다. **
 
 각 부품의 자체 상태/키보드 세부 계약은 [tabs](tabs.md), [segmented](segmented-control.md), [checkbox](checkbox.md), [radio](radio-choice.md)가 소유한다.
 
+### Selection
+- 상태 범위부터 판단: 범주 Panel=Tabs, 결과 조건=Filter, 동일 데이터의 기간/보기=Segment, 화면 이동=Section Link, 단일 그룹 선택=Radio, 수동 완료=Checkbox.
+- Chip은 필터·선택·추천·상태·분류 다섯 역할을 의미별로 구분하고 정적인 상태를 클릭 Filter처럼 표시하지 않는다. Filter는 실제 결과 바로 위.
+
+### Don't
+1. 필터 '공부'를 눌러도 목록 결과가 그대로이고 선택 Chip만 빨개짐.
+2. Tabs/Segment/Sort를 한 화면에 세 줄로 중복 쌓아 핵심 정보를 밀어냄.
+3. 장착 중 상태를 토글형 Chip으로 표현해 클릭 기대만 발생.
+
+### Relations
+- **허용:** C-TABS Panel, C-SEGMENT View, C-RADIO Exclusive, C-CHECK 수동 완료, P-HIERARCHY 결과 인접.
+- **금지:** 타입별 키보드 소유권 중복, 선택 스타일만으로 동작 구현 주장, 데이터 필터 조건 임의 생성.
+
+### Verification
+- 정상 Tabs Panel/Filter 실제 결과/Segment 데이터 전환 각각을 독립 검사. Don't 무반응 필터·3단 컨트롤과 비교, 320/390/430 light/dark에서 클릭·aria·scroll·200% 검증.
+
 ## 이력
 
 - 이전 계약은 [HISTORY](../HISTORY.md)에 원본 보존; 현재 연결 규칙이 우선한다.

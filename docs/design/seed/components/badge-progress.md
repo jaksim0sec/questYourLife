@@ -40,6 +40,22 @@ D-012 승인 디자인 기준을 보존한다. Badge는 정보 상태, Progress�
 
 **기존 기능 보존:** Progress는 사용자가 직접 누르는 완료 버튼이 아니며 보상 지급, 퀘스트 체크, 실제 DB 완료를 대신하지 않는다.
 
+### Selection
+- Badge는 실제 상태 표시, Progress는 목표 대비 진행이다. Badge Solid는 강한 현재 상태, Outline은 선택·경계, Weak는 보조 분류. 승인 톤 neutral/brand/success/info/warning/danger/reward 7개, 기본 높이26/XS21·패딩11/XS8 보존.
+- 공통 Progress 두께는 micro6/default10/featured12. 대표값·기한·파생값은 O-PROGRESS 소유. 객체당 1~2개 Badge·2~3단어 밀도는 검증 전 candidate. 1200/1000 초과의 aria-valuenow는1000, aria-valuetext에는 실제1200/1000 보존.
+
+### Don't
+1. 9.7px/790 기여 배지로 12px 하한 회피하고 여러 Badge가 주연을 압도함.
+2. 눌리지 않는 상태 배지를 Solid CTA처럼 꾸밈.
+3. 620/1000·62%·남은380이 같은 크기이며 회색 Progress가 비어 있음.
+
+### Relations
+- **허용:** O-PROGRESS 값→C-STATUS Track/ARIA, O-ITEM State→정보 Badge, C-SELECTION이 클릭 가능한 필터/선택 소유.
+- **금지:** 지급 완료 추정, 시각 트랙과 ARIA 별도 값, 이미지에 상태 Label을 전부 묻기.
+
+### Verification
+- 정상 620/1000(62%, aria620)·1200/1000(100%, aria1000과 실제값)과 Don't mismatch를 병치. 320/390/430 light/dark에서 computed track 6/10/12, 글자≥12·<14 무게≤600 검증.
+
 ## 이력
 
 - 과거 v0.6 제안/확정 규격의 반복 문단과 D-013 r1 K08은 [HISTORY](../HISTORY.md)에 전체 원문을 그대로 보존했다. 역사적 승인 근거 D-012는 [v015 승인 시드](../implementation/v015.md)에 보존.

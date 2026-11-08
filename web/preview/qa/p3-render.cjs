@@ -80,7 +80,11 @@ async function guest(page){
  await page.keyboard.press('ArrowLeft');
  assert.equal(await page.locator('[data-clan-tab="record"]').getAttribute('aria-selected'),'true','keyboard tab select');
  await page.goto(base+'#clan-reward');await page.locator('[data-back]').first().click();
- assert.equal(new URL(page.url()).hash,'#clan','direct inner back parent');
+ assert.equal(new URL(page.url()).hash,'#clan-my','Back must honor actual entry history from clan-my');
+ const deep=await browser.newPage({viewport:{width:390,height:844}});
+ await deep.goto(base+'#clan-reward');await deep.locator('[data-back]').first().click();
+ assert.equal(new URL(deep.url()).hash,'#clan','Direct deep link Back defaults to clan parent');
+ await deep.close();
  await page.goto(base+'#clan-create');
  assert.ok(await page.locator('#clan-name').count(),'create form missing');
  await page.locator('#clan-name').fill('우리 테스트 클랜');

@@ -107,3 +107,12 @@
 ### 2026-11-08 v7 visual hierarchy rebuild
 
 The joined clan root now follows identity → reward artwork & embedded progress → actual cosmetic item media → members and clan ranking → text social feed → discovery. Prior equal-weight action bars, duplicate reward headings and repeated member hero are removed. Existing 13 routes, v0.14 SVG and backend untouched. Production GitHub Pages rendering remains separately unverified.
+
+
+### 2026-11-08 · 근거 기반 UI 검토안
+
+- 공통 Header inset·타이포·중앙 glyph/target 정렬, 클랜 읽는 행/설명/시간 역할, 중립 Reward stage, Light 보조 글자 대비를 교정했다.
+- 320px/200%에서 feed/rank가 한 글자씩 쌓이지 않도록 컨테이너 폭에 따라 재배치한다. 단순 scrollWidth 합격과 읽기 품질을 구별한다.
+- [상세 평가](../../docs/design/seed/UI_REVIEW_2026-11-08.md), [현재 웹 제안값](../../docs/design/seed/implementation/ui-review-20261108.json), [검증 범위](../../docs/design/seed/VALIDATION.md).
+- baseline D-012·SVG·마스코트·기존 경로/데이터 로직 보존. 실제 제품 출시·Android·서버 구현 완료가 아니다.
+- QA: Playwright가 있는 환경에서 정적 서버를 실행한 뒤 `BASE_URL=http://localhost:8000/ CHROME_PATH=/path/to/chrome node web/preview/qa/matrix.cjs`. `QA_FONT_BASE`를 주면 공통 Noto Sans KR 폰트 CSS를 사용하고, 생략하면 시스템 서체로 검사한다.

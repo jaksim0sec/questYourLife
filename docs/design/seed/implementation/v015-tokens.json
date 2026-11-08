@@ -162,10 +162,10 @@
       "dark": {
         "canvas": "#101115",
         "shell": "#16171B",
-        "bottomNav": "#242329",
+        "bottomNav": "#202226",
         "bottomNavActiveFg": "#F45C68"
       },
-      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged. Bottom Nav active label uses v0.15 approved brand red in light mode to preserve text contrast; dark retains the existing site active brand red. 2026-11-08 revised dark canvas and shell two steps down in brightness; nav unchanged."
+      "notes": "2026-11-08 latest web review: see implementation/ui-review-20261108.json. Approved top-level v0.15 light/dark baseline is unchanged; preview shell/geometry are proposals."
     }
   },
   "space": {

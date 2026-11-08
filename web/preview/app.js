@@ -163,7 +163,7 @@
     if (trigger.hasAttribute('data-theme-switch')) {
       const theme = trigger.dataset.themeSwitch;
       document.documentElement.dataset.theme = theme;
-      document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#17181d' : '#fcfbfa';
+      document.querySelector('meta[name="theme-color"]').content = getComputedStyle(document.documentElement).getPropertyValue('--shell-surface').trim();
       showSheet('menu');
     }
   });

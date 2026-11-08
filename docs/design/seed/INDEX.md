@@ -121,3 +121,8 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 ## 2026-11-08 · 사진 근거 시각 감사 (proposed, 승인 전)
 
 - [당근 4장 / 현행 클랜 2장 구분과 세로 구간별 UI/정보 밀도·색·문구 검수](CLAN_REFERENCE_AUDIT_2026-11-08.md). P-HIERARCHY/A-ART 제안 보완을 함께 기록하되 D-012 정본 숫자를 변경하지 않음.
+
+
+### 2026-11-08 최신 웹 검토안
+
+헤더·문자·색·보상 stage 교정의 현재 제안 수치는 [implementation/ui-review-20261108.json](implementation/ui-review-20261108.json)을 사용한다. 기존 v0.15 승인값을 대체하지 않으며 검증 보고와 시각 승인을 구분한다. 이전 v5.3~v6 변경 기록은 이력이다.

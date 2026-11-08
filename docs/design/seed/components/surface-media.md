@@ -9,13 +9,38 @@ references: [REF-001, REF-002, REF-003, REF-004]
 
 # Surface와 미디어 슬롯
 
-## Purpose / Non-goals
+## 현행 계약
+
+### Selection
+- 10역할을 **Plain(면 없음) / Solid(독립 묶음) / Outlined(선 중심) / Subtle(힌트) / Inset(내부 부가) / Raised(실제 부상) / Interactive(전체 한 조작) / Media(이미지 슬롯) / Reward(한정 보상 강조) / Overlay(별도 포커스 층)**으로 구별한다.
+- 정보 관계를 여백과 Inset Divider로 읽을 수 있으면 **Surface 0개**가 기본이다. 연속 사람·활동·설정은 C-LIST Flat, 독립된 정보 단위만 Solid/Outlined. 이벤트 홍보 Banner는 A2 전용 장면+한정 콘텐츠, 상태 Page Banner는 간결한 상태 메시지다. 두 유형을 색으로만 혼동하지 않는다.
+- Solid는 승인값 padding 16 / radius 16 / 중립 1px, Inset padding 12. 보조 면을 10역할 외 새 역할로 발명하지 않는다. Reward는 보상 목적 페이지에서만 검토하고 관리형 O-PROGRESS를 광고에 넣지 않는다.
+
+### Don't
+1. 공동 진행 수치를 갈색 gradient와 거대한 상자로 포장해 실질적 정보 위계를 광고 아래로 내리기: Reward가 아닌 O-PROGRESS+Plain 선택.
+2. 반복 사람 6명을 각각 회색 타일·그림자·배지로 장식해 보조 정보가 서로 경쟁하기: Flat List+Inset Divider 선택.
+3. Raised 안 Raised, Reward 안 Reward, 정적 Surface에 chevron·pressed 추가하기: 중첩·클릭 책임 둘 다 위반.
+
+### Relations
+- **허용:** Plain > Flat List/Divider, Solid > Header+Body+Footer, Media > C-IMAGE, Reward > A2 Art + 외부 Text, Overlay > C-SHEET/C-OVERLAY. 객체 슬롯은 O-ITEM/O-PROGRESS가 소유한다.
+- **금지:** Interactive 링크 내부 Button, Raised > Raised, Reward > Reward, 관리형 O-PROGRESS > 이벤트 Art. Surface는 C-STATUS 상태값과 C-ACTION 클릭 정책을 재정의하지 않는다.
+
+### Verification
+- 정상 fixture: 같은 데이터에 Plain·Solid 경계 차이가 분명하고, Reward 예에서 실제 이미지/메시지 목적이 분리되는지 계산 스타일과 DOM 의미를 검사.
+- Don't fixture: 갈색 gradient Hero+큰 비클릭 상자 / 회색 타일 여러 개를 병치하고 **주연 수치의 뷰포트 위치, 대비, 클릭 affordance**를 비교한다.
+- 320/390/430 및 dark/light: radius/padding/child overflow, 실제 중첩·shadow 개수, 정적 항목의 가짜 포커스를 확인한다.
+
+## 이력
+
+> P2 이전 제안·구버전·수치 근거를 원문 보존한다. 현행 판단은 위 네 계약에서만 수행하며 이전 후보를 자동 승인하지 않는다.
+
+### Purpose / Non-goals
 정보의 의미 있는 그룹, 독립 콘텐츠, 강조 아트의 경계를 구분한다. 모든 경계가 Card는 아니다. 정적 Surface에 불필요한 버튼 affordance를 주지 않는다.
 
-## 책임 분리 · v0.2
+### 책임 분리 · v0.2
 기본 Surface/Card/Banner 슬롯은 여기서 유지한다. 원형 프레임 여부/마스코트 신원/장비 레이어는 [C-AVATAR](avatar.md), 미디어 fit·loading·fallback·ratio는 [C-IMAGE](image-frame.md)가 **정본**이다. 구형 요약표는 역할 식별을 위한 설명이고 독립 상태·크기를 이곳에서 재정의하지 않는다.
 
-## Anatomy / Properties
+### Anatomy / Properties
 | 역할 | 슬롯·속성 | 경계 |
 |---|---|---|
 | Surface | Header? + Body + Footer?, tone=default/muted | 관련 정보 그룹 |
@@ -26,25 +51,25 @@ references: [REF-001, REF-002, REF-003, REF-004]
 
 Grid와 horizontal rail은 이 재료들의 레이아웃 조합이며 '보상 카드', '퀘스트 카드'라는 새 기본 API를 강제하지 않는다. 본문 안에 Surface가 꼭 필요한지 먼저 확인한다.
 
-## Tokens / Variants
+### Tokens / Variants
 bg.surface/muted, radius.surface/image, surface.padding, item.gap, type.item/support 정본 참조. 일반 면은 flat. Image Frame 비율은 square(아이템·Avatar) / landscape(콘텐츠 썸네일) 후보로 정하며 구체적 hero 비율은 화면 목적에 맞춰 검토한다. 투명 아이템은 contain, 배경을 담은 썸네일은 cover를 사용한다. **마스코트의 기본 표시 후보는 투명 캐릭터 자체이며 흰 원형 배경은 필수가 아니다.** 세부표현은 C-AVATAR를 따르고, 모든 실제 소품은 잘리지 않게 contain.
 
-## States / Behavior
+### States / Behavior
 Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 대체 설명 제공. Selected item은 stroke.selected + 체크 및 실제 선택 ARIA로 표시한다. 착용 중은 실제 equipped 사실이 있을 때 별도의 상태 텍스트로 표시하며 선택과 동일시하지 않는다. owned/equipped/locked/unavailable은 서로 다른 데이터 상태로 구분하고 실제 정보가 있을 때만 노출한다. locked를 단순 회색 이미지로만 표현하지 않는다.
 
 카드가 이동하면 하나의 명확한 target을 제공한다. Bookmark/Reaction 같은 독립 조작은 별도 target으로 둔다. 선택이 서버에 반영 중이면 pending 표시 후 성공/실패를 구분한다.
 
-## Guidelines
+### Guidelines
 미디어의 금속광·파티클을 Container 배경·일반 버튼에 전파하지 않는다. 같은 모음에서 프레임 비율·물체 점유율·텍스트 기준선을 맞춘다. 이미지 위 장문·작은 가격표를 넣지 않는다. 랭킹 배지·강조 리본·선택 경계·글로우를 동시에 중첩하지 않는다.
 
-## Accessibility
+### Accessibility
 장식 이미지는 중복 설명을 생략하고 콘텐츠를 대표하면 대체 설명을 둔다. 상태·가격은 이미지 안의 가짜 글씨가 아닌 실제 텍스트로 전달한다. hover만으로 설명을 열지 않는다. 확대 시 그리드 열 수를 줄이며 텍스트 영역을 확보한다.
 
-## Evidence & Confidence / Impact
+### Evidence & Confidence / Impact
 둥근 그룹·아트 프레임·수집 슬롯은 관찰 high. contain/crop·실패·보유 상태는 proposed. 보상 이미지 표현은 A-ART, 주목도와 비중은 P-HIERARCHY에 의존한다. 정확한 아이템·열 수·카드 순서는 시드가 소유하지 않는다.
 
 
-## v0.15 Surface 10역할과 중첩 규칙 (D-012)
+### v0.15 Surface 10역할과 중첩 규칙 (D-012)
 
 | Role | 구조적 의미 | 허용 경계 |
 |---|---|---|
@@ -63,7 +88,7 @@ Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 
 
 > **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
 
-## K04 Surface와 의미 경계
+### K04 Surface와 의미 경계
 
 **정본 소유자:** `components/surface-media.md`.
 

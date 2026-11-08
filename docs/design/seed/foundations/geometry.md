@@ -7,79 +7,17 @@ depends_on: [F-PRINCIPLES]
 references: [REF-001, REF-004, REF-005, REF-006]
 ---
 
-# 간격·크기·형태
+# F-GEOMETRY · 기준선과 최소 조작
 
-## 제안 토큰 정본
-단위는 논리 단위다. 웹 간격은 16 기준 rem, Android는 dp로 옮겨 시각 비교한다. 물리 px나 스크린샷 측정값이 아니다.
+## 현행 계약
 
-| Token | 값 | 용도 |
-|---|---:|---|
-| space.1 / .2 / .3 / .4 / .5 / .6 / .8 | 4 / 8 / 12 / 16 / 20 / 24 / 32 | 공통 간격 스케일 |
-| page.inset | 20 | 기본 좌우 여백 |
-| page.insetCompact | 16 | 360 미만 폭에서 공통 전환 |
-| content.maxWidth | 560 | 단일 모바일 읽기 열, 넓으면 중앙 정렬 |
-| section.gap | 24 | 큰 그룹 사이 |
-| group.gap | 16 | 관련된 하위 블록 사이 |
-| item.gap | 12 | 목록·카드 사이 |
-| inline.gap | 8 | 짧은 아이콘·라벨 사이 |
-| surface.padding | 16 | 기본 그룹 내부 |
-| row.paddingY / .paddingX | 12 / 16 | 목록 내부 |
-| radius.control | 16 | 일반 버튼·입력 |
-| radius.surface | 16 | 카드·그룹 면 |
-| radius.image | 14 | 콘텐츠 썸네일 |
-| radius.overlay | 24 | 시트·다이얼로그 |
-| radius.pill | 999 | 의미상 칩·세그먼트 thumb |
-| stroke.default | 1 | 경계 |
-| stroke.selected | 2 | 선택 경계 |
-| size.actionSmall / .actionMedium / .actionLarge | 34 / 43 / 48 | v0.15 시연의 표시 높이, 48 미만은 별도 비중첩 터치 타깃 필요 |
-| size.touchMin | 48 | 클릭·터치 영역 최소 |
-| size.rowMin | 56 | 목록 행의 최소 높이 |
-| size.topBarMin / .bottomBarMin | 60 / 76 | OS inset 제외한 상·하단 content 최소 높이 |
-| action.paddingXSmall / .paddingXMedium / .paddingXLarge | 12 / 16 / 18 | 버튼 size별 좌우 padding |
-| action.paddingYSmall / .paddingYMedium / .paddingYLarge | 7 / 9 / 13 | 버튼 size별 상하 padding, 줄높이를 줄인 만큼 여백 확보; 버튼 높이는 유지 |
-| segment.paddingX / .trackHeight | 12 / 43 | 세그먼트 좌우 padding·보이는 기본 높이 |
-| badge.paddingX / .paddingY | 11 / 3 | 기본 Badge 내부, XS는 X=8·높이 21 |
-| field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
-| progress.height | 10 | 기본 진행 막대 높이 |
-| size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 27 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
-| size.iconButtonContent / .iconButtonCompact | 17 / 16 | D-012 버튼 아이콘 허용16–18에 맞춘 일반/작은 size; 구형14 후보 사용 중단 |
-| size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 64 / 104 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
+- `page.inset`은 Header/본문이 공유하는 **단일 gutter 토큰**이다. CSS web preview 구현 이름은 `--page-inset`. px 임의 padding 추가 금지. 기존 r1에서 360px 미만 1rem, 이상 1.25rem 제안했지만 P0 웹에서는 1rem으로 우선 연결되어 있다. 최종 임계·값은 P2/P3 실측 확인 전 **candidate**이며 동일 페이지에서 토큰만은 같아야 한다.
+- **최소 Hit Target 48×48px(웹), 48dp(Android)**, 비중첩. 표시 버튼 높이 34/43/48과 실제 클릭 면적은 별도. 44px로 승인 없이 하향 금지.
+- Header Glyph 24px, 버튼 Target 최소48px, 두 중심의 가로·세로 차이 **1px 이하**. Glyph를 `translateX`로 옮기는 꼼수 금지.
+- 글자 **200% 확대에서 Header / Tabs / Bottom Nav 라벨 고정 높이 금지**, 줄바꿈·필요한 행 높이 증가 허용. 사용자가 입력한 이름/상태가 잘리거나 가로 overflow 발생하면 실패.
+- Radius는 공통 의미 Variant로 결정하고 지역 자의적 16/6/10 병기 금지. OS safe-area/키보드 inset은 S-PAGE 소유, gutter와 별도.
+- Header와 본문 외곽 max-width가 서로 다른 경우에도 실제 왼쪽 시작선이 같은지 확인한다. 헤더 높이 58.8/60/56 비교, Bottom 65.2+safe/76 비교는 P2 후보 기록이다.
 
-## 개선 변경의 근거 (제안값)
-S2-01/04/08에 나타나는 Button 내부 콘텐츠 과대·Avatar 과대를 줄이기 위해 `iconButtonContent=18→16`, `avatarProfile=80→64`, `avatarHeroMax=120→104`, `paddingXLarge=20→18`을 v0.2 후보로 조정. 전체 버튼 높이·터치 최소 48·페이지 여백은 보존한다. **수치 감소가 곧 합격은 아니며** 웹에서 동일 fixture 전후 비교가 필요하다. 48 미만 보이는 버튼은 비중첩 48 hit target을 별도로 확보한다.
+## 이력
 
-## v0.6 변형 규격
-- Progress는 C-STATUS **한 종류**, `micro=6`, `default=10`, `featured=12`의 높이 속성으로 표현한다. 별도 Progress 컴포넌트를 만들지 않는다.
-- Top Nav 60dp(상태바 제외), glyph 24dp, hit target 48dp. Bottom Nav 76dp(inset 제외), glyph 27dp, 라벨 11–12sp, Gap 4dp. 실제 탭 수는 O-003 미결.
-- Button 16dp radius를 기준으로 하고 로딩/프레스 시 Label center·Icon slot·border box 이동 금지. 내장 아이콘은 16–18dp, Label/Icon Gap 6–8dp.
-- Rarity Surface에도 16dp radius를 공유하지만 등급색과 이미지 속성은 별도 C-RARITY에 소유. 3단 Bottom Sheet는 C-SHEET의 content-driven snap과 S-PAGE 안전영역 참조.
-
-## 적용 규칙
-같은 size는 tone·treatment가 바뀌어도 높이·padding·radius가 같다. radius는 의미별 family 토큰을 공유하며 같은 숫자를 모든 모양에 강제하지 않는다. 버튼과 카드 내부 패딩을 개별 화면에서 임의로 줄이지 않는다.
-
-최소 높이는 글자 확대 시 증가할 수 있다. 32·40 높이 컨트롤은 주변을 포함한 비중첩 48 터치영역을 확보한다. 공간이 부족하면 큰 size/줄바꿈 배치로 바꾸며 투명 hitbox를 겹치지 않는다. 작은 버튼을 빽빽하게 놓고 모두 48 target이라고 주장하지 않는다.
-
-모든 콘텐츠의 시작선은 page.inset 또는 같은 surface.padding에 맞춘다. 제목·아이콘·숫자의 실제 보이는 경계는 광학적으로 미세 보정할 수 있으나 로컬 padding 토큰을 늘리지 않는다.
-
-## 반응형·안전영역
-320/360/390/430 논리 폭과 200% 글자를 검토 기준으로 제안한다. 고정 열 개수를 이미지에서 가져오지 않는다. 2차원 에셋은 contain/crop 역할을 명시하고 텍스트는 폭과 함께 재흐름시킨다. 가로 목록은 넘치는 단서를 남기고 잘린 버튼을 주 조작으로 쓰지 않는다.
-
-OS safe inset은 페이지 spacing과 별개다. 아래 inset·키보드·하단바는 S-PAGE가 한 번만 합산한다. iPhone 프레임·노치·OS 시계를 앱의 padding으로 추출하지 않는다.
-
-## 상태·근거·영향
-Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오류·확대에서는 높이 증가를 허용한다. 둥근 면의 반복은 관찰 high, 숫자·폭 전환 기준은 proposed이며 실기기 미검증이다. 전역 변경 시 버튼·목록·시트·하단 고정 영역을 같이 확인한다.
-
-
-## v0.15 적용 우선 규격
-
-현재 사용자 채택 웹 시연의 기본 Button은 43px, Small 34px, Large 48px, Radius 16px. 클릭 영역은 Android에서 최소 48dp를 확보하며 hit 영역을 겹치지 않게 한다. 기본 7-tone Pill Badge 높이 26, XS 21, 아이콘 13, paddingX 기본 11 / XS 8. Sheet의 동적 min 기준·Safe Area 상세는 [C-SHEET](../components/bottom-sheet.md). SVG 획은 제공 원본의 **1.8**이 정본이며 이 문서에서 덧칠하지 않는다.
-
-> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
-
-## 공통 계약 r1의 적용 기준
-
-- 버튼의 기본 inline Glyph는 승인 기본17, compact는 허용범위 안의16을 사용한다. 이전 변경 근거의14는 당시 실험 기록이다.
-- 표시 높이34/43/48과 실제 target을 분리하며 웹 target은 48 CSS px와3rem 중 큰 값 이상으로 비중첩 확보한다. 실제 링크/버튼이 target을 소유하고 내부 face를 중앙에 둔다.
-- page.inset은 360 CSS px 미만1rem, 이상1.25rem. 같은 라우트의 헤더·본문은 같은 gutter와 가용 외곽 폭을 참조한다. OS safe inset은 별도다.
-- 표시 높이는 확대 시 상한이 아니며 텍스트가 필요하면 성장한다. topBarMin/bottomBarMin 등 기존 후보 수치를 무조건 고정 높이로 사용하지 않는다.
-- Glyph 박스 정렬과 타깃 중심은 [NAV-TOP](../../TOP_NAVIGATION.md), 실제 고정 영역·이력은 [S-PAGE](../shells/page-shells.md)가 소유한다.
+- 이전 정본 원문은 [HISTORY.md](../HISTORY.md)에서 전체 보존하며 현행 조항으로 사용하지 않는다.

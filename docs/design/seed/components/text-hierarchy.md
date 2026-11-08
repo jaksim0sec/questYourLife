@@ -7,30 +7,27 @@ depends_on: [F-TYPE, F-GEOMETRY, F-COLOR]
 references: [D-001, D-009, S2-04, S2-08, U-05]
 ---
 
-# Text Hierarchy / Typography Roles
+# C-TEXT · 의미 역할과 슬롯
 
+## 현행 계약
 
-> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+의미 역할은 **Display / Title / Section / Body / Caption** 다섯 개뿐이다. **Item/Meta는 의미 역할이 아니라 F-TYPE 숫자 스케일 이름**으로만 남긴다. HTML heading 레벨은 페이지 시맨틱 구조이며 글자 크기와 동일하지 않다.
 
-## K03 텍스트 역할과 수치 스케일
+| 슬롯 | 역할 | F-TYPE scale |
+|---|---|---|
+| Root 화면명 | Title | root |
+| Standard 화면명 | Title | detail |
+| 한정된 강조 제목 | Display | hero |
+| 대표 기록 수치 | Display | number |
+| 섹션 제목 | Section | section |
+| 반복 객체·목록 이름 | Body | item |
+| 본문 | Body | body |
+| 시간·기간·보조 설명 | Caption | support |
+| 부차적인 실제 상태 | Caption | caption |
+| 반복 수치·가격 | Body | numberSmall |
 
-**정본 소유자:** 역할·슬롯 매핑은 `components/text-hierarchy.md`, 수치 스케일은 `foundations/typography.md`.
+가격·조건·오류·이름을 모두 Caption으로 내리지 않는다. 반복 아이템의 Identity는 기본 두 줄, 전체 이름에 접근 가능한 대체 경로 없이 잘라내지 않는다. **반례:** `620/1000`보다 `완료까지 380`이 강하면 O-PROGRESS 대표 수치 주연 실패. 실제 렌더 최소 크기·굵기는 F-TYPE의 단일 규범을 참조한다.
 
-의미 역할은 **Display / Title / Section / Body / Caption**의 5개다. Item과 Meta를 추가 의미 역할로 유지하지 않는다. `type.item`·`type.support`는 기존 수치 스케일 이름으로 존속한다. HTML heading 레벨은 문서 구조로 결정하며 글자 크기와 동일시하지 않는다.
+## 이력
 
-| 실제 슬롯 | 의미 역할 | 사용 스케일 | 웹 어댑터 style |
-|---|---|---|---|
-| Root 화면명 | Title | type.root | root |
-| Standard 화면명 | Title | type.detail | standard |
-| 한정된 강조 제목 | Display | type.hero | hero |
-| 화면의 핵심 수치 | Display | type.number | number |
-| 정보 그룹명 | Section | type.section | section |
-| 반복 객체·목록 이름 | Body | type.item | item |
-| 본문 | Body | type.body | body |
-| 시간·기간·보조 설명 | Caption | type.support | support |
-| 짧고 부차적인 상태 라벨 | Caption | type.caption | caption |
-| 반복 수치·가격 | Body | type.numberSmall | number-small |
-
-이번 웹 개편은 기존 F-TYPE 스케일을 사용한다: root 26/34·700, detail 18/26·600, hero와 number 24/32·700, section 18/26·700, item과 numberSmall 16/24·600, body 16/24·400, support 14/20·400, caption 12/18·500, button 14/20·600, buttonCompact 12/18·600. 단위는 기본 16 기준 rem이며 실제 RootFont 실험이 적용되면 최종 CSS 크기는 달라진다. 이 선택은 웹 개편의 검수 시작 기준이다.
-
-작은 글자를 더 굵게 만들어 필수 정보를 욱여넣지 않는다. 이름·가격·조건·오류는 읽을 공간을 확보하고 확대 시 높이를 늘린다. 반복 객체 이름은 기본 2줄 공간을 확보하되, 긴 이름을 생략했다면 같은 목적지의 상세나 명시적인 펼침 조작으로 전체 이름을 확인할 수 있어야 한다. 정적 객체에 그런 경로가 없으면 이름 전체를 표시한다. 설명·기간을 Caption이라는 이유로 모두 12로 낮추지 않는다.
+- 이전 정본 원문은 [HISTORY.md](../HISTORY.md)에서 전체 보존하며 현행 조항으로 사용하지 않는다.

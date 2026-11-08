@@ -53,3 +53,8 @@
 - 기존 JS 임의 SVG 도형을 제거하고 SEED **16개 공식 SVG 원본 SHA**를 `assets/seed-icons/`에 연결. CSS mask로 UI `currentColor`를 적용해 도형 소스는 손대지 않음.
 - Gold Reward Secondary light/dark, Field border focus, Segmented demo menu, 48px 터치 목표, 아이콘/버튼 치수를 C-ACTION/C-FIELD/C-SVG에 맞춤.
 - Root/Header/Nav/RootFontSize/아바타 합성·기존 12개 경로·예시 시뮬레이션 로직 불변. 실제 Pages/Android UX는 별도 검증.
+
+
+### 클랜 v5 · 2026-11-08
+
+클랜 깃발을 독립형 **컬러 직물 배너 + 진한 별표**로 교정. 홈은 일상·보상·발견 우선으로 정리하고, `#clan-record` 화면에 4칸 지표/기여/업적을 분리. 탐색 `#clan-discover`는 미디어 커버·카테고리 탭으로 구성. 참고 이미지 1~5 분석은 `CLAN_UI_AUDIT.md`. 실제 서버 연결 없음.

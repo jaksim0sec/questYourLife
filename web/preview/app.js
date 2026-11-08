@@ -28,6 +28,7 @@
     'clan-created': ['클랜 생성 시연', 'clan', 'global-inner'],
     'clan-invite': ['클랜 초대', 'clan', 'global-inner'],
     'clan-my': ['내 클랜', 'clan', 'global-inner'],
+    'clan-record': ['이번 주 기록', 'clan', 'global-inner'],
     'clan-activity': ['클랜 활동', 'clan', 'global-inner'],
     'clan-discover': ['클랜 둘러보기', 'clan', 'global-inner'],
     'clan-rank': ['클랜 랭킹', 'clan', 'global-inner'],

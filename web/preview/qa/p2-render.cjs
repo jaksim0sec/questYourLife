@@ -1,0 +1,70 @@
+const {chromium}=require('playwright');
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const evidence=path.resolve(process.env.P2_EVIDENCE_DIR||'docs/design/evidence/p2');
+fs.mkdirSync(evidence,{recursive:true});
+const base=process.env.P2_FIXTURE_URL||'http://127.0.0.1:8001/qa/p2-fixtures.html';
+const ids=['C-SURFACE','C-ACTION','C-IMAGE','C-SHEET','C-OVERLAY','C-GESTURE','C-ICON','C-BOTTOM','C-TEXT','C-STATUS','C-LIST','C-TABS','C-SEGMENT','C-SELECTION','C-AVATAR','C-CREDIT','C-RARITY','C-FIELD','C-RADIO','C-SVG','C-CHECK'];
+(async()=>{
+ const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+ const matrix=[];
+ try{
+  for(const width of [320,390,430])for(const theme of ['light','dark']){
+   const page=await b.newPage({viewport:{width,height:844},deviceScaleFactor:1});
+   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const res=await page.goto(base,{waitUntil:'load'});
+   assert.equal(res.status(),200,'fixture HTTP');
+   await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+   await page.evaluate(()=>document.fonts.ready);
+   const stat=await page.evaluate((ids)=>{
+     const pairs=[...document.querySelectorAll('.fx-section')].map(e=>({id:e.dataset.contract,good:e.querySelector('.fx-good')?.getBoundingClientRect().width,bad:e.querySelector('.fx-bad')?.getBoundingClientRect().width}));
+     const good=document.querySelector('[data-contract="C-STATUS"] .fx-good .fx-track');
+     const bad=document.querySelector('[data-contract="C-STATUS"] .fx-bad .fx-track');
+     const correct={track:good.getBoundingClientRect().width,fill:good.firstElementChild.getBoundingClientRect().width,height:good.getBoundingClientRect().height,now:good.getAttribute('aria-valuenow'),max:good.getAttribute('aria-valuemax')};
+     const incorrect={track:bad.getBoundingClientRect().width,fill:bad.firstElementChild.getBoundingClientRect().width,now:bad.getAttribute('aria-valuenow')};
+     const btn=document.querySelector('[data-contract="C-ICON"] .fx-good .fx-icon-target').getBoundingClientRect();
+     const badBtn=document.querySelector('[data-contract="C-ICON"] .fx-bad .fx-icon-target').getBoundingClientRect();
+     const img=document.querySelector('[data-contract="C-IMAGE"] .fx-good img');
+     const badImg=document.querySelector('[data-contract="C-IMAGE"] .fx-bad img');
+     const tiny=document.querySelector('[data-contract="C-TEXT"] .fx-bad .fx-tiny');
+     const fonts=[...document.querySelectorAll('.fx-good h3,.fx-good b,.fx-good strong,.fx-good small,.fx-good button,.fx-good a,.fx-good label,.fx-good span')].filter(e=>e.getClientRects().length).map(e=>({text:e.textContent.trim().slice(0,20),size:parseFloat(getComputedStyle(e).fontSize),weight:parseInt(getComputedStyle(e).fontWeight)||400})).filter(e=>e.text);
+     const tabs=[...document.querySelectorAll('[data-contract="C-TABS"] .fx-good [role=tab]')].map(e=>{let r=e.getBoundingClientRect();return{width:r.width,height:r.height}});
+     return {pairs,correct,incorrect,iconGood:{width:btn.width,height:btn.height},iconBad:{width:badBtn.width,height:badBtn.height},fitGood:getComputedStyle(img).objectFit,fitBad:getComputedStyle(badImg).objectFit,imgLoaded:img.naturalWidth>0,textBadSize:parseFloat(getComputedStyle(tiny).fontSize),bottomGood:getComputedStyle(document.querySelector('[data-contract="C-BOTTOM"] .fx-good .fx-nav')).display,bottomBad:getComputedStyle(document.querySelector('[data-contract="C-BOTTOM"] .fx-bad .fx-nav')).display,tabTargets:tabs,fonts,overflow:document.documentElement.scrollWidth-innerWidth,rootFont:parseFloat(getComputedStyle(document.documentElement).fontSize)};
+   },ids);
+   assert.equal(stat.pairs.length,21,'21 paired fixtures');
+   assert.deepEqual(stat.pairs.map(p=>p.id),ids,'21 IDs order');
+   assert.ok(stat.pairs.every(p=>p.good>0&&p.bad>0),'normal + Dont side-by-side');
+   assert.ok(Math.abs(stat.correct.fill/stat.correct.track-0.62)<=0.01,'actual good progress 62%');
+   assert.ok(Math.abs(stat.correct.height-10)<=0.5,'default progress 10px');
+   assert.equal(stat.correct.now,'620');assert.equal(stat.correct.max,'1000');
+   assert.equal(stat.incorrect.now,'0','Dont aria mismatch is present');
+   assert.equal(stat.incorrect.fill,0,'Dont empty fill is present');
+   assert.ok(stat.iconGood.width>=48&&stat.iconGood.height>=48,'normal icon target');
+   assert.ok(stat.iconBad.width<48,'Dont icon target is actually too small');
+   assert.equal(stat.fitGood,'contain');assert.equal(stat.fitBad,'cover');assert.ok(stat.imgLoaded,'asset available');
+   assert.ok(stat.textBadSize<12,'Dont tiny text actually <12px');
+   assert.notEqual(stat.bottomGood,'none');assert.equal(stat.bottomBad,'none');
+   assert.ok(stat.tabTargets.every(t=>t.width>0&&t.height>=48),'normal tabs target 48');
+   assert.ok(stat.fonts.every(f=>f.size>=12-.01),'normal fixture min font 12 '+JSON.stringify(stat.fonts.filter(f=>f.size<12)));
+   assert.ok(stat.fonts.every(f=>f.size>=14||f.weight<=600),'normal small weight limit '+JSON.stringify(stat.fonts.filter(f=>f.size<14&&f.weight>600)));
+   assert.ok(stat.overflow<=1,'fixture unexpected horizontal overflow '+stat.overflow);
+   await page.locator('[data-fx-tab="b"]').click();
+   assert.equal(await page.locator('#fx-panel-b').isVisible(),true,'tab click changes actual panel');
+   assert.equal(await page.locator('#fx-tab-b').getAttribute('aria-selected'),'true');
+   await page.locator('[data-fx-view="last"]').click();
+   assert.equal(await page.locator('#fx-view-value').innerText(),'410점','segment changes data');
+   await page.locator('[data-fx-filter="study"]').click();
+   assert.equal(await page.locator('#fx-results [data-kind]:visible').count(),1,'filter changes visible results');
+   const react=page.locator('.fx-good .fx-react');await react.click();assert.equal(await react.getAttribute('aria-pressed'),'true');
+   await page.locator('#fx-check').check();assert.equal(await page.locator('#fx-check').isChecked(),true,'checkbox native check');
+   await page.locator('.fx-radio input').nth(1).check();assert.equal(await page.locator('.fx-radio input').first().isChecked(),false,'radio exclusive');
+   assert.equal(errors.length,0,'browser pageerrors '+JSON.stringify(errors));
+   const image='p2-fixtures-'+width+'-'+theme+'.png';await page.screenshot({path:path.join(evidence,image),fullPage:true});
+   matrix.push({width,theme,components:ids.length,ratio:stat.correct.fill/stat.correct.track,trackHeight:stat.correct.height,aria:stat.correct.now,rootFont:stat.rootFont,expectedDont:{smallText:stat.textBadSize,badTarget:stat.iconBad.width},overflow:stat.overflow,interactions:['tabs','segment','filter','reaction','checkbox','radio'],image});
+   console.log('P2 fixture PASS '+width+'/'+theme+' 21 components; progress='+matrix.at(-1).ratio.toFixed(4));
+   await page.close();
+  }
+  fs.writeFileSync(path.join(evidence,'fixture-matrix.json'),JSON.stringify({run:new Date().toISOString(),status:'passed',matrix},null,2)+'\n');
+ }finally{await b.close()}
+})().catch(e=>{console.error('P2 fixture failed',e);process.exitCode=1});

@@ -1,0 +1,47 @@
+name: SEED r3 P2 fixture evidence
+on:
+  push:
+    branches: [seed-r3-p2p3]
+    paths:
+      - '.github/workflows/seed-r3-p2.yml'
+      - 'web/preview/qa/p2-fixtures.*'
+      - 'web/preview/qa/p2-render.cjs'
+      - 'docs/design/seed/components/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start preview HTTP server and test real rendered styles/interaction
+        run: |
+          python3 -m http.server 8001 --directory web/preview >/tmp/seed-p2.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8001/qa/p2-fixtures.html >/dev/null; then break; fi
+            sleep 1
+          done
+          node web/preview/qa/p2-render.cjs
+      - name: Attach six screenshots and computed metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seed-r3-p2-fixture-matrix
+          path: docs/design/evidence/p2/
+          if-no-files-found: warn
+      - name: Commit verified fixture evidence
+        if: success()
+        run: |
+          git config user.name 'seed-r3-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/design/evidence/p2/
+          if git diff --cached --quiet; then echo 'Evidence already present'; else
+            git commit -m 'test(seed-r3): record 6-way P2 fixture screenshots and computed-style evidence'
+            git push origin HEAD:seed-r3-p2p3
+          fi

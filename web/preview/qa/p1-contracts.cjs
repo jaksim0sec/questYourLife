@@ -29,7 +29,11 @@ assert.ok(!topnav.includes('K10을 따른다'),'Top Navigation must not point at
 assert.ok(bottom.includes('[4가지 페이지 유형](../pages/page-types.md)'),'page type owner missing from bottom nav');
 assert.ok(!bottom.includes('Bottom Nav 가시성과 Bottom CTA 충돌은 S-PAGE가 소유'),'old bottom nav visibility owner remains');
 assert.ok(prog.includes('min(current,target)')&&prog.includes('aria-valuetext'),'over-goal ARIA contradiction not resolved');
-assert.ok(status.includes('now1000'),'C-STATUS over-goal bound lost');
+assert.ok(status.includes('aria-valuenow=1000'),'C-STATUS over-goal bound lost');
+const normalizedStatus=norms('components/badge-progress.md');
+assert.equal((normalizedStatus.match(/thickness=micro\(/g)||[]).length,1,'Progress thickness one canonical line');
+assert.ok(normalizedStatus.includes('default(10px)')&&normalizedStatus.includes('featured(12px)'),'approved thickness lost');
+assert.ok(read('HISTORY.md').includes('## K08 상태·Progress·재화'),'archived K08 source missing');
 assert.ok(read('HISTORY.md').includes('K12 웹 작업자 간 고정 인터페이스'),'K12 history missing');
 console.log('T3 known conflict regression PASS: old K10/K12 and over-goal ARIA conflicts removed from active rules');
 const ledger=read('LEDGER.md');let coverage=0,p1=0,missing=[],stage={};const trace=read('P1_TRACE.md');

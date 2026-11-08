@@ -73,9 +73,9 @@
 | L0002 | 3.3 | 근거 위치는 `web/preview/clan.js`의 `rewardPanel()`과 `web/preview/clan.css`의 `.clan-reward-*`다. 아래 값은 **CSS viewport 390px / root 17px 가정**의 환산값이며 실기기 측정이 아니다. [S4] | 390/17 | 측정/수치 17px | 검토 | objects/progress.md#현행 계약 | P1 | candidate |
 | L0003 | 3.3 | \| 요소 \| 당시 보고된 값·구조 \| 문제 \| | 390/17 | 비교표 원문 | 검토 | objects/progress.md#현행 계약 | P1 | history |
 | L0004 | 3.3 | \| `rewardPanel()` \| 홍보·진행·탐색 동시 구성 \| 정보 책임 혼합 \| | 390/17 | 비교표 원문 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0005 | 3.3 | \| `.clan-reward-hero` \| 커스텀 갈색 그라데이션 \| 전용 이벤트 장면 대신 표면 효과로 특별함 대체 \| | 390/17 | 비교표 원문 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0006 | 3.3 | \| `.clan-chest-frame` \| Hero 폭 약 57%, `pointer-events:none` \| 작은 정면 에셋 확대, 큰 이미지 비클릭 \| | 390/17 | 측정/수치 57% | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0007 | 3.3 | \| `.clan-reward-hero-copy` \| 폭 약 52% \| 이미지와 텍스트가 겹치며 경쟁 \| | 390/17 | 측정/수치 52% | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
+| L0005 | 3.3 | \| `.clan-reward-hero` \| 커스텀 갈색 그라데이션 \| 전용 이벤트 장면 대신 표면 효과로 특별함 대체 \| | 390/17 | 비교표 원문 | 검토 | components/image-frame.md#현행 계약 | P2 | proposed |
+| L0006 | 3.3 | \| `.clan-chest-frame` \| Hero 폭 약 57%, `pointer-events:none` \| 작은 정면 에셋 확대, 큰 이미지 비클릭 \| | 390/17 | 측정/수치 57% | 검토 | components/image-frame.md#현행 계약 | P2 | proposed |
+| L0007 | 3.3 | \| `.clan-reward-hero-copy` \| 폭 약 52% \| 이미지와 텍스트가 겹치며 경쟁 \| | 390/17 | 측정/수치 52% | 검토 | components/image-frame.md#현행 계약 | P2 | proposed |
 | L0008 | 3.3 | \| Hero `h2` \| 약 22.4px / 810 \| 홍보 카피가 진행값보다 강함 \| | 390/17 | 측정/수치 22.4px | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
 | L0009 | 3.3 | \| Hero `h2` \| 약 22.4px / 810 \| 홍보 카피가 진행값보다 강함 \| | 390/17 | 측정/수치 810 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
 | L0010 | 3.3 | \| Hero 설명 `p` \| 약 11.1px \| 필요한 설명은 지나치게 작음 \| | 390/17 | 측정/수치 11.1px | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
@@ -91,104 +91,104 @@
 | L0020 | 3.3 | \| Progress Track \| 약 8px \| v0.15 기본 10px과 불일치 \| | 390/17 | 측정/수치 10px | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
 | L0021 | 3.3 | \| Progress 위치 \| Hero 내부 \| 관리 데이터가 홍보에 종속 \| | 390/17 | 비교표 원문 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
 | L0022 | 3.3 | \| `보상 구성 보기`·`미리보기` \| 모두 `#clan-reward` \| 같은 목적지의 중복 진입 \| | 390/17 | 비교표 원문 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0023 | 3.3 | \| 꾸미기 아이템 3개 \| 정적 `span` \| 진열이 유도하는 선택·상세 기대와 실제 행동 불일치 가능 \| | 390/17 | 측정/수치 3개 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0024 | 3.3 | 가장 크게 보이는 상자는 작동하지 않고 작은 링크 두 개가 같은 곳으로 이동한다. 모든 이미지를 버튼으로 바꾸라는 뜻은 아니다. **시각적 강조·클릭 기대·실제 행동이 대응해야 한다**는 지적이다. | 390/17 | 문장/사례 | 검토 | objects/progress.md#현행 계약 | P1 | proposed |
-| L0025 | 3.4 | - `이번 주 6명 참여`와 `6명 기여 중`은 같은 인원 정보를 다른 형태로 반복했다 | 390/17 | 측정/수치 6명 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0026 | 3.4 | - `이번 주 6명 참여`와 `6명 기여 중`은 같은 인원 정보를 다른 형태로 반복했다 | 390/17 | 측정/수치 6명 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0027 | 3.4 | - `보상 구성 보기`와 바로 아래 3개 아이템 진열은 보상 노출을 반복했다 | 390/17 | 측정/수치 3개 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0028 | 3.4 | - 동일한 `#clan-reward` 링크가 추가로 반복되어 행동 위계가 약해졌다 | 390/17 | 문장/사례 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0029 | 3.4 | - 큰 Hero 아래 비슷한 크기의 카드 3개가 이어져 리듬은 단조롭고 보상 면적은 커졌다 | 390/17 | 측정/수치 3개 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0030 | 3.4 | 데이터 의미가 실제로 다르다면 구별해 표시할 수 있다. 문제는 차이를 정의하지 않은 채 표현만 늘리는 것이다. | 390/17 | 문장/사례 | 검토 | objects/progress.md#Counterexamples | P1 | proposed |
-| L0031 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 709 | 검토 | foundations/typography.md#현행 계약 | P1 | history |
-| L0032 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1536px | 검토 | foundations/typography.md#현행 계약 | P1 | history |
-| L0033 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/typography.md#현행 계약 | P1 | history |
-| L0034 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16171 | 검토 | foundations/typography.md#현행 계약 | P1 | history |
-| L0035 | 4.1 | \| 영역 \| 대표 색 \| 공통 바탕 대비 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0036 | 4.1 | \| 두 화면 기본 배경 \| `#16171B` \| 1.00:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16171 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0037 | 4.1 | \| 두 화면 기본 배경 \| `#16171B` \| 1.00:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.00:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0038 | 4.1 | \| 당근 비선택 필터 \| `#2B2E35` \| 1.32:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0039 | 4.1 | \| 당근 비선택 필터 \| `#2B2E35` \| 1.32:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.32:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0040 | 4.1 | \| 현생패치 아이템 타일 \| `#2A292E` \| 1.23:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0041 | 4.1 | \| 현생패치 아이템 타일 \| `#2A292E` \| 1.23:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.23:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0042 | 4.1 | \| 현생패치 하단바 \| `#242329` \| 1.15:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 242329 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0043 | 4.1 | \| 현생패치 하단바 \| `#242329` \| 1.15:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.15:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0044 | 4.1 | \| 당근 하단바 \| `#1D2025` \| 1.09:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0045 | 4.1 | \| 당근 하단바 \| `#1D2025` \| 1.09:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.09:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0046 | 4.1 | \| 현생패치 보상 배너 어두운 부분 \| 약 `#3A322F` \| 1.43:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0047 | 4.1 | \| 현생패치 보상 배너 어두운 부분 \| 약 `#3A322F` \| 1.43:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.43:1 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0048 | 4.1 | 당근은 상품 목록 배경을 공통 바탕으로 유지하고 필터만 약하게 띄웠다. 실제 상품 사진·제목·가격에 대비가 집중된다. 현생패치는 갈색 배너와 개별 회색 타일의 **면 자체에 강조가 분산**됐다. 배경을 더 어둡게 바꾸는 것만으로는 콘텐츠 역할이 선명해지지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0049 | 4.2 | \| 대상 \| 당시 측정·환산 \| 해석 \| | 355/16.5 | 비교표 원문 | 검토 | foundations/typography.md#현행 계약 | P1 | history |
-| L0050 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 641 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0051 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 614 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0052 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 321 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0053 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 307 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0054 | 4.2 | \| 당근 상품 이미지 \| 약 127×127 CSS px \| 이미지·제목·메타·가격을 한 행으로 묶어 여러 독립 콘텐츠 노출 \| | 355/16.5 | 측정/수치 127 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0055 | 4.2 | \| 당근 상품 이미지 \| 약 127×127 CSS px \| 이미지·제목·메타·가격을 한 행으로 묶어 여러 독립 콘텐츠 노출 \| | 355/16.5 | 측정/수치 127 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0056 | 4.2 | 큰 Hero 자체가 결함은 아니다. **점유 면적에 비해 정보·행동·가치가 부족하고 클랜 활동을 아래로 밀어내는 것**이 문제다. 원문이 ‘30% 이상’, ‘거의 절반’, ‘50%’로 표현한 비중은 측정 범위와 설명 맥락이 달라 하나의 정밀 실측값으로 합치지 않는다. | 355/16.5 | 측정/수치 30% | 반례 | foundations/typography.md#현행 계약 | P1 | history |
-| L0057 | 4.2 | 큰 Hero 자체가 결함은 아니다. **점유 면적에 비해 정보·행동·가치가 부족하고 클랜 활동을 아래로 밀어내는 것**이 문제다. 원문이 ‘30% 이상’, ‘거의 절반’, ‘50%’로 표현한 비중은 측정 범위와 설명 맥락이 달라 하나의 정밀 실측값으로 합치지 않는다. | 355/16.5 | 측정/수치 50% | 반례 | foundations/typography.md#현행 계약 | P1 | history |
-| L0058 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 709px | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0059 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 355px | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0060 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 16.5px | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0061 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 3.3 | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0062 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 390px | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0063 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 17px | 보류 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0064 | 4.3 | \| 요소 \| 당시 관찰 \| 개선 목표 후보 \| | 355/16.5 | 비교표 원문 | 검토 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0065 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 1.3rem | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0066 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 850 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0067 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 22px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0068 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 750 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0069 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 3.15rem | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0070 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 40 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0071 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 44px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0072 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 68 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0073 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 76px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0074 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 321 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0075 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 307px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0076 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 321 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0077 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 200 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0078 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 220px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0079 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 21.8px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0080 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 810 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0081 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 22 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0082 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0083 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0084 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 750 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0085 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 10.7px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0086 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 12 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0087 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 13px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0088 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 400 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
+| L0023 | 3.3 | \| 꾸미기 아이템 3개 \| 정적 `span` \| 진열이 유도하는 선택·상세 기대와 실제 행동 불일치 가능 \| | 390/17 | 측정/수치 3개 | 검토 | objects/item.md#현행 계약 | P1 | proposed |
+| L0024 | 3.3 | 가장 크게 보이는 상자는 작동하지 않고 작은 링크 두 개가 같은 곳으로 이동한다. 모든 이미지를 버튼으로 바꾸라는 뜻은 아니다. **시각적 강조·클릭 기대·실제 행동이 대응해야 한다**는 지적이다. | 390/17 | 문장/사례 | 검토 | components/image-frame.md#현행 계약 | P2 | proposed |
+| L0025 | 3.4 | - `이번 주 6명 참여`와 `6명 기여 중`은 같은 인원 정보를 다른 형태로 반복했다 | 390/17 | 측정/수치 6명 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0026 | 3.4 | - `이번 주 6명 참여`와 `6명 기여 중`은 같은 인원 정보를 다른 형태로 반복했다 | 390/17 | 측정/수치 6명 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0027 | 3.4 | - `보상 구성 보기`와 바로 아래 3개 아이템 진열은 보상 노출을 반복했다 | 390/17 | 측정/수치 3개 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0028 | 3.4 | - 동일한 `#clan-reward` 링크가 추가로 반복되어 행동 위계가 약해졌다 | 390/17 | 문장/사례 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0029 | 3.4 | - 큰 Hero 아래 비슷한 크기의 카드 3개가 이어져 리듬은 단조롭고 보상 면적은 커졌다 | 390/17 | 측정/수치 3개 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0030 | 3.4 | 데이터 의미가 실제로 다르다면 구별해 표시할 수 있다. 문제는 차이를 정의하지 않은 채 표현만 늘리는 것이다. | 390/17 | 문장/사례 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0031 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 709 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | history |
+| L0032 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1536px | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | history |
+| L0033 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | history |
+| L0034 | 4.1 | S3는 709×1536px JPEG 2장을 비교해 두 화면의 기본 배경에서 모두 `#16171B`가 관찰됐다고 기록한다. 아래는 JPEG 대표 픽셀의 WCAG 상대 휘도 대비이며 **공식 토큰·접근성 합격점·디자인 품질 점수가 아니다.** | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16171 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | history |
+| L0035 | 4.1 | \| 영역 \| 대표 색 \| 공통 바탕 대비 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0036 | 4.1 | \| 두 화면 기본 배경 \| `#16171B` \| 1.00:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16171 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0037 | 4.1 | \| 두 화면 기본 배경 \| `#16171B` \| 1.00:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.00:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0038 | 4.1 | \| 당근 비선택 필터 \| `#2B2E35` \| 1.32:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0039 | 4.1 | \| 당근 비선택 필터 \| `#2B2E35` \| 1.32:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.32:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0040 | 4.1 | \| 현생패치 아이템 타일 \| `#2A292E` \| 1.23:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0041 | 4.1 | \| 현생패치 아이템 타일 \| `#2A292E` \| 1.23:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.23:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0042 | 4.1 | \| 현생패치 하단바 \| `#242329` \| 1.15:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 242329 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0043 | 4.1 | \| 현생패치 하단바 \| `#242329` \| 1.15:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.15:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0044 | 4.1 | \| 당근 하단바 \| `#1D2025` \| 1.09:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0045 | 4.1 | \| 당근 하단바 \| `#1D2025` \| 1.09:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.09:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0046 | 4.1 | \| 현생패치 보상 배너 어두운 부분 \| 약 `#3A322F` \| 1.43:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0047 | 4.1 | \| 현생패치 보상 배너 어두운 부분 \| 약 `#3A322F` \| 1.43:1 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1.43:1 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0048 | 4.1 | 당근은 상품 목록 배경을 공통 바탕으로 유지하고 필터만 약하게 띄웠다. 실제 상품 사진·제목·가격에 대비가 집중된다. 현생패치는 갈색 배너와 개별 회색 타일의 **면 자체에 강조가 분산**됐다. 배경을 더 어둡게 바꾸는 것만으로는 콘텐츠 역할이 선명해지지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | foundations/color-surfaces.md#현행 계약 | P2 | proposed |
+| L0049 | 4.2 | \| 대상 \| 당시 측정·환산 \| 해석 \| | 355/16.5 | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | history |
+| L0050 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 641 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0051 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 614 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0052 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 321 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0053 | 4.2 | \| 현생패치 Reward Hero \| 약 641×614 JPEG px → 321×307 CSS px \| 모바일에서 거의 정사각형인 단일 보상 구역 \| | 355/16.5 | 측정/수치 307 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0054 | 4.2 | \| 당근 상품 이미지 \| 약 127×127 CSS px \| 이미지·제목·메타·가격을 한 행으로 묶어 여러 독립 콘텐츠 노출 \| | 355/16.5 | 측정/수치 127 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0055 | 4.2 | \| 당근 상품 이미지 \| 약 127×127 CSS px \| 이미지·제목·메타·가격을 한 행으로 묶어 여러 독립 콘텐츠 노출 \| | 355/16.5 | 측정/수치 127 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0056 | 4.2 | 큰 Hero 자체가 결함은 아니다. **점유 면적에 비해 정보·행동·가치가 부족하고 클랜 활동을 아래로 밀어내는 것**이 문제다. 원문이 ‘30% 이상’, ‘거의 절반’, ‘50%’로 표현한 비중은 측정 범위와 설명 맥락이 달라 하나의 정밀 실측값으로 합치지 않는다. | 355/16.5 | 측정/수치 30% | 반례 | patterns/content-hierarchy.md#현행 계약 | P1 | history |
+| L0057 | 4.2 | 큰 Hero 자체가 결함은 아니다. **점유 면적에 비해 정보·행동·가치가 부족하고 클랜 활동을 아래로 밀어내는 것**이 문제다. 원문이 ‘30% 이상’, ‘거의 절반’, ‘50%’로 표현한 비중은 측정 범위와 설명 맥락이 달라 하나의 정밀 실측값으로 합치지 않는다. | 355/16.5 | 측정/수치 50% | 반례 | patterns/content-hierarchy.md#현행 계약 | P1 | history |
+| L0058 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 709px | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0059 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 355px | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0060 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 16.5px | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0061 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 3.3 | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0062 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 390px | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0063 | 4.3 | 다음은 스크린샷 폭 709px을 **CSS 약 355px / root 약 16.5px**로 환산한 S3의 진단·목표값이다. 3.3절의 390px/root 17px 값과 구별한다. 목표값은 미승인 후보다. | 390/17 | 측정/수치 17px | 보류 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0064 | 4.3 | \| 요소 \| 당시 관찰 \| 개선 목표 후보 \| | 355/16.5 | 비교표 원문 | 검토 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0065 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 1.3rem | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0066 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 850 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0067 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 22px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0068 | 4.3 | \| Root Header \| `1.3rem`, 850 \| 22px / 750 전후 \| | 355/16.5 | 측정/수치 750 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0069 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 3.15rem | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0070 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 40 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0071 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 44px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0072 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 68 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0073 | 4.3 | \| 클랜 프로필 깃발 \| `3.15rem` \| 깃발 40–44px, 행 68–76px \| | 355/16.5 | 측정/수치 76px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0074 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 321 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0075 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 307px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0076 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 321 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0077 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 200 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0078 | 4.3 | \| Reward Hero \| 321×307px \| 321×200–220px \| | 355/16.5 | 측정/수치 220px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0079 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 21.8px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0080 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 810 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0081 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 22 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0082 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0083 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0084 | 4.3 | \| Hero 제목 \| 약 21.8px / 810 \| 22–24px / 700–750 \| | 355/16.5 | 측정/수치 750 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0085 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 10.7px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0086 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 12 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0087 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 13px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0088 | 4.3 | \| Hero 설명 \| 약 10.7px \| 12–13px / 400 \| | 355/16.5 | 측정/수치 400 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
 | L0089 | 4.3 | \| 기여 Badge \| 약 9.4px / 790 \| 12px / 600 \| | 355/16.5 | 측정/수치 9.4px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
 | L0090 | 4.3 | \| 기여 Badge \| 약 9.4px / 790 \| 12px / 600 \| | 355/16.5 | 측정/수치 790 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
 | L0091 | 4.3 | \| 기여 Badge \| 약 9.4px / 790 \| 12px / 600 \| | 355/16.5 | 측정/수치 12px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
 | L0092 | 4.3 | \| 기여 Badge \| 약 9.4px / 790 \| 12px / 600 \| | 355/16.5 | 측정/수치 600 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0093 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 13.7px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0094 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 760 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0095 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 15 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0096 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 16px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0097 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
+| L0093 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 13.7px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0094 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 760 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0095 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 15 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0096 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 16px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0097 | 4.3 | \| 꾸미기 제목 \| 약 13.7px / 760 \| 15–16px / 700 \| | 355/16.5 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
 | L0098 | 4.3 | \| 아이템 라벨 \| 약 9.4px \| 최소 12px \| | 355/16.5 | 측정/수치 9.4px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
 | L0099 | 4.3 | \| 아이템 라벨 \| 약 9.4px \| 최소 12px \| | 355/16.5 | 측정/수치 12px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0100 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 16 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0101 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0102 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 12 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0103 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 13px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0104 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 40 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0105 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 44px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0106 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 76 | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0107 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 92px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0108 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 1px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0109 | 4.3 | \| 헤더 아이콘 \| 개별 위치 이동 \| Glyph 24px, 공통 슬롯·중심축 \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
+| L0100 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 16 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0101 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0102 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 12 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0103 | 4.3 | \| 일반 정보·메타 \| 주요·보조의 비중 불균형 \| 주요 16–24px, 메타 12–13px \| | 355/16.5 | 측정/수치 13px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0104 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 40 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0105 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 44px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0106 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 76 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0107 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 92px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0108 | 4.3 | \| 클랜 활동 행 \| 반복 행 표현 보강 필요 \| 아바타 40–44px, 행 76–92px, 구분선 1px \| | 355/16.5 | 측정/수치 1px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0109 | 4.3 | \| 헤더 아이콘 \| 개별 위치 이동 \| Glyph 24px, 공통 슬롯·중심축 \| | 355/16.5 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
 | L0110 | 4.3 | 작은 글자를 과한 굵기로 보상하는 경향이 반복된다. `.57rem`이 최종적으로 10px 미만이 되는지 확인해야 하며, 토큰을 참조했다는 이유만으로 가독성을 통과시켜서는 안 된다. 메타는 조용하게, 가격·핵심 수치는 필요에 따라 강조한다. | 355/16.5 | 측정/수치 57rem | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
 | L0111 | 4.3 | 작은 글자를 과한 굵기로 보상하는 경향이 반복된다. `.57rem`이 최종적으로 10px 미만이 되는지 확인해야 하며, 토큰을 참조했다는 이유만으로 가독성을 통과시켜서는 안 된다. 메타는 조용하게, 가격·핵심 수치는 필요에 따라 강조한다. | 355/16.5 | 측정/수치 10px | 검토 | foundations/typography.md#현행 계약 | P1 | proposed |
-| L0112 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 44 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0113 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 48px | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0114 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 4 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0115 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 8px | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0116 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 48dp | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0117 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 44 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0118 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 16171 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0119 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 242329 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
-| L0120 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 2 | 반례 | foundations/typography.md#현행 계약 | P1 | candidate |
+| L0112 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 44 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0113 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 48px | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0114 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 4 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0115 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 8px | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0116 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 48dp | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0117 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 44 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0118 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 16171 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0119 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 242329 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
+| L0120 | 4.3 | S3의 터치 영역 제안은 44–48px, 슬롯 간격은 4–8px다. **현생패치의 기존 최소 48dp 계약을 44로 낮추는 승인으로 해석하지 않는다.** `#16171B` 유지·추가 암전 금지와 비강조 Surface의 `#242329`, 선택 필터의 `#2B2E35` 제안 역시 해당 비교 화면의 후보이며 `previewShellLayers`나 승인 다크 토큰을 대체하지 않는다. | 355/16.5 | 측정/수치 2 | 반례 | foundations/typography.md#현행 계약 | P2 | candidate |
 | L0121 | 4.4 | 데이터는 `620 / 1,000`인데 화면 막대는 전부 회색이었다는 분석이다. S3는 JS가 내부 `span`에 `width:62%`를 지정하지만 CSS가 인라인 `span`을 폭 적용 가능한 요소로 만들지 않은 것을 원인으로 제시했다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 620 | 검토 | objects/progress.md#현행 계약 | P0 | proposed |
 | L0122 | 4.4 | 데이터는 `620 / 1,000`인데 화면 막대는 전부 회색이었다는 분석이다. S3는 JS가 내부 `span`에 `width:62%`를 지정하지만 CSS가 인라인 `span`을 폭 적용 가능한 요소로 만들지 않은 것을 원인으로 제시했다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1,000 | 검토 | objects/progress.md#현행 계약 | P0 | proposed |
 | L0123 | 4.4 | 데이터는 `620 / 1,000`인데 화면 막대는 전부 회색이었다는 분석이다. S3는 JS가 내부 `span`에 `width:62%`를 지정하지만 CSS가 인라인 `span`을 폭 적용 가능한 요소로 만들지 않은 것을 원인으로 제시했다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 62% | 검토 | objects/progress.md#현행 계약 | P0 | proposed |
@@ -224,18 +224,18 @@
 | L0153 | 4.5 | \| 관련 텍스트 사이 \| 6px \| 클랜명↔메타 약 3px \| | 355/16 | 측정/수치 6px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0154 | 4.5 | \| 관련 텍스트 사이 \| 6px \| 클랜명↔메타 약 3px \| | 355/16 | 측정/수치 3px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0155 | 4.5 | \| 섹션 간격 \| 관계에 따라 선택 \| 일부 섹션 일괄 약 8px \| | 355/16 | 측정/수치 8px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0156 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 44px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0157 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 16 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0158 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 22px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0159 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 700 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0160 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 49.5px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0161 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 13.4px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0162 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 690 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0163 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 820 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0164 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 10px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0165 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 2.3px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0166 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 26.4px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0167 | 4.5 | 탭의 실제 패딩보다 빈 간격이 커 `멤버 / 기록 / 소식`이 조작 가능한 탭보다 떨어진 텍스트처럼 보일 수 있다. 탭은 바로 아래 패널을 바꾸고, 상세 링크는 다른 화면으로 이동한다는 책임을 분명히 해야 한다. | 355/16 | 문장/사례 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
+| L0156 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 44px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0157 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 16 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0158 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 22px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0159 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 700 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0160 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 49.5px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0161 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 13.4px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0162 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 690 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0163 | 4.5 | \| Line Tabs 높이·라벨 \| 44px, 16/22px, 700 \| 약 49.5px, 13.4px, 기본 690/선택 820 \| | 355/16 | 측정/수치 820 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0164 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 10px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0165 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 2.3px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0166 | 4.5 | \| Tab 가로 패딩·간격 \| 패딩 10px, 간격은 배치에 따름 \| 패딩 약 2.3px, 간격 약 26.4px \| | 355/16 | 측정/수치 26.4px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0167 | 4.5 | 탭의 실제 패딩보다 빈 간격이 커 `멤버 / 기록 / 소식`이 조작 가능한 탭보다 떨어진 텍스트처럼 보일 수 있다. 탭은 바로 아래 패널을 바꾸고, 상세 링크는 다른 화면으로 이동한다는 책임을 분명히 해야 한다. | 355/16 | 문장/사례 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
 | L0168 | 4.5 | `translateX(0.5rem / 1rem / 1.5rem)`으로 아이콘 Glyph를 개별 이동한 분석도 있다. 기존 Grid 유무보다 **공통 Right Slot 안에서 Glyph 중심과 실제 Hit Target 중심이 일치하는지**가 핵심이다. 같은 x축 기준선·역할별 타이포·슬롯 정렬을 우선 교정한다. | 355/16 | 측정/수치 0.5rem | 검토 | shells/page-shells.md#현행 계약 | P1 | history |
 | L0169 | 4.5 | `translateX(0.5rem / 1rem / 1.5rem)`으로 아이콘 Glyph를 개별 이동한 분석도 있다. 기존 Grid 유무보다 **공통 Right Slot 안에서 Glyph 중심과 실제 Hit Target 중심이 일치하는지**가 핵심이다. 같은 x축 기준선·역할별 타이포·슬롯 정렬을 우선 교정한다. | 355/16 | 측정/수치 1rem | 검토 | shells/page-shells.md#현행 계약 | P1 | history |
 | L0170 | 4.5 | `translateX(0.5rem / 1rem / 1.5rem)`으로 아이콘 Glyph를 개별 이동한 분석도 있다. 기존 Grid 유무보다 **공통 Right Slot 안에서 Glyph 중심과 실제 Hit Target 중심이 일치하는지**가 핵심이다. 같은 x축 기준선·역할별 타이포·슬롯 정렬을 우선 교정한다. | 355/16 | 측정/수치 1.5rem | 검토 | shells/page-shells.md#현행 계약 | P1 | history |
@@ -270,14 +270,14 @@
 | L0199 | 6.1 | \| `C-STATUS` \| Badge·Progress 역할과 두께 \| 상태 중복·과밀·핵심 수치 주목도 및 실제 렌더 검사 부족 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
 | L0200 | 6.1 | \| `S-PAGE` \| Root·Detail·Utility·Immersive·Overlay의 외곽 구조 \| 내부 콘텐츠의 목적별 유형과 우선순위는 별도 설계 필요 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
 | L0201 | 6.1 | \| `VALIDATION` \| 토큰·상태·반응형·접근성·오류 검사 \| 정보 객체 완결성·선택 이유·행동 예측·목적 적합성 검사 부족 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0202 | 6.5 | \| 관계 \| 필요한 계약 \| 사례 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0203 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12.4px | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0204 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 17px | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0205 | 6.5 | \| `C-TABS + C-SELECTION` \| 상위 범주·하위 필터·보기 전환의 위치·순서·영향 범위 \| 멤버/기록/소식은 패널 전환, 기간은 같은 데이터 보기 전환 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0206 | 6.5 | \| `C-LIST + C-SURFACE` \| Flat List 우선 조건, 독립 Surface 필요 조건, Row/Group 경계 \| 사람·활동에 아이템 타일 문법 일괄 적용 금지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0207 | 6.5 | \| `F-GEOMETRY + F-TYPE` \| 고정 Shell과 root 글자 확대의 충돌 검사 \| 확대 시 헤더·하단바·라벨·Safe Area 유지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0208 | 6.5 | \| `C-IMAGE + C-CREDIT + C-RARITY + C-TEXT` \| 정보 객체의 슬롯·정렬·상태·행동 \| 블루 캡의 상점/보관함/미리보기 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
-| L0209 | 6.5 | 당근의 **Header=탐색 맥락, Chip=조건, List=결과, Bottom Nav=루트 이동**은 관계가 화면에 드러나는 사례다. 클랜 홈의 ‘정체성→보상→진열’ 나열은 관계와 행동이 약했다. 두 페이지의 목적이 다르므로 클랜 홈에 당근 필터를 추가하는 복제로 해결하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
+| L0202 | 6.5 | \| 관계 \| 필요한 계약 \| 사례 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0203 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12.4px | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0204 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 17px | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0205 | 6.5 | \| `C-TABS + C-SELECTION` \| 상위 범주·하위 필터·보기 전환의 위치·순서·영향 범위 \| 멤버/기록/소식은 패널 전환, 기간은 같은 데이터 보기 전환 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0206 | 6.5 | \| `C-LIST + C-SURFACE` \| Flat List 우선 조건, 독립 Surface 필요 조건, Row/Group 경계 \| 사람·활동에 아이템 타일 문법 일괄 적용 금지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0207 | 6.5 | \| `F-GEOMETRY + F-TYPE` \| 고정 Shell과 root 글자 확대의 충돌 검사 \| 확대 시 헤더·하단바·라벨·Safe Area 유지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0208 | 6.5 | \| `C-IMAGE + C-CREDIT + C-RARITY + C-TEXT` \| 정보 객체의 슬롯·정렬·상태·행동 \| 블루 캡의 상점/보관함/미리보기 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0209 | 6.5 | 당근의 **Header=탐색 맥락, Chip=조건, List=결과, Bottom Nav=루트 이동**은 관계가 화면에 드러나는 사례다. 클랜 홈의 ‘정체성→보상→진열’ 나열은 관계와 행동이 약했다. 두 페이지의 목적이 다르므로 클랜 홈에 당근 필터를 추가하는 복제로 해결하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
 | L0210 | 6.6 | \| 판단 \| 우선 후보 \| 배제하거나 주의할 후보 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | patterns/content-hierarchy.md#현행 계약 | P1 | candidate |
 | L0211 | 6.6 | \| 간격만으로 구분 가능한가 \| Plain / Flat Section \| 의미 없는 Card \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
 | L0212 | 6.6 | \| 같은 그룹 내부 경계가 필요한가 \| 필요한 위치의 Divider \| 반복 목록 전체의 과도한 선·마지막 불필요한 Divider \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
@@ -481,20 +481,20 @@
 | L0410 | 8.6 | \| G7 검증 \| 렌더됐지만 실제 비교·행동 확인 없음 \| 07 \| 화면·상호작용 근거 확보 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 07 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
 | L0411 | 8.6 | 실패하면 해당 결정을 성공 처리하지 않고 원인을 낳은 단계로 돌아간다. 테스트·프로토타입의 합의된 예외는 범위와 이유를 기록할 수 있다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
 | L0412 | 8.6 | **상자 사례의 복귀:** ‘너무 크다’는 관찰 → G5 실패 → G1에서 주연 확인 → 정체성·활동·공동 기록과 보상 홍보의 책임 분리 → 적합 패턴 재선택 → 크기·배치 수정 → 실제 화면 검증. 원인이 역할 오판이면 CSS height만 줄여서는 해결되지 않는다. 치수 수정 자체가 항상 잘못인 것은 아니다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 반례 | PROCESS.md#현행 계약 | P1 | history |
-| L0413 | 9.3 | \| 대상 \| 최소 보강 \| 대응 원문 아이디어 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | history |
-| L0414 | 9.3 | \| P-HIERARCHY \| 홍보/실용 정보/탐색/수령 결과 분류, 실제 데이터·주행동·면적 이유 \| S4 R1, S6 H02, S7 D01–D04 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0415 | 9.3 | \| C-SURFACE \| 허용 슬롯·대표 행동·자식·금지 조합·Plain 우선 조건 \| S4 R2, S6 H01/H06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0416 | 9.3 | \| A-ART+C-IMAGE \| A1 확대 실패 반례, A2 전용 구도·광원·안전영역·실제 주목도 \| S4 R3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0417 | 9.3 | \| C-ACTION+P-ACTIONS \| 역할·Emphasis→공통 Variant·화면 대표 CTA·금지 조합 \| S4 R4 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0418 | 9.3 | \| C-TEXT+F-TYPE \| 역할명 충돌 해소·Scale/Semantic·슬롯 매핑·최종 가독성 \| S2 16, S3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0419 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 03 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0420 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 05 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0421 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0422 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 19 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0423 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 21 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0424 | 9.3 | \| S-PAGE \| Shell과 콘텐츠 목적의 책임 구분 \| S6 H03 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0425 | 9.3 | \| INDEX \| 새 페이지에서 목적·Pattern·객체의 읽기/선택 경로 \| S6 H04, S7 D07 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
-| L0426 | 9.3 | \| VALIDATION \| 객체 완결성·목적·중복·클릭·계층·에셋 용도·실제 비교 \| S4 R5, S6 H05, S7 D06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
+| L0413 | 9.3 | \| 대상 \| 최소 보강 \| 대응 원문 아이디어 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | history |
+| L0414 | 9.3 | \| P-HIERARCHY \| 홍보/실용 정보/탐색/수령 결과 분류, 실제 데이터·주행동·면적 이유 \| S4 R1, S6 H02, S7 D01–D04 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0415 | 9.3 | \| C-SURFACE \| 허용 슬롯·대표 행동·자식·금지 조합·Plain 우선 조건 \| S4 R2, S6 H01/H06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0416 | 9.3 | \| A-ART+C-IMAGE \| A1 확대 실패 반례, A2 전용 구도·광원·안전영역·실제 주목도 \| S4 R3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0417 | 9.3 | \| C-ACTION+P-ACTIONS \| 역할·Emphasis→공통 Variant·화면 대표 CTA·금지 조합 \| S4 R4 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0418 | 9.3 | \| C-TEXT+F-TYPE \| 역할명 충돌 해소·Scale/Semantic·슬롯 매핑·최종 가독성 \| S2 16, S3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0419 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 03 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0420 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 05 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0421 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0422 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 19 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0423 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 21 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0424 | 9.3 | \| S-PAGE \| Shell과 콘텐츠 목적의 책임 구분 \| S6 H03 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0425 | 9.3 | \| INDEX \| 새 페이지에서 목적·Pattern·객체의 읽기/선택 경로 \| S6 H04, S7 D07 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0426 | 9.3 | \| VALIDATION \| 객체 완결성·목적·중복·클릭·계층·에셋 용도·실제 비교 \| S4 R5, S6 H05, S7 D06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
 | L0427 | 9.5 | \| 역할 \| 기본 후보 \| 조건 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | candidate |
 | L0428 | 9.5 | \| 수락·확정·실제 수령 \| C-ACTION High / Solid \| 의미 Tone, 화면 대표 행동 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |
 | L0429 | 9.5 | \| 일반 실행·초대 \| C-ACTION Medium / Neutral Weak 등 \| 일반 행동의 비중 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |
@@ -503,38 +503,38 @@
 | L0432 | 9.5 | \| 기여 중·참여 인원·완료 상태 \| Badge 또는 일반 메타 \| 행동이 없으면 버튼처럼 꾸미지 않음 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |
 | L0433 | 9.5 | 당시 지역 스타일 예시는 `.clan-more`, `.clan-reward-cta`, `.clan-reward-items-head a`, `.clan-inline-invite`, `.clan-btn`이다. 같은 역할·강조도·상태는 공통 Variant를 기본으로 쓴다. 차이가 필요하면 근거를 남긴다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | patterns/action-layout.md#현행 계약 | P2 | history |
 | L0434 | 9.5 | 불필요한 홍보 카피를 늘리지 않고 용어·데이터 의미를 고정한다. `F-TYPE/C-TEXT` 역할, `F-COLOR` 의미색, `C-STATUS` 두께·색, `C-ACTION` Variant, `C-IMAGE` 용도를 공유한다. **보상 오브젝트의 금색은 주변 버튼·Progress·표면의 의미색과 같지 않다.** 아트의 물성을 전역 UI 강조색으로 무단 확장하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |
-| L0435 | 10.2 | \| 범주 \| 조건·확인 항목 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0436 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 320 | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0437 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 360 | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0438 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 390 | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0439 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 430 | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0440 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 355px | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0441 | 10.2 | \| 테마 \| 라이트·다크, 승인 토큰과 실험값 구분 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0442 | 10.2 | \| 글자·콘텐츠 \| 텍스트 200% 확대, 긴 제목·2줄 이상 아이템명·큰 수치·배지 줄바꿈·최종 폰트 크기 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 200% | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0443 | 10.2 | \| 글자·콘텐츠 \| 텍스트 200% 확대, 긴 제목·2줄 이상 아이템명·큰 수치·배지 줄바꿈·최종 폰트 크기 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0444 | 10.2 | \| 첫 시선 \| 첫 2초에 핵심 내용 인지, 텍스트·수치·아트의 주연 식별 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0445 | 10.2 | \| 정보 중복 \| 제목·설명·Badge·CTA·미리보기에서 같은 내용·목적지 반복 여부 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0446 | 10.2 | \| 공간 \| 보상·진열이 사람·활동을 밀어내는지, 면적에 정보/행동 가치가 있는지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0447 | 10.2 | \| Surface \| 배경·테두리를 제거해도 의미 유지 시 삭제 가능한지, 중첩·동일 카드 반복 여부 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0448 | 10.2 | \| 타이포 \| 큰 제목 경쟁, 작은 글자+과한 굵기, 실제 10px 미만 렌더 등 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 10px | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0449 | 10.2 | \| 이미지 \| A1/A2/A3 목적, contain/cover·축소·크롭·안전영역·Overlay 충돌 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0450 | 10.2 | \| Progress \| 데이터 수치와 채움 길이·두께·색·상태 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0451 | 10.2 | \| 조작 \| 타일·이미지·버튼의 클릭/비클릭 구별, 실제 목적지·로딩·실패·포커스·터치 영역 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0452 | 10.2 | \| 헤더 \| x축 기준선·Glyph와 Hit Target 중심·Root/Standard 역할·긴 제목·우측 슬롯 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0453 | 10.2 | \| 탐색 \| Tabs↔Panel·Filter↔List·Segment↔같은 데이터 연결, Root/Detail 전환·Back 이력 복원 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0454 | 10.2 | \| Shell \| Safe Area·고정 하단바·스크롤 복귀·키보드·root 글자 확대 충돌 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0455 | 10.2 | \| 회귀 \| 클랜 깃발·마스코트·장비·Avatar·승인 SVG·상하단 내비·기존 스크롤/상호작용 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | history |
-| L0456 | 10.2 | \| 비교 근거 \| 승인 레퍼런스와 실제 모바일 렌더를 나란히 비교, 확인 범위·차이·미확인 기록 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0457 | 10.3 | \| 사례 \| 부족한 판정 \| 필요한 판정 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0458 | 10.3 | \| 상자 Hero \| 높이를 줄였다 \| 목적 분리·진행 가독성·활동 노출·아트 적합성·행동 기대까지 확인 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0459 | 10.3 | \| 아이템 \| 이미지·가격을 추가했다 \| 맥락에 필요한 슬롯·긴 이름·상태·행동이 일관된 객체로 읽힘 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0460 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 62% | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0461 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 620 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0462 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1000 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0463 | 10.3 | \| 헤더 \| 아이콘 위치가 예뻐졌다 \| 보이는 중심과 실제 타깃·본문 시작선·긴 제목 정합 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0464 | 10.3 | \| Tabs \| 선택색이 바뀐다 \| 해당 패널이 바뀌고 상세 이동과 구별됨 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0465 | 10.3 | \| SEED 개정 \| 문서를 더 썼다 \| 반복 실패를 판정할 조건·반례·관계·검증 기준이 생김 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | VALIDATION.md#현행 계약 | P1 | proposed |
-| L0466 | 10.3 | \| PCP \| 7단계 양식이 있다 \| 판단을 생략하지 않고 실패 단계로 복귀한 근거가 남음 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 7단계 | 반례 | VALIDATION.md#현행 계약 | P1 | proposed |
+| L0435 | 10.2 | \| 범주 \| 조건·확인 항목 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0436 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 320 | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0437 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 360 | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0438 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 390 | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0439 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 430 | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0440 | 10.2 | \| 화면 폭 \| 원문 공통 320/360/390/430 CSS px, S3 비교 재현 시 355px도 추가 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 355px | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0441 | 10.2 | \| 테마 \| 라이트·다크, 승인 토큰과 실험값 구분 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0442 | 10.2 | \| 글자·콘텐츠 \| 텍스트 200% 확대, 긴 제목·2줄 이상 아이템명·큰 수치·배지 줄바꿈·최종 폰트 크기 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 200% | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0443 | 10.2 | \| 글자·콘텐츠 \| 텍스트 200% 확대, 긴 제목·2줄 이상 아이템명·큰 수치·배지 줄바꿈·최종 폰트 크기 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0444 | 10.2 | \| 첫 시선 \| 첫 2초에 핵심 내용 인지, 텍스트·수치·아트의 주연 식별 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0445 | 10.2 | \| 정보 중복 \| 제목·설명·Badge·CTA·미리보기에서 같은 내용·목적지 반복 여부 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0446 | 10.2 | \| 공간 \| 보상·진열이 사람·활동을 밀어내는지, 면적에 정보/행동 가치가 있는지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0447 | 10.2 | \| Surface \| 배경·테두리를 제거해도 의미 유지 시 삭제 가능한지, 중첩·동일 카드 반복 여부 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0448 | 10.2 | \| 타이포 \| 큰 제목 경쟁, 작은 글자+과한 굵기, 실제 10px 미만 렌더 등 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 10px | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0449 | 10.2 | \| 이미지 \| A1/A2/A3 목적, contain/cover·축소·크롭·안전영역·Overlay 충돌 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0450 | 10.2 | \| Progress \| 데이터 수치와 채움 길이·두께·색·상태 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0451 | 10.2 | \| 조작 \| 타일·이미지·버튼의 클릭/비클릭 구별, 실제 목적지·로딩·실패·포커스·터치 영역 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0452 | 10.2 | \| 헤더 \| x축 기준선·Glyph와 Hit Target 중심·Root/Standard 역할·긴 제목·우측 슬롯 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0453 | 10.2 | \| 탐색 \| Tabs↔Panel·Filter↔List·Segment↔같은 데이터 연결, Root/Detail 전환·Back 이력 복원 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0454 | 10.2 | \| Shell \| Safe Area·고정 하단바·스크롤 복귀·키보드·root 글자 확대 충돌 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0455 | 10.2 | \| 회귀 \| 클랜 깃발·마스코트·장비·Avatar·승인 SVG·상하단 내비·기존 스크롤/상호작용 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | history |
+| L0456 | 10.2 | \| 비교 근거 \| 승인 레퍼런스와 실제 모바일 렌더를 나란히 비교, 확인 범위·차이·미확인 기록 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0457 | 10.3 | \| 사례 \| 부족한 판정 \| 필요한 판정 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0458 | 10.3 | \| 상자 Hero \| 높이를 줄였다 \| 목적 분리·진행 가독성·활동 노출·아트 적합성·행동 기대까지 확인 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0459 | 10.3 | \| 아이템 \| 이미지·가격을 추가했다 \| 맥락에 필요한 슬롯·긴 이름·상태·행동이 일관된 객체로 읽힘 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0460 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 62% | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0461 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 620 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0462 | 10.3 | \| Progress \| CSS에 62%가 있다 \| `620/1000`과 실제 채움 일치 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1000 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0463 | 10.3 | \| 헤더 \| 아이콘 위치가 예뻐졌다 \| 보이는 중심과 실제 타깃·본문 시작선·긴 제목 정합 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0464 | 10.3 | \| Tabs \| 선택색이 바뀐다 \| 해당 패널이 바뀌고 상세 이동과 구별됨 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0465 | 10.3 | \| SEED 개정 \| 문서를 더 썼다 \| 반복 실패를 판정할 조건·반례·관계·검증 기준이 생김 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | VALIDATION.md#현행 계약 | P4 | proposed |
+| L0466 | 10.3 | \| PCP \| 7단계 양식이 있다 \| 판단을 생략하지 않고 실패 단계로 복귀한 근거가 남음 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 7단계 | 반례 | VALIDATION.md#현행 계약 | P4 | proposed |
 | L0467 | A.1 | S5의 조건: CSS viewport 355px / 브라우저 기본 글자 16px 가정. | 355/16 | 측정/수치 355px | 검토 | foundations/geometry.md#현행 계약 | P2 | candidate |
 | L0468 | A.1 | S5의 조건: CSS viewport 355px / 브라우저 기본 글자 16px 가정. | 355/16 | 측정/수치 16px | 검토 | foundations/geometry.md#현행 계약 | P2 | candidate |
 | L0469 | A.1 | \| 속성 \| 당근 공개 규격으로 인용된 값 \| 현생패치 당시 코드 환산 \| | 355/16 | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
@@ -570,64 +570,64 @@
 | L0499 | A.1 | 별도 제안인 현생패치 `F-TYPE` Root Title 26px/700, `F-GEOMETRY` Top Bar 최소 60px은 당근 18px/700·56px과 다르다. 수치 차이가 곧 오류는 아니다. 브랜드 비례로 의도됐는지 검증되지 않은 확대인지 판단해야 하며, 제안값을 승인값으로 바꾸지 않는다. | 355/16 | 측정/수치 18px | 검토 | foundations/geometry.md#현행 계약 | P2 | candidate |
 | L0500 | A.1 | 별도 제안인 현생패치 `F-TYPE` Root Title 26px/700, `F-GEOMETRY` Top Bar 최소 60px은 당근 18px/700·56px과 다르다. 수치 차이가 곧 오류는 아니다. 브랜드 비례로 의도됐는지 검증되지 않은 확대인지 판단해야 하며, 제안값을 승인값으로 바꾸지 않는다. | 355/16 | 측정/수치 700 | 검토 | foundations/geometry.md#현행 계약 | P2 | candidate |
 | L0501 | A.1 | 별도 제안인 현생패치 `F-TYPE` Root Title 26px/700, `F-GEOMETRY` Top Bar 최소 60px은 당근 18px/700·56px과 다르다. 수치 차이가 곧 오류는 아니다. 브랜드 비례로 의도됐는지 검증되지 않은 확대인지 판단해야 하며, 제안값을 승인값으로 바꾸지 않는다. | 355/16 | 측정/수치 56px | 검토 | foundations/geometry.md#현행 계약 | P2 | candidate |
-| L0502 | A.2 | \| 항목 \| 원문 인용값 \| 해석 \| | 355/16 | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0503 | A.2 | \| `global-gutter` \| 16px \| 헤더·일반 콘텐츠 시작선 \| | 355/16 | 측정/수치 16px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0504 | A.2 | \| `nav-to-title` \| 20px \| Nav 아래 별도 Page Title이 있을 때. 모든 헤더 아래 고정 간격 아님 \| | 355/16 | 측정/수치 20px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0505 | A.2 | \| `component-default` \| 12px \| 별도 계약 없는 컴포넌트 사이 \| | 355/16 | 측정/수치 12px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0506 | A.2 | \| `between-text` \| 6px \| 같은 정보 그룹 텍스트 사이 \| | 355/16 | 측정/수치 6px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0507 | A.2 | \| `between-chips` \| 8px \| Chip 사이 \| | 355/16 | 측정/수치 8px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0508 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 44 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0509 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 16 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0510 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 22 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0511 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 700 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0512 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 49.5 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0513 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 13.4 | 검토 | foundations/geometry.md#현행 계약 | P2 | history |
-| L0514 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 10px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0515 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 2.3px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0516 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 26.4px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0517 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 2px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0518 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 1px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0519 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 2px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0520 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 1px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0521 | A.2 | \| Small Chip \| 높이 32 / 가로 Padding 6px \| 역할에 맞는 크기 선택 \| | 355/16 | 측정/수치 32 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0522 | A.2 | \| Small Chip \| 높이 32 / 가로 Padding 6px \| 역할에 맞는 크기 선택 \| | 355/16 | 측정/수치 6px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0523 | A.2 | \| Medium Chip \| 높이 36 / 가로 Padding 8px \| 동일 \| | 355/16 | 측정/수치 36 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0524 | A.2 | \| Medium Chip \| 높이 36 / 가로 Padding 8px \| 동일 \| | 355/16 | 측정/수치 8px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0525 | A.2 | \| Large Chip \| 높이 40 / 가로 Padding 10px \| 동일 \| | 355/16 | 측정/수치 40 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0526 | A.2 | \| Large Chip \| 높이 40 / 가로 Padding 10px \| 동일 \| | 355/16 | 측정/수치 10px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0527 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 14 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0528 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 19px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0529 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 8px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0530 | A.2 | \| List 가로·세로 Padding \| 16px·12px \| 반복 행의 공통 슬롯 \| | 355/16 | 측정/수치 16px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0531 | A.2 | \| List 가로·세로 Padding \| 16px·12px \| 반복 행의 공통 슬롯 \| | 355/16 | 측정/수치 12px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0532 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 16 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0533 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 22px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0534 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 400 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0535 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 13 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0536 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 18px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0537 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 400 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0538 | A.2 | \| Title↔Detail Gap \| 2px \| 행 내부 관련성 \| | 355/16 | 측정/수치 2px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0539 | A.2 | \| Prefix 우측 Padding \| 12px \| 미디어와 본문 관계 \| | 355/16 | 측정/수치 12px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0540 | A.2 | \| Suffix Icon \| 18px \| 보조 이동/상태 슬롯 \| | 355/16 | 측정/수치 18px | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0541 | A.2 | 당근의 Header와 Filter Bar는 같은 탐색 영역처럼 이어지고 목록에서 콘텐츠 성격이 바뀌는 예시다. 여백은 단순 빈 공간이 아니라 **무엇이 무엇에 속하는지 보여주는 관계 신호**다. 같은 페이지의 헤더·일반 콘텐츠는 같은 좌우 기준선과 동일 계열 표면으로 연결하며 간격·구분선·콘텐츠 형태로 단위를 구분한다. | 355/16 | 문장/사례 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0542 | A.3 | \| 장치 \| 배치·책임 \| 현생패치 예시 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0543 | A.3 | \| Line Tabs \| 전환할 상위 콘텐츠 바로 위 \| 내 클랜의 멤버/기록/소식 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0544 | A.3 | \| Chip Tabs \| 실제 2차 범주가 있을 때 관련 콘텐츠 위 \| 필요 시 Line 아래 2단 탐색 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0545 | A.3 | \| Chip Tabs \| 실제 2차 범주가 있을 때 관련 콘텐츠 위 \| 필요 시 Line 아래 2단 탐색 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0546 | A.3 | \| Filter Bar+Chip \| 영향을 받는 결과 목록 바로 위 \| 공개 클랜 검색 결과 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0547 | A.3 | \| Segmented \| 같은 데이터의 수치·그래프 바로 위 \| 주간/월간 기록 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0548 | A.3 | \| Section Link \| 제목 우측, 큰 정보 영역으로 이동 \| 전체 보기/기록 상세 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0549 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 8명 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0550 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0551 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0552 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0553 | A.3 | 공개 클랜 발견 예시는 `전체 / 공부 / 습관 / 운동` 조건과 바로 아래 결과 목록이다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0554 | A.3 | \| 설명용 클랜 \| 분류·규모 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0555 | A.3 | \| 갓생 스터디단 \| 공부·멤버 24명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 24명 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0556 | A.3 | \| 매일 1% 더 \| 습관·멤버 18명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1% | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0557 | A.3 | \| 매일 1% 더 \| 습관·멤버 18명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18명 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0558 | A.3 | \| 새벽 루틴 모임 \| 생활·멤버 12명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12명 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
-| L0559 | A.3 | 필터는 실제 결과를 바꿔야 하며 클랜 홈에 이 기능을 새로 추가하라는 확정 지시가 아니다. 3열 Reward Grid는 물체 진열에, 투명 배경 Flat List는 사람·클랜·활동에 우선 검토한다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | foundations/geometry.md#현행 계약 | P2 | proposed |
+| L0502 | A.2 | \| 항목 \| 원문 인용값 \| 해석 \| | 355/16 | 비교표 원문 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0503 | A.2 | \| `global-gutter` \| 16px \| 헤더·일반 콘텐츠 시작선 \| | 355/16 | 측정/수치 16px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0504 | A.2 | \| `nav-to-title` \| 20px \| Nav 아래 별도 Page Title이 있을 때. 모든 헤더 아래 고정 간격 아님 \| | 355/16 | 측정/수치 20px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0505 | A.2 | \| `component-default` \| 12px \| 별도 계약 없는 컴포넌트 사이 \| | 355/16 | 측정/수치 12px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0506 | A.2 | \| `between-text` \| 6px \| 같은 정보 그룹 텍스트 사이 \| | 355/16 | 측정/수치 6px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0507 | A.2 | \| `between-chips` \| 8px \| Chip 사이 \| | 355/16 | 측정/수치 8px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0508 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 44 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0509 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 16 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0510 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 22 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0511 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 700 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0512 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 49.5 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0513 | A.2 | \| Medium Line Tabs \| 높이 44, Label 16/22, 700 \| 현생패치 당시 높이 약 49.5, Label 13.4, 줄높이 별도 없음 \| | 355/16 | 측정/수치 13.4 | 검토 | components/tabs.md#현행 계약 | P2 | history |
+| L0514 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 10px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0515 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 2.3px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0516 | A.2 | \| Tab 패딩 \| 좌우 10px \| 현생패치 약 2.3px, Tab 간격 약 26.4px \| | 355/16 | 측정/수치 26.4px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0517 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 2px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0518 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 1px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0519 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 2px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0520 | A.2 | \| Tab Indicator·하단 Stroke \| 2px·1px \| 현생패치도 각각 2px·1px \| | 355/16 | 측정/수치 1px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0521 | A.2 | \| Small Chip \| 높이 32 / 가로 Padding 6px \| 역할에 맞는 크기 선택 \| | 355/16 | 측정/수치 32 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0522 | A.2 | \| Small Chip \| 높이 32 / 가로 Padding 6px \| 역할에 맞는 크기 선택 \| | 355/16 | 측정/수치 6px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0523 | A.2 | \| Medium Chip \| 높이 36 / 가로 Padding 8px \| 동일 \| | 355/16 | 측정/수치 36 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0524 | A.2 | \| Medium Chip \| 높이 36 / 가로 Padding 8px \| 동일 \| | 355/16 | 측정/수치 8px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0525 | A.2 | \| Large Chip \| 높이 40 / 가로 Padding 10px \| 동일 \| | 355/16 | 측정/수치 40 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0526 | A.2 | \| Large Chip \| 높이 40 / 가로 Padding 10px \| 동일 \| | 355/16 | 측정/수치 10px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0527 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 14 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0528 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 19px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0529 | A.2 | \| Chip Label·Group Gap \| 14/19px·8px \| 텍스트·그룹 관계 \| | 355/16 | 측정/수치 8px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0530 | A.2 | \| List 가로·세로 Padding \| 16px·12px \| 반복 행의 공통 슬롯 \| | 355/16 | 측정/수치 16px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0531 | A.2 | \| List 가로·세로 Padding \| 16px·12px \| 반복 행의 공통 슬롯 \| | 355/16 | 측정/수치 12px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0532 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 16 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0533 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 22px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0534 | A.2 | \| List Title \| 16/22px / 400 \| 반복 항목 제목 \| | 355/16 | 측정/수치 400 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0535 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 13 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0536 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 18px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0537 | A.2 | \| List Detail \| 13/18px / 400 \| 메타·설명 \| | 355/16 | 측정/수치 400 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0538 | A.2 | \| Title↔Detail Gap \| 2px \| 행 내부 관련성 \| | 355/16 | 측정/수치 2px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0539 | A.2 | \| Prefix 우측 Padding \| 12px \| 미디어와 본문 관계 \| | 355/16 | 측정/수치 12px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0540 | A.2 | \| Suffix Icon \| 18px \| 보조 이동/상태 슬롯 \| | 355/16 | 측정/수치 18px | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0541 | A.2 | 당근의 Header와 Filter Bar는 같은 탐색 영역처럼 이어지고 목록에서 콘텐츠 성격이 바뀌는 예시다. 여백은 단순 빈 공간이 아니라 **무엇이 무엇에 속하는지 보여주는 관계 신호**다. 같은 페이지의 헤더·일반 콘텐츠는 같은 좌우 기준선과 동일 계열 표면으로 연결하며 간격·구분선·콘텐츠 형태로 단위를 구분한다. | 355/16 | 문장/사례 | 검토 | components/tabs.md#현행 계약 | P2 | proposed |
+| L0542 | A.3 | \| 장치 \| 배치·책임 \| 현생패치 예시 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0543 | A.3 | \| Line Tabs \| 전환할 상위 콘텐츠 바로 위 \| 내 클랜의 멤버/기록/소식 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0544 | A.3 | \| Chip Tabs \| 실제 2차 범주가 있을 때 관련 콘텐츠 위 \| 필요 시 Line 아래 2단 탐색 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0545 | A.3 | \| Chip Tabs \| 실제 2차 범주가 있을 때 관련 콘텐츠 위 \| 필요 시 Line 아래 2단 탐색 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0546 | A.3 | \| Filter Bar+Chip \| 영향을 받는 결과 목록 바로 위 \| 공개 클랜 검색 결과 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0547 | A.3 | \| Segmented \| 같은 데이터의 수치·그래프 바로 위 \| 주간/월간 기록 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0548 | A.3 | \| Section Link \| 제목 우측, 큰 정보 영역으로 이동 \| 전체 보기/기록 상세 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0549 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 8명 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0550 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0551 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 2 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0552 | A.3 | ‘내 클랜’ 예시는 Standard Nav → `느슨한 갓생단 / 조금씩이라도 함께 꾸준히 / 멤버 8명` 정체성 → 멤버/기록/소식 Tabs → 해당 패널이다. 멤버 패널의 설명용 데이터는 `이모리 · 1일 활동`, `밤산책 · 2일 활동`, `모찌 · 3일 활동`이었다. 정보·이름·기능의 최종 확정을 뜻하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0553 | A.3 | 공개 클랜 발견 예시는 `전체 / 공부 / 습관 / 운동` 조건과 바로 아래 결과 목록이다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0554 | A.3 | \| 설명용 클랜 \| 분류·규모 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0555 | A.3 | \| 갓생 스터디단 \| 공부·멤버 24명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 24명 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0556 | A.3 | \| 매일 1% 더 \| 습관·멤버 18명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1% | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0557 | A.3 | \| 매일 1% 더 \| 습관·멤버 18명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18명 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0558 | A.3 | \| 새벽 루틴 모임 \| 생활·멤버 12명 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12명 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
+| L0559 | A.3 | 필터는 실제 결과를 바꿔야 하며 클랜 홈에 이 기능을 새로 추가하라는 확정 지시가 아니다. 3열 Reward Grid는 물체 진열에, 투명 배경 Flat List는 사람·클랜·활동에 우선 검토한다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 3 | 검토 | objects/person-activity.md#현행 계약 | P2 | proposed |
 | L0560 | A.4 | \| 계층 \| 원문 역할명·예시 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/bottom-navigation.md#현행 계약 | P2 | history |
 | L0561 | A.4 | \| Global 0 \| `layer-basement`, 전체 페이지 바닥 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 0 | 검토 | components/bottom-navigation.md#현행 계약 | P2 | proposed |
 | L0562 | A.4 | \| Global 1 \| `layer-default`, Top Nav/List/Tabs가 놓인 페이지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 1 | 검토 | components/bottom-navigation.md#현행 계약 | P2 | proposed |

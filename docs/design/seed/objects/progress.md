@@ -22,7 +22,7 @@ references: [D-012, D-013]
 
 `current/target` 데이터 하나에서 텍스트, fill 비율, 남은 양, `aria-valuemin/max/now`를 생성한다. fill은 `target>0 ? clamp(current/target,0,1) : loading/unavailable`이다. 목표 초과는 **실제 current**를 숨기지 않고 bar만 100% 제한하며 자동 지급 완료를 암시하지 않는다.
 
-**공용 트랙**은 C-STATUS가 소유하는 기본 10px. micro 6px, featured 12px의 사용 범위는 C-STATUS에서 선택하며 클랜 전용 두께 CSS 금지. 내부 span을 `display:block;height:100%`로 실제 측정한다.
+**공용 트랙의 기본/마이크로/강조 두께는 C-STATUS만이 소유**한다. O-PROGRESS는 그 Variant를 선택하며 클랜 전용 트랙 두께 CSS 신설 금지. 내부 span을 `display:block;height:100%`로 실제 측정한다.
 
 대표값이 **파생값보다 약하면 실패**. O-PROGRESS를 이벤트/홍보 A2 배너 **안에 넣지 않는다**. 로딩, 값 0, 조회 실패, stale은 같은 0%가 아니다. 비클릭 Progress는 눌리는 표현을 갖지 않는다.
 

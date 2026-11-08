@@ -58,7 +58,7 @@
   </div></div>`;
   const rewardPanel=({extended=false}={})=>`<div class="clan-reward-hero">
     <div class="clan-reward-top"><span class="clan-reward-kicker">${svg('gift')} 이번 주 공동 상자</span><span class="clan-reward-active">${svg('users')} 6명 기여 중</span></div>
-    <div class="clan-reward-stage"><div class="clan-reward-hero-copy"><h2>각자 해내고,<br>같이 열자</h2><p>이번 주 작은 성취가 모이는 중</p><a href="#clan-reward" class="clan-reward-cta">보상 구성 보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
+    <div class="clan-reward-stage"><div class="clan-reward-hero-copy"><h2>각자 해내고,<br>같이 열자</h2><p>6명이 함께 채우는 중</p><a href="#clan-reward" class="clan-reward-cta">보상 구성 보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
     <div class="clan-reward-progress">${progress()}<div class="clan-reward-progress-end">${svg('clock')} 이번 주 일요일까지</div></div>
   </div>${rewardItems()}${extended?'<div class="clan-reward-footnote">상자 구성과 지급 조건은 시연 상태이며 미확정</div>':''}`;
   const rewardSection=()=>`<section class="clan-section clan-reward-section" aria-label="이번 주 공동 보상">${rewardPanel()}</section>`;

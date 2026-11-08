@@ -73,3 +73,10 @@ Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오
 ## v0.15 적용 우선 규격
 
 현재 사용자 채택 웹 시연의 기본 Button은 43px, Small 34px, Large 48px, Radius 16px. 클릭 영역은 Android에서 최소 48dp를 확보하며 hit 영역을 겹치지 않게 한다. 기본 7-tone Pill Badge 높이 26, XS 21, 아이콘 13, paddingX 기본 11 / XS 8. Sheet의 동적 min 기준·Safe Area 상세는 [C-SHEET](../components/bottom-sheet.md). SVG 획은 제공 원본의 **1.8**이 정본이며 이 문서에서 덧칠하지 않는다.
+
+
+## 2026-11-08 근거 기반 웹 검토안
+
+Header와 본문은 `--page-inset:1rem`을 공유한다. 아이콘은 `3rem` 터치 영역 중심의 `1.5rem` glyph로 놓고 nth-last-child translate 보정은 제거한다. 작은 화면에서 본문 글자를 축소하지 않고 아이덴티티/보상 아트를 다음 줄로 보낸다. 터치 최소값과 표시 크기를 분리한다.
+
+공통 수치 정본: [UI review mapping](../implementation/ui-review-20261108.json). D-012 채택 기준을 변경하거나 Android 이식 완료를 뜻하지 않는다.

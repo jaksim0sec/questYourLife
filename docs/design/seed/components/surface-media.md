@@ -60,3 +60,10 @@ Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 
 | Overlay | Sheet/Dialog의 별도 층 | Focus/스크림/닫기/안전영역 |
 
 **금지:** 무의미한 Solid/Card 반복 중첩, 부모 Raised 내부 Raised, Reward 내부 Reward, 텍스트를 배경 상자로 감싸기만 하는 임시 구현. 각 Surface는 하나의 의미/행동을 가져야 한다. 실제 페이지/데이터 구성을 이 표에서 발명하지 않는다. 자세한 속성 정본은 [v0.15](../implementation/v015.md).
+
+
+## 2026-11-08 근거 기반 웹 검토안
+
+Reward 역할을 선택했다고 항상 갈색 그라데이션·광원·두꺼운 보상 버튼이 필요한 것은 아니다. 클랜 검토안은 중립 stage에 원본 골드 상자와 짧은 제목만 강조하고 아직 열 수 없는 상태는 미리보기 액션으로 표현한다. 화면 전체에 별도 광고 배너처럼 보이는 보상 블록을 반복하지 않는다.
+
+공통 수치 정본: [UI review mapping](../implementation/ui-review-20261108.json). D-012 채택 기준을 변경하거나 Android 이식 완료를 뜻하지 않는다.

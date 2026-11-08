@@ -1,0 +1,47 @@
+{
+  "status": "proposed-web-review",
+  "date": "2026-11-08",
+  "baselineCommit": "1e30837380366502e36ace63720a96813a8e2fa7",
+  "scope": "new/web/preview only",
+  "units": "rem; inherited responsive root baseline",
+  "shell": {
+    "dark": {
+      "canvas": "#101115",
+      "content": "#16171B",
+      "navigation": "#202226",
+      "secondaryText": "#ADB1BA"
+    },
+    "pageInset": "1rem",
+    "header": {
+      "height": "3.75rem",
+      "rootTitle": "1.5rem/700",
+      "standardTitle": "1rem/700",
+      "actionTarget": "3rem",
+      "actionGlyph": "1.5rem",
+      "glyphOffset": "0"
+    },
+    "light": {
+      "secondaryText": "#756D76"
+    }
+  },
+  "text": {
+    "identity": "1.125rem/700",
+    "item": ".875rem/600",
+    "support": ".8125rem/400",
+    "meta": ".75rem/400",
+    "rewardTitle": "1.5rem/700"
+  },
+  "reward": {
+    "stage": "surface",
+    "type": "one headline + supporting line + preview action",
+    "art": "existing box_gold.webp contain",
+    "progressThickness": ".375rem"
+  },
+  "invariants": [
+    "D-012 baseline unchanged",
+    "existing 56 source SVGs unchanged",
+    "backend/native untouched",
+    "no new navigation destinations"
+  ],
+  "notes": "Reapplied over concurrent shared-branch composition; reward contents/social module preserved, neutral stage and semantic text/reflow retained."
+}

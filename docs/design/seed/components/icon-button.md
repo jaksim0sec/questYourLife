@@ -34,3 +34,10 @@ F-ICON-MOTION stroke 1.8 round, F-GEOMETRY size.iconSmall/default/nav 및 size.t
 S2-04 반례 05, S2-05/08 작은 선형 아이콘. 독립 조작 API가 있는 Icon Button을 C-ACTION의 단순 색상 variant로 확장하지 않기 위해 별도 명세. NAV-TOP·C-LIST·C-BOTTOM과 함께 검증.
 
 > 숫자 및 신규 상태는 사용자 미승인 후보. 제품 데이터·탭 목적지·도메인 기능을 이 문서에서 발명하지 않는다.
+
+
+## 2026-11-08 근거 기반 웹 검토안
+
+각 glyph의 시각 중심과 자신의 hit target 중심 차이를 브라우저 bbox로 검사한다. 이전 시연은 알림 아이콘이 약 8.5px 벗어났다. 오른쪽 정렬은 슬롯/패딩으로 조정하며 glyph를 이웃 버튼 쪽으로 이동시키지 않는다. 원본 SVG 도형은 보존한다.
+
+공통 수치 정본: [UI review mapping](../implementation/ui-review-20261108.json). D-012 채택 기준을 변경하거나 Android 이식 완료를 뜻하지 않는다.

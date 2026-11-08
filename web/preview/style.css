@@ -1,8 +1,8 @@
 @charset "utf-8";
 
-:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #756d76; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --page-inset: 1rem; --type-root: 1.5rem; --type-item: .875rem; --type-support: .8125rem; --type-meta: .75rem; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
 
-:root[data-theme="dark"] { color-scheme: dark; --canvas: #101115; --surface: #242329; --shell-surface: #16171b; --nav-surface: #242329; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
+:root[data-theme="dark"] { color-scheme: dark; --canvas: #101115; --surface: #242329; --shell-surface: #16171b; --nav-surface: #202226; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #adb1ba; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
 /* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
 :root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -35,35 +35,29 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .head, .nav-inner { width: min(100%, 72rem); margin-inline: auto; }
 
-.head { display: grid; align-items: center; grid-template-columns: minmax(0px, 1fr) auto; min-height: calc(3.5625rem); padding-inline: clamp(0.75rem, 3vw, 1.5rem); }
+.head { display: grid; align-items: center; grid-template-columns: minmax(0px, 1fr) auto; min-height: 3.75rem; padding-inline: var(--page-inset); }
 
 .head.standard { grid-template-columns: minmax(3rem, 1fr) minmax(0px, auto) minmax(3rem, 1fr); }
 
-.head.standard > .icon-btn { margin-inline-start: -0.75rem; }
+.head.standard > .icon-btn { margin-inline-start: -.75rem; }
 
-.head h1 { font-size: 1.3rem; letter-spacing: -0.05em; font-weight: 850; overflow-wrap: anywhere; }
+.head h1 { font-size: var(--type-root); letter-spacing: -0.035em; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.35; }
 
-.head.standard h1 { font-size: 0.9rem; text-align: center; }
+.head.standard h1 { font-size: 1rem; text-align: center; }
 
-.tools { display: flex; justify-self: end; align-items: center; margin-inline-end: -0.75rem; }
+.tools { display: flex; justify-self: end; align-items: center; margin-inline-end: -.75rem; }
 
 .icon-btn { display: inline-grid; place-items: center; width: 3rem; height: 3rem; border: 0px; border-radius: 1rem; background: transparent; }
-
-.tools .icon-btn:nth-last-child(2) .glyph { transform: translateX(0.5rem); }
-
-.tools .icon-btn:nth-last-child(3) .glyph { transform: translateX(1rem); }
-
-.tools .icon-btn:nth-last-child(4) .glyph { transform: translateX(1.5rem); }
 
 #nav { position: fixed; z-index: 20; inset: auto 0px 0px; background: var(--nav-surface); border-top: 1px solid var(--line); padding-bottom: var(--safe); }
 
 .nav-inner { display: grid; grid-template-columns: repeat(5, 1fr); min-height: calc(3.9525rem); }
 
-.nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 700; }
+.nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 500; }
 
 .nav-link .glyph, .nav-link svg { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
 
-.nav-link[aria-current] { color: var(--nav-active); font-weight: 850; }
+.nav-link[aria-current] { color: var(--nav-active); font-weight: 700; }
 
 #sheet { position: fixed; inset: auto 0px 0px; margin: 0px auto; width: min(100%, 42rem); max-width: none; min-height: min(185px, 40dvh); padding: 0 0 var(--safe); border: 0px; border-radius: 1.5rem 1.5rem 0px 0px; background: var(--surface); color: var(--text); }
 

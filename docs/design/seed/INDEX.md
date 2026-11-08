@@ -15,9 +15,9 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 
 ## 선택적으로 읽기
 
-1. 작업을 화면 골격 / 행동 / 정보 표현 / 아트로 분해하고 아래 Read when·별칭으로 찾는다.
-2. 새 페이지면 S-PAGE, 필요한 Component, 해당 항목의 **직접 의존성만 재귀적으로** 읽는다. 조합 문제일 때만 Pattern, 아트 문제일 때만 A-ART를 추가한다.
-3. 원본·판단 충돌 때만 R-INPUTS와 OPEN을 읽는다. 수치 확정 전·완료 보고 전에는 V-CHECKS.
+1. 기존 부품의 국소 수정은 해당 Component와 직접 의존성만 읽는다. 새 페이지는 제품 과업·콘텐츠·행동을 먼저 결정한다.
+2. 새 페이지는 P-HIERARCHY와 관련 Pattern에서 객체·그룹·표현을 결정한 뒤 S-PAGE와 필요한 Component를 읽는다. 아트의 역할을 선택할 때 A-ART를 추가한다.
+3. 제품 결정은 DECISIONS/OPEN을 확인하고, 원본·판단 충돌 때 R-INPUTS를 읽는다. 수치 선택 전·완료 보고 전에는 V-CHECKS를 따른다.
 4. 모든 파일을 매번 읽지 않는다. ID는 안정적으로 유지하고 경로/의존성 변경은 INDEX와 같은 변경에서 반영한다.
 
 | ID | Name / Aliases | Category | Read when | Path | Depends on | Status | References |
@@ -67,7 +67,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 | 수락/거절의 비례·줄바꿈 | P-ACTIONS → C-ACTION/관련 Foundation |
 | 새 입력 페이지 | S-PAGE + C-FIELD + C-ACTION → 직접 의존성 |
 | 프로필·기록의 과장 교정 | P-HIERARCHY + C-AVATAR + C-LIST/F-TYPE |
-| 보상 아이템 진열 | C-IMAGE + A-ART + C-SURFACE, 실제 상태면 C-STATUS |
+| 보상 아이템 진열 | P-HIERARCHY의 정보 객체 → C-IMAGE + C-TEXT + 필요한 C-SURFACE/C-STATUS/C-CREDIT + A-ART |
 | 오프라인/실패 표현 | P-STATES → 관련 피드백 재료 |
 | Root 하단/상세 fixed CTA 충돌 | S-PAGE → C-BOTTOM + P-ACTIONS |
 | 상위 탭과 기간 선택이 겹칠 때 | C-TABS + C-SEGMENT → P-HIERARCHY |
@@ -121,3 +121,17 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 ## 2026-11-08 · 사진 근거 시각 감사 (proposed, 승인 전)
 
 - [당근 4장 / 현행 클랜 2장 구분과 세로 구간별 UI/정보 밀도·색·문구 검수](CLAN_REFERENCE_AUDIT_2026-11-08.md). P-HIERARCHY/A-ART 제안 보완을 함께 기록하되 D-012 정본 숫자를 변경하지 않음.
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## 공통 계약 r1 · 개편의 읽기 경로
+
+[D-013](../../DECISIONS.md)의 위임 범위에서 선택·조합 계약을 개편 기준으로 결정했다. 의미의 정본은 각 기존 파일이며 새 계층을 추가하지 않았다.
+
+- 페이지 판단·정보 객체: [P-HIERARCHY](patterns/content-hierarchy.md).
+- 텍스트 역할/수치: [C-TEXT](components/text-hierarchy.md) / [F-TYPE](foundations/typography.md).
+- 경계·미디어·아트: [C-SURFACE](components/surface-media.md) / [C-IMAGE](components/image-frame.md) / [A-ART](assets/reward-art.md).
+- 행동·상태·목록: [C-ACTION](components/action-button.md) / [C-STATUS](components/badge-progress.md) / [C-LIST](components/list-item.md).
+- 헤더·이력·safe inset: [NAV-TOP](../TOP_NAVIGATION.md) / [S-PAGE](shells/page-shells.md).
+- A/B 고정 클래스·지역 상태·이력 인터페이스: [v0.15 웹 어댑터](implementation/v015.md).
+- 반례와 인수: [V-CHECKS](VALIDATION.md). 원격 등록·브라우저·Native 검증의 상태는 각각 별도다.

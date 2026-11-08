@@ -34,3 +34,9 @@ F-ICON-MOTION stroke 1.8 round, F-GEOMETRY size.iconSmall/default/nav 및 size.t
 S2-04 반례 05, S2-05/08 작은 선형 아이콘. 독립 조작 API가 있는 Icon Button을 C-ACTION의 단순 색상 variant로 확장하지 않기 위해 별도 명세. NAV-TOP·C-LIST·C-BOTTOM과 함께 검증.
 
 > 숫자 및 신규 상태는 사용자 미승인 후보. 제품 데이터·탭 목적지·도메인 기능을 이 문서에서 발명하지 않는다.
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## 공통 계약 r1의 실제 타깃
+
+Glyph 박스는 target 박스 중앙에 둔다. 헤더의 icon별 translateX·scale로 슬롯을 조작하지 않는다. 최소48 CSS px와3rem 중 큰 실제 비중첩 target을 확보한다. 새 Header 아이콘 수·순서는 현재 페이지의 실제 행동으로 정하며 들어가지 않으면 타깃 축소 대신 낮은 우선순위부터 기존 메뉴로 이동한다. 헤더 구조는 [NAV-TOP](../../TOP_NAVIGATION.md), 정렬/이력·safe inset은 [S-PAGE](../shells/page-shells.md)의 K10이 소유한다.

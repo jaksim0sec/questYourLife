@@ -53,8 +53,23 @@ S2-04 반례 02와 S2-05의 하단 CTA 충돌은 Shell 책임 문제다. 버튼 
 Sheet는 [C-SHEET](../components/bottom-sheet.md) 및 [P-SHEET](../patterns/bottom-sheet-flow.md) 계약을 따른다. 이 Shell은 OS Safe Insets/IME/Root·Detail Bottom Nav 가시성의 **최종 소유자**다. Full Sheet가 열려도 헤더/하단바의 reserved height를 두 번 더하지 않는다. Sheet Footer는 Body 스크롤에서 제외하며, swipe는 앱/OS edge navigation을 가로채지 않는다. 내용이 짧으면 최소 높이 우선이고 3 Snap 단계를 무조건 노출하지 않는다.
 
 ## Bottom Navigation 제안 경계
-기본은 간단한 Outline glyph + 짧은 Label + 의미 있는 selected 표시. active Fill은 승인 전 후보이며 탭 수·목적지·중앙 +·라벨·최종 표시 정책은 모두 미결이다. 생성 +는 목적지와 실행의 의미가 달라 중간 탭으로 자동 채택하지 않는다. 아트 속 4탭·5탭을 공통 시스템으로 복사하지 않는다.
+기본은 간단한 Outline glyph + 짧은 Label + 의미 있는 selected 표시. 활성 Fill/비활성 Outline 표현은 D-012 승인 범위이며 탭 수·목적지·중앙 +·실제 라벨·최종 IA는 별도 미결이다. 생성 +는 목적지와 실행의 의미가 달라 중간 탭으로 자동 채택하지 않는다. 아트 속 4탭·5탭을 공통 시스템으로 복사하지 않는다.
 
 ## 충돌·검증
 다크 테마 콘텐츠 후보와 D-011의 밝은 중립 헤더 사이의 차이는 O-022에 기록했다. 기존 확정안은 보존하고 다크 전역 헤더 적용은 보류한다. 웹/네이티브 inset 처리·scroll restoration·키보드·deep link는 미검증이다. 320–430 폭·200% 글자·긴 제목·Back/Close·마지막 항목·fixed CTA 조건을 실제 웹 시연에서 확인한다.
 
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## K10 헤더·Shell·이력
+
+**정본 소유자:** 구조는 `TOP_NAVIGATION.md`, 공간·이력은 `shells/page-shells.md`.
+
+Root의 좌측 화면명/우측 Outline 액션, Standard의 Back 또는 Close/중앙 제목/우측 보조 슬롯을 유지한다. Glyph24와 최소48 target을 구분한다. 헤더와 일반 콘텐츠의 시작선은 같은 화면 gutter를 쓴다. 화면별 Glyph를 translateX로 옮겨 간격을 만들지 않는다. 원본 SVG의 광학 중심은 보존하고 Glyph 박스를 target 박스 중앙에 둔다.
+
+웹 gutter는 기존 page.inset을 사용하여 360px 미만1rem, 이상1.25rem을 기준으로 한다. 같은 화면의 헤더·본문이 같은 gutter와 가용 콘텐츠 폭을 참조한다. 모바일 gutter와 OS safe inset은 별도다. 넓은 화면에서는 기존 home의72rem, clan의46rem 외곽 폭을 유지하되 각 화면의 헤더와 본문에 같은 외곽 폭을 적용한다. 긴 글의560 읽기 열은 내부 콘텐츠 선택이며 전체 셸을 몰래 축소하는 기본값이 아니다.
+
+헤더 액션은 기본2개 이내, 목적이 분명하고 제목과 타깃을 보존할 때3개까지 허용한다. 들어가지 않으면 낮은 우선순위 액션부터 기존 메뉴로 옮긴다. Standard 양옆 슬롯은 실제 큰 쪽을 기준으로 균형을 맞춰 제목을 화면 중앙에 둔다. 제목이 길어도 타깃을 줄이지 않고 줄바꿈·헤더 높이 증가를 허용한다. 버튼 목록·순서는 화면의 실제 행동으로 정한다.
+
+Back은 유효한 앱 내부 이전 이력으로, 직접 진입 시 해당 라우트의 기존 부모로 간다. 브라우저 Back을 별도 가짜 이력으로 대체하지 않는다. scroll은 URL 하나가 아닌 history entry별로 복원한다. Shell은 navigation·scroll·safe inset을 소유하고 클랜은 탭/필터 등 지역 상태만 소유한다. 지역 rerender가 무조건 window.scrollTo(0)를 호출하지 않게 한다. 닫기·메뉴·테마 전환도 원래 포커스와 탐색 맥락을 보존한다.
+
+하단 공간은 실제 측정된 고정 영역 높이와 safe inset을 Shell 한 곳에서 계산한다. 하단 활성 Fill/비활성 Outline은 D-012 승인 표현이며 목적지 IA와 별개다. 실제 탭 경로·클랜 나침반/웹 책갈피의 기존 적용 범위를 혼동하지 않는다.

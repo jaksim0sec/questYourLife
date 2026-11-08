@@ -154,3 +154,31 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 11444.jpg(당근 크롭)의 일반 바탕 샘플 `#16171B`, 11449.jpg(현생패치 화면)의 콘텐츠 샘플 `#18191E`, 간격 약 `#121317`, 하단 네비 `#242329`를 대조. 이미지 압축·표시 장치·다크 모드 차이가 있으므로 이를 당근 SEED의 공식값이라고 **주장하지 않음**.
 
 이번 시연은 `--canvas:#101115` / `--shell-surface:#16171B` / `--nav-surface:#242329`로 시각 조합을 시험. 상단·일반 콘텐츠·클랜 Flat Section은 shell, 섹션 간 거터는 canvas, 하단 내비게이션은 nav 전용 색. **승인된 D-012 color.dark.canvas `#17181D`, surface `#242329`는 보존**한다.
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## K11 색·아트의 보존 경계
+
+**정본 소유자:** `foundations/color-surfaces.md`, `assets/reward-art.md`.
+
+브랜드/보상/중립/성공/정보/주의/특별의 의미를 유지한다. 색·치수는 분야 정본에서만 소유하며 지역 CSS의 새 HEX와 글자 크기 예외를 누적하지 않는다. 동일 톤의 변화가 필요하면 실제 대비 실패와 사용처를 리드에게 제시한다.
+
+이번 개편은 기존 JSON의 `color.previewShellLayers`를 웹 역할 매핑으로 유지한다: canvas는 바탕/간격, shell은 헤더+Plain 콘텐츠, bottomNav는 하단바, 기존 `--surface`는 독립 면/시트/컨트롤이다. 기존 `--brand`를 승인 브랜드값으로 전역 일괄 교체하지 않는다. 새 공통 액션이 승인 Brand 규격을 사용하면 별도의 의미 변수로 승인값을 참조하고 기존 홈에 연결된 `--brand`의 전역 의미를 바꾸지 않는다.
+
+새 공통 표현의 CSS 바인딩은 아래로 고정한다. JSON과 F-COLOR가 같은 이름에서 다르면 표에 지정한 소스를 사용한다. 기존 전역 변수는 변경하지 않고 A가 이 별칭을 소유한다.
+
+| CSS 별칭 | 단일 값 소스 | 적용 |
+|---|---|---|
+| `--seed-fg` | JSON color.[theme].text | 공통 본문·neutral-weak/outline 전경 |
+| `--seed-fg-secondary` | F-COLOR fg.secondary | 공통 support·caption·ghost 전경 |
+| `--seed-muted` | F-COLOR bg.muted | neutral-weak 면·기본 Progress track·미디어 placeholder |
+| `--seed-stroke` | F-COLOR stroke.control | neutral-outline의 식별 경계 |
+| `--seed-neutral-solid` / `--seed-on-neutral` | F-COLOR neutral.solid / neutral.onSolid | neutral-solid |
+| `--seed-brand` / `--seed-on-brand` | JSON color.[theme].brand / 기존 white 값 `#FFFFFF` | brand-solid, 기본 Progress fill(전경 없음) |
+| `--seed-reward` / `--seed-on-reward` | JSON color.[theme].secondaryCTA.bg / .on | reward-secondary |
+| `--seed-focus` | F-COLOR focus.ring | 키보드 focus |
+| `--seed-disabled-bg` / `--seed-disabled-fg` | F-COLOR disabled.bg / disabled.fg | 공통 disabled 상태. loading과 의미를 합치지 않음 |
+
+선택 이유: 기존 Light secondaryText `#777079`를 Light shell `#F8F7F9`에 사용하면 불투명 sRGB 계산 대비 약4.49:1로 작은 일반 글자의4.5 기준에 못 미친다. 새 공통 보조 글자는 이미 존재하는 F-COLOR fg.secondary `#5E5A65`를 사용하면 같은 배경에서 약6.29:1이다. 기존 JSON 값·레거시 `--sub`를 전역 수정하지 않고 공통 바인딩에서 해결한다. 실제 반투명·이미지 합성은 후속 렌더 검증 대상이다.
+
+팔레트는 기존 semanticPalette의 theme별 foreground/background/accent로 연결한다. 오브젝트의 금속 금색을 Progress·버튼·전체 배경에 전파하지 않는다. 보상 원본의 입체감과 실제 물체 인지를 유지한다. image10의 유료 패스·레이드·음식 보상을 새 기능으로 가져오지 않는다.

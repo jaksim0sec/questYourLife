@@ -80,3 +80,26 @@ Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 
 - Secondary Gold CTA: Light `#FFCC4D` + dark `#352713` label/icon, **Dark `#957027` + white label/icon**. 단독 카드/배경에 노랑 CTA 톤을 전파하지 않는다.
 - Label + Icon 하나의 중앙 정렬 그룹, Icon 16–18(기본 17), 간격 6–8(기본 7), control radius 16. Pressed/Loading은 label center·외곽 크기 보존.
 - Button 실제 표시 높이 Small 34 / Default 43 / Large 48. Android는 어떤 크기든 비중첩 최소 48dp touch target 필요.
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## K07 액션과 클릭 책임
+
+**정본 소유자:** `components/action-button.md`, 그룹 관계는 `patterns/action-layout.md`.
+
+| 이번 웹 어댑터 variant | 기본 강조 | 사용 |
+|---|---|---|
+| brand-solid | High | 제품의 핵심 실행 |
+| neutral-solid | High | 중립적 확정 |
+| neutral-weak | Medium | 일반·보조 실행 |
+| neutral-outline | Low | 낮은 강조의 보조 행동 |
+| ghost | Low | 상세/전체 보기 등 관련 이동 |
+| reward-secondary | Medium | 보상 맥락의 실제 행동. 대표 수령 과업이면 High로 사용할 근거를 기록 |
+
+이는 이번 구현에 필요한 허용 조합이며 기존 Brand Weak/Critical 등 다른 계약을 삭제하지 않는다. 필요 없는 조합을 선제 구현하지 않는다. 화면 대표 High는 기본 최대 1개이고 조회 화면은 0개도 정상이다. 가로 3개 이상의 행동은 재배치·메뉴를 우선 검토하며, 48 타깃을 유지할 수 없으면 병렬 배치를 중단한다. 단순 초대·미리보기·일반 확인을 모두 브랜드색으로 채우지 않는다.
+
+실제 target은 최소 48 CSS px와 3rem 중 큰 값으로 비중첩 확보한다. face의 표시 높이 34/43/48, radius16, 버튼 아이콘 기본17·허용16–18, gap7을 보존한다. 48 미만 face는 같은 링크/버튼 요소가 타깃을 소유하고 내부 face를 중앙 정렬한다. 외부 투명 의사요소로 이웃을 덮지 않는다. 글자 확대 때 face 높이를 고정 상한으로 쓰지 않는다.
+
+Pressed/Loading에서 scale·font-weight·padding·border-width를 바꾸지 않는다. focus는 크기를 밀지 않는 ring을 사용한다. 버튼 label과 아이콘은 한 정렬 그룹이다. 일반 링크도 의미 있는 이름·키보드 포커스·실제 목적지를 갖는다. 같은 영역에서 같은 목적지의 텍스트 링크와 가짜 개별 버튼을 반복하지 않는다.
+
+아트가 장식이면 비클릭이어도 된다. 클릭처럼 보이는 카드·Chevron·Pressed는 실제 대응 동작이 있을 때만 사용한다. 서버 기능이 없는 시연에 지급 완료·구매 완료를 암시하는 버튼을 두지 않는다.

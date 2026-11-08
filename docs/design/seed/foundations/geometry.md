@@ -42,7 +42,7 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | field.paddingX / .paddingY | 16 / 12 | 입력 내부 padding |
 | progress.height | 10 | 기본 진행 막대 높이 |
 | size.iconSmall / .iconDefault / .iconNav | 16 / 20 / 27 | 일반 UI 아이콘 슬롯, 버튼 내부와 구분 |
-| size.iconButtonContent / .iconButtonCompact | 16 / 14 | 텍스트 버튼 내부 아이콘, 일반/작은 size |
+| size.iconButtonContent / .iconButtonCompact | 17 / 16 | D-012 버튼 아이콘 허용16–18에 맞춘 일반/작은 size; 구형14 후보 사용 중단 |
 | size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 64 / 104 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
 
 ## 개선 변경의 근거 (제안값)
@@ -73,3 +73,13 @@ Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오
 ## v0.15 적용 우선 규격
 
 현재 사용자 채택 웹 시연의 기본 Button은 43px, Small 34px, Large 48px, Radius 16px. 클릭 영역은 Android에서 최소 48dp를 확보하며 hit 영역을 겹치지 않게 한다. 기본 7-tone Pill Badge 높이 26, XS 21, 아이콘 13, paddingX 기본 11 / XS 8. Sheet의 동적 min 기준·Safe Area 상세는 [C-SHEET](../components/bottom-sheet.md). SVG 획은 제공 원본의 **1.8**이 정본이며 이 문서에서 덧칠하지 않는다.
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## 공통 계약 r1의 적용 기준
+
+- 버튼의 기본 inline Glyph는 승인 기본17, compact는 허용범위 안의16을 사용한다. 이전 변경 근거의14는 당시 실험 기록이다.
+- 표시 높이34/43/48과 실제 target을 분리하며 웹 target은 48 CSS px와3rem 중 큰 값 이상으로 비중첩 확보한다. 실제 링크/버튼이 target을 소유하고 내부 face를 중앙에 둔다.
+- page.inset은 360 CSS px 미만1rem, 이상1.25rem. 같은 라우트의 헤더·본문은 같은 gutter와 가용 외곽 폭을 참조한다. OS safe inset은 별도다.
+- 표시 높이는 확대 시 상한이 아니며 텍스트가 필요하면 성장한다. topBarMin/bottomBarMin 등 기존 후보 수치를 무조건 고정 높이로 사용하지 않는다.
+- Glyph 박스 정렬과 타깃 중심은 [NAV-TOP](../../TOP_NAVIGATION.md), 실제 고정 영역·이력은 [S-PAGE](../shells/page-shells.md)가 소유한다.

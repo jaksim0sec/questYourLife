@@ -64,3 +64,9 @@ Loading에서도 제목 역할과 예상 콘텐츠 폭을 유지한다. 오류 �
 | 768px 이상 | 브라우저 기본값 100% | 별도 강제 고정 없음 |
 
 구현: [web/preview/style.css](../../../../web/preview/style.css)의 `:root` 미디어 쿼리. `text-size-adjust:100%`는 브라우저 텍스트 자동 확대의 의도치 않은 변형을 피하기 위한 것으로, 사용자가 설정한 글자 크기·브라우저 확대/축소와 충돌하지 않도록 실기기 검증이 필요하다. **이 스케일은 preview-only trial이며 Compose 글꼴 크기 정책의 확정이 아니다.**
+
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## 공통 계약 r1의 스케일 선택
+
+이번 웹 개편은 위 기존 스케일 표를 검수 시작값으로 사용한다. 의미 역할은 [C-TEXT](../components/text-hierarchy.md)의 Display/Title/Section/Body/Caption 5개이며 `type.item`/`type.support`는 수치 스케일 이름이다. 역할·HTML heading·실제 크기를 동일 개념으로 합치지 않는다. 기본 16 기준 rem으로 변환하고 기존 RootFont trial은 보존한다. 시각 부적합이 확인되면 리드가 영향과 반례를 갖춰 개정하며 Native 승인값으로 자동 이식하지 않는다.

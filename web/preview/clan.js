@@ -43,17 +43,21 @@
   const memberStack=()=>`<div class="clan-avatars-group" aria-label="이번 주 참여 멤버 예시: 이모리, 밤산책, 모찌, 다온">${members.map(m=>avatar(m.name,{online:true,size:'stack'})).join('')}</div>`;
   const action=(href,ic,txt)=>`<a class="clan-mini-action" href="#${href}">${svg(ic)}<span>${txt}</span></a>`;
   const identity=()=>`<section class="clan-section clan-top-section">
-    <div class="clan-identity-intro"><a href="#clan-my" class="clan-main-identity">${emblem()}<span class="clan-identity-copy"><small class="clan-eyebrow">내 클랜 <span class="clan-online-dot" aria-hidden="true"></span> 이번 주 활동 중</small><strong>${title()}</strong><span>멤버 8명 · 이번 주 6명 참여</span></span>${svg('chevron','clan-subchev')}</a></div>
-    <a class="clan-presence" href="#clan-record">${memberStack()}<span class="clan-presence-label"><strong>오늘도 함께 도전 중</strong><small>4명이 기록을 남겼어요</small></span>${svg('chevron','clan-subchev')}</a>
-    <div class="clan-quick-actions">${action('dm','message','클랜 채팅')}${action('clan-invite','userPlus','친구 초대')}${action('clan-record','ranking','우리 기록')}</div>
+    <div class="clan-profile-line">
+      <a href="#clan-my" class="clan-main-identity">${emblem()}<span class="clan-identity-copy"><strong>${title()}</strong><small>멤버 8명 · 이번 주 6명 참여</small></span></a>
+      <a href="#clan-invite" class="clan-inline-invite">${svg('userPlus')}<span>초대</span></a>
+    </div>
+    <div class="clan-community-row">
+      <a href="#clan-activity" class="clan-presence">${memberStack()}<span class="clan-presence-label"><strong>오늘 4명이 기록을 남겼어요</strong><small>최근 활동 보기</small></span>${svg('chevron','clan-subchev')}</a>
+      <a href="#dm" class="clan-chat-action" aria-label="클랜 채팅 열기">${svg('message')}</a>
+    </div>
   </section>`;
   const rewardVisual=()=>`<img src="assets/box_gold.webp" class="clan-chest-img" alt="" loading="lazy" draggable="false">`;
-  const progress=({compact=false}={})=>`<div class="clan-progress-meta"><div><span>공동 기록</span><strong>620 <small>/ 1,000</small></strong></div><span class="clan-remaining">380 남음</span></div>
+  const progress=({compact=false}={})=>`<div class="clan-progress-meta"><div><span>공동 기록</span><strong>620 <small>/ 1,000</small></strong></div><span class="clan-remaining">완료까지 380</span></div>
       <div class="clan-progress-track ${compact?'is-compact':''}" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span style="width:62%"></span></div>`;
-  const rewardPanel=({extended=false}={})=>`<div class="clan-reward-hero"><div class="clan-reward-hero-copy"><span class="clan-reward-kicker">${svg('gift')} 이번 주 공동 도전</span><strong>함께 열어가는<br>우리의 보상 상자</strong><p>6명의 작은 성취가 모이는 중</p><a href="#clan-reward" class="clan-reward-cta">보상 살펴보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
-    <div class="clan-progress-wrap">${progress()}
-      <div class="clan-progress-foot"><span>${svg('clock')} 이번 주 일요일까지</span><span>62% 달성</span></div></div>${extended?`<div class="clan-reward-footnote">상자 구성과 지급 조건은 시연 상태이며 미확정</div>`:''}`;
-  const rewardSection=()=>`<section class="clan-section clan-reward-section">${heading('이번 주 함께 여는 상자','clan-reward','보상 보기')}${rewardPanel()}</section>`;
+  const rewardPanel=({extended=false}={})=>`<div class="clan-reward-hero"><div class="clan-reward-hero-copy"><span class="clan-reward-kicker">${svg('gift')} 이번 주 공동 상자</span><h2>각자 해내고,<br>같이 열자</h2><p>6명이 함께 채우는 보상</p><a href="#clan-reward" class="clan-reward-cta">보상 미리보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
+    <div class="clan-progress-wrap">${progress()}<div class="clan-progress-foot"><span>${svg('clock')} 일요일까지</span><a href="#clan-record">우리 기록 ${svg('chevron')}</a></div></div>${extended?'<div class="clan-reward-footnote">상자 구성과 지급 조건은 시연 상태이며 미확정</div>':''}`;
+  const rewardSection=()=>`<section class="clan-section clan-reward-section" aria-label="이번 주 공동 보상">${rewardPanel()}</section>`;
   const recordMetrics=()=>`<div class="clan-record-metrics" role="group" aria-label="이번 주 클랜 기록">
     <div class="clan-record-metric">${svg('calendar')}<strong>7일</strong><span>집계 기간</span></div>
     <div class="clan-record-metric">${svg('check')}<strong>24개</strong><span>완료 도전</span></div>
@@ -66,12 +70,9 @@
   const reactions={ '밤산책':3,'모찌':5,'이모리':2 };
   const feedItem=(member,what,when,extra='')=>{const yes=!!draft.hearts[member];return `<article class="clan-feed-item">${avatar(member)}<div class="clan-feed-content"><div class="clan-feed-name"><strong>${member}</strong><time>${when}</time></div><p>${what}</p>${extra?`<span class="clan-feed-tag">${svg('check')} ${extra}</span>`:''}</div><button type="button" class="clan-react" data-clan-heart="${member}" aria-pressed="${yes}" aria-label="${member} 응원 ${yes?'취소':'하기'}">${svg('heart')}<small>${reactions[member]+(yes?1:0)}</small></button></article>`;};
   const feedRows=()=>feedItem('밤산책','오늘의 퀘스트 2개 완료','12분 전','일일 도전')+feedItem('모찌','4일 연속으로 기록을 남겼어요','38분 전','연속 참여')+feedItem('이모리','이번 주 첫 공동 기록을 달성했어요','2시간 전','공동 도전');
-  const feedSection=()=>`<section class="clan-section clan-feed-section">${heading('지금 우리 클랜','clan-activity','소식 전체')}
-    <a href="#clan-record" class="clan-feature-story">
-      <div class="clan-story-portraits" aria-hidden="true">${avatar('이모리',{size:'hero'})}${avatar('밤산책',{size:'hero'})}${avatar('다온',{size:'hero'})}</div>
-      <div class="clan-story-copy"><span class="clan-story-badge">${svg('check')} 오늘의 도전</span><strong>4명이 오늘도<br>기록을 남겼어요</strong><small>함께 쌓인 기록 구경하기 ${svg('chevron')}</small></div>
-    </a>
+  const feedSection=()=>`<section class="clan-section clan-feed-section">${heading('방금 올라온 클랜 소식','clan-activity','모두 보기')}
     ${feedItem('밤산책','오늘의 퀘스트 2개 완료','12분 전','일일 도전')}
+    ${feedItem('모찌','4일 연속으로 기록을 남겼어요','38분 전')}
   </section>`;
   const achievements=()=>`<div class="clan-medal-rail"><div class="clan-medal"><span class="clan-medal-art medal-gold">${svg('flame')}</span><strong>첫 주 완주</strong><small>주간 기록</small></div><div class="clan-medal"><span class="clan-medal-art medal-blue">${svg('trophy')}</span><strong>100회 달성</strong><small>누적 실천</small></div><div class="clan-medal"><span class="clan-medal-art medal-red">${svg('flag')}</span><strong>첫 클랜</strong><small>함께한 시작</small></div></div>`;
   const trailSection=()=>`<section class="clan-section">${heading('함께 쌓은 발자국','clan-my','기록 보기')}${achievements()}</section>`;

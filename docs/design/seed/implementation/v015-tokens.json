@@ -146,7 +146,7 @@
       "rule": "semantic role -> family+level by theme; keep 500 for pictorial accents, use foreground 700 on light and 300 on dark for small text."
     },
     "previewShellLayers": {
-      "status": "web-preview-trial-adjustment-2026-11-08",
+      "status": "web-preview-screenshot-comparison-2026-11-08",
       "scope": "web/preview only; not a change to approved v0.15 base color.light/dark tokens or native app",
       "roles": {
         "canvas": "existing color.[theme].canvas; separators and gaps",
@@ -160,8 +160,8 @@
         "bottomNavActiveFg": "#DB3040"
       },
       "dark": {
-        "canvas": "#111216",
-        "shell": "#18191E",
+        "canvas": "#101115",
+        "shell": "#16171B",
         "bottomNav": "#242329",
         "bottomNavActiveFg": "#F45C68"
       },

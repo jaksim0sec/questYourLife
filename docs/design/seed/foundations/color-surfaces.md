@@ -147,3 +147,10 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 | `bottomNavSurface` | `#242329` | **유지 `#242329`** | `--nav-surface` |
 
 이 변경은 **`new/web/preview`용 실험값**으로, D-011 헤더 구조와 D-012의 기존 `color.dark.canvas`/`surface` 승인값을 바꾸는 결정이 아니다. 일반 카드·버튼·보상 아트·텍스트·SVG·Safe Area는 그대로 둔다. 색 대비의 높낮이/토큰 일치 정적 확인과 실제 기기 스크린샷 검수를 구분한다.
+
+
+## 2026-11-08 · 원본 이미지 기반 Depth 조정 (WEB PREVIEW ONLY, proposed)
+
+11444.jpg(당근 크롭)의 일반 바탕 샘플 `#16171B`, 11449.jpg(현생패치 화면)의 콘텐츠 샘플 `#18191E`, 간격 약 `#121317`, 하단 네비 `#242329`를 대조. 이미지 압축·표시 장치·다크 모드 차이가 있으므로 이를 당근 SEED의 공식값이라고 **주장하지 않음**.
+
+이번 시연은 `--canvas:#101115` / `--shell-surface:#16171B` / `--nav-surface:#242329`로 시각 조합을 시험. 상단·일반 콘텐츠·클랜 Flat Section은 shell, 섹션 간 거터는 canvas, 하단 내비게이션은 nav 전용 색. **승인된 D-012 color.dark.canvas `#17181D`, surface `#242329`는 보존**한다.

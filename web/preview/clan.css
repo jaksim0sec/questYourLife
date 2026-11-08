@@ -277,7 +277,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 .clan-story-badge{margin-bottom:.06rem}
 .clan-content-tabs,.clan-category-tabs{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--clan-stroke);margin:.65rem -.12rem 1.05rem}
 .clan-content-tabs::-webkit-scrollbar,.clan-category-tabs::-webkit-scrollbar{display:none}
-.clan-content-tabs>button,.clan-category-tabs>button{background:none;border:0;border-bottom:2px solid transparent;min-height:3rem;display:flex;align-items:center;padding:.62rem .65rem;color:var(--clan-muted);white-space:nowrap;font-size:.79rem;font-weight:600}
+.clan-content-tabs>button,.clan-category-tabs>button{background:none;border:0;border-bottom:2px solid transparent;min-height:3rem;min-width:3rem;display:flex;align-items:center;padding:.62rem .65rem;color:var(--clan-muted);white-space:nowrap;font-size:.79rem;font-weight:600}
 .clan-content-tabs>button[aria-selected="true"],.clan-category-tabs>button[aria-pressed="true"]{color:var(--clan-ink);border-bottom-color:var(--brand);font-weight:600}
 .clan-category-tabs{margin-top:.7rem}
 .clan-discover-results{grid-auto-columns:minmax(10rem,48%);margin:0 0 1rem}

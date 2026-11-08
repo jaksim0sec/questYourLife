@@ -50,11 +50,11 @@
   const rewardVisual=()=>`<img src="assets/box_gold.webp" class="clan-chest-img" alt="" loading="lazy" draggable="false">`;
   // Single source for the progress number, visual fill, and accessible value.
   const collectiveRecord = Object.freeze({current:620,target:1000});
-  const progress=({compact=false}={})=>{
+  const progress=({compact=false,showLabel=true}={})=>{
     const {current,target}=collectiveRecord;
     const fraction=target>0?Math.max(0,Math.min(current/target,1)):0;
     const formatted=n=>new Intl.NumberFormat('ko-KR').format(n);
-    return `<div class="clan-progress-meta"><div><span>공동 기록</span><strong>${formatted(current)} <small>/ ${formatted(target)}</small></strong></div><span class="clan-remaining">완료까지 ${formatted(Math.max(target-current,0))}</span></div>
+    return `<div class="clan-progress-meta"><div>${showLabel?'<span>공동 기록</span>':''}<strong>${formatted(current)} <small>/ ${formatted(target)}</small></strong></div><span class="clan-remaining">완료까지 ${formatted(Math.max(target-current,0))}</span></div>
       <div class="progress-track ${compact?'is-compact':''}" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${Math.min(current,target)}" aria-valuetext="${formatted(current)} / ${formatted(target)}"><span style="--progress:${fraction*100}%"></span></div>`;
   };
 
@@ -63,7 +63,7 @@
 <div class="clan-preview-item"><div class="clan-preview-media"><img src="assets/cosmetic_beanie.png" alt="" loading="lazy"></div><div class="clan-preview-copy"><strong>비니</strong><small>공동 목표 달성 시 예정 · 지급 조건 미확정</small></div></div></div>`;
   const rewardSection=()=>`<section class="clan-section clan-record-home" aria-label="이번 주 공동 기록">
   <div class="clan-heading"><h2>이번 주 공동 기록</h2><a class="clan-more" href="#clan-reward">보상 구성 보기 ${svg('chevron')}</a></div>
-  ${progress()}
+  ${progress({showLabel:false})}
   <div class="clan-progress-foot"><span>이번 주 일요일까지</span><span>6명 참여</span></div>
 </section>`;
   const socialSection=()=>`<section class="clan-section clan-social-section" aria-label="오늘 함께한 사람">
@@ -139,14 +139,13 @@
     </div>
     <section id="clan-tabpanel" class="clan-content-panel" role="tabpanel" aria-labelledby="clan-tab-${draft.myTab}" tabindex="0">${myPanel()}</section>
   </section></div>`;
-  const renderReward=()=>inner('이번 주 공동 보상',`<div class="clan-reward-detail-head">${rewardVisual()}<div><strong>이번 주 공동 보상</strong><p>목표 달성 후 제공될 예정인 구성</p></div></div>
+  const renderReward=()=>inner('이번 주 공동 보상',`<div class="clan-reward-detail-head">${rewardVisual()}<div><strong>공동 상자</strong><p>목표 달성 후 제공될 예정인 구성</p></div></div>
   <h3 class="clan-subheading">공동 진행</h3>${progress()}
   <p class="clan-detail-note">일요일까지 · 실제 지급 시점과 조건은 미확정</p>
   <h3 class="clan-subheading">예정 꾸미기 아이템</h3>${rewardItems()}
   <p class="clan-detail-note">표시된 아이템은 시연 예시이며 보유·장착·구매 상태가 아닙니다.</p>`);
   const renderRecord=()=>`<div class="clan-layout clan-inner"><section class="clan-section clan-record-section">
-    <h2 class="clan-inner-title">이번 주 기록</h2>
-    <div class="clan-record-primary"><span>공동 기록</span>${progress()}<div class="clan-progress-foot"><span>일요일까지</span><a href="#clan-reward">보상 상세 ${svg('chevron')}</a></div></div>
+    <div class="clan-record-primary"><span>공동 기록</span>${progress({showLabel:false})}<div class="clan-progress-foot"><span>일요일까지</span><a href="#clan-reward">보상 상세 ${svg('chevron')}</a></div></div>
     <h3 class="clan-subheading">주간 지표</h3>${recordMetrics()}
   </section>${contribution()}</div>`;
   function renderDetails(page){

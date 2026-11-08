@@ -26,7 +26,7 @@ async function guest(page){
   const m=await page.evaluate(()=>{
     const main=document.getElementById('main'),nav=document.getElementById('nav');
     const fonts=[...document.querySelectorAll('.clan-layout h1,.clan-layout h2,.clan-layout h3,.clan-layout p,.clan-layout a,.clan-layout button,.clan-layout span,.clan-layout strong,.clan-layout small,.clan-layout time,#nav .nav-link')].filter(e=>e.getClientRects().length && getComputedStyle(e).display!=='none' && getComputedStyle(e).visibility!=='hidden').map(e=>({text:e.textContent.trim().slice(0,23),size:parseFloat(getComputedStyle(e).fontSize),weight:parseInt(getComputedStyle(e).fontWeight)||400})).filter(e=>e.text);
-    const targets=[...main.querySelectorAll('.clan-layout a,.clan-layout button')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return{text:e.textContent.trim().slice(0,25),width:r.width,height:r.height}});
+    const targets=[...document.querySelectorAll('#main .clan-layout a,#main .clan-layout button,#header a,#header button,#nav a')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return{text:e.textContent.trim().slice(0,25),width:r.width,height:r.height}});
     const progress=[...main.querySelectorAll('.progress-track')].map(e=>({width:e.getBoundingClientRect().width,fill:e.firstElementChild?.getBoundingClientRect().width||0,height:e.getBoundingClientRect().height,now:e.getAttribute('aria-valuenow'),max:e.getAttribute('aria-valuemax'),text:e.getAttribute('aria-valuetext')}));
     const rect=sel=>{let e=main.querySelector(sel);if(!e)return null;let r=e.getBoundingClientRect();return{top:r.top,bottom:r.bottom,left:r.left,right:r.right}};
     const images=[...main.querySelectorAll('img')].map(e=>({src:e.getAttribute('src'),loaded:e.complete&&e.naturalWidth>0}));
@@ -38,6 +38,7 @@ async function guest(page){
   assert.equal(m.navActive,'#clan',label+' active nav');
   const badFonts=m.fonts.filter(t=>t.size<11.98||(t.size<13.98&&t.weight>600));
   assert.equal(badFonts.length,0,label+' font mismatch '+width+'/'+theme+' '+JSON.stringify(badFonts.slice(0,18)));
+  assert.ok(m.targets.length>0,label+' no interactive targets inspected');
   const badTargets=m.targets.filter(t=>t.width<47.8||t.height<47.8);
   assert.equal(badTargets.length,0,label+' bad hitboxes '+width+'/'+theme+' '+JSON.stringify(badTargets.slice(0,18)));
   const badImgs=m.images.filter(e=>!e.loaded);

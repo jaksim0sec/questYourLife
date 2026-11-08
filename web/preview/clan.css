@@ -30,7 +30,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #main{padding-bottom:calc(4.25
 /* Clan identity forms one unit, without duplicate status rows and equal-width actions. */
 .clan-top-section{padding-top:.52rem;padding-bottom:.72rem}
 .clan-profile-line{display:flex;align-items:center;gap:.5rem;min-height:4.1rem}
-.clan-main-identity{display:flex;align-items:center;gap:.65rem;flex:1;color:inherit}
+.clan-main-identity{display:flex;align-items:center;gap:.65rem;flex:1;min-height:3rem;color:inherit}
 .clan-top-section .clan-emblem{width:3.15rem;height:3.15rem}
 .clan-identity-copy{display:grid;gap:.18rem;flex:1}
 .clan-identity-copy strong{font-size:1.11rem;font-weight:790;line-height:1.24;letter-spacing:-.04em}

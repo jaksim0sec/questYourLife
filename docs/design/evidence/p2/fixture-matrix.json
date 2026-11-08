@@ -1,0 +1,144 @@
+{
+  "run": "2026-11-08T23:28:08.459Z",
+  "status": "passed",
+  "matrix": [
+    {
+      "width": 320,
+      "theme": "light",
+      "components": 21,
+      "ratio": 0.62,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 16,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 24
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-320-light.png"
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "components": 21,
+      "ratio": 0.62,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 16,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 24
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-320-dark.png"
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "components": 21,
+      "ratio": 0.6199220352892901,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 16.997,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 25.484375
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-390-light.png"
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "components": 21,
+      "ratio": 0.6199220352892901,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 16.997,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 25.484375
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-390-dark.png"
+    },
+    {
+      "width": 430,
+      "theme": "light",
+      "components": 21,
+      "ratio": 0.6199616122840691,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 17.569,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 26.34375
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-430-light.png"
+    },
+    {
+      "width": 430,
+      "theme": "dark",
+      "components": 21,
+      "ratio": 0.6199616122840691,
+      "trackHeight": 10,
+      "aria": "620",
+      "rootFont": 17.569,
+      "expectedDont": {
+        "smallText": 9.7,
+        "badTarget": 26.34375
+      },
+      "overflow": 0,
+      "interactions": [
+        "tabs",
+        "segment",
+        "filter",
+        "reaction",
+        "checkbox",
+        "radio"
+      ],
+      "image": "p2-fixtures-430-dark.png"
+    }
+  ]
+}

@@ -4,7 +4,9 @@ on:
     branches: [seed-r3]
     paths:
       - '.github/workflows/seed-r3-p0.yml'
-      - 'web/preview/qa/**'
+      - 'web/preview/qa/header.cjs'
+      - 'web/preview/qa/progress.cjs'
+      - 'web/preview/qa/baseline.cjs'
 permissions:
   contents: write
 jobs:

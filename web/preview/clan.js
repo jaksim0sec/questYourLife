@@ -2,31 +2,16 @@
 (() => {
   'use strict';
   const draft = { joined:true, name:'느슨한 갓생단', about:'조금씩이라도 함께 꾸준히', flag:'#DB3040', selectedPublic:'study', hearts:Object.create(null) };
-  // Outlines follow the project's v0.14 24px/1.8 round-stroke icon contract.
-  const shapes = {
-    flag:'<path d="M4.5 21V4.5c3.5-3 7 1.9 10.5-.5 1.5-1 3-1 4.5-.5v10c-1.5-.5-3-.5-4.5.5-3.5 2.4-7-2.5-10.5.5"/>',
-    users:'<circle cx="9" cy="7.5" r="3"/><path d="M3 20v-1.4C3 15.7 5.2 14 9 14s6 1.7 6 4.6V20M16 5.2a3 3 0 0 1 0 5.6M18 14.2c2 .6 3 2 3 4.4V20"/>',
-    book:'<path d="M12 21V6.6C10.75 4.73 9.16 3.34 7.55 2.92Q6.6 2.66 6.6 3.72V17.25C8.62 17.55 10.42 18.77 12 21Z"/><path d="M6.6 6.48 4.35 5.98Q2.8 5.63 2.8 7.2V18.9Q2.8 19.98 3.9 19.99C7.2 20.01 9.8 20.62 12 21 15.05 19.25 17.22 18.93 20.12 18.82Q21.2 18.79 21.2 17.7V6.35Q21.2 5.25 20.1 5.38C16.9 5.74 14.5 6.58 12 8.45"/>',
-    heart:'<path d="M12 6.1C7.8.6 1.5 4.8 3.1 10.3c1.1 3.6 5.1 7.5 8.9 10 3.8-2.5 7.8-6.4 8.9-10C22.5 4.8 16.2.6 12 6.1Z"/>',
-    check:'<circle cx="12" cy="12" r="9.2"/><path d="m7.7 12 2.8 2.8 5.8-5.8"/>',
-    gift:'<rect x="3" y="8.5" width="18" height="4.2" rx="1.3"/><path d="M5 12.7v6.1q0 1.7 1.7 1.7h10.6q1.7 0 1.7-1.7v-6.1M12 8.5v12M12 8.4C7 8.4 5.2 6.8 5.5 4.8c.4-2.6 5.8-2.6 6.5 3.6ZM12 8.4c5 0 6.8-1.6 6.5-3.6-.4-2.6-5.8-2.6-6.5 3.6Z"/>',
-    chevron:'<path d="m9 5.5 6.5 6.5L9 18.5"/>',
-    plus:'<path d="M12 4.5v15M4.5 12h15"/>',
-    message:'<path d="M6.73 19.83C8.14 20.61 9.93 21 11.91 21 17.1 21 21 17.1 21 12S17.1 3 12 3 3 6.9 3 12C3 13.94 3.49 15.5 4.29 16.86L3.55 20.13Q3.39 20.82 4.08 20.65Z"/>',
-    activity:'<path d="M3 12h4l2.4-6.5 4.1 13 2.5-6.5h5"/>',
-    flame:'<path d="M12.4 2.8c.5 4.1 4.1 5 4.1 8.1 1.1-.8 1.7-1.8 1.9-3.1 2 2.5 2.6 4.7 2 7.1-.8 3.9-3.6 6.3-7.9 6.3-4.8 0-8-3.3-8-7.6 0-2.4 1.3-4.7 3.2-6.1-.1 2 .5 3.2 1.6 4 0-4.7 3.1-5.1 3.1-8.7Z"/>',
-    trophy:'<path d="M7 3.5h10V9a5 5 0 0 1-10 0ZM7 5H3.5v2.5Q3.5 12 8 12M17 5h3.5v2.5q0 4.5-4.5 4.5M12 14v6M7.5 20.5h9"/>',
-    shop:'<rect x="4" y="7.5" width="16" height="13" rx="2.5"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/>',
-    target:'<circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.1"/>',
-    userPlus:'<circle cx="8.5" cy="7.2" r="2.9"/><path d="M2.5 20v-1.2c0-2.8 2.2-4.5 6-4.5s6 1.7 6 4.5V20M19 8v5M16.5 10.5h5"/>',
-    clock:'<circle cx="12" cy="12" r="9.2"/><path d="M12 6.8v5.5l-3.3 2.5"/>',
-    ranking:'<path d="M2.5 20.5h19M4 20.5v-8q0-1.5 1.5-1.5H9M9 20.5V5q0-1.5 1.5-1.5h3Q15 3.5 15 5v15.5M15 14h3.5q1.5 0 1.5 1.5v5"/>',
-    sparkle:'<path d="M11.5 3.7q.5-1.7 1 0l1.6 5.2q.2.7.9.9l5.3 1.7q1.5.5 0 1l-5.3 1.7q-.7.2-.9.9l-1.6 5.2q-.5 1.7-1 0l-1.6-5.2q-.2-.7-.9-.9l-5.3-1.7q-1.5-.5 0-1L9 9.8q.7-.2.9-.9Z"/>',
-    calendar:'<rect x="3.5" y="5.1" width="17" height="15.4" rx="2.5"/><path d="M7.5 3v4M16.5 3v4M3.5 10h17"/>',
-    chart:'<path d="M4 20v-5M10 20V9M16 20V4M22 20v-8"/>',
-    star:'<path d="m12 2.7 2.7 5.8 6.3.9-4.5 4.4 1.1 6.2L12 17l-5.6 3 1.1-6.2L3 9.4l6.3-.9Z"/>'
+  // Source-only icon geometry; all 20 distinct glyph files are verbatim SEED v0.14 blobs.
+  // Exact user-approved SEED v0.14 icon files. Use their unmodified mask alpha
+  // to apply currentColor in the UI. Never retrace geometry in this preview.
+  const seedIconNames = Object.freeze({"flag":"flag","users":"users","book":"book","heart":"heart","check":"check","gift":"gift","chevron":"chevron","plus":"plus","message":"chat","activity":"activity","flame":"flame","trophy":"trophy","shop":"shopping-bag","target":"target","userPlus":"user-plus","clock":"clock","ranking":"ranking","sparkle":"sparkle","calendar":"calendar","chart":"chart","star":"sparkle"});
+  const svg = (key, cls='') => {
+    const icon=seedIconNames[key];
+    if(!icon)return '';
+    const path='assets/seed-icons/'+icon+'.svg';
+    return `<span class="clan-svg ${cls}" data-seed-icon="${icon}" aria-hidden="true" style="-webkit-mask-image:url('${path}');mask-image:url('${path}')"></span>`;
   };
-  const svg = (key,cls='') => `<svg class="clan-svg ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[key]||''}</svg>`;
   const safe = t => String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const title = () => safe(draft.name.trim() || '클랜 이름');
   const heading = (text, route, action='전체 보기') => `<div class="clan-heading"><h2>${text}</h2>${route?`<a class="clan-more" href="#${route}">${action}${svg('chevron')}</a>`:''}</div>`;

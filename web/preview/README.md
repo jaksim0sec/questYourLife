@@ -45,3 +45,11 @@
 - **첨부 참고 분석, SEED 계약 대조, 범위/검증**: [CLAN_UI_AUDIT.md](CLAN_UI_AUDIT.md). 원본 레퍼런스의 유료 시즌패스·레이드·아이템 경제는 기능으로 추가하지 않았음.
 
 검증: 인라인 브라우저 320·390·430·768 × 라이트/다크 × 가입/미가입 16조건 가로 넘침 0, JS 오류 0. 원본 장비·보상 그림의 실제 Pages 렌더와 Android/E2E는 별도 미검증.
+
+
+### 2026-11-08 · 클랜 v4 · SEED 전체 이해 후 교정
+
+- [SEED_COMPONENT_MAP.md](SEED_COMPONENT_MAP.md): INDEX **36개 전부**를 역할·의존성·클랜 사용/비사용으로 매핑, Surface 10/Badge 7/Text 5/원본 SVG 56 정리.
+- 기존 JS 임의 SVG 도형을 제거하고 SEED **20개 공식 SVG 원본 SHA**를 `assets/seed-icons/`에 연결. CSS mask로 UI `currentColor`를 적용해 도형 소스는 손대지 않음.
+- Gold Reward Secondary light/dark, Field border focus, Segmented demo menu, 48px 터치 목표, 아이콘/버튼 치수를 C-ACTION/C-FIELD/C-SVG에 맞춤.
+- Root/Header/Nav/RootFontSize/아바타 합성·기존 12개 경로·예시 시뮬레이션 로직 불변. 실제 Pages/Android UX는 별도 검증.

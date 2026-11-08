@@ -50,6 +50,6 @@
 ### 2026-11-08 · 클랜 v4 · SEED 전체 이해 후 교정
 
 - [SEED_COMPONENT_MAP.md](SEED_COMPONENT_MAP.md): INDEX **36개 전부**를 역할·의존성·클랜 사용/비사용으로 매핑, Surface 10/Badge 7/Text 5/원본 SVG 56 정리.
-- 기존 JS 임의 SVG 도형을 제거하고 SEED **20개 공식 SVG 원본 SHA**를 `assets/seed-icons/`에 연결. CSS mask로 UI `currentColor`를 적용해 도형 소스는 손대지 않음.
+- 기존 JS 임의 SVG 도형을 제거하고 SEED **16개 공식 SVG 원본 SHA**를 `assets/seed-icons/`에 연결. CSS mask로 UI `currentColor`를 적용해 도형 소스는 손대지 않음.
 - Gold Reward Secondary light/dark, Field border focus, Segmented demo menu, 48px 터치 목표, 아이콘/버튼 치수를 C-ACTION/C-FIELD/C-SVG에 맞춤.
 - Root/Header/Nav/RootFontSize/아바타 합성·기존 12개 경로·예시 시뮬레이션 로직 불변. 실제 Pages/Android UX는 별도 검증.

@@ -70,7 +70,7 @@
 - Core Outline 32: `home, explore, chat, users, user, grid, check, check-circle, book, bookmark, calendar, clock, target, activity, plus, edit, search, share, chevron, left, menu, more, settings, gift, trophy, flame, sparkle, heart, bell, shirt, dumbbell, chart`.
 - Fill 5: `home-fill, chat-fill, users-fill, user-fill, check-circle-fill`.
 - Additional Outline 19: `flag, repeat, pause, play, skip, user-plus, link, send, ranking, shopping-bag, coins, package, lock, close, chevron-down, refresh, warning, info, eye`.
-- 클랜 화면에서 쓰는 **20개 고유 원본 SVG**를 `assets/seed-icons/`에 Git blob 단위 동일한 사본으로 연결. 별칭: `message→chat`, `shop→shopping-bag`, `userPlus→user-plus`, `star→sparkle` (별 아이콘 부재, 표현은 비슷한 공식 광채로 교체). 다른 36개는 정본 경로 그대로 보존하고 웹 시연에 불필요한 복제 금지.
+- 클랜 화면에서 쓰는 **16개 고유 원본 SVG**를 `assets/seed-icons/`에 Git blob 단위 동일한 사본으로 연결. 별칭: `message→chat`, `shop→shopping-bag`, `userPlus→user-plus`, `star→sparkle` (별 아이콘 부재, 표현은 비슷한 공식 광채로 교체). 다른 40개는 정본 경로 그대로 보존하고 웹 시연에 불필요한 복제 금지.
 - `coins.svg`는 **실제 캐시 코인 이미지가 아님**. 클랜 미리보기에서 임의 C문자 코인·지급 금액을 만들지 않음.
 
 ## 5. v3에서 발견된 위반 → 교정

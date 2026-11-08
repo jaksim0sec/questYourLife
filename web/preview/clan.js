@@ -2,10 +2,10 @@
 (() => {
   'use strict';
   const draft = { joined:true, name:'느슨한 갓생단', about:'조금씩이라도 함께 꾸준히', flag:'#DB3040', selectedPublic:'study', hearts:Object.create(null) };
-  // Source-only icon geometry; all 20 distinct glyph files are verbatim SEED v0.14 blobs.
+  // Source-only icon geometry; all 16 distinct glyph files are verbatim SEED v0.14 blobs.
   // Exact user-approved SEED v0.14 icon files. Use their unmodified mask alpha
   // to apply currentColor in the UI. Never retrace geometry in this preview.
-  const seedIconNames = Object.freeze({"flag":"flag","users":"users","book":"book","heart":"heart","check":"check","gift":"gift","chevron":"chevron","plus":"plus","message":"chat","activity":"activity","flame":"flame","trophy":"trophy","shop":"shopping-bag","target":"target","userPlus":"user-plus","clock":"clock","ranking":"ranking","sparkle":"sparkle","calendar":"calendar","chart":"chart","star":"sparkle"});
+  const seedIconNames = Object.freeze({"flag":"flag","users":"users","book":"book","heart":"heart","check":"check","gift":"gift","chevron":"chevron","plus":"plus","message":"chat","activity":"activity","flame":"flame","trophy":"trophy","shop":"shopping-bag","target":"target","userPlus":"user-plus","clock":"clock"});
   const svg = (key, cls='') => {
     const icon=seedIconNames[key];
     if(!icon)return '';

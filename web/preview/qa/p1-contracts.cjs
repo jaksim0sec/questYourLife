@@ -32,7 +32,7 @@ assert.ok(prog.includes('min(current,target)')&&prog.includes('aria-valuetext'),
 assert.ok(status.includes('now1000'),'C-STATUS over-goal bound lost');
 assert.ok(read('HISTORY.md').includes('K12 웹 작업자 간 고정 인터페이스'),'K12 history missing');
 console.log('T3 known conflict regression PASS: old K10/K12 and over-goal ARIA conflicts removed from active rules');
-const ledger=read('LEDGER.md');let coverage=0,p1=0,missing=[],stage={};
+const ledger=read('LEDGER.md');let coverage=0,p1=0,missing=[],stage={};const trace=read('P1_TRACE.md');
 for(const row of ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x))){
  const a=row.split(' | ');const sec=a[1],owner=a[6],phase=a[7];
  stage[phase]=(stage[phase]||0)+1;
@@ -41,6 +41,14 @@ for(const row of ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x))){
 assert.ok(p1>100,'expected comprehensive P1 ledger');
 for(let n=1;n<=38;n++){const id='L'+String(n).padStart(2,'0');assert.ok(new RegExp('^\\| '+id+' \\| ', 'm').test(ledger),'missing original plan '+id);}
 assert.equal(ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x)).length,585,'lossless report ledger rows');assert.equal(missing.length,0,'T4 missing owners: '+JSON.stringify(missing.slice(0,5)));
+const sourceRows=ledger.split('\n').filter(s=>/^\| L\d{4} \|/.test(s) && s.split(' | ')[7]==='P1');
+const ids=sourceRows.map(s=>s.split(' | ')[0].slice(2));
+assert.equal(ids.length,new Set(ids).size,'P1 duplicate ids');
+const traceRows=trace.split('\n').filter(s=>/^\| L\d{4} \|/.test(s));
+assert.equal(traceRows.length,ids.length,'T4 trace count mismatch');
+for(const id of ids)assert.ok(traceRows.some(x=>x.startsWith('| '+id+' | ')),'T4 trace missing '+id);
+console.log('T4 per-row disposition PASS: '+ids.length+' P1 input rows');
+
 for(const sec of ['3.3','3.4','4.1','4.2','4.3','4.4','4.5','5.1','5.2','5.3','6.1','6.5','6.6',...Array.from({length:21},(_,i)=>'7.'+(i+1)),'8.2','8.3','8.4','8.5','8.6','9.3','9.5','10.2','10.3','A.1','A.2','A.3','A.4']){assert.ok(ledger.includes('| '+sec+' | '),'coverage '+sec);coverage++;}
 console.log('T4 ownership/coverage PASS: '+p1+' P1 rows / '+coverage+' sections; stages='+JSON.stringify(stage));
 console.log('T2 BLOCKED: an independent new-session design reproduction has not been performed; G-P1 NOT PASSED.');

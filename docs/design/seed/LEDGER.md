@@ -257,17 +257,17 @@
 | L0139 | 4.5 | \| Header와 콘텐츠 시작선 \| 동일한 16px \| Header 약 12.4px, 본문 `.clan-section` 약 17px → 4.6px 차이 \| | 355/16 | 측정/수치 12.4px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0140 | 4.5 | \| Header와 콘텐츠 시작선 \| 동일한 16px \| Header 약 12.4px, 본문 `.clan-section` 약 17px → 4.6px 차이 \| | 355/16 | 측정/수치 17px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0141 | 4.5 | \| Header와 콘텐츠 시작선 \| 동일한 16px \| Header 약 12.4px, 본문 `.clan-section` 약 17px → 4.6px 차이 \| | 355/16 | 측정/수치 4.6px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0142 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 18 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0143 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 24px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0144 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 700 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0145 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 21.4px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0146 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 850 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0147 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 0.05 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0148 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 18 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0149 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 24px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0150 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 700 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0151 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 14.8px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
-| L0152 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 850 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
+| L0142 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 18 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0143 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0144 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0145 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 21.4px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0146 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 850 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0147 | 4.5 | \| Root Title \| 18/24px, 700 \| 약 21.4px, 850, 줄높이 상속, 자간 -0.05em \| | 355/16 | 측정/수치 0.05 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0148 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 18 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0149 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 24px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0150 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 700 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0151 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 14.8px | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
+| L0152 | 4.5 | \| Standard Title \| 18/24px, 700 \| 약 14.8px, 850 \| | 355/16 | 측정/수치 850 | 검토 | foundations/typography.md#현행 계약 | P2 | proposed |
 | L0153 | 4.5 | \| 관련 텍스트 사이 \| 6px \| 클랜명↔메타 약 3px \| | 355/16 | 측정/수치 6px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0154 | 4.5 | \| 관련 텍스트 사이 \| 6px \| 클랜명↔메타 약 3px \| | 355/16 | 측정/수치 3px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0155 | 4.5 | \| 섹션 간격 \| 관계에 따라 선택 \| 일부 섹션 일괄 약 8px \| | 355/16 | 측정/수치 8px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
@@ -318,12 +318,12 @@
 | L0200 | 6.1 | \| `S-PAGE` \| Root·Detail·Utility·Immersive·Overlay의 외곽 구조 \| 내부 콘텐츠의 목적별 유형과 우선순위는 별도 설계 필요 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
 | L0201 | 6.1 | \| `VALIDATION` \| 토큰·상태·반응형·접근성·오류 검사 \| 정보 객체 완결성·선택 이유·행동 예측·목적 적합성 검사 부족 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
 | L0202 | 6.5 | \| 관계 \| 필요한 계약 \| 사례 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
-| L0203 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12.4px | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
-| L0204 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 17px | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0203 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 12.4px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
+| L0204 | 6.5 | \| `NAV-TOP + S-PAGE` \| Root/Standard별 제목·좌우 기준선·Right Slot·스크롤 관계 \| Header 12.4px와 본문 17px 시작선 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 17px | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
 | L0205 | 6.5 | \| `C-TABS + C-SELECTION` \| 상위 범주·하위 필터·보기 전환의 위치·순서·영향 범위 \| 멤버/기록/소식은 패널 전환, 기간은 같은 데이터 보기 전환 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
-| L0206 | 6.5 | \| `C-LIST + C-SURFACE` \| Flat List 우선 조건, 독립 Surface 필요 조건, Row/Group 경계 \| 사람·활동에 아이템 타일 문법 일괄 적용 금지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/selection-controls.md#현행 계약 | P1 | proposed |
-| L0207 | 6.5 | \| `F-GEOMETRY + F-TYPE` \| 고정 Shell과 root 글자 확대의 충돌 검사 \| 확대 시 헤더·하단바·라벨·Safe Area 유지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
-| L0208 | 6.5 | \| `C-IMAGE + C-CREDIT + C-RARITY + C-TEXT` \| 정보 객체의 슬롯·정렬·상태·행동 \| 블루 캡의 상점/보관함/미리보기 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
+| L0206 | 6.5 | \| `C-LIST + C-SURFACE` \| Flat List 우선 조건, 독립 Surface 필요 조건, Row/Group 경계 \| 사람·활동에 아이템 타일 문법 일괄 적용 금지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/list-item.md#현행 계약 | P1 | proposed |
+| L0207 | 6.5 | \| `F-GEOMETRY + F-TYPE` \| 고정 Shell과 root 글자 확대의 충돌 검사 \| 확대 시 헤더·하단바·라벨·Safe Area 유지 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | foundations/geometry.md#현행 계약 | P1 | proposed |
+| L0208 | 6.5 | \| `C-IMAGE + C-CREDIT + C-RARITY + C-TEXT` \| 정보 객체의 슬롯·정렬·상태·행동 \| 블루 캡의 상점/보관함/미리보기 차이 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | objects/item.md#현행 계약 | P1 | proposed |
 | L0209 | 6.5 | 당근의 **Header=탐색 맥락, Chip=조건, List=결과, Bottom Nav=루트 이동**은 관계가 화면에 드러나는 사례다. 클랜 홈의 ‘정체성→보상→진열’ 나열은 관계와 행동이 약했다. 두 페이지의 목적이 다르므로 클랜 홈에 당근 필터를 추가하는 복제로 해결하지 않는다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 검토 | components/selection-controls.md#현행 계약 | P1 | proposed |
 | L0210 | 6.6 | \| 판단 \| 우선 후보 \| 배제하거나 주의할 후보 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | patterns/content-hierarchy.md#현행 계약 | P1 | candidate |
 | L0211 | 6.6 | \| 간격만으로 구분 가능한가 \| Plain / Flat Section \| 의미 없는 Card \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/content-hierarchy.md#현행 계약 | P1 | proposed |
@@ -528,20 +528,20 @@
 | L0410 | 8.6 | \| G7 검증 \| 렌더됐지만 실제 비교·행동 확인 없음 \| 07 \| 화면·상호작용 근거 확보 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 07 | 검토 | PROCESS.md#현행 계약 | P1 | proposed |
 | L0411 | 8.6 | 실패하면 해당 결정을 성공 처리하지 않고 원인을 낳은 단계로 돌아간다. 테스트·프로토타입의 합의된 예외는 범위와 이유를 기록할 수 있다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 반례 | PROCESS.md#현행 계약 | P1 | proposed |
 | L0412 | 8.6 | **상자 사례의 복귀:** ‘너무 크다’는 관찰 → G5 실패 → G1에서 주연 확인 → 정체성·활동·공동 기록과 보상 홍보의 책임 분리 → 적합 패턴 재선택 → 크기·배치 수정 → 실제 화면 검증. 원인이 역할 오판이면 CSS height만 줄여서는 해결되지 않는다. 치수 수정 자체가 항상 잘못인 것은 아니다. | 미명시(390/17·355/16.5·355/16 혼용 금지) | 문장/사례 | 반례 | PROCESS.md#현행 계약 | P1 | history |
-| L0413 | 9.3 | \| 대상 \| 최소 보강 \| 대응 원문 아이디어 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | history |
+| L0413 | 9.3 | \| 대상 \| 최소 보강 \| 대응 원문 아이디어 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | PROCESS.md#현행 계약 | P1 | history |
 | L0414 | 9.3 | \| P-HIERARCHY \| 홍보/실용 정보/탐색/수령 결과 분류, 실제 데이터·주행동·면적 이유 \| S4 R1, S6 H02, S7 D01–D04 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0415 | 9.3 | \| C-SURFACE \| 허용 슬롯·대표 행동·자식·금지 조합·Plain 우선 조건 \| S4 R2, S6 H01/H06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0416 | 9.3 | \| A-ART+C-IMAGE \| A1 확대 실패 반례, A2 전용 구도·광원·안전영역·실제 주목도 \| S4 R3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0417 | 9.3 | \| C-ACTION+P-ACTIONS \| 역할·Emphasis→공통 Variant·화면 대표 CTA·금지 조합 \| S4 R4 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0418 | 9.3 | \| C-TEXT+F-TYPE \| 역할명 충돌 해소·Scale/Semantic·슬롯 매핑·최종 가독성 \| S2 16, S3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0419 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 03 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0420 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 05 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0421 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0422 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 19 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0423 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 21 | 반례 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0424 | 9.3 | \| S-PAGE \| Shell과 콘텐츠 목적의 책임 구분 \| S6 H03 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0425 | 9.3 | \| INDEX \| 새 페이지에서 목적·Pattern·객체의 읽기/선택 경로 \| S6 H04, S7 D07 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
-| L0426 | 9.3 | \| VALIDATION \| 객체 완결성·목적·중복·클릭·계층·에셋 용도·실제 비교 \| S4 R5, S6 H05, S7 D06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | pages/page-intent.md#현행 계약 | P1 | proposed |
+| L0415 | 9.3 | \| C-SURFACE \| 허용 슬롯·대표 행동·자식·금지 조합·Plain 우선 조건 \| S4 R2, S6 H01/H06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/surface-media.md#현행 계약 | P2 | proposed |
+| L0416 | 9.3 | \| A-ART+C-IMAGE \| A1 확대 실패 반례, A2 전용 구도·광원·안전영역·실제 주목도 \| S4 R3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/image-frame.md#현행 계약 | P2 | proposed |
+| L0417 | 9.3 | \| C-ACTION+P-ACTIONS \| 역할·Emphasis→공통 Variant·화면 대표 CTA·금지 조합 \| S4 R4 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 반례 | components/action-button.md#현행 계약 | P2 | proposed |
+| L0418 | 9.3 | \| C-TEXT+F-TYPE \| 역할명 충돌 해소·Scale/Semantic·슬롯 매핑·최종 가독성 \| S2 16, S3 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 16 | 검토 | components/text-hierarchy.md#현행 계약 | P1 | proposed |
+| L0419 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 03 | 검토 | components/badge-progress.md#현행 계약 | P2 | proposed |
+| L0420 | 9.3 | \| C-LIST+C-STATUS \| 정렬·행동 밀도·부모 반경·배지 정보량·실제 Progress \| S2 03/05 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 05 | 검토 | components/badge-progress.md#현행 계약 | P2 | proposed |
+| L0421 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 18 | 반례 | components/bottom-sheet.md#현행 계약 | P2 | proposed |
+| L0422 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 19 | 반례 | components/bottom-sheet.md#현행 계약 | P2 | proposed |
+| L0423 | 9.3 | \| C-SHEET+C-OVERLAY+C-GESTURE \| 담을 위치·손실 위험·피드백 대체 금지 조건 \| S2 18/19/21 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 측정/수치 21 | 반례 | components/bottom-sheet.md#현행 계약 | P2 | proposed |
+| L0424 | 9.3 | \| S-PAGE \| Shell과 콘텐츠 목적의 책임 구분 \| S6 H03 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | shells/page-shells.md#현행 계약 | P1 | proposed |
+| L0425 | 9.3 | \| INDEX \| 새 페이지에서 목적·Pattern·객체의 읽기/선택 경로 \| S6 H04, S7 D07 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | INDEX.md#현행 계약 | P1 | proposed |
+| L0426 | 9.3 | \| VALIDATION \| 객체 완결성·목적·중복·클릭·계층·에셋 용도·실제 비교 \| S4 R5, S6 H05, S7 D06 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | VALIDATION.md#현행 계약 | P1 | proposed |
 | L0427 | 9.5 | \| 역할 \| 기본 후보 \| 조건 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | candidate |
 | L0428 | 9.5 | \| 수락·확정·실제 수령 \| C-ACTION High / Solid \| 의미 Tone, 화면 대표 행동 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |
 | L0429 | 9.5 | \| 일반 실행·초대 \| C-ACTION Medium / Neutral Weak 등 \| 일반 행동의 비중 \| | 미명시(390/17·355/16.5·355/16 혼용 금지) | 비교표 원문 | 검토 | patterns/action-layout.md#현행 계약 | P2 | proposed |

@@ -134,3 +134,16 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 - 정확한 HEX는 시각 검토용 매핑이며 사용자 승인된 새로운 숫자 정본이 아님. 클랜 섹션 간 `--canvas` 간격, Safe Area, RootFontSize, Active/Inactive 아이콘을 그대로 둔다.
 
 > v5.3 접근성 보정: Light Bottom Nav 선택 텍스트만 공식 `#DB3040` 사용 (흰색 위 약 **4.66:1**). 기존 legacy `#F04E5B`는 흰색에서 약 **3.53:1**이라 작은 탭 라벨에 부족했다. Dark는 기존 `#F45C68` / `#242329` (약 **4.88:1**) 유지. 전역 브랜드/다른 버튼 색은 변경하지 않음.
+
+
+## 2026-11-08 후속 · Dark 3단 배경 대비 강화 (웹 시연 한정)
+
+사용자 지시: 섹션 간격 `canvas`와 일반 `shellSurface`의 HEX 밝기를 낮추고 Bottom Nav는 현재보다 상대적으로 밝게 유지.
+
+| 역할 | 직전 trial | 새 trial | 범위 |
+|---|---|---|---|
+| `canvas` (간격/최하위 면) | `#17181D` | **`#111216`** | `--canvas` |
+| `shellSurface` (상단·콘텐츠 면) | `#1D1D22` | **`#18191E`** | `--shell-surface` |
+| `bottomNavSurface` | `#242329` | **유지 `#242329`** | `--nav-surface` |
+
+이 변경은 **`new/web/preview`용 실험값**으로, D-011 헤더 구조와 D-012의 기존 `color.dark.canvas`/`surface` 승인값을 바꾸는 결정이 아니다. 일반 카드·버튼·보상 아트·텍스트·SVG·Safe Area는 그대로 둔다. 색 대비의 높낮이/토큰 일치 정적 확인과 실제 기기 스크린샷 검수를 구분한다.

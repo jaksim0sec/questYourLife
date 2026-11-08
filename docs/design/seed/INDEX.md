@@ -112,3 +112,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 ## 2026-11-07 · 컬러 팔레트 시연
 
 기준색 Blue `#3987FF` · Green `#19C98A` · Orange `#FFAD32` · Purple `#A078FF`. 확장 HEX와 Light/Dark 의미색은 [F-COLOR](foundations/color-surfaces.md) → [v015-tokens.json](implementation/v015-tokens.json) `color.palette` / `color.semanticPalette`에서 관리. **웹 시연용 임시 채택**, v0.15 승인된 브랜드·보상·SVG 규격 변경 아님.
+
+## 2026-11-08 · 시각 품질 감사 제안 (승인 전)
+
+- [실제 시연의 정보 위계·아트·표면 관련 SEED 규칙 보완 검토](PROPOSALS_2026-11-08.md). P-HIERARCHY/A-ART의 **기존 규칙 미준수**와 F-COLOR 등 **실제 계약 누락**을 별도로 분류. 제안 문서는 approved 지위를 갖지 않으며, 다음 디자인 적용·비교 시 참고만 한다.

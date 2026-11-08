@@ -146,7 +146,7 @@
       "rule": "semantic role -> family+level by theme; keep 500 for pictorial accents, use foreground 700 on light and 300 on dark for small text."
     },
     "previewShellLayers": {
-      "status": "web-preview-trial-2026-11-08",
+      "status": "web-preview-trial-adjustment-2026-11-08",
       "scope": "web/preview only; not a change to approved v0.15 base color.light/dark tokens or native app",
       "roles": {
         "canvas": "existing color.[theme].canvas; separators and gaps",
@@ -160,12 +160,12 @@
         "bottomNavActiveFg": "#DB3040"
       },
       "dark": {
-        "canvas": "#17181D",
-        "shell": "#1D1D22",
+        "canvas": "#111216",
+        "shell": "#18191E",
         "bottomNav": "#242329",
         "bottomNavActiveFg": "#F45C68"
       },
-      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged. Bottom Nav active label uses v0.15 approved brand red in light mode to preserve text contrast; dark retains the existing site active brand red."
+      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged. Bottom Nav active label uses v0.15 approved brand red in light mode to preserve text contrast; dark retains the existing site active brand red. 2026-11-08 revised dark canvas and shell two steps down in brightness; nav unchanged."
     }
   },
   "space": {

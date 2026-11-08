@@ -144,6 +144,26 @@
         }
       },
       "rule": "semantic role -> family+level by theme; keep 500 for pictorial accents, use foreground 700 on light and 300 on dark for small text."
+    },
+    "previewShellLayers": {
+      "status": "web-preview-trial-2026-11-08",
+      "scope": "web/preview only; not a change to approved v0.15 base color.light/dark tokens or native app",
+      "roles": {
+        "canvas": "existing color.[theme].canvas; separators and gaps",
+        "shell": "header + plain content sections share this surface",
+        "bottomNav": "bottom navigation only, lighter than shell in both themes"
+      },
+      "light": {
+        "canvas": "#FCFBFA",
+        "shell": "#F8F7F9",
+        "bottomNav": "#FFFFFF"
+      },
+      "dark": {
+        "canvas": "#17181D",
+        "shell": "#1D1D22",
+        "bottomNav": "#242329"
+      },
+      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged."
     }
   },
   "space": {

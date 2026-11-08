@@ -72,3 +72,11 @@
 - 별도의 `#clan-record` 및 `#clan-activity`는 홈 링크용 기존 상세 경로 그대로 보존, 그 화면의 가짜 페이지 이동 탭은 삭제.
 - 깃발의 내부 수직 점선 재봉선과 깃봉 상단 원형 끝 장식 제거. 원본 별표·배너 비율·색상 미리보기 유지.
 - 네비/RootFontSize/홈/계정·DB·실제 클랜 시스템 변경 없음. 브라우저 시각 검수 별도.
+
+
+### 2026-11-08 · v5.3 · Shell 3단 표면 계층 (시각 시험)
+- 3단 `canvas → shellSurface → bottomNavSurface`로 역할 분리. 상단/일반 콘텐츠를 동일한 `--shell-surface`, 고정 하단 네비를 한 단계 밝은 `--nav-surface`로 매핑.
+- Dark: `#17181D / #1D1D22 / #242329`. Light: `#FCFBFA / #F8F7F9 / #FFFFFF`. 실제 카드/시트용 기존 `--surface`는 유지.
+- `#main` 배경을 Header와 공유하되 `.clan-layout`은 기존 구획용 `--canvas` 간격을 유지해 Flat Section 사이의 경계가 사라지지 않게 함.
+- 정확한 색값은 [F-COLOR](../../docs/design/seed/foundations/color-surfaces.md)의 Web Preview trial. 기존 D-011 헤더 구성, C-BOTTOM SVG/경로, RootFontSize/레이아웃·보상/마스코트·기능 미변경.
+- 실제 Pages 모바일/라이트·다크 육안 검수는 미완료.

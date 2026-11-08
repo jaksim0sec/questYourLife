@@ -1,8 +1,8 @@
 @charset "utf-8";
 
-:root { --canvas: #fcfbfa; --surface: #fff; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
 
-:root[data-theme="dark"] { color-scheme: dark; --canvas: #17181d; --surface: #242329; --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
+:root[data-theme="dark"] { color-scheme: dark; --canvas: #17181d; --surface: #242329; --shell-surface: #1d1d22; --nav-surface: #242329; --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
 /* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
 :root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -31,7 +31,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .glyph, .glyph svg { display: block; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; }
 
-#header { position: sticky; top: 0px; z-index: 10; background: var(--surface); padding-top: env(safe-area-inset-top, 0px); }
+#header { position: sticky; top: 0px; z-index: 10; background: var(--shell-surface); padding-top: env(safe-area-inset-top, 0px); }
 
 .head, .nav-inner { width: min(100%, 72rem); margin-inline: auto; }
 
@@ -55,7 +55,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .tools .icon-btn:nth-last-child(4) .glyph { transform: translateX(1.5rem); }
 
-#nav { position: fixed; z-index: 20; inset: auto 0px 0px; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: var(--safe); }
+#nav { position: fixed; z-index: 20; inset: auto 0px 0px; background: var(--nav-surface); border-top: 1px solid var(--line); padding-bottom: var(--safe); }
 
 .nav-inner { display: grid; grid-template-columns: repeat(5, 1fr); min-height: calc(3.9525rem); }
 
@@ -87,7 +87,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 
 .menu-state { margin-left: auto; color: var(--sub); font-size: 0.8125rem; }
 
-#main { min-width: 0px; }
+#main { min-width: 0px; background: var(--shell-surface); }
 
 body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25rem * .93 + var(--safe) + 2rem); }
 

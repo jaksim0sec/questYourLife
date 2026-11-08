@@ -115,3 +115,20 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 - 채도가 높은 500을 라이트 테마 작은 본문에 바로 사용하면 대비 부족이므로 텍스트에는 의미색 foreground를 사용한다.
 - 색상은 보조 신호로만 쓰고 상승 화살표·숫자·진행률처럼 형태/텍스트도 함께 사용한다. 상승률의 산식과 대상은 미확정.
 - 토큰의 단일 데이터 원본은 [v015-tokens.json](../implementation/v015-tokens.json)의 `color.palette` 및 `color.semanticPalette`이다. 기존 의미색 표의 success/warning/info/focus는 이번 웹 시연 trial mapping으로 업데이트했다. 이전 제안은 Git 이력에 남는다.
+
+
+## 2026-11-08 · 웹 시연의 3단 Shell 표면 분리 (trial, 사용자 피드백)
+
+관찰: 기존 웹 시연의 상단 `#header`와 하단 `#nav`가 같은 `--surface`를 사용해 상단·콘텐츠·하단바의 독립적인 깊이가 보이지 않았다. 참고 화면은 하단바가 **상단 헤더 및 일반 콘텐츠보다 한 단계 밝은 표면**이다.
+
+| 역할 | Light trial | Dark trial | 실제 적용 범위 |
+|---|---|---|---|
+| `canvas` | `#FCFBFA` | `#17181D` | 페이지 바깥·Flat Section 사이 간격 |
+| `shellSurface` | `#F8F7F9` | `#1D1D22` | Top Navigation + 일반 `#main` + Clan Flat Section |
+| `bottomNavSurface` | `#FFFFFF` | `#242329` | 고정 Bottom Navigation |
+
+- 웹에서는 `--shell-surface`, `--nav-surface`로 역할을 분리. 이 두 값을 기존 `--surface` 카드/시트와 혼동하지 않음.
+- **기존 v0.15의 기본 `color.light/dark.canvas/surface`값은 그대로 보존**하고, 승인 전 숫자를 `color.previewShellLayers`에만 기록. 범위: `new/web/preview`. Android 및 현재 TopNav의 구조·SVG는 변경하지 않음.
+- 다크 계층은 배경(`#17181D`) → 상단/본문(`#1D1D22`) → 하단 네비(`#242329`). 라이트도 상단/본문이 하단 네비보다 약간 어둡게 표현됨.
+- 앱 콘텐츠 중 일반 카드/컨트롤은 기존 `--surface`가 유지되므로 Shell과 다른 표현을 가질 수 있음. 이것은 Shell의 3단 기본 깊이와 별개의 *내부 UI Surface 역할*임.
+- 정확한 HEX는 시각 검토용 매핑이며 사용자 승인된 새로운 숫자 정본이 아님. 클랜 섹션 간 `--canvas` 간격, Safe Area, RootFontSize, Active/Inactive 아이콘을 그대로 둔다.

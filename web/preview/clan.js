@@ -42,22 +42,31 @@
   const selectedClub=()=>clubs.find(c=>c.id===draft.selectedPublic)||clubs[0];
   const memberStack=()=>`<div class="clan-avatars-group" aria-label="이번 주 참여 멤버 예시: 이모리, 밤산책, 모찌, 다온">${members.map(m=>avatar(m.name,{online:true,size:'stack'})).join('')}</div>`;
   const action=(href,ic,txt)=>`<a class="clan-mini-action" href="#${href}">${svg(ic)}<span>${txt}</span></a>`;
-  const identity=()=>`<section class="clan-section clan-top-section">
-    <div class="clan-profile-line">
-      <a href="#clan-my" class="clan-main-identity">${emblem()}<span class="clan-identity-copy"><strong>${title()}</strong><small>멤버 8명 · 이번 주 6명 참여</small></span></a>
-      <a href="#clan-invite" class="clan-inline-invite">${svg('userPlus')}<span>초대</span></a>
-    </div>
-    <div class="clan-community-row">
-      <a href="#clan-activity" class="clan-presence">${memberStack()}<span class="clan-presence-label"><strong>오늘 4명이 기록을 남겼어요</strong><small>최근 활동 보기</small></span>${svg('chevron','clan-subchev')}</a>
-      <a href="#dm" class="clan-chat-action" aria-label="클랜 채팅 열기">${svg('message')}</a>
-    </div>
-  </section>`;
+
+  const identity=()=>`<section class="clan-section clan-top-section"><div class="clan-profile-line">
+    <a href="#clan-my" class="clan-main-identity">${emblem()}<span class="clan-identity-copy"><strong>${title()}</strong><small>멤버 8명 · 이번 주 6명 참여</small></span></a>
+    <a href="#clan-invite" class="clan-inline-invite">${svg('userPlus')}<span>초대</span></a>
+  </div></section>`;
   const rewardVisual=()=>`<img src="assets/box_gold.webp" class="clan-chest-img" alt="" loading="lazy" draggable="false">`;
   const progress=({compact=false}={})=>`<div class="clan-progress-meta"><div><span>공동 기록</span><strong>620 <small>/ 1,000</small></strong></div><span class="clan-remaining">완료까지 380</span></div>
       <div class="clan-progress-track ${compact?'is-compact':''}" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span style="width:62%"></span></div>`;
-  const rewardPanel=({extended=false}={})=>`<div class="clan-reward-hero"><div class="clan-reward-hero-copy"><span class="clan-reward-kicker">${svg('gift')} 이번 주 공동 상자</span><h2>각자 해내고,<br>같이 열자</h2><p>6명이 함께 채우는 보상</p><a href="#clan-reward" class="clan-reward-cta">보상 미리보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
-    <div class="clan-progress-wrap">${progress()}<div class="clan-progress-foot"><span>${svg('clock')} 일요일까지</span><a href="#clan-record">우리 기록 ${svg('chevron')}</a></div></div>${extended?'<div class="clan-reward-footnote">상자 구성과 지급 조건은 시연 상태이며 미확정</div>':''}`;
+
+  const rewardItems=()=>`<div class="clan-reward-items"><div class="clan-reward-items-head"><h3>상자에 담길 꾸미기</h3><a href="#clan-reward">미리보기 ${svg('chevron')}</a></div><div class="clan-reward-item-rail">
+    <span class="clan-reward-item"><img src="assets/cosmetic_blue_cap.png" alt="파란색 캡" loading="lazy"><small>캡</small></span>
+    <span class="clan-reward-item"><img src="assets/cosmetic_black_headphones.png" alt="헤드셋" loading="lazy"><small>헤드셋</small></span>
+    <span class="clan-reward-item"><img src="assets/cosmetic_beanie.png" alt="비니" loading="lazy"><small>비니</small></span>
+  </div></div>`;
+  const rewardPanel=({extended=false}={})=>`<div class="clan-reward-hero">
+    <div class="clan-reward-top"><span class="clan-reward-kicker">${svg('gift')} 이번 주 공동 상자</span><span class="clan-reward-active">${svg('users')} 6명 기여 중</span></div>
+    <div class="clan-reward-stage"><div class="clan-reward-hero-copy"><h2>각자 해내고,<br>같이 열자</h2><p>이번 주 작은 성취가 모이는 중</p><a href="#clan-reward" class="clan-reward-cta">보상 구성 보기 ${svg('chevron')}</a></div><div class="clan-chest-frame">${rewardVisual()}</div></div>
+    <div class="clan-reward-progress">${progress()}<div class="clan-reward-progress-end">${svg('clock')} 이번 주 일요일까지</div></div>
+  </div>${rewardItems()}${extended?'<div class="clan-reward-footnote">상자 구성과 지급 조건은 시연 상태이며 미확정</div>':''}`;
   const rewardSection=()=>`<section class="clan-section clan-reward-section" aria-label="이번 주 공동 보상">${rewardPanel()}</section>`;
+  const socialSection=()=>`<section class="clan-section clan-social-section"><div class="clan-social-heading"><h2>이번 주 함께한 사람들</h2><span>6명 참여</span></div><p class="clan-social-description">모두의 작은 기록이 모였어요</p>
+    <div class="clan-social-people">${members.map(m=>`<a href="#clan-my" class="clan-social-person">${avatar(m.name,{size:'hero'})}<strong>${m.name}</strong></a>`).join('')}</div>
+    <div class="clan-social-stats"><a href="#clan-record"><span>클랜 주간 순위</span><strong>12위</strong></a><a href="#clan-record"><span>지난주 대비</span><strong class="clan-positive-rank">↑ 3</strong></a></div>
+    <div class="clan-social-actions">${action('dm','message','클랜 채팅')}${action('clan-record','ranking','우리 기록')}</div>
+  </section>`;
   const recordMetrics=()=>`<div class="clan-record-metrics" role="group" aria-label="이번 주 클랜 기록">
     <div class="clan-record-metric">${svg('calendar')}<strong>7일</strong><span>집계 기간</span></div>
     <div class="clan-record-metric">${svg('check')}<strong>24개</strong><span>완료 도전</span></div>
@@ -91,7 +100,7 @@
   const rankingSection=()=>`<section class="clan-section">${heading('공개 클랜 랭킹','clan-rank','전체 랭킹')}${rankings()}</section>`;
   const guestHero=()=>`<section class="clan-section clan-guest-hero"><div class="clan-guest-copy"><span class="clan-eyebrow">함께하는 퀘스트</span><h2>혼자 시작한 도전도<br>함께하면 더 재밌어</h2><p>친구들과 퀘스트를 실천하고<br>우리만의 기록을 만들어봐</p></div><div class="clan-guest-illustration" aria-hidden="true">${avatar('이모리',{size:'hero'})}${avatar('밤산책',{size:'hero'})}${avatar('다온',{size:'hero'})}</div><div class="clan-guest-actions"><a href="#clan-create" class="clan-btn clan-btn-main">${svg('plus')} 클랜 만들기</a><a href="#clan-invite" class="clan-btn clan-btn-alt">초대로 참여</a></div></section>`;
   const guestHelp=()=>`<section class="clan-section">${heading('클랜에서 함께하는 것')}<div class="clan-guest-benefits"><span>${svg('users')}<strong>함께 도전</strong></span><span>${svg('heart')}<strong>서로 응원</strong></span><span>${svg('gift')}<strong>공동 보상</strong></span></div></section>`;
-  const root=()=>`<div class="clan-layout clan-root">${draft.joined?identity()+rewardSection()+feedSection()+discoverSection():guestHero()+discoverSection()+rankingSection()+guestHelp()}<div class="clan-mock-note">표시된 활동·수치·보상은 디자인 확인용 예시입니다</div></div>`;
+  const root=()=>`<div class="clan-layout clan-root">${draft.joined?identity()+rewardSection()+socialSection()+feedSection()+discoverSection():guestHero()+discoverSection()+rankingSection()+guestHelp()}<div class="clan-mock-note">표시된 활동·수치·보상은 디자인 확인용 예시입니다</div></div>`;
   const inner=(h,body,action='')=>`<div class="clan-layout clan-inner"><section class="clan-section clan-inner-panel"><h2 class="clan-inner-title">${h}</h2>${body}${action?`<div class="clan-inner-action">${action}</div>`:''}</section></div>`;
   const cta=(url,text,kind='alt')=>`<a href="#${url}" class="clan-btn clan-btn-${kind}">${text}${svg('chevron')}</a>`;
   const renderCreate=()=>{const colors=[['#E9EF77','연두'],['#F6A9B2','분홍'],['#9FC2F7','파랑'],['#A3E4CE','민트'],['#C9B5F4','보라']];return `<div class="clan-layout clan-inner"><section class="clan-section clan-create"><span class="clan-eyebrow">CREATE CLAN</span><h2>우리만의 클랜을 만들어봐</h2><p class="clan-helper">클랜의 깃발과 이름을 정해봐</p><div class="clan-create-preview">${emblem()}<div><strong data-clan-preview-name>${title()}</strong><small>클랜 프로필 미리보기</small></div></div><form id="clan-create-form"><fieldset class="clan-color-field"><legend>깃발 천 색상</legend><div class="clan-color-options">${colors.map(([c,l])=>`<button type="button" class="clan-color" data-clan-color="${c}" aria-pressed="${draft.flag===c}" aria-label="${l}" style="--swatch:${c}"><span></span></button>`).join('')}</div></fieldset><label class="clan-field"><span>클랜 이름 <em>필수</em></span><input id="clan-name" required minlength="2" maxlength="20" placeholder="이름을 입력해줘" value="${safe(draft.name)}"><small>2~20자</small></label><label class="clan-field"><span>한 줄 소개 <em>선택</em></span><textarea id="clan-about" rows="2" maxlength="80" placeholder="우리 클랜을 소개해봐">${safe(draft.about)}</textarea></label><p class="clan-form-hint">${svg('users')} 친구는 만든 뒤 초대해도 돼요</p><button type="submit" class="clan-btn clan-btn-main clan-submit">클랜 만들기${svg('chevron')}</button></form></section></div>`;};

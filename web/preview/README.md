@@ -102,3 +102,8 @@
 - 디자인/검증 자료: `docs/design/seed/CLAN_REFERENCE_AUDIT_2026-11-08.md`, `docs/superpowers/specs/...`.
 
 - 화면 검수 중 새로 놓인 Invite/Chat/Reward preview의 터치 영역을 최소 `3rem`으로 확대 (웹 320px 기본 root=16px에서 48px), 실제 필드/패널에서 키보드 및 모바일 눌림 검증 별도.
+
+
+### 2026-11-08 v7 visual hierarchy rebuild
+
+The joined clan root now follows identity → reward artwork & embedded progress → actual cosmetic item media → members and clan ranking → text social feed → discovery. Prior equal-weight action bars, duplicate reward headings and repeated member hero are removed. Existing 13 routes, v0.14 SVG and backend untouched. Production GitHub Pages rendering remains separately unverified.

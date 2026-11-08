@@ -80,3 +80,5 @@
 - `#main` 배경을 Header와 공유하되 `.clan-layout`은 기존 구획용 `--canvas` 간격을 유지해 Flat Section 사이의 경계가 사라지지 않게 함.
 - 정확한 색값은 [F-COLOR](../../docs/design/seed/foundations/color-surfaces.md)의 Web Preview trial. 기존 D-011 헤더 구성, C-BOTTOM SVG/경로, RootFontSize/레이아웃·보상/마스코트·기능 미변경.
 - 실제 Pages 모바일/라이트·다크 육안 검수는 미완료.
+
+- Light 하단 네비 선택 글자 대비 보정: `--nav-active: #DB3040`(공식 시드 브랜드색). Dark `--nav-active`는 기존 `--brand` 유지. 다른 브랜드 버튼 색 영향 없음.

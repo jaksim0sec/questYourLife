@@ -1,8 +1,8 @@
 @charset "utf-8";
 
-:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
 
-:root[data-theme="dark"] { color-scheme: dark; --canvas: #17181d; --surface: #242329; --shell-surface: #1d1d22; --nav-surface: #242329; --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
+:root[data-theme="dark"] { color-scheme: dark; --canvas: #17181d; --surface: #242329; --shell-surface: #1d1d22; --nav-surface: #242329; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
 /* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
 :root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -63,7 +63,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .nav-link .glyph, .nav-link svg { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
 
-.nav-link[aria-current] { color: var(--brand); font-weight: 850; }
+.nav-link[aria-current] { color: var(--nav-active); font-weight: 850; }
 
 #sheet { position: fixed; inset: auto 0px 0px; margin: 0px auto; width: min(100%, 42rem); max-width: none; min-height: min(185px, 40dvh); padding: 0 0 var(--safe); border: 0px; border-radius: 1.5rem 1.5rem 0px 0px; background: var(--surface); color: var(--text); }
 

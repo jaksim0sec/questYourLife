@@ -156,14 +156,16 @@
       "light": {
         "canvas": "#FCFBFA",
         "shell": "#F8F7F9",
-        "bottomNav": "#FFFFFF"
+        "bottomNav": "#FFFFFF",
+        "bottomNavActiveFg": "#DB3040"
       },
       "dark": {
         "canvas": "#17181D",
         "shell": "#1D1D22",
-        "bottomNav": "#242329"
+        "bottomNav": "#242329",
+        "bottomNavActiveFg": "#F45C68"
       },
-      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged."
+      "notes": "Keep general surface (#FFFFFF/#242329) for existing controls/cards/sheets. Bottom tabs and global header geometry, icon assets and scroll insets unchanged. Bottom Nav active label uses v0.15 approved brand red in light mode to preserve text contrast; dark retains the existing site active brand red."
     }
   },
   "space": {

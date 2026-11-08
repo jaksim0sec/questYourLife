@@ -14,9 +14,9 @@
 | P1-10 | 작성 | VALIDATION R-01~R-10 검출 경로 |
 | G-P1 T1 | 통과(경로검사) | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) R-01~R-10 10개 대응 경로 확인 |
 | G-P1 T2 | 차단 | 독립 신규 세션 재현 증거 없음. [Issue #8](https://github.com/jaksim0sec/questYourLife/issues/8)에 별도 검수 과제 등록. 등록만으로 통과 불가 |
-| G-P1 T3 | 부분검증 | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) 단일 소유 경로 선언 확인. 다른 정본에 남은 규범 문장 중복 여부 의미 검토 미완료 |
-| G-P1 T4 | 부분검증 | [Actions 42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395) P1 178행의 담당 경로 존재 및 47절 커버리지 확인. **수치·반례 내용 반영 판정은 미완료** |
-| G-P1 | 차단 | T2 독립 재현 미실시 및 T3 규범 문장·T4 개별 입력의 의미 검토 미완료. P2 진입 금지 |
+| G-P1 T3 | 부분검증 | [Actions 42507430906](https://github.com/jaksim0sec/questYourLife/actions/runs/42507430906) 소유 경로 및 K10/K12/ARIA·C-STATUS 반복 교정 통과. 모든 관련 정본의 의미 중복은 추가 검토 필요 |
+| G-P1 T4 | 문서 추적 통과 | [Actions 42507430906](https://github.com/jaksim0sec/questYourLife/actions/runs/42507430906), [P1_TRACE](./P1_TRACE.md): P1 159행 각 원문/소유/처리 구분. 원문 585행·계획서 38행 보존. 실제 렌더는 P4 |
+| G-P1 | 차단 | T2 독립 신규 세션 재현 미실시, T3 전역 규범 문장 유일성 추가 검토 필요. T1 및 T4 문서 추적은 PASS. P2 진입 금지 |
 
 ## 실패/복귀
 

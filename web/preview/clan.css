@@ -179,7 +179,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-member-detail strong{font-size:.79rem}
 .clan-member-detail small{font-size:.7rem;color:var(--clan-muted)}
 .clan-public-detail-banner{min-height:8rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem}
-.clan-public-detail-banner>.clan-svg{width:3.8rem;height:3.8rem}
+.clan-public-detail-banner .clan-emblem{width:3.8rem;height:3.8rem}
 .clan-public-detail-banner strong{font-size:.85rem}
 .clan-public-line{display:flex;align-items:center;gap:.7rem;padding:.8rem 0;color:var(--clan-ink);border-bottom:1px solid var(--clan-stroke)}
 .clan-public-line>span:nth-child(2){display:grid;gap:.2rem;flex:1}
@@ -267,7 +267,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-content-tabs,.clan-category-tabs{display:flex;align-items:center;gap:1.25rem;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--clan-stroke);margin:.65rem -.12rem 1.05rem}
 .clan-content-tabs::-webkit-scrollbar,.clan-category-tabs::-webkit-scrollbar{display:none}
 .clan-content-tabs>a,.clan-category-tabs>button{background:none;border:0;border-bottom:2px solid transparent;min-height:3rem;display:flex;align-items:center;padding:.62rem .16rem;color:var(--clan-muted);white-space:nowrap;font-size:.79rem;font-weight:690}
-.clan-content-tabs>a[aria-current="page"],.clan-category-tabs>button[aria-selected="true"]{color:var(--clan-ink);border-bottom-color:var(--brand);font-weight:820}
+.clan-content-tabs>a[aria-current="page"],.clan-category-tabs>button[aria-pressed="true"]{color:var(--clan-ink);border-bottom-color:var(--brand);font-weight:820}
 .clan-category-tabs{margin-top:.7rem}
 .clan-discover-results{grid-auto-columns:minmax(10rem,48%);margin:0 0 1rem}
 .clan-my-copy{display:grid;gap:.3rem}.clan-my-copy>strong{font-size:1.02rem}.clan-my-copy p{color:var(--clan-muted);font-size:.73rem}
@@ -288,3 +288,13 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-record-section .clan-subheading{margin:1.4rem 0 .72rem}
 :root[data-theme="dark"] .clan-story-badge,:root[data-theme="dark"] .clan-status-badge{background:#0b5038;color:#76eabd}
 @media(max-width:359px){.clan-record-metrics{padding:.9rem .1rem}.clan-record-metric span{font-size:.58rem}.clan-cover-rail{grid-auto-columns:minmax(9rem,47%)}.clan-story-portraits{flex-basis:32%}}
+
+/* Persistent identity: every listed clan uses its fabric pennant, not a line-action icon. */
+.clan-cover-flag{position:absolute;right:.38rem;top:.28rem;z-index:4;display:block;filter:drop-shadow(0 1px 1px #0007)}
+.clan-cover-flag .clan-emblem{width:2.15rem;height:2.15rem}
+.clan-rank-icon .clan-emblem,.clan-public-line-icon .clan-emblem{width:2.35rem;height:2.35rem}
+.clan-rank-icon,.clan-public-line-icon{background:transparent;border-radius:0;width:2.5rem;height:2.5rem}
+.clan-record-identity{display:inline-flex;align-items:center;gap:.12rem}
+.clan-record-identity .clan-emblem{width:1.7rem;height:1.7rem;margin-right:.2rem}
+.clan-public-detail-banner>span:last-child{display:grid;gap:.2rem;max-width:65%}
+.clan-public-detail-banner small{font-size:.73rem;opacity:.85}

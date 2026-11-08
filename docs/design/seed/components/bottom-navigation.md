@@ -40,7 +40,7 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 
 ## v0.15 상태 정본
 
-별도 Fill을 제공하는 nav asset은 활성=Fill + 강조색 + 라벨, 비활성=Outline + 중립. SVG 출력 27dp, `viewBox=24`, 원본 획 1.8. 사용자의 승인된 Soft SVG 소스를 사용하되 **앱의 기존 클랜 탭 나침반 교체 금지**. 탭 목적지 및 특정 아이콘 매핑 결정은 O-003. Root/Detail 시 Bottom Nav 가시성과 Bottom CTA 충돌은 S-PAGE가 소유.
+별도 Fill을 제공하는 nav asset은 활성=Fill + 강조색 + 라벨, 비활성=Outline + 중립. SVG 출력 27dp, `viewBox=24`, 원본 획 1.8. 사용자의 승인된 Soft SVG 소스를 사용하되 **앱의 기존 클랜 탭 나침반 교체 금지**. 탭 목적지 및 특정 아이콘 매핑 결정은 O-003. **하단바 노출·비노출/활성 부모 탭 판정은 [4가지 페이지 유형](../pages/page-types.md)의 단일 소유**이고, 높이·Safe inset 및 Fixed CTA의 공간 계산만 [S-PAGE](../shells/page-shells.md)가 소유한다. Root/Detail은 상단 Shell 구조이지 바텀바 노출 정책이 아니다.
 
 ## 2026-11-07 클랜 시연 아이콘 보정
 

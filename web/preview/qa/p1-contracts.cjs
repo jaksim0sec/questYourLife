@@ -23,6 +23,15 @@ const roles=norms('components/text-hierarchy.md');const type=norms('foundations/
 for(const r of ['Display','Title','Section','Body','Caption'])assert.ok(roles.includes(r));
 assert.ok(type.includes('12px')&&type.includes('600 이하'));assert.ok(geo.includes('page.inset'));assert.ok(norms('pages/page-types.md').includes('논글로벌'));assert.ok(read('components/badge-progress.md').includes('10'));
 console.log('T3 structural PASS: roles/type/gutter/track have declared owner paths');
+const impl=read('implementation/v015.md'), topnav=fs.readFileSync(path.resolve(dir,'../TOP_NAVIGATION.md'),'utf8'),bottom=read('components/bottom-navigation.md'),prog=read('objects/progress.md'),status=read('components/badge-progress.md');
+assert.ok(!impl.includes('## K12 웹 작업자 간 고정 인터페이스'),'K12 must be history until P5');
+assert.ok(!topnav.includes('K10을 따른다'),'Top Navigation must not point at removed r1 K10');
+assert.ok(bottom.includes('[4가지 페이지 유형](../pages/page-types.md)'),'page type owner missing from bottom nav');
+assert.ok(!bottom.includes('Bottom Nav 가시성과 Bottom CTA 충돌은 S-PAGE가 소유'),'old bottom nav visibility owner remains');
+assert.ok(prog.includes('min(current,target)')&&prog.includes('aria-valuetext'),'over-goal ARIA contradiction not resolved');
+assert.ok(status.includes('now1000'),'C-STATUS over-goal bound lost');
+assert.ok(read('HISTORY.md').includes('K12 웹 작업자 간 고정 인터페이스'),'K12 history missing');
+console.log('T3 known conflict regression PASS: old K10/K12 and over-goal ARIA conflicts removed from active rules');
 const ledger=read('LEDGER.md');let coverage=0,p1=0,missing=[],stage={};
 for(const row of ledger.split('\n').filter(x=>/^\| L\d{4} \|/.test(x))){
  const a=row.split(' | ');const sec=a[1],owner=a[6],phase=a[7];

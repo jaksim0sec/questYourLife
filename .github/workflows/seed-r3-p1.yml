@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/seed-r3-p1.yml'
       - 'web/preview/qa/p1-contracts.cjs'
+      - 'docs/design/seed/**'
+      - 'docs/design/TOP_NAVIGATION.md'
 permissions: {contents: read}
 jobs:
   contracts:

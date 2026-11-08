@@ -20,7 +20,7 @@ references: [D-012, D-013]
 | Derived | %, 남은 양 등 파생 정보. 대표값보다 약하게 |
 | Action | 실제 상세가 있으면 Low 링크 1개 |
 
-`current/target` 데이터 하나에서 텍스트, fill 비율, 남은 양, `aria-valuemin/max/now`를 생성한다. fill은 `target>0 ? clamp(current/target,0,1) : loading/unavailable`이다. 목표 초과는 **실제 current**를 숨기지 않고 bar만 100% 제한하며 자동 지급 완료를 암시하지 않는다.
+`current/target` 데이터 하나에서 텍스트, fill 비율, 남은 양, `aria-valuemin/max/now` + `aria-valuetext`를 생성한다. fill은 `target>0 ? clamp(current/target,0,1) : loading/unavailable`이다. 목표 초과는 **실제 current**를 화면 글자와 `aria-valuetext`에 유지하지만, ARIA Progress의 `aria-valuenow`와 바는 `min(current,target)`으로 제한한다. `aria-valuemax=target`을 넘는 now값은 불허한다. 자동 지급 완료를 암시하지 않는다.
 
 **공용 트랙의 기본/마이크로/강조 두께는 C-STATUS만이 소유**한다. O-PROGRESS는 그 Variant를 선택하며 클랜 전용 트랙 두께 CSS 신설 금지. 내부 span을 `display:block;height:100%`로 실제 측정한다.
 

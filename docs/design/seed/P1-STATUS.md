@@ -34,3 +34,14 @@
 - 확인한 Head: `0ba610ab923173c75d4f96e3a82221928a7eaf9e`. `new`를 덮어쓰지 않고 `seed-r3` 전용 Draft PR [#9](https://github.com/jaksim0sec/questYourLife/pull/9) 생성.
 - P0 Chromium 전체 성공 [42503557364](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557364), P1 T1/소유·경로/커버리지 테스트 성공 [42503557395](https://github.com/jaksim0sec/questYourLife/actions/runs/42503557395).
 - 게이트 요구와 이미 통과한 자동검사의 수준을 구분함. 자동 성공 = T2/T3/T4 본질 판정 완료가 아님.
+
+## T3 실제 규범 충돌 발견과 국소 교정 · 2026-11-09
+
+| 확인한 실제 충돌 | 교정 | 영향 |
+|---|---|---|
+| D-013 r1을 강등했지만 승인 `implementation/v015.md`에 K12 history/focus 고정 인터페이스가 활성 계약으로 남음 | r1 블록 전체 HISTORY로 비파괴 이관, D-012 원 승인 표·수치는 유지 | P5 보류된 상태 API를 현재 의무로 오인하지 않게 함 |
+| `TOP_NAVIGATION.md`의 r1 K10 링크는 S-PAGE 개편 뒤 존재하지 않음 | r1 블록 HISTORY로, D-011 Root/Standard 본문 보존 | 깨진 규범 링크 제거 |
+| C-BOTTOM이 Root/Detail 여부에 따른 하단바 가시성을 S-PAGE에 위임 | `page-types` 단일 소유, S-PAGE는 safe/공간 계산으로 한정 | 기존 Android 미변경, P3 웹 수정 대기 |
+| O-PROGRESS의 초과 `aria-valuenow=current`와 C-STATUS의 `now=min(value,max)` 충돌 | Progress bar/aria-valuenow는 clamp, 실제 초과량은 화면 글자/aria-valuetext | 620/1000 P0 렌더 영향 없음, 1200/1000 실제 경계 검증은 P4 대기 |
+
+T3 자동화는 구체적 충돌의 재발 방지 검사까지 추가했지만, **새 CI 실행/전 범위 의미적 유일성 검토 전 전체 T3 통과를 주장하지 않는다**. T2는 여전히 외부 독립 세션 이슈 [#8](https://github.com/jaksim0sec/questYourLife/issues/8)에 차단.

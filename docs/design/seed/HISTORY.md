@@ -855,3 +855,90 @@ Prefix·Suffix가 바뀌는 정도는 variant로 처리한다. 새 조합이 독
 
 행 전체 이동과 독립 반응 버튼이 동시에 있으면 정적 부모 안에 형제 링크/버튼을 둔다. 행 하나에 4개 이상의 독립 조작을 배치하지 않는다. 부모·자식 반경은 같은 숫자를 기계적으로 반복하지 말고 내부 패딩과 맞는 경계를 선택한다.
 ````
+
+
+---
+
+### implementation/v015.md [K12 · r1 history only]
+
+````markdown
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## K12 웹 작업자 간 고정 인터페이스
+
+**정본 소유자:** `implementation/v015.md`의 개편 웹 어댑터 절. 아래 이름은 이번 작업부터 고정한다. TypeScript 표기는 기존 정적 JS 작업을 위한 문서 계약이며 새 빌드 체계를 뜻하지 않는다.
+
+### 표현 소유권
+
+| 소유자 | 구현 범위 | 계약 |
+|---|---|---|
+| A | style.css, app.js, index.html | 공통 CSS·Shell·이력·정적 기존 마크업의 연결 |
+| B | clan.js, clan.css | 클랜 데이터→마크업·지역 레이아웃·지역 이벤트 |
+| 리드 | 기존 docs 정본 | 역할·의미·규칙·값의 결정과 변경 영향 |
+| C | 독립 검수 fixture·결과 | 읽기/실행 검수. 제품 파일 동시 수정 금지 |
+
+B는 공통 클래스의 font-size/color/height/radius를 지역 선택자로 덮어쓰지 않는다. A는 클랜 이름·수치·아이템 정보 구조를 공통 CSS에 하드코딩하지 않는다. 독립 공통 runtime JS 모듈이나 전역 ItemCard API를 추가하지 않는다.
+
+### 공통 CSS/마크업
+
+| 표면 | 고정 이름/속성 | 책임 |
+|---|---|---|
+| 텍스트 | `.seed-text[data-text-role][data-text-style]` | role/style은 K03 표의 조합만 사용 |
+| 액션 | `.seed-action[data-variant][data-size]`, 내부 `.seed-action__face`, `__label`, `__icon` | size=small/default/large, variant는 K07. 타깃은 바깥 실제 링크/버튼, face는 내부 표시 |
+| 미디어 | `.seed-media[data-media-kind][data-media-state]`, 내부 `.seed-media__image`, `__fallback` | kind=item/thumbnail/scene, state=loading/loaded/error. 비율은 `--media-ratio`, fit은 `data-media-fit=contain/cover` |
+| Progress | `.progress-track[data-thickness][data-progress-state] > .progress-fill` | 기존 클래스 재사용. thickness=micro/default/featured, state=ready/loading. `--progress`는 0%–100%의 퍼센트 문자열 |
+| Progress 조회 불가 | 일반 텍스트 `.seed-text` | `.progress-track`과 range role을 생성하지 않음 |
+| 셸 | `--page-gutter`, `--page-max` | A만 설정. 헤더와 해당 본문이 공유 |
+
+기존 `.progress-track span` fill 규칙은 `.progress-fill`로 범위를 명확히 하되 기존 정적 마크업을 A가 함께 연결한다. `.clan-progress-track`은 호환용 레이아웃 이름만 남길 수 있고 fill의 기본 표시를 소유하지 않는다. `.gallery-button`은 원래 갤러리의 레이아웃 별칭으로 남길 수 있으나 실제 액션 표현은 `.seed-action`으로 연결한다. 선택 상태는 실제 ARIA와 K05에 따르고 단순 `is-active` 클래스만으로 만들지 않는다.
+
+data-text-role의 실제 속성값은 JSON과 같은 소문자 `display|title|section|body|caption`이며 data-text-style은 K03의 마지막 열을 그대로 사용한다. `--media-ratio`는 CSS aspect-ratio 형식이며 item은 기본 `1 / 1`, thumbnail/scene은 호출자가 해당 모음의 비율을 명시한다.
+
+### 클랜 내부 데이터 계약
+
+```ts
+type ProgressInput = {
+  label: string
+  value: number | null
+  max: number | null
+  state?: 'ready' | 'loading' | 'unavailable' // 기본 ready
+  freshness?: 'current' | 'stale'            // 기본 current
+  thickness?: 'micro' | 'default' | 'featured' // 기본 default
+  compact?: boolean                        // 기본 false, 메타 배치만 변경
+}
+// clan.js 내부 helper. HTML 텍스트/속성은 기존 safe()로 이스케이프한다.
+progress(input: ProgressInput): string
+
+type ClanViewState = {
+  myTab: 'members' | 'record' | 'activity'
+  clanFilter: 'all' | '공부' | '습관' | '운동'
+}
+// 기존 supports/render/previewMenu는 유지하고 아래 두 메서드만 추가한다.
+PreviewClan.captureViewState(): ClanViewState
+PreviewClan.restoreViewState(state: Partial<ClanViewState> | null): void
+```
+
+capture는 복사본을 반환한다. restore는 허용된 값만 반영하고 null·잘못된 값은 기존 유효 지역 상태를 유지한다. restore가 DOM·해시·스크롤·클랜명/소개/깃발/응원 상태를 변경하지 않는다. A는 render 전에 지역 상태를 복원하고 render 후 scroll을 복원한다.
+
+**B→A 통지:** 정상 사용자 조작으로 myTab/clanFilter가 실제로 바뀐 직후 B는 `document`에 이름이 `seed:clan-viewstate`인 Event를 dispatch한다. detail은 없다. A가 이 이벤트를 받아 captureViewState()로 현재 entry의 snapshot을 replaceState에 반영한다. restore는 이벤트를 발생시키지 않고 A도 캡처에 대한 변경 이벤트를 되보내지 않는다. A가 B의 클릭/키보드 구현 세부를 추적하거나 B가 history에 직접 쓰지 않는다.
+
+`history.state.seedPreview`는 A가 소유한다. 입력은 `entryId`, `route`, `parent`, `scrollY`, `focusKey: string|null`, `clan: ClanViewState|null`이다. 기존 다른 history.state 필드는 보존하고 entryId는 같은 history entry의 replaceState에서 유지한다. 같은 URL의 서로 다른 entry도 구분한다. 이탈 직전 캡처하고 복귀 시 해당 entry 상태를 사용한다. B가 직접 history.state에 쓰지 않는다.
+
+초기 로드와 새 해시 진입에서 entryId를 붙여도 같은 entry에 기존 상태가 있으면 유지한다. scroll과 지역 상태는 변경될 때 현재 entry에 replaceState로 함께 갱신한다. popstate 후에 방금 떠난 entry의 scroll을 쓸 수 있다고 가정하지 않는다. 뒤로가기에서 떠난 entry를 덮어쓰지 않고 도착 entry의 저장값을 읽는다. 기존 링크의 새 해시 이동을 처리하면서 pushState를 추가 호출하여 중복 이력을 만들지 않는다.
+
+**포커스 복원:** A는 focusin에서 현재 entry의 마지막 유효 focusKey를 저장한다. 기존 고유 id는 `id:<id>`, 그 밖의 조작은 `key:<data-focus-key>` 형식이다. A가 Shell 조작의 키를, B가 클랜 내 이동/탭/필터 조작의 안정적인 id 또는 data-focus-key를 유지하며 이름·문구·배열 인덱스로 키를 생성하지 않는다. 같은 페이지 안에서 중복 키를 허용하지 않는다. 복귀 순서는 지역 상태 복원 → render → 저장 타깃 focus({preventScroll:true}) → 저장 scrollY 복원이다. 타깃이 사라졌으면 현재 활성 탭, 그것도 없으면 main의 첫 heading을 임시 tabindex=-1로 포커스한다. 원래 위치로 복원하면 타깃이 가려지는 경우 타깃 접근 가능성을 우선해 최소 추가 스크롤한다. scrollY는 유한한0이상 값만 받고 실제 스크롤 범위로 제한한다. 사용자의 포커스를 초기화하는 전체 rerender 후에도 이 계약을 따른다.
+
+Progress compact는 더 얇은 별도 Progress가 아니다. 값·목표·label은 호출자가 명시한다. B는 내부 helper를 사용하고 A의 정적 홈 예제도 같은 마크업·수치 규칙을 따른다. 필수 label이 비었으면 개발/검수 오류로 판정하고 이름 없는 range를 노출하지 않는다.
+````
+
+---
+
+### design/TOP_NAVIGATION.md [r1 history only]
+
+````markdown
+> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
+
+## 공통 계약 r1의 웹 적용
+
+Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 역할·수치 매핑은 [C-TEXT](seed/components/text-hierarchy.md), 타깃·gutter·이력 계약은 [S-PAGE](seed/shells/page-shells.md)의 K10을 따른다. Glyph 박스와 실제 target의 중심을 맞추며 icon별 translateX로 액션 간격을 보정하지 않는다. 기존 다크 Shell은 웹 trial이며 헤더의 새 전역 색상 승인으로 기록하지 않는다.
+````

@@ -45,3 +45,8 @@
 | O-PROGRESS의 초과 `aria-valuenow=current`와 C-STATUS의 `now=min(value,max)` 충돌 | Progress bar/aria-valuenow는 clamp, 실제 초과량은 화면 글자/aria-valuetext | 620/1000 P0 렌더 영향 없음, 1200/1000 실제 경계 검증은 P4 대기 |
 
 T3 자동화는 구체적 충돌의 재발 방지 검사까지 추가했지만, **새 CI 실행/전 범위 의미적 유일성 검토 전 전체 T3 통과를 주장하지 않는다**. T2는 여전히 외부 독립 세션 이슈 [#8](https://github.com/jaksim0sec/questYourLife/issues/8)에 차단.
+
+## 실패/복귀 · P1 CI 규범 구역 형식 검사
+
+- [Actions 42506894025](https://github.com/jaksim0sec/questYourLife/actions/runs/42506894025) 실패: INDEX의 **현행 계약**에 넣은 승인 규격 링크의 표시 문자와 경로에 `v0.`가 있어 P1-1 '구 규칙 표기 0개' 검증 위반.
+- 원인: 규칙 자체 충돌이 아니라 표시 문자열/경로의 과거 버전 토큰이 현행 절에 포함된 형식 위반. 구현을 우회하지 않고 승인 규격 진입을 `implementation/v015.md`로 통일. 변경 후 CI 재실행 전 미통과 유지.

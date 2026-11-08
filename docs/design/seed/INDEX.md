@@ -52,7 +52,7 @@ references: [U-01, U-02, D-011]
 | C-RARITY | Item Rarity Surface | component | 등급별 은은한 미세 그라데이션 프레임 | [components/item-rarity-surface.md](components/item-rarity-surface.md) | F-COLOR, F-GEOMETRY, C-IMAGE, A-ART | proposed | U-05, S2-08 |
 | C-OVERLAY | Sheet·Dialog·Snackbar·Skeleton | component | 모달/피드백/빈 상태/로딩 | [components/overlay-feedback.md](components/overlay-feedback.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION, C-ACTION | proposed | REF-003, SRC-TDS-SYSTEM |
 
-**승인값 유지:** [D-012 web 시드 v0.15](implementation/v015.md) + [v0.15 tokens](implementation/v015-tokens.json) + [56종 원본 SVG](assets/icons/v0.14/README.md). K12는 HISTORY에만 기록되며 P5 이전 적용 금지.
+**승인값 유지:** [D-012 확정 웹 규격과 원본 SVG 진입](implementation/v015.md) + [승인 수치 JSON](implementation/v015-tokens.json). 보류된 이력·포커스 API는 HISTORY에만 기록되며 P5 이전 적용 금지.
 
 **원문 수치·반례 입력:** [LEDGER](LEDGER.md) · **이력:** [HISTORY](HISTORY.md). D-011/D-012와 SVG 56종, Android/경제·IA 미결을 문서 개정만으로 재승인하지 않는다.
 

@@ -42,5 +42,5 @@
 ### 4. Verification
 - [x] JavaScript compile and 13 clan render routes; static CSS vars and link targets.
 - [x] RED (old source failed 5 composition criteria), GREEN (new code passes requirements).
-- [ ] Actual 320/390/430px Light/Dark browser screenshots and visual inspection.
+- [ ] Actual 320/390/430px Light/Dark browser screenshots and visual inspection. A representative isolated layout fixture was run at three widths (0 horizontal overflow), but it is not the source site.
 - [ ] Physical device and Android end-to-end checks (outside web preview scope).

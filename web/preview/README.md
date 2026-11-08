@@ -100,3 +100,5 @@
 - 소식은 중복 참여 히어로 없이 Plain 행. S-PAGE 상단 구조/Bottom Nav/Avatar/56종 SVG/실제 기능/계정 유지.
 - Dark preview `#101115 → #16171B → #242329`로 간격·본문·하단 3단. Light 그대로, 승인된 D-012 토큰 그대로.
 - 디자인/검증 자료: `docs/design/seed/CLAN_REFERENCE_AUDIT_2026-11-08.md`, `docs/superpowers/specs/...`.
+
+- 화면 검수 중 새로 놓인 Invite/Chat/Reward preview의 터치 영역을 최소 `3rem`으로 확대 (웹 320px 기본 root=16px에서 48px), 실제 필드/패널에서 키보드 및 모바일 눌림 검증 별도.

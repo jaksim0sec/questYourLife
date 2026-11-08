@@ -34,14 +34,14 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-identity-copy{display:grid;gap:.17rem;flex:1}
 .clan-identity-copy strong{font-size:1.09rem;line-height:1.24;font-weight:780;letter-spacing:-.035em}
 .clan-identity-copy small{font-size:.7rem;font-weight:430;color:var(--clan-muted);line-height:1.35}
-.clan-inline-invite{display:inline-flex;align-items:center;justify-content:center;gap:.28rem;min-height:2.65rem;padding:.38rem .65rem;border:1px solid var(--clan-stroke);border-radius:.77rem;color:var(--clan-ink);font-size:.72rem;font-weight:690;white-space:nowrap}
+.clan-inline-invite{display:inline-flex;align-items:center;justify-content:center;gap:.28rem;min-height:3rem;padding:.38rem .65rem;border:1px solid var(--clan-stroke);border-radius:.77rem;color:var(--clan-ink);font-size:.72rem;font-weight:690;white-space:nowrap}
 .clan-inline-invite .clan-svg{width:.88rem;height:.88rem}
 .clan-community-row{display:flex;align-items:center;gap:.3rem;border-top:1px solid var(--clan-stroke);margin-top:.55rem}
 .clan-presence{display:flex;align-items:center;flex:1;gap:.42rem;padding:.6rem 0;min-height:3.3rem;color:inherit}
 .clan-presence-label{display:grid;gap:.18rem;flex:1}
 .clan-presence-label strong{font-size:.72rem;font-weight:680;line-height:1.3}
 .clan-presence-label small{font-size:.66rem;color:var(--clan-muted)}
-.clan-chat-action{flex:0 0 2.65rem;display:grid;place-items:center;min-height:2.65rem;border-radius:.8rem;background:var(--surface);color:var(--clan-ink)}
+.clan-chat-action{flex:0 0 3rem;display:grid;place-items:center;min-height:3rem;border-radius:.8rem;background:var(--surface);color:var(--clan-ink)}
 .clan-chat-action .clan-svg{width:1.13rem;height:1.13rem}
 .clan-root .clan-reward-section{border-top:1px solid var(--clan-stroke);padding-top:.9rem}
 .clan-root .clan-feed-section,.clan-root .clan-discover-section{margin-top:.48rem}
@@ -54,7 +54,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-reward-kicker .clan-svg{width:.78rem;height:.78rem}
 .clan-reward-hero-copy>h2{font-size:1.37rem;line-height:1.2;font-weight:810;letter-spacing:-.04em;margin:.13rem 0}
 .clan-reward-hero-copy>p{font-size:.69rem;line-height:1.4;color:#eddec9;font-weight:430}
-.clan-reward-cta{display:inline-flex;align-items:center;gap:.22rem;border-radius:.7rem;background:#fff2;color:#fff;font-weight:670;font-size:.71rem;padding:.54rem .65rem;margin-top:.34rem;min-height:2.55rem;border:1px solid #fff4}
+.clan-reward-cta{display:inline-flex;align-items:center;gap:.22rem;border-radius:.7rem;background:#fff2;color:#fff;font-weight:670;font-size:.71rem;padding:.54rem .65rem;margin-top:.34rem;min-height:3rem;border:1px solid #fff4}
 .clan-reward-cta .clan-svg{width:.82rem;height:.82rem}
 .clan-chest-frame{width:52%;height:11.45rem;position:absolute;right:-.7rem;bottom:-.43rem;z-index:1;display:grid;place-items:center}
 .clan-chest-img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 9px 12px #2b191c88)}
@@ -233,7 +233,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 .clan-preview-choices button{border:0;border-radius:999px;background:transparent;color:var(--clan-muted);min-height:3rem;padding:.6rem .7rem;font-size:.75rem;font-weight:710}
 .clan-preview-choices button[aria-pressed="true"]{background:var(--clan-surface);color:var(--clan-ink);box-shadow:0 1px 3px #00000018}
 .clan-layout button:focus-visible,.clan-layout a:focus-visible,.clan-preview-choices button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}.clan-field input:focus-visible,.clan-field textarea:focus-visible{outline:0;border-color:var(--brand);box-shadow:none}
-@media(max-width:360px){.clan-profile-line{gap:.26rem}.clan-top-section .clan-emblem{width:2.85rem;height:2.85rem}.clan-inline-invite{padding-inline:.44rem;font-size:.66rem}.clan-identity-copy strong{font-size:1.02rem}.clan-avatar-stack{width:2.02rem;height:2.02rem}.clan-presence{gap:.2rem}.clan-presence-label strong{font-size:.65rem}.clan-chat-action{flex-basis:2.45rem;min-height:2.45rem}.clan-reward-hero-copy{width:59%}.clan-reward-hero-copy>h2{font-size:1.22rem}.clan-chest-frame{width:49%}.clan-cover-caption small{font-size:.62rem}.clan-guest-copy h2{font-size:1.15rem}.clan-guest-illustration{right:-.5rem}}
+@media(max-width:360px){.clan-profile-line{gap:.26rem}.clan-top-section .clan-emblem{width:2.85rem;height:2.85rem}.clan-inline-invite{padding-inline:.44rem;font-size:.66rem}.clan-identity-copy strong{font-size:1.02rem}.clan-avatar-stack{width:2.02rem;height:2.02rem}.clan-presence{gap:.2rem}.clan-presence-label strong{font-size:.65rem}.clan-chat-action{flex-basis:3rem;min-height:3rem}.clan-reward-hero-copy{width:59%}.clan-reward-hero-copy>h2{font-size:1.22rem}.clan-chest-frame{width:49%}.clan-cover-caption small{font-size:.62rem}.clan-guest-copy h2{font-size:1.15rem}.clan-guest-illustration{right:-.5rem}}
 @media(min-width:48rem){.clan-layout{gap:.72rem;padding-top:.8rem}.clan-section{border-radius:1rem;padding:1.35rem 1.5rem}.clan-guest-hero{padding:1.7rem 1.5rem}.clan-cover-art{height:9rem}}
 @media(prefers-reduced-motion:no-preference){.clan-btn,.clan-cover-art,.clan-reward-cta{transition:filter .15s ease,transform .15s ease}.clan-btn:active,.clan-reward-cta:active{transform:scale(.99)}}
 

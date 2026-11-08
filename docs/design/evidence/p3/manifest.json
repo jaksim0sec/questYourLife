@@ -2,7 +2,7 @@
   "status": "passed",
   "sourceBranch": "seed-r3-p2p3",
   "baselineSha": "3e59cdac4594a552aaa6bf903a7935ef71eebf21",
-  "capturedAt": "2026-11-08T23:54:52.311Z",
+  "capturedAt": "2026-11-08T23:59:08.160Z",
   "captureCount": 40,
   "dressingCount": 2,
   "matrix": [
@@ -29,8 +29,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 476.953125,
-      "recordBottom": 260.234375,
+      "firstFeedBottom": 457.359375,
+      "recordBottom": 240.640625,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -57,8 +57,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 476.953125,
-      "recordBottom": 260.234375,
+      "firstFeedBottom": 457.359375,
+      "recordBottom": 240.640625,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -85,8 +85,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 493.859375,
-      "recordBottom": 271.609375,
+      "firstFeedBottom": 473.578125,
+      "recordBottom": 251.328125,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -113,8 +113,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 493.859375,
-      "recordBottom": 271.609375,
+      "firstFeedBottom": 473.578125,
+      "recordBottom": 251.328125,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -141,8 +141,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 504.96875,
-      "recordBottom": 278.65625,
+      "firstFeedBottom": 484.15625,
+      "recordBottom": 257.84375,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -169,8 +169,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 504.96875,
-      "recordBottom": 278.65625,
+      "firstFeedBottom": 484.15625,
+      "recordBottom": 257.84375,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -197,8 +197,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 522.875,
-      "recordBottom": 288,
+      "firstFeedBottom": 501.375,
+      "recordBottom": 266.5,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -225,8 +225,8 @@
           "text": "620 / 1,000"
         }
       ],
-      "firstFeedBottom": 522.875,
-      "recordBottom": 288,
+      "firstFeedBottom": 501.375,
+      "recordBottom": 266.5,
       "sixCount": 1,
       "loadedImages": 6
     },
@@ -241,7 +241,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12,
-      "targetMinWidth": 67.171875,
+      "targetMinWidth": 48,
       "targetMinHeight": 48,
       "progress": [],
       "firstFeedBottom": null,
@@ -260,7 +260,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12,
-      "targetMinWidth": 67.171875,
+      "targetMinWidth": 48,
       "targetMinHeight": 48,
       "progress": [],
       "firstFeedBottom": null,
@@ -279,7 +279,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12.426,
-      "targetMinWidth": 67.84375,
+      "targetMinWidth": 49.703125,
       "targetMinHeight": 49.703125,
       "progress": [],
       "firstFeedBottom": null,
@@ -298,7 +298,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12.426,
-      "targetMinWidth": 67.84375,
+      "targetMinWidth": 49.703125,
       "targetMinHeight": 49.703125,
       "progress": [],
       "firstFeedBottom": null,
@@ -317,7 +317,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12.7477,
-      "targetMinWidth": 72.375,
+      "targetMinWidth": 50.984375,
       "targetMinHeight": 50.984375,
       "progress": [],
       "firstFeedBottom": null,
@@ -336,7 +336,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 12.7477,
-      "targetMinWidth": 72.375,
+      "targetMinWidth": 50.984375,
       "targetMinHeight": 50.984375,
       "progress": [],
       "firstFeedBottom": null,
@@ -355,7 +355,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 13.1768,
-      "targetMinWidth": 73.03125,
+      "targetMinWidth": 52.703125,
       "targetMinHeight": 52.703125,
       "progress": [],
       "firstFeedBottom": null,
@@ -374,7 +374,7 @@
       "nav": "#clan",
       "layer": "global",
       "fontsMin": 13.1768,
-      "targetMinWidth": 73.03125,
+      "targetMinWidth": 52.703125,
       "targetMinHeight": 52.703125,
       "progress": [],
       "firstFeedBottom": null,
@@ -545,8 +545,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 48,
+      "targetMinHeight": 48,
       "progress": [
         {
           "width": 288,
@@ -573,8 +573,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 48,
+      "targetMinHeight": 48,
       "progress": [
         {
           "width": 288,
@@ -601,8 +601,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.426,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 49.703125,
+      "targetMinHeight": 49.703125,
       "progress": [
         {
           "width": 326.875,
@@ -629,8 +629,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.426,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 49.703125,
+      "targetMinHeight": 49.703125,
       "progress": [
         {
           "width": 326.875,
@@ -657,8 +657,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.7477,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 50.984375,
+      "targetMinHeight": 50.984375,
       "progress": [
         {
           "width": 356.03125,
@@ -685,8 +685,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.7477,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 50.984375,
+      "targetMinHeight": 50.984375,
       "progress": [
         {
           "width": 356.03125,
@@ -713,8 +713,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 13.1768,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 52.703125,
+      "targetMinHeight": 52.703125,
       "progress": [
         {
           "width": 394.875,
@@ -741,8 +741,8 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 13.1768,
-      "targetMinWidth": null,
-      "targetMinHeight": null,
+      "targetMinWidth": 52.703125,
+      "targetMinHeight": 52.703125,
       "progress": [
         {
           "width": 394.875,
@@ -769,7 +769,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12,
-      "targetMinWidth": 67.171875,
+      "targetMinWidth": 48,
       "targetMinHeight": 48,
       "progress": [
         {
@@ -797,7 +797,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12,
-      "targetMinWidth": 67.171875,
+      "targetMinWidth": 48,
       "targetMinHeight": 48,
       "progress": [
         {
@@ -825,7 +825,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.426,
-      "targetMinWidth": 67.84375,
+      "targetMinWidth": 49.703125,
       "targetMinHeight": 49.703125,
       "progress": [
         {
@@ -853,7 +853,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.426,
-      "targetMinWidth": 67.84375,
+      "targetMinWidth": 49.703125,
       "targetMinHeight": 49.703125,
       "progress": [
         {
@@ -881,7 +881,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.7477,
-      "targetMinWidth": 72.375,
+      "targetMinWidth": 50.984375,
       "targetMinHeight": 50.984375,
       "progress": [
         {
@@ -909,7 +909,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 12.7477,
-      "targetMinWidth": 72.375,
+      "targetMinWidth": 50.984375,
       "targetMinHeight": 50.984375,
       "progress": [
         {
@@ -937,7 +937,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 13.1768,
-      "targetMinWidth": 73.03125,
+      "targetMinWidth": 52.703125,
       "targetMinHeight": 52.703125,
       "progress": [
         {
@@ -965,7 +965,7 @@
       "nav": "#clan",
       "layer": "global-inner",
       "fontsMin": 13.1768,
-      "targetMinWidth": 73.03125,
+      "targetMinWidth": 52.703125,
       "targetMinHeight": 52.703125,
       "progress": [
         {

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>꾸미기 Fixture · SEED r3</title>
+<link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../clan.css">
+<style>
+body{margin:0;background:var(--canvas);color:var(--text)}
+.dress-shell{padding:1rem var(--page-inset) 3rem;max-width:44rem;margin:auto}.dress-shell *{box-sizing:border-box}
+.dress-header{display:flex;align-items:center;gap:.65rem;min-height:4rem;border-bottom:1px solid var(--line)}
+.dress-header h1{font-size:1.15rem;font-weight:700;margin:0}
+.dress-header a{min-width:3rem;min-height:3rem;display:grid;place-items:center;color:var(--text);text-decoration:none;font-size:.875rem}
+.dress-description{font-size:.875rem;line-height:1.5;color:var(--sub);margin:1rem 0}
+.dress-contexts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.dress-context{display:grid;align-content:start;gap:.55rem;background:var(--shell-surface);border-radius:1rem;padding:.75rem;min-width:0}
+.dress-context h2{font-size:.875rem;font-weight:700;margin:0}.dress-context small{font-size:.75rem;color:var(--sub);line-height:1.5}
+.dress-media{aspect-ratio:1;min-width:0;display:grid;place-items:center;border-radius:.8rem;background:var(--surface);overflow:hidden}
+.dress-media img{width:78%;height:78%;object-fit:contain}.dress-context strong{font-size:1rem;font-weight:700}
+.dress-state{font-size:.75rem;font-weight:600;color:var(--text)}
+.dress-nonaction{display:flex;align-items:center;justify-content:center;border:1px solid var(--line);min-height:3rem;border-radius:.65rem;color:var(--sub);font-size:.75rem}
+.dress-context [disabled]{opacity:.65;cursor:not-allowed}
+.dress-note{font-size:.75rem;color:var(--sub);line-height:1.5}
+@media(max-width:350px){.dress-contexts{gap:.4rem}.dress-context{padding:.5rem}}
+</style>
+</head>
+<body data-layer="non-global"><main class="dress-shell">
+<header class="dress-header"><a href="../index.html#clan-reward" aria-label="꾸미기 시연 닫기">닫기</a><h1>블루 캡 · 맥락 검증</h1></header>
+<p class="dress-description">같은 이미지라도 O-ITEM의 필수 슬롯과 행동은 과업에 따라 달라진다. 구매·장착·지급 기능이 없는 시연입니다.</p>
+<section class="dress-contexts" aria-label="O-ITEM 맥락 비교">
+<article class="dress-context" data-context="reward-preview"><h2>공동 보상 미리보기</h2>
+<div class="dress-media"><img src="../assets/cosmetic_blue_cap.png" alt=""></div>
+<strong>블루 캡</strong><span class="dress-state">획득 예정</span><small>공동 목표 달성 시 예정 · 지급 조건 미확정</small>
+<div class="dress-nonaction" role="note">미리보기 · 조작 없음</div></article>
+<article class="dress-context" data-context="wardrobe"><h2>보관함·꾸미기 예시</h2>
+<div class="dress-media"><img src="../assets/cosmetic_blue_cap.png" alt=""></div>
+<strong>블루 캡</strong><span class="dress-state">보유 · 장착 중 (가상 상태)</span><small>현재 착용 상태를 별도 슬롯에 표현</small>
+<button type="button" class="dress-nonaction" disabled aria-label="장착 해제, 시연 전용 비활성">장착 해제 · 비기능</button></article>
+</section><p class="dress-note">이 페이지는 QA Fixture이며 앱 라우트/보유 데이터/상점 가격/실제 장착을 추가하지 않습니다.</p>
+</main></body></html>

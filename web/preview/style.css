@@ -53,11 +53,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .nav-inner { display: grid; grid-template-columns: repeat(5, 1fr); min-height: calc(3.9525rem); }
 
-.nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 700; }
+.nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: .75rem; color: var(--sub); font-weight: 600; }
 
 .nav-link .glyph, .nav-link svg { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
 
-.nav-link[aria-current] { color: var(--nav-active); font-weight: 850; }
+.nav-link[aria-current] { color: var(--nav-active); font-weight: 600; }
 
 #sheet { position: fixed; inset: auto 0px 0px; margin: 0px auto; width: min(100%, 42rem); max-width: none; min-height: min(185px, 40dvh); padding: 0 0 var(--safe); border: 0px; border-radius: 1.5rem 1.5rem 0px 0px; background: var(--surface); color: var(--text); }
 

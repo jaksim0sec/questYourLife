@@ -45,6 +45,7 @@
     'book/move': ['10분 운동 루틴', 'quests', 'global-inner'],
     'book/sleep': ['7일 수면 리셋', 'quests', 'global-inner']
   };
+  const initialRoute = decodeURIComponent(location.hash.slice(1) || 'home');
   let previousPage = 'home';
   let currentPage = 'home';
 
@@ -159,7 +160,10 @@
     if (trigger.hasAttribute('data-go')) location.hash = '#'+trigger.dataset.go;
     if (trigger.hasAttribute('data-sheet')) showSheet(trigger.dataset.sheet);
     if (trigger.hasAttribute('data-close') && sheet.open) sheet.close();
-    if (trigger.hasAttribute('data-back')) location.hash = '#'+(previousPage !== currentPage ? previousPage : 'home');
+    if (trigger.hasAttribute('data-back')) {
+      const directClanDeepLink = initialRoute === currentPage && currentPage.startsWith('clan-') && previousPage === 'home';
+      location.hash = '#'+(directClanDeepLink ? 'clan' : (previousPage !== currentPage ? previousPage : 'home'));
+    }
     if (trigger.hasAttribute('data-theme-switch')) {
       const theme = trigger.dataset.themeSwitch;
       document.documentElement.dataset.theme = theme;

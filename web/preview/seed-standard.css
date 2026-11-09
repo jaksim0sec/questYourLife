@@ -1,16 +1,4 @@
 @charset "utf-8";
-/* Shared SEED web tokens. Values are aliases of existing preview variables; no palette changes. */
-:root {
-  --seed-canvas: var(--canvas);
-  --seed-surface: var(--surface);
-  --seed-border: var(--line);
-  --seed-foreground: var(--text);
-  --seed-muted: var(--sub);
-  --seed-brand: var(--brand);
-  --seed-reward: var(--reward);
-  --seed-on-reward: var(--on-reward);
-}
-
 /* Original preview foundation, font, header and actions; values unchanged. */
 :root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
 

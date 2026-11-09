@@ -9,13 +9,54 @@ references: [REF-005, REF-006, REF-007, SRC-SEED-BUTTON, SRC-TDS-BUTTON]
 
 # Action Button family
 
-## Purpose / Non-goals
+## 현행 계약
+
+행동 의미→강조→Variant→크기 순서로 결정한다. 기존 D-012 **표시 높이 34/43/48px, 실제 타깃 최소 48×48px, radius 16**을 유지한다. 버튼은 동작, 링크는 이동이며 상태 정보는 C-STATUS다. 그룹의 행동 책임은 [P-ACTIONS](../patterns/action-layout.md)가 소유한다.
+
+### Selection
+
+| 행동 역할 | 허용 Variant | 배제 후보 |
+|---|---|---|
+| 화면을 완결하는 단일 대표 실행 | brand-solid High 또는 중립 확정 neutral-solid High | 모든 행동을 brand-solid로 승격 |
+| 일반 보조 실행·초대 | neutral-weak Medium | 중요하지 않은 High |
+| 부가 보기·자세히·미루기 | neutral-outline / ghost Low | 별도 검정 알약 |
+| 실제 보상 수령·보관 | reward-secondary Medium (수령이 유일한 주행동일 때만 High 후보) | 일반 목록까지 Gold CTA |
+| 실제 파괴적 동작 | critical + 결과 설명 | 단순 건너뛰기를 위험 처리 |
+| 상단 단독 SVG | C-ICON | C-ACTION label 없는 임의 구현 |
+| 독립 선택·필터 | C-SELECTION / C-RADIO | 지속 체크를 Action loading으로 구현 |
+
+**화면 대표 High CTA는 기본 1개.** 클랜 홈처럼 대표 행동이 행별 응원인 경우 **High CTA 0개**도 적절하다. 기존 지역 클래스 `.clan-more`, `.clan-reward-cta` 등은 P3에서 역할 기반 Variant로 연결할 후보이며 **P2에서 기존 동작을 제거하지 않는다**.
+
+### Don't
+
+1. 11.6px/710 CTA를 색상만 진하게 해 주행동처럼 보이게 하는 사례. F-TYPE 12px 하한·14px 미만 weight≤600 위반.
+2. 동일 보상 상세 목적지에 큰 버튼과 텍스트 링크를 함께 두는 사례(R-05). 주연 링크 1개로 통합해야 한다.
+3. 화면 구역마다 무관한 Brand Solid를 반복하거나 loading 중 버튼 폭·label 중심이 이동하는 사례.
+
+### Relations
+
+- **부모:** Page의 대표 Action 영역, C-LIST의 단일 suffix, C-SHEET Footer, C-OVERLAY Dialog 행동 영역.
+- **자식:** Label + optional C-SVG 아이콘 한 묶음 + 로딩 indicator. 독립적인 링크/버튼을 자식으로 넣지 않는다.
+- **형제:** P-ACTIONS의 High + Medium/Low, 같은 그룹에서 높이/기준선 통일. 두 개가 실제 대등한 경우만 50:50.
+- **금지:** Interactive Surface나 O-ITEM 대표 링크 내부 button 중첩; C-STATUS와 외형만 같은 비클릭 버튼.
+
+### Verification
+
+- 표시 높이 34/43/48px, 실제 조작 48×48px 이상, 버튼 간 타깃 비중첩을 분리 측정한다.
+- Pressed/Loading 전후 outer rect·label center 이동 ≤1px, Disabled/Busy 의미·재실행 차단, icon name 및 keyboard 실행.
+- 320/390/430×light/dark와 200% 텍스트에서 라벨 잘림, 골드 대비·중복 High·동일 목적지 중복 링크 검사.
+
+## 이력
+
+- P2 이전 정본 전문은 이 아래에 보존. 구 승인값의 권위는 [D-012](../implementation/v015.md)·[토큰](../implementation/v015-tokens.json)으로 판정하며, 이 아래의 옛 제안·K/r1 문단은 새 현행 규칙이 아니다.
+
+#### Purpose / Non-goals
 명시적 행동을 실행한다. 선택·탐색 탭·단순 상태 배지는 버튼 variant가 아니다. 다른 페이지로 이동하는 링크는 플랫폼의 link 의미를 유지한다. HTML 태그나 라이브러리 설치는 이 문서의 구현 지시가 아니다.
 
-## Anatomy
+#### Anatomy
 Container + Label + 선택적 Prefix 또는 Suffix + Loading indicator. 아이콘은 의미를 돕는 하나만 기본으로 사용한다. 장식 배지·코인·카운터를 모두 버튼에 밀어 넣지 않는다. Icon Button의 독립 size/target·Badge·상단 규칙은 [C-ICON](icon-button.md)을 따른다. Text Button은 배경 면 없이 같은 행동 의미와 터치 기준을 유지한다.
 
-## Properties / Variants
+#### Properties / Variants
 role(action/iconAction/textAction/link), emphasis(high/medium/low), tone(neutral/brand/critical), treatment(solid/weak/outline/ghost), size(small/medium/large), width(hug/fill)을 별개 축으로 본다. 모든 조합을 만들지 않고 아래를 기본 허용 조합으로 제한한다.
 
 | 이름·별칭 | Emphasis | Tone / Treatment | 배경 / 전경 토큰 | 사용 |
@@ -34,21 +75,21 @@ Critical solid의 전경은 해당 테마 bg.surface를 사용하며 대비 검�
 
 SEED 현행 문서에는 Brand Weak가 기본 variant로 나열되지 않는다. 이 시드는 사용자 REF-006 제안 및 TDS weak의 구조를 참고한 별도 후보이며 SEED를 그대로 구현했다고 주장하지 않는다. Brand Solid와 Neutral Solid 모두 High가 될 수 있다.
 
-## Size & Tokens
+#### Size & Tokens
 높이·padding은 F-GEOMETRY의 size.action* 및 action.padding* 정본, label은 F-TYPE의 type.button/buttonCompact, radius는 radius.control을 쓴다. Small label은 buttonCompact와 size.iconButtonCompact, Medium/Large는 button과 size.iconButtonContent를 사용한다. 아이콘을 강조하려고 label보다 과대하게 키우지 않는다. Icon Button은 [C-ICON](icon-button.md) 정본을 따르며 상단은 D-011 우선이다.
 
 사용자 후속 피드백 U-04에 따라 Container의 높이·좌우 padding·최소 터치 영역은 유지하고 글자·아이콘을 소폭 축소한다. 줄높이 감소분은 상하 padding으로 돌려 버튼 내부의 숨 쉴 공간을 늘린다. 단독 Icon Button·상단·본문 아이콘의 크기는 함께 축소하지 않는다.
 
 너비는 내용과 맥락에 따라 hug/fill, 내부 정렬은 중앙이다. glyph와 label의 광학 중심을 맞춘다. 로딩·아이콘 유무·tone 변경으로 버튼 외곽을 바꾸지 않는다.
 
-## v0.6 내부 콘텐츠 튕김 방지
+#### v0.6 내부 콘텐츠 튕김 방지
 - Label/Prefix/Suffix는 가운데로 정렬된 **하나의 그룹**. Button inline icon 16–18dp, gap 6–8dp, 24 viewBox 기반 C-SVG glyph 사용.
 - Pressed 시 scale/font-weight/letter-spacing/padding/border-width를 바꾸지 않는다. 색상/opacity만 전환한다.
 - Loading 시 Label의 너비와 중심 좌표를 유지하고 spinner만 position overlay; Icon slot 너비도 보존. Disabled 시 text+icon의 상대 위치 유지.
 - 상태 전환 전후 동일 크기 버튼의 outer rect와 label center 이동은 1px 이하를 QA 기준으로 삼는다. 200% font scale에 의한 의도적 reflow는 예외. 선택 의미는 C-SELECTION.
 - Button+SVG 조합의 자세한 Anatomy는 [P-BTN-ICON](../patterns/button-icon-layout.md).
 
-## States / Behavior
+#### States / Behavior
 | 상태 | 표현·동작 |
 |---|---|
 | Enabled | 역할별 기본 토큰, 명확한 동사 라벨 |
@@ -61,20 +102,20 @@ SEED 현행 문서에는 Brand Weak가 기본 variant로 나열되지 않는다.
 
 선택은 일반 실행 버튼의 지속 상태가 아니다. 토글 동작은 C-SELECTION을 사용한다. loading은 disabled와 동일한 의미가 아니며 스크린리더에 진행 중을 알린다.
 
-## Guidelines
+#### Guidelines
 High는 한 행동 영역에서 하나를 기본으로 한다. 화면의 대표 CTA가 여러 지역 High와 경쟁하는지도 확인한다. 의미 없는 전체 너비, 맥락 없는 비대칭/대칭 강제, 모든 액션의 붉은 Solid, 버튼마다 다른 둥글기·그라데이션·선물 아이콘 확대를 금한다. 버튼 조합은 P-ACTIONS를 읽는다.
 
-## Accessibility
+#### Accessibility
 텍스트 대비·48 최소 조작 영역은 Foundation을 따른다. Icon Button 이름은 동작을 설명한다. 긴 한글·200% 글자에서 padding 유지, 높이 확장 또는 그룹 재배치. loading/busy·disabled를 색만으로 알리지 않는다. 키보드 실행·포커스 이동은 의미에 맞춘다.
 
-## Evidence & Confidence
+#### Evidence & Confidence
 REF-006은 제안, REF-007은 실앱 한 화면 관찰 medium. REF-005는 명시 교정 근거 high. 상태·수치·조합 API는 proposed이며 원본 화면에서 직접 관찰했다고 쓰지 않는다.
 
-## Dependencies & Impact
+#### Dependencies & Impact
 Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 suffix, 고정 하단 CTA에 영향을 준다. 이름이 다른 기능별 버튼을 별도 컴포넌트로 만들지 않는다.
 
 
-## v0.15 Outline / Reward CTA 우선 규칙 (D-012)
+#### v0.15 Outline / Reward CTA 우선 규칙 (D-012)
 
 - `Outline` 기본은 **Neutral Foreground + Neutral Border**. Brand Red를 자동 상속하지 않는다. `Brand Weak`는 명시적 보조색 액션이고 `Brand Outline`은 별도 이름을 사용할 때만 허용; 기본 Outline과 혼동하지 않는다.
 - Secondary Gold CTA: Light `#FFCC4D` + dark `#352713` label/icon, **Dark `#957027` + white label/icon**. 단독 카드/배경에 노랑 CTA 톤을 전파하지 않는다.
@@ -83,7 +124,7 @@ Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 
 
 > **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
 
-## K07 액션과 클릭 책임
+#### K07 액션과 클릭 책임
 
 **정본 소유자:** `components/action-button.md`, 그룹 관계는 `patterns/action-layout.md`.
 

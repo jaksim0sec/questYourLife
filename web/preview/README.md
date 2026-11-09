@@ -3,9 +3,17 @@
 원본: 2026-11-06 사용자가 제공한 MHTML 2개 (`#home`, `#explore`).
 
 - `index.html`: 홈 저장 DOM·inline SVG와 원본 퀘스트북 탐색의 Standard 헤더
-- `style.css`: MHTML 공통 CSS 기반, 원본 :root 유지 + 의미색 실험 규칙 후행 추가
+- `seed-standard.css`: 기존 MHTML/시연의 실제 색상·글자·Header/Nav/Sheet·공통 버튼/미디어/배지/Progress/SVG 스타일을 수치 변경 없이 분리한 표준 스타일시트
+- `style.css`: 페이지별 배치·미디어 변형·특정 시연 표현. 기존 수치·비율은 그대로 보존
 - `assets/mascot.png`, `assets/box.webp`: 홈 MHTML에서 실제 추출한 바이너리
 - `app.js`: 의도된 시연 수준의 hash 라우팅과 테마 전환 및 빈 메뉴/알림 시트
+
+## 표준 스타일시트 웹 적용 · 2026-11-10
+
+- 모든 화면이 공통으로 쓰는 토큰/기본 UI 스타일은 `seed-standard.css`에 두고, 페이지별 공간 구성은 `style.css`/`clan.css`가 담당한다.
+- 기존 페이지 DOM은 같은 내용과 URL을 유지하며 `seed-action`, `seed-media`, `seed-badge`, `seed-progress-track`, `seed-text` 클래스를 기존 클래스와 병용해 연결했다.
+- **원래 비율과 수치 유지:** 갤러리 열 비중, 이미지 정사각 비율, CSS 팔레트 및 샘플 수치는 조정하지 않았다. 정식 v0.15와 미리보기 간 차이를 자동 정리하지 않는다.
+- **구현 한계:** 기존 클랜 전용 스타일을 전부 공통 컴포넌트로 교체한 것은 아니다. Android 및 시각적 전후 비교는 미수행. [공통 스타일 적용 계약](../../docs/design/seed/implementation/shared-style-contract.md)을 따를 것.
 
 ## 공통 SVG 에셋 전환 완료 · 2026-11-09
 
@@ -27,7 +35,7 @@
 
 **저장소 루트에서** `python3 -m http.server 8000` 실행 후 `http://localhost:8000/web/preview/#home`에 접속. 공통 `assets/` 경로가 필요하므로 `web/preview`만 서버 루트로 삼는 과거 명령은 더 이상 사용하지 않는다. 별도 빌드/패키지 설치 불필요.
 
-`style.css` 원본 규칙은 보존하되 하단에 의미색 시연 오버라이드를 추가했음. 메뉴 시트의 테마 전환은 루트 색상 토큰 검수용. 미저장 페이지에 대한 디자인 채택이나 정보구조 확정은 이 프로토타입만으로 판단하지 않음.
+기존 CSS 선언은 `seed-standard.css`와 `style.css`에 역할별로 나눠 보존했음. 코드 연결 검사는 `node --test web/preview/seed-standard.test.mjs`, 실제 화면 검수는 별개.  메뉴 시트의 테마 전환은 루트 색상 토큰 검수용. 미저장 페이지에 대한 디자인 채택이나 정보구조 확정은 이 프로토타입만으로 판단하지 않음.
 
 ## 2026-11-07 · 의미색 팔레트 시연
 

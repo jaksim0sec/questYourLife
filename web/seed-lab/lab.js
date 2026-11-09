@@ -69,6 +69,7 @@ function renderProgress(key){
     note.textContent="값을 모르는 동안 확정 퍼센트를 표시하지 않습니다.";
   }else if(p.state==="unavailable"){
     track.removeAttribute("aria-valuenow");
+    track.removeAttribute("aria-valuetext");
     label.textContent="조회 불가";
     note.textContent="유효한 0과 조회 불가는 다릅니다. 막대를 숨깁니다.";
   }else{
@@ -83,7 +84,7 @@ function renderProgress(key){
   updatePressed(progressButtons,key,"progressChoice");
 }
 progressButtons.forEach(button=>button.addEventListener("click",()=>renderProgress(button.dataset.progressChoice)));
-const thicknessButtons=$$("[data-thickness]");
+const thicknessButtons=$("button[data-thickness]");
 thicknessButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#progress-track").dataset.thickness=button.dataset.thickness;
   updatePressed(thicknessButtons,button.dataset.thickness,"thickness");

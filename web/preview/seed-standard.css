@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* Shared SEED web tokens. Values are aliases of existing preview variables; no palette changes. */
+:root {
+  --seed-canvas: var(--canvas);
+  --seed-surface: var(--surface);
+  --seed-border: var(--line);
+  --seed-foreground: var(--text);
+  --seed-muted: var(--sub);
+  --seed-brand: var(--brand);
+  --seed-reward: var(--reward);
+  --seed-on-reward: var(--on-reward);
+}

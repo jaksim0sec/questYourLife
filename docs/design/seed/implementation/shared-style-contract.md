@@ -20,18 +20,43 @@ references: [D-011, D-012, D-013]
 | 웹 표준 클래스 | 현재 연결 | 보존 원칙 |
 |---|---|---|
 | `.seed-text[data-text-role="caption"]` | 기존 `.muted`와 같은 선언 | 글자 수치 유지. 다른 4개 텍스트 역할 전체 구현을 주장하지 않음 |
-| `.seed-action[data-variant]` | 기본/solid/neutral-outline/ghost/reward-secondary, 기존 `.gallery-button` 별칭 | 기존 시연 버튼의 높이·패딩·색 그대로 |
+| `.seed-action[data-variant][data-size]` | v0.15 웹 어댑터의 기본 Action + 내부 `__face`/`__label`/`__icon`; 기존 `.gallery-button`과 분리 | 기본 14/20, Small 12/18, face 34/43/48, 중립 Outline의 선은 face 하나 |
 | `.seed-media` + 하위 label/fallback | 기존 `.media-frame`, `.media-label`, `.media-fallback` 별칭 | 1:1 비율, 이미지 72%·보상 86% 점유 규격 보존 |
 | `.seed-badge[data-tone]` | 기존 `.badge` 별칭과 3종 실제 시연 | 기존 배지 텍스트·padding 유지 |
 | `.seed-progress-track` / `.seed-progress-fill` | 기존 `.progress-track` 병용 | 실제 `--progress` 33.333%/58.333% 원본 유지 |
 | `.seed-icon` | 기존 공식 SVG mask 처리 | 56개 정본 경로 변경 없음 |
 | 공통 Foundation/Shell | 기존 `:root` 토큰·반응형·Header/Nav/Sheet 규칙을 표준 파일로 이동 | CSS 선언값 복사·추출만 하고 수치 교정 안 함 |
 
-**실제 전환:** HTML에는 기존 클래스와 새 표준 클래스를 같이 달아 호환한다. 표준 파일에는 기존 선언을 옮기고 alias selector를 추가했으며, `style.css`는 페이지별 레이아웃·표현만 소유한다. `clan.css`의 지역 구조·컴포넌트 변형은 기존대로 남겨 화면 형태를 변경하지 않는다. JS와 사용자 데이터·이미지 파일은 이 작업에서 수정하지 않는다.
+**실제 전환:** 이 문단의 초기 전환(2026-11-10 오전)은 레거시 갤러리 클래스와 새 표준 클래스를 병용했다. 이후 Action의 Cascade 충돌이 확인되어 **`.gallery-button`만 `web/preview/style.css`에 분리**하고, 표준 `.seed-action`은 `seed-standard.css`에서 독점한다. 나머지 기존 클래스 Alias(`.seed-media`/`.seed-badge` 등)는 이 변경에서 손대지 않는다. 기존 콘텐츠, JS, 데이터·이미지 파일은 보존한다.
 
 **수치 충돌의 처리:** 현행 preview 버튼 높이·색상 등과 v0.15에서 승인한 기준 사이에 차이가 남아 있다. 사용자가 **비율·데이터를 임의 변경하지 말라**고 요청했으므로, 표준 파일은 **현재 웹 시연값을 정확히 보존**했다. 문서/구현 간 차이의 조정이나 모든 Variant의 전체 구현은 별도 승인 대상이다.
 
 **실행 상태/검증:** `web/preview/seed-standard.test.mjs`에 클래스 연결과 현재 값/비율/데이터 보존 검사를 추가했다. 이는 문서·정적 코드 계약이며 사용자 육안 비교나 Compose 검증을 대체하지 않는다. 다음 작업에서 웹 공통 스타일을 사용하는 컴포넌트는 우선 `seed-standard.css`의 실제 구현을 인용한다.
+
+## 2026-11-10 · Action CSS 소유권 교정 사례 (실물 반례)
+
+**시작 증상:** SEED Lab에서 `neutral-outline` 초기화 버튼의 테두리가 이중으로 보이고, 실행 버튼 글자가 다른 UI보다 커졌다. Chromium 최소 재현에서 outer/face border가 각각 1px이고 신규 Action이 16px 상속 글자를 사용함을 확인했다. 기존 갤러리의 `.gallery-button.seed-action`도 신규 기본 스타일 `font:inherit`와 `padding:0`의 영향을 받았다.
+
+**원인:** `seed-standard.css`에 있던 구형 `.gallery-button, .seed-action` 혼합 선택자 및 `.seed-action[data-variant="neutral-outline"]`가 외부 target의 표현을 소유했고, 뒤늦게 추가된 내부 `.seed-action__face`도 같은 표면을 그렸다. 뒤에 선언된 `.seed-action { border:0 }`만으로는 앞선 속성 선택자의 더 높은 specificity를 무효화하지 못한다.
+
+| 책임 | 정본 / 수정 지점 | 이번 교정 |
+|---|---|---|
+| 의미·타이포·높이 | C-ACTION / F-TYPE / F-GEOMETRY / v0.15 | 일반 14/20, Small 12/18, face 34/43/48과 비중첩 target 48 이상 유지 |
+| 표준 표현 | `web/preview/seed-standard.css` | `.seed-action`은 실제 target+폰트, `__face`는 내부 패딩·반경·선·Variant. 표현은 한 곳 |
+| 구형 시연 전용 표현 | `web/preview/style.css` | `.gallery-button`만 적용. SEED 표준과 같은 요소에 중복 클래스 부여 금지 |
+| 페이지별 배치 | `web/seed-lab/lab.css` | `.lab-actions`는 flex/간격만. font-size·border·padding·height override 금지 |
+| 사용처 | `web/seed-lab/index.html` | 승인된 `seed-action + data-variant + data-size + __face` 조합을 그대로 사용 |
+| 회귀 증거 | `web/seed-lab/action-style.test.mjs` + `web/preview/seed-standard.test.mjs` | 소유권·별칭 충돌·14/12·34/43/48·기존 예시 데이터 보존 검증 |
+
+### 이후 모든 공통 스타일 수정의 처리 순서
+
+1. **요구의 책임 확인:** Foundation 숫자 변경인지, C-ACTION Variant/state인지, P-LAYOUT 배치인지, 페이지 데이터인지 먼저 판정한다.
+2. **기존 정본 재사용:** 승인 명세를 바꾸지 않는 버그면 공통 CSS 구현만 수정. 페이지 override나 새 버튼 variant를 만들지 않는다.
+3. **충돌 영향 조사:** 같은 이름의 구형 클래스·selector specificity·CSS load order·다른 화면 사용처 확인. 역사적 실험용 클래스를 신규 SEED 정본과 섞지 않는다.
+4. **RED → GREEN:** 실제 회귀를 재현하는 테스트를 먼저 실패시킨 뒤 공통 소유권에서 고친다. 최소 버튼 둘(Brand Solid / Neutral Outline), Light/Dark, Small/Default/Large와 기존 preview를 함께 검증한다.
+5. **변경 범위 보고:** Node 정적 검사, Chromium computed style/겹침/버튼 hit target, 320/390/430 및 긴 문구 결과를 별개로 기록한다. 브라우저 미검수면 완료로 선언하지 않는다.
+
+**이번 범위:** CSS 충돌 교정이지 새로운 디자인 토큰/컴포넌트의 승인이나 Android 구현 변경이 아니다. 구형 preview는 역사적 샘플이므로 자체 표현을 유지하되 SEED 클래스 사용처로 계산하지 않는다.
 
 ---
 
@@ -85,7 +110,7 @@ references: [D-011, D-012, D-013]
 사용 예시 (기존 문서의 구조를 설명하는 *개념 예시*이지 현재 preview에서 동작 확인한 코드가 아님):
 
 ```html
-<button class="seed-action" data-variant="solid" data-size="default">
+<button class="seed-action" data-variant="brand-solid" data-size="default">
   <span class="seed-action__face"><span class="seed-action__label">시작하기</span></span>
 </button>
 ```

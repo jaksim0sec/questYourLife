@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko" data-seed-lab data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#FCFBFA">
+  <title>SEED Lab | 갓생패치</title>
+  <link rel="stylesheet" href="../preview/seed-standard.css">
+  <link rel="stylesheet" href="./lab.css">
+  <script type="module" src="./lab.js"></script>
+</head>
+<body>
+  <header class="lab-header">
+    <div class="lab-header-inner">
+      <div class="lab-brand"><span class="lab-brand-mark" aria-hidden="true">S</span><div><strong>SEED Lab</strong><span>갓생패치 · 웹 디자인 실험</span></div></div>
+      <button id="theme-toggle" class="lab-icon-button" type="button" aria-label="다크 모드 켜기"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/moon.svg')" aria-hidden="true"></span></button>
+    </div>
+  </header>
+  <main class="lab-wrap">
+    <div class="lab-intro">
+      <div class="lab-kicker"><span class="lab-signal"></span> 실험 환경 <span>SEED v0.15 · Web only</span></div>
+      <h1 class="seed-text" data-text-role="display">컴포넌트를 쌓는 게 아니라<br><span class="lab-highlight">조합의 규칙을 시험한다</span></h1>
+      <p class="seed-text" data-text-role="body">같은 객체를 다른 레이아웃에 배치하고, 상태를 바꾸고, 공식 에셋이 깨지지 않는지 관찰하는 공간. 서비스의 실제 클랜·상점 화면은 아닙니다.</p>
+    </div>
+    <div class="lab-nav-wrap">
+      <div role="tablist" aria-label="실험 영역" class="lab-tabs">
+        <button id="tab-layout" type="button" role="tab" aria-controls="panel-layout" aria-selected="true" tabindex="0" data-panel-target="layout">배치와 구성</button>
+        <button id="tab-state" type="button" role="tab" aria-controls="panel-state" aria-selected="false" tabindex="-1" data-panel-target="state">상태와 행동</button>
+        <button id="tab-assets" type="button" role="tab" aria-controls="panel-assets" aria-selected="false" tabindex="-1" data-panel-target="assets">에셋과 표면</button>
+      </div>
+    </div>
+
+    <section id="panel-layout" role="tabpanel" aria-labelledby="tab-layout" data-panel="layout" class="lab-panel">
+      <div class="lab-section-head"><div><span class="lab-overline">P-LAYOUT · C-IMAGE · C-LIST</span><h2 class="seed-text" data-text-role="title">같은 데이터, 다른 공간 관계</h2><p class="seed-text" data-text-role="caption">이름·상태·이미지는 유지하고 배치 방식만 바꿉니다</p></div><span class="seed-badge" data-tone="info">실험 01</span></div>
+      <div class="lab-workbench seed-surface" data-surface="solid">
+        <div class="lab-toolbar"><strong class="lab-toolbar-label">배치 방법</strong><div class="seed-segment" role="group" aria-label="배치 방법">
+          <button type="button" data-layout-choice="grid" aria-pressed="true">격자</button>
+          <button type="button" data-layout-choice="rail" aria-pressed="false">가로 진열</button>
+          <button type="button" data-layout-choice="rows" aria-pressed="false">세로 목록</button>
+        </div></div>
+        <div id="layout-specimens" class="lab-object-list" data-layout="grid">
+          <article class="lab-item"><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/01_school_locker.png" alt="민트색 학교 사물함"><span class="seed-badge seed-media__badge" data-size="xs" data-tone="neutral">기본</span></div><div class="lab-item-meta"><strong>학교 사물함</strong><span class="seed-text" data-text-role="caption">일상 소품 · 보상 오브젝트</span></div></article>
+          <article class="lab-item"><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/06_wooden_chest.png" alt="갈색 나무 보물상자"><span class="seed-badge seed-media__badge" data-size="xs" data-tone="neutral">기본</span></div><div class="lab-item-meta"><strong>나무 보물상자</strong><span class="seed-text" data-text-role="caption">보물상자 · 보상 오브젝트</span></div></article>
+          <article class="lab-item"><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/08_premium_glowing_chest.png" alt="푸른빛이 나는 고급 보물상자"><span class="seed-badge seed-media__badge" data-size="xs" data-tone="reward">특별</span></div><div class="lab-item-meta"><strong>빛나는 보물상자</strong><span class="seed-text" data-text-role="caption">연출 강조 · 보상 오브젝트</span></div></article>
+        </div>
+        <p id="layout-rationale" class="lab-rationale" aria-live="polite">격자: 이미지를 동시에 비교할 때. 동일한 프레임과 정보 슬롯을 사용합니다.</p>
+      </div>
+
+      <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">P-HIERARCHY · C-SURFACE</span><h2 class="seed-text" data-text-role="title">섹션은 카드가 아니다</h2><p class="seed-text" data-text-role="caption">Plain과 Solid를 비교하고 정보의 책임을 구분합니다</p></div><span class="seed-badge" data-tone="neutral">실험 02</span></div>
+      <div class="lab-surface-comparison">
+        <section class="seed-surface" data-surface="plain"><div class="lab-example-heading"><span class="seed-badge" data-tone="neutral" data-size="xs">Plain</span><h3 class="seed-text" data-text-role="section">이번 주 활동</h3></div><div class="lab-metric-row"><div><strong class="lab-metric-number">12</strong><span class="seed-text" data-text-role="caption">활동 완료</span></div><div><strong class="lab-metric-number">4</strong><span class="seed-text" data-text-role="caption">새로운 도전</span></div></div><p class="seed-text" data-text-role="caption">배경 없이 간격으로만 구획</p></section>
+        <section class="seed-surface" data-surface="solid"><div class="lab-example-heading"><span class="seed-badge" data-tone="neutral" data-size="xs">Solid</span><h3 class="seed-text" data-text-role="section">이번 주 활동</h3></div><div class="lab-metric-row"><div><strong class="lab-metric-number">12</strong><span class="seed-text" data-text-role="caption">활동 완료</span></div><div><strong class="lab-metric-number">4</strong><span class="seed-text" data-text-role="caption">새로운 도전</span></div></div><p class="seed-text" data-text-role="caption">독립 경계가 필요할 때만 면 추가</p></section>
+      </div>
+    </section>
+
+    <section id="panel-state" role="tabpanel" aria-labelledby="tab-state" data-panel="state" class="lab-panel" hidden>
+      <div class="lab-section-head"><div><span class="lab-overline">C-STATUS · K08</span><h2 class="seed-text" data-text-role="title">수치와 진행 표시의 일치</h2><p class="seed-text" data-text-role="caption">0 · 부분 · 목표 · 초과 · 조회 불가 · 로딩을 구분합니다</p></div><span class="seed-badge" data-tone="info">실험 03</span></div>
+      <div class="seed-surface lab-workbench" data-surface="solid">
+        <div class="lab-progress-values" role="group" aria-label="진행률 테스트 입력">
+          <button type="button" data-progress-choice="0" aria-pressed="false">0</button><button type="button" data-progress-choice="620" aria-pressed="true">620</button><button type="button" data-progress-choice="1000" aria-pressed="false">1000</button><button type="button" data-progress-choice="1200" aria-pressed="false">1200</button><button type="button" data-progress-choice="unavailable" aria-pressed="false">조회 불가</button><button type="button" data-progress-choice="loading" aria-pressed="false">로딩</button>
+        </div>
+        <div class="lab-progress-demo">
+          <div class="lab-progress-top"><span class="seed-text" data-text-role="body" data-text-style="strong">공동 목표 진행</span><strong id="progress-value">620 / 1,000</strong></div>
+          <div id="progress-track" class="progress-track" data-thickness="default" data-progress-state="ready" role="progressbar" aria-label="공동 목표 진행" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span class="progress-fill" style="--progress:62%"></span></div>
+          <p id="progress-note" class="seed-text" data-text-role="caption" aria-live="polite">실제 수치 620, 표시 폭 62%</p>
+        </div>
+        <div class="lab-divider"></div>
+        <div class="lab-toolbar"><span class="seed-text" data-text-role="body">두께</span><div class="seed-segment" role="group" aria-label="진행 막대 두께"><button type="button" data-thickness="micro" aria-pressed="false">6</button><button type="button" data-thickness="default" aria-pressed="true">10</button><button type="button" data-thickness="featured" aria-pressed="false">12</button></div></div>
+      </div>
+      <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">C-ACTION · C-SELECTION · C-FIELD</span><h2 class="seed-text" data-text-role="title">입력과 행동 상태</h2></div><span class="seed-badge" data-tone="neutral">실험 04</span></div>
+      <div class="lab-control-grid">
+        <section class="seed-surface lab-control-card" data-surface="solid"><h3 class="seed-text" data-text-role="section">버튼 위계</h3><p class="seed-text" data-text-role="caption">같은 크기 규격, 서로 다른 의미</p><div class="lab-actions">
+          <button type="button" class="seed-action" data-variant="brand-solid" data-size="default" id="action-demo"><span class="seed-action__face"><span class="seed-action__icon"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/check.svg')" aria-hidden="true"></span></span><span class="seed-action__label">실행 확인</span></span></button>
+          <button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" id="action-reset"><span class="seed-action__face"><span class="seed-action__label">초기화</span></span></button>
+        </div><p id="action-feedback" class="seed-text" data-text-role="caption" role="status">버튼을 눌러 시각 상태를 확인하세요. 데이터는 저장하지 않습니다.</p></section>
+        <section class="seed-surface lab-control-card" data-surface="solid"><h3 class="seed-text" data-text-role="section">선택과 입력</h3><div class="lab-choice-stack"><label class="seed-choice"><input type="checkbox" id="choice-check"> 제안 확인</label><label class="seed-choice"><input type="radio" name="choice-radio" value="a" checked> 기본 보기</label><label class="seed-choice"><input type="radio" name="choice-radio" value="b"> 상세 보기</label><label for="choice-field" class="seed-text" data-text-role="caption">텍스트 입력</label><input class="seed-field" id="choice-field" placeholder="짧은 문구 입력" maxlength="60"></div><p id="choice-feedback" class="seed-text" data-text-role="caption" role="status">체크 해제 · 기본 보기</p></section>
+      </div>
+      <section class="seed-surface lab-sheet-preview" data-surface="subtle"><div><span class="lab-overline">C-SHEET · C-GESTURE</span><h3 class="seed-text" data-text-role="section">바텀시트 동작 실험</h3><p class="seed-text" data-text-role="caption">Min · Mid · Full · Closed / 핸들 드래그 · 키보드</p></div><button type="button" id="sheet-open" class="seed-action" data-variant="neutral-outline" data-size="default"><span class="seed-action__face">시트 열기</span></button></section>
+    </section>
+
+    <section id="panel-assets" role="tabpanel" aria-labelledby="tab-assets" data-panel="assets" class="lab-panel" hidden>
+      <div class="lab-section-head"><div><span class="lab-overline">A-ART · C-IMAGE</span><h2 class="seed-text" data-text-role="title">보상 오브젝트 원본 8종</h2><p class="seed-text" data-text-role="caption">A1 단일 오브젝트. A2 배너 장면으로 취급하지 않습니다</p></div><span class="seed-badge" data-tone="info">실험 05</span></div>
+      <div id="reward-gallery" class="lab-reward-gallery" aria-label="등록된 보상 오브젝트 8종"></div>
+      <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">C-SVG · F-ICON</span><h2 class="seed-text" data-text-role="title">공식 SVG 원본 56종</h2><p class="seed-text" data-text-role="caption">manifest 기반으로 불러오며 임의 아이콘을 생성하지 않습니다</p></div><span id="icon-count" class="seed-badge" data-tone="neutral">불러오는 중</span></div>
+      <div class="lab-icon-toolbar"><input type="search" id="icon-search" class="seed-field" placeholder="아이콘 이름 검색" aria-label="아이콘 이름 검색"><div class="seed-segment" role="group" aria-label="SVG 아이콘 필터"><button type="button" data-icon-filter="all" aria-pressed="true">전체</button><button type="button" data-icon-filter="outline" aria-pressed="false">Outline</button><button type="button" data-icon-filter="fill" aria-pressed="false">Fill</button></div></div>
+      <div id="icon-gallery" class="lab-icon-gallery" aria-live="polite"></div>
+      <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">C-SURFACE</span><h2 class="seed-text" data-text-role="title">표면 역할 10종</h2><p class="seed-text" data-text-role="caption">시각 강도와 의미만 비교. 페이지 배치와 독립</p></div><span class="seed-badge" data-tone="neutral">실험 06</span></div>
+      <div id="surface-gallery" class="lab-surface-gallery"></div>
+    </section>
+    <footer class="lab-footer"><span>SEED Lab · 정적 웹 검증 환경</span><span>서비스 데이터·로그인·보상 지급 없음</span></footer>
+  </main>
+  <dialog id="lab-sheet" class="seed-sheet" aria-labelledby="sheet-title" data-snap="min">
+    <button type="button" class="seed-sheet__handle" aria-label="시트 크기 조절. 위아래 화살표 키 사용" title="드래그 또는 방향키로 조절"></button>
+    <div class="seed-sheet__head"><div><h2 id="sheet-title" class="seed-text" data-text-role="section">시트 동작 시험</h2><p class="seed-text" data-text-role="caption" id="sheet-state">최소 높이</p></div><button type="button" id="sheet-close" class="lab-icon-button" aria-label="닫기"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')" aria-hidden="true"></span></button></div>
+    <div class="seed-sheet__body"><p class="seed-text" data-text-role="body">이 영역은 시트와 독립적으로 스크롤됩니다. 실제 데이터나 퀘스트를 수정하지 않습니다.</p><div class="lab-sheet-content" id="sheet-lines"></div></div>
+    <div class="seed-sheet__footer"><span class="seed-badge" data-tone="neutral" id="sheet-snap-badge">Min</span><button type="button" id="sheet-next" class="seed-action" data-variant="neutral-outline" data-size="default"><span class="seed-action__face">다음 단계</span></button><button type="button" class="seed-action" data-variant="brand-solid" data-size="default" id="sheet-done"><span class="seed-action__face">닫기</span></button></div>
+  </dialog>
+</body>
+</html>

@@ -140,6 +140,11 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - A/B 고정 클래스·지역 상태·이력 인터페이스: [v0.15 웹 어댑터](implementation/v015.md).
 - 반례와 인수: [V-CHECKS](VALIDATION.md). 원격 등록·브라우저·Native 검증의 상태는 각각 별도다.
 
+## 2026-11-10 · 표준 스타일 적용 계약 (문서 제안, 구현 미완료)
+
+- **SEED 규격을 실제 코드에 연결할 때:** [표준 스타일 적용 체계](implementation/shared-style-contract.md). 웹의 기존 공통 클래스·CSS 변수와 Android Compose의 Theme·재사용 UI 함수를 대응시키고, 전역 규격/컴포넌트 Variant/페이지 배치를 구분한다.
+- 이는 **새 디자인 계층이나 스타일 런타임이 아님.** 승인된 v0.15와 현행 구현의 차이를 확인하고, 기존 클래스/컴포넌트를 재사용하는 운영 계약이다. 스타일시트 코드·Native 이관은 이번 문서 반영에 포함되지 않는다.
+
 ## 2026-11-10 · 범용 공간 배치와 페이지 구성 (제안 규격, 웹/Native 미적용)
 
 - **페이지를 새로 설계할 때:** [페이지 구성](patterns/page-composition.md) → [공간 배치](patterns/layout-composition.md) → [정보 위계](patterns/content-hierarchy.md) → 해당 기존 Component/Surface/Shell 순서로 참조. 이는 제작 순서이며 문서의 실제 계층을 추가한 것이 아니다.

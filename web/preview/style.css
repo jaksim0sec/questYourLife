@@ -99,7 +99,7 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 
 .home-intro h2 { font-size: 1.45rem; letter-spacing: -0.035em; line-height: 1.35; }
 
-.muted { color: var(--sub); font-size: 0.82rem; }
+
 
 .home-intro .muted { margin: 0.35rem 0px 0px; }
 
@@ -141,7 +141,7 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 
 .book-tile .muted { font-size: 0.73rem; }
 
-.media-frame { position: relative; display: grid; place-items: center; aspect-ratio: 1 / 1; border-radius: 0.85rem; overflow: hidden; }
+
 
 .mascot-frame { background: rgb(247, 232, 230); }
 
@@ -153,15 +153,15 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 
 :root[data-theme="dark"] .reward-frame { background: rgb(56, 48, 45); }
 
-.media-frame img { display: block; width: 72%; height: 72%; object-fit: contain; }
+
 
 .reward-frame img { width: 86%; height: 86%; }
 
-.media-fallback { color: var(--sub); opacity: 0.55; }
 
-.media-fallback .glyph, .media-fallback svg { width: 2.25rem; height: 2.25rem; }
 
-.media-label { position: absolute; left: 0.65rem; top: 0.65rem; padding: 0.28rem 0.48rem; border-radius: 0.45rem; background: color-mix(in srgb, var(--surface) 85%, transparent); color: var(--text); font-size: 0.65rem; font-weight: 800; }
+
+
+
 
 .rank-list { border-top: 1px solid var(--line); }
 

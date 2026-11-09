@@ -10,3 +10,22 @@
   --seed-reward: var(--reward);
   --seed-on-reward: var(--on-reward);
 }
+
+/* Canonical SEED selectors and unchanged preview aliases. */
+.muted, .seed-text[data-text-role="caption"] { color: var(--sub); font-size: 0.82rem; }
+.media-frame, .seed-media { position: relative; display: grid; place-items: center; aspect-ratio: 1 / 1; border-radius: 0.85rem; overflow: hidden; }
+.media-frame img, .seed-media img { display: block; width: 72%; height: 72%; object-fit: contain; }
+.media-fallback, .seed-media__fallback { color: var(--sub); opacity: 0.55; }
+.media-fallback .glyph, .media-fallback svg, .seed-media__fallback .glyph, .seed-media__fallback svg { width: 2.25rem; height: 2.25rem; }
+.media-label, .seed-media__label { position: absolute; left: 0.65rem; top: 0.65rem; padding: 0.28rem 0.48rem; border-radius: 0.45rem; background: color-mix(in srgb, var(--surface) 85%, transparent); color: var(--text); font-size: 0.65rem; font-weight: 800; }
+.gallery-button, .seed-action { min-height: 2.5rem; padding: 0.55rem 0.9rem; border-radius: 0.75rem; font-size: 0.79rem; font-weight: 700; }
+.gallery-button.primary, .seed-action[data-variant="solid"] { border: 1px solid var(--brand); background: var(--brand); color: white; }
+.gallery-button.secondary, .seed-action[data-variant="neutral-outline"] { border: 1px solid var(--line); background: var(--surface); }
+.gallery-button.quiet, .seed-action[data-variant="ghost"] { border: 0px; background: transparent; color: var(--brand); }
+.gallery-button.reward, .seed-action[data-variant="reward-secondary"] { display: grid; place-items: center; width: 100%; margin-top: 0.75rem; border: 0px; background: var(--reward); color: var(--on-reward); }
+.badge, .seed-badge { border-radius: 999px; padding: 0.3rem 0.55rem; font-size: 0.68rem; font-weight: 800; }
+.badge.accent, .seed-badge[data-tone="brand"] { background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); }
+.badge.neutral, .seed-badge[data-tone="neutral"] { background: var(--line); color: var(--sub); }
+.badge.outline, .seed-badge[data-tone="outline"] { border: 1px solid var(--line); color: var(--text); }
+.progress-track, .seed-progress-track { height: 0.45rem; margin-top: 0.65rem; overflow: hidden; border-radius: 999px; background: var(--line); }
+.progress-track span, .seed-progress-track > .seed-progress-fill { display: block; width: var(--progress, 0%); height: 100%; border-radius: inherit; background: var(--brand); }

@@ -7,6 +7,15 @@
 - `assets/mascot.png`, `assets/box.webp`: 홈 MHTML에서 실제 추출한 바이너리
 - `app.js`: 의도된 시연 수준의 hash 라우팅과 테마 전환 및 빈 메뉴/알림 시트
 
+## 공통 에셋으로 이관 예정 · 2026-11-09
+
+**현재 실행 경로는 그대로 유지한다.** `web/preview/assets/seed-icons/`에 있는 공식 SVG 계열 사본 18개, `clan-bookmark-fill.svg`, `index.html`/JS 내 inline SVG 및 `box*.webp`·`mascot*.png`·`cosmetic_*.png`는 [공통 에셋 관리 계약](../../docs/assets/README.md)에 따라 원본/예외를 확인하고 **실제 파일 이동 시** 참조를 함께 바꿀 대상이다.
+
+- 목표는 향후 `new`가 앱 개발 브랜치가 될 때 루트 `assets/`를 SVG/이미지의 공통 소스로 사용하고, preview가 그 정본을 직접 참조하도록 만드는 것. **현행 56 SVG 원본은 아직** `docs/design/seed/assets/icons/v0.14/`에 있다.
+- `clan.js`의 CSS mask URL(`assets/seed-icons/<name>.svg`)과 HTML/CSS/JS 이미지 URL은 **페이지 주소 기준**으로 해석된다. 이관 시 새 경로·로컬 서버 루트·GitHub Pages base path를 함께 수정해야 한다.
+- 실제 전환 후에는 저장소 루트를 서빙하고 `/web/preview/`로 접근하도록 아래 실행 안내를 변경한다. 지금은 변경 전이므로 **기존 아래 실행 명령**을 계속 사용한다.
+- 이 절은 **이전 작업의 명세만 기록**한 것. SVG/PNG/WebP 파일, preview 코드, 기존 기능은 아직 이동·수정하지 않았다. 신규 아트 원본이나 별도 Fill 도형을 기존 승인 Soft SVG로 자동 대체하지 않는다.
+
 ## 범위
 
 **보존됨:** 홈의 모든 시각 요소, 루트 색상/레이아웃 CSS, 퀘스트북 탐색의 저장된 헤더 및 빈 본문, 하단 5탭과 인라인 SVG, 이미지.

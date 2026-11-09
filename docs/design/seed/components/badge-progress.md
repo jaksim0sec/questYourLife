@@ -40,6 +40,40 @@ D-012 승인 디자인 기준을 보존한다. Badge는 정보 상태, Progress�
 
 **기존 기능 보존:** Progress는 사용자가 직접 누르는 완료 버튼이 아니며 보상 지급, 퀘스트 체크, 실제 DB 완료를 대신하지 않는다.
 
+
+C-STATUS는 의미 Badge와 단일 Progress의 시각 상태 소유자다. O-PROGRESS가 대표 수치/마감/파생 의미를 소유하며 이 문서의 트랙 6/10/12px과 ARIA 계약은 복제하지 않는다.
+
+### Selection
+
+| 데이터·목적 | 선택 | 배제 |
+|---|---|---|
+| 실제 상태·강조 없이 구분 | Neutral/Weak Badge 또는 plain Caption | Solid Badge 남발 |
+| 유효한 주목 상태 1종 | Solid Badge, 객체당 1개 우선 | 색으로만 의미 전달 |
+| 제한된 경고·해석이 필요한 상태 | Outline/Weak + 명시 label | 위험색만으로 경고 |
+| 목표 대비 진행 | Progress default 10px, micro 6은 좁은 부가 맥락, featured 12는 한정 강조 | 클랜 전용 별도 트랙 |
+| 값이 유효하지 않거나 loading | 상태 설명·indeterminate, now 미제공 | 0/1000 위장 |
+
+D-012 높이 기본26/XS21, tone 7개 유지. **객체당 1~2 Badge와 2~3단어 라벨은 P2 밀도 비교 후보**, 필요한 의미를 지우라는 강제 상한이 아니다.
+
+### Don't
+
+1. 배지 9.7px/font-weight790으로 정보를 우겨 넣어 F-TYPE 하한과 굵기 규칙을 모두 위반.
+2. 진행 620/1000을 표기하면서 실제 bar fill은 0, aria-valuenow만 620인 사례(R-04). 데이터→fill/텍스트/ARIA 공통 입력 필수.
+3. 단순 상태 Badge에 hover·pointer/pressed를 넣어 실행 버튼처럼 보이거나 실제 보상 미지급을 지급 완료로 표시.
+
+### Relations
+
+- **부모:** O-PROGRESS의 Bar/Status, O-ITEM 상태·희귀도 보조 슬롯, C-LIST 메타·Header Badge.
+- **자식:** 유효한 상태 label, Progress track+fill/ARIA; 단독 button/link 없음.
+- **형제:** 대표 숫자(Display)가 Badge보다 우선. O-PROGRESS의 Value/Deadline은 C-TEXT를 사용.
+- **금지:** C-STATUS에서 O-PROGRESS 대표 수치나 Page Intent를 재정의, 상태 배지를 C-ACTION으로 대체.
+
+### Verification
+
+- 0/620/1000/1200(max1000), loading/unavailable/stale를 검사: 실제 width ratio와 ARIA, 초과 시 clamp·aria-valuetext.
+- 기본 Progress computed height 10px, micro6/featured12 적용 구분, Badge 26/21 및 최소 글자12·14미만 weight≤600.
+- 정상/Don't에 실제 클릭 시맨틱 차이, 객체당 과다 Badge/주연 대비, dark/light×320/390/430 확인.
+
 ## 이력
 
 - 과거 v0.6 제안/확정 규격의 반복 문단과 D-013 r1 K08은 [HISTORY](../HISTORY.md)에 전체 원문을 그대로 보존했다. 역사적 승인 근거 D-012는 [v015 승인 시드](../implementation/v015.md)에 보존.

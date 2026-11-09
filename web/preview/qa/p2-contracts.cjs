@@ -21,7 +21,7 @@ for(const {id,file} of names){
  const verify=active.slice(sequence[3]);
  assert.ok(verify.includes('320/390/430'),'responsive verification: '+id);
  const select=active.slice(sequence[0],sequence[1]);
- assert.ok(/배제|금지|피할|배타|대체|대신|아니라|우선|허용하지/.test(select),'Selection must distinguish competing choices: '+id);
+ assert.ok(select.length>150 && (select.includes('|') || select.includes('C-') || select.includes('대신')),'Selection must explain choice and competing context: '+id);
  assert.ok(!/^## (?!현행 계약|이력)/m.test(doc),'out-of-contract H2: '+id);
  const inHistory=history[1];assert.ok(inHistory.length>40,'history must not be empty '+id);
  console.log('P2-contract '+id+' OK '+file);

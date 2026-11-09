@@ -89,6 +89,21 @@ thicknessButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#progress-track").dataset.thickness=button.dataset.thickness;
   updatePressed(thicknessButtons,button.dataset.thickness,"thickness");
 }));
+const pageModes={
+  root:{title:"홈",meta:"액션 슬롯",heading:"계속 이어가는 작은 도전",description:"정보를 목적에 따라 섹션으로 나누고, 전역 탐색 공간을 예약합니다.",bottom:"하단 Navigation 슬롯 · 실제 경로 없음",rationale:"Root: 주 스크롤과 전역 탐색을 분리합니다. 미리보기는 탐색을 실행하지 않습니다."},
+  detail:{title:"퀘스트 상세",meta:"뒤로 슬롯",heading:"한 가지 목표에 집중",description:"표준 헤더와 상세 본문을 분리하고, 필요할 때만 고정 CTA 영역을 확보합니다.",bottom:"고정 CTA 슬롯 · 필요할 때만 표시",rationale:"Detail: 본문과 선택적인 고정 CTA를 분리합니다. 전역 Navigation은 실제 플로우에서 결정합니다."},
+  utility:{title:"기록 수정",meta:"닫기 슬롯",heading:"입력에 방해받지 않는 화면",description:"폼·키보드·확정 동작의 경계를 Shell에서 관리합니다.",bottom:"폼 확인 영역 · IME/실기기 별도 검증",rationale:"Utility: 키보드와 안전 영역의 소유권을 Shell 한 곳에 둡니다. 이 화면은 정적인 구조 시연입니다."}
+};
+const shellButtons=$("button[data-shell-choice]");
+function renderPageShell(kind){
+  const mode=pageModes[kind];if(!mode)return;
+  $("#page-shell").dataset.shellKind=kind;
+  for(const [id,key] of [["#page-shell-title","title"],["#page-shell-header-meta","meta"],["#page-shell-heading","heading"],["#page-shell-description","description"],["#page-shell-bottom","bottom"],["#page-shell-rationale","rationale"]])$(id).textContent=mode[key];
+  updatePressed(shellButtons,kind,"shellChoice");
+}
+shellButtons.forEach(button=>button.addEventListener("click",()=>renderPageShell(button.dataset.shellChoice)));
+renderPageShell("root");
+
 renderProgress("620");
 
 let clickCount=0;
@@ -183,11 +198,30 @@ async function loadIcons(){
 loadIcons();
 
 const sheet=$("#lab-sheet"),handle=$(".seed-sheet__handle",sheet),sheetBody=$(".seed-sheet__body",sheet);
-let snap="min",lastFocus=null,dragging=null;
+let snap="min",lastFocus=null,dragging=null,footerLayout="paired";
+const footer=$("#sheet-footer"),footerButtons=$("button[data-footer-choice]");
+const footerDescriptions={
+  none:"없음: 입력·정보 열람 시. 상단 닫기와 핸들만 사용합니다.",
+  single:"단일: 다음 단계 하나만 표시. 군더더기 없는 단일 CTA입니다.",
+  paired:"이중: 보조 행동과 다음 단계가 같은 높이로 정렬됩니다.",
+  stacked:"세로: 긴 문구나 좁은 화면에서 행동을 위아래로 분리합니다."
+};
+function applyFooterLayout(layout){
+  if(!Object.hasOwn(footerDescriptions,layout))return;
+  footerLayout=layout;footer.dataset.layout=layout;
+  footer.hidden=layout==="none";
+  $("#sheet-done").hidden=layout==="single";
+  $("#footer-explanation").textContent=footerDescriptions[layout];
+  updatePressed(footerButtons,layout,"footerChoice");
+  if(sheet.open)setSnap(snap);
+}
+footerButtons.forEach(button=>button.addEventListener("click",()=>applyFooterLayout(button.dataset.footerChoice)));
+applyFooterLayout("paired");
 function getHeights(){
   const vh=window.visualViewport?.height||window.innerHeight;
-  const content=sheetBody.scrollHeight+155;
-  const min=Math.min(380,Math.max(185,Math.min(vh*.4,content)));
+  const chrome=handle.offsetHeight+$(".seed-sheet__head",sheet).offsetHeight+footer.offsetHeight;
+  const content=sheetBody.scrollHeight+chrome;
+  const min=Math.min(vh,Math.max(185,chrome+64,Math.min(vh*.4,content,380)));
   const mid=Math.max(min,Math.round(vh*.65));
   return {min,mid,full:Math.max(mid,Math.round(vh))};
 }
@@ -197,7 +231,7 @@ function setSnap(which){
   const choice=entries.find(pair=>pair[0]===which)||entries[entries.length-1];
   snap=choice[0];setHeight(choice[1]);sheet.dataset.snap=snap;
   $("#sheet-state").textContent=({min:"최소",mid:"중간",full:"전체"})[snap]+" 높이 · Footer 분리";
-  $("#sheet-snap-badge").textContent=({min:"Min",mid:"Mid",full:"Full"})[snap];
+  $("#sheet-next-label").textContent=snap==="full"?"최소 높이로":"다음 단계";
 }
 function closeSheet(){if(sheet.open)sheet.close();}
 for(let i=1;i<=16;i++){
@@ -205,7 +239,7 @@ for(let i=1;i<=16;i++){
   row.className="lab-sheet-line";left.textContent="반복 항목 "+i;right.textContent="스크롤 테스트";
   row.append(left,right);$("#sheet-lines").append(row);
 }
-$("#sheet-open").addEventListener("click",()=>{lastFocus=document.activeElement;sheet.showModal();setSnap("min");handle.focus();});
+$("#sheet-open").addEventListener("click",()=>{lastFocus=document.activeElement;sheet.showModal();applyFooterLayout(footerLayout);setSnap("min");handle.focus();});
 $("#sheet-close").addEventListener("click",closeSheet);
 $("#sheet-done").addEventListener("click",closeSheet);
 $("#sheet-next").addEventListener("click",()=>setSnap(snap==="min"?"mid":snap==="mid"?"full":"min"));

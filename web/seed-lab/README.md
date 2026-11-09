@@ -28,8 +28,21 @@ node --test web/seed-lab/*.test.mjs
 | 04 | 액션/체크/라디오/필드/시트 | 컴포넌트 상태, 명확한 동작 및 포커스 |
 | 05 | 공식 PNG 8종 + manifest SVG 56종 | 원본 단일 출처, 투명 이미지 contain, 활성 Fill 분리 |
 | 06 | Surface 역할 10종 | 표면과 공간 배치의 책임 분리 |
+| 07 | Root / Detail / Utility 공통 골격 | S-PAGE의 Header/본문/하단 슬롯만 재사용, 새 Page Type 아님 |
+| Sheet Footer | 없음 / 단일 / 이중 / 세로 | 기존 C-ACTION의 크기·톤을 조합. Body 스크롤과 Footer 고정 분리 |
 
-공통 표현은 `../preview/seed-standard.css`가 소유하고, `lab.css`는 테스트 콘텐츠의 배치만 소유한다. 새 전용 컴포넌트, JSON UI 빌더, 임의 아이콘 원본, 앱 기능은 만들지 않았다. 테마의 승인 토큰은 실험 환경에만 적용해 구형 preview의 변형된 색과 섞지 않는다.
+공통 표현은 `../preview/seed-standard.css`가 소유하고, `lab.css`는 테스트 콘텐츠의 배치만 소유한다.
+
+### 2026-11-10 · 시각 개선에 따른 실제 파일 책임
+
+- `seed-standard.css`: `--seed-stroke-control` (조작 경계), C-CHECK/C-RADIO 스타일, `seed-sheet__footer[data-layout]`, `seed-page-shell` 및 `__header/__content/__section/__bottom`의 공통 골격. 기존 디자인 토큰과 이미지 파일은 보존한다.
+- `lab.css`: 소개·섹션 헤딩·Grid/Shell 데모의 상대 배치, 반응형 실험 구성만 소유한다. 공통 버튼·Field·Shell의 색·기본 숫자를 여기서 재정의하지 않는다.
+- `lab.js`: 레이아웃 전환, footer 방식 전환, snap 높이 재계산을 실험에서만 처리한다. 앱/서버 데이터는 사용하지 않는다.
+- **Footer 구성:** `none`(CTA 영역 없음), `single`(주행동 하나), `paired`(중립 보조 + 브랜드 주행동), `stacked`(좁은 화면용 세로). 모두 기존 C-ACTION 조합이며 독립적인 버튼 타입이 아니다.
+- **Page Shell 시연:** Root/Detail/Utility는 기존 `S-PAGE`의 표시 모드이고 실제 앱 헤더/라우팅/Navigation을 완성했다는 의미가 아니다. Slot과 gutter/본문/하단 예약 구조만 공통으로 확인한다.
+- 회귀 기준: `visual-polish.test.mjs`. 코드 구조 검사와 모바일 브라우저 실화면 검수는 구분한다.
+
+[시각 검토 및 개선 근거](../../docs/superpowers/reports/2026-11-10-seed-lab-visual-review.md). 새 전용 컴포넌트, JSON UI 빌더, 임의 아이콘 원본, 앱 기능은 만들지 않았다. 테마의 승인 토큰은 실험 환경에만 적용해 구형 preview의 변형된 색과 섞지 않는다.
 
 ## 검증 구분
 

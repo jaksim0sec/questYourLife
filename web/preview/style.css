@@ -1,6 +1,16 @@
 @charset "utf-8";
 
 /* Preview/page-specific CSS. Standard theme, shell and component rules are in seed-standard.css. */
+
+/* Historical component-gallery controls only. Do not combine with .seed-action;
+   canonical actions are defined in seed-standard.css with an inner __face. */
+.gallery-button { min-height:2.5rem; padding:0.55rem 0.9rem; border-radius:0.75rem; font-size:0.79rem; font-weight:700; }
+.gallery-button.primary { border:1px solid var(--brand); background:var(--brand); color:white; }
+.gallery-button.secondary { border:1px solid var(--line); background:var(--surface); }
+.gallery-button.quiet { border:0px; background:transparent; color:var(--brand); }
+.gallery-button.reward { display:grid; place-items:center; width:100%; margin-top:0.75rem; border:0px; background:var(--reward); color:var(--on-reward); }
+
+
 #main { min-width: 0px; background: var(--shell-surface); }
 
 body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25rem * .93 + var(--safe) + 2rem); }

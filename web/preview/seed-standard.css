@@ -120,3 +120,11 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .badge.outline, .seed-badge[data-tone="outline"] { border: 1px solid var(--line); color: var(--text); }
 .progress-track, .seed-progress-track { height: 0.45rem; margin-top: 0.65rem; overflow: hidden; border-radius: 999px; background: var(--line); }
 .progress-track span, .seed-progress-track > .seed-progress-fill { display: block; width: var(--progress, 0%); height: 100%; border-radius: inherit; background: var(--brand); }
+
+/* Canonical 56-icon mask rendering; glyph paths remain unchanged. */
+.seed-icon { display:inline-block; flex:0 0 auto; background:currentColor;
+  -webkit-mask-image:var(--seed-icon); mask-image:var(--seed-icon);
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-position:center; mask-position:center;
+  -webkit-mask-size:contain; mask-size:contain; }
+.glyph .seed-icon { display:block; width:100%; height:100%; }

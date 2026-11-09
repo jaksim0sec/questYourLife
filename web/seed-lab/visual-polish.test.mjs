@@ -5,7 +5,7 @@ const read=(f)=>readFileSync(new URL(f,import.meta.url),"utf8");
 const html=read("./index.html"),js=read("./lab.js"),style=read("./lab.css"),seed=read("../preview/seed-standard.css");
 
 test("Page Shell remains an S-PAGE layout primitive rather than a new page type",()=>{
-  assert.match(html,/class="seed-page-shell" data-shell-kind="root"/);
+  assert.match(html,/class="seed-page-shell"[^>]*data-shell-kind="root"/);
   for(const slot of ["header","content","section","bottom"])assert.match(seed,new RegExp("\\.seed-page-shell__"+slot+"\\b"));
   for(const role of ["root","detail","utility"])assert.match(html,new RegExp('data-shell-choice="'+role+'"'));
   assert.match(js,/function renderPageShell\(/);

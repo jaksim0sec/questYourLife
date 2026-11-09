@@ -13,6 +13,28 @@ references: [D-011, D-012, D-013]
 >
 > **상태:** 제안 규격 및 구현 가이드. 기존 v0.15 승인값과 D-011/D-013를 변경하지 않으며 이번 문서 등록 자체가 웹·Android 공통 스타일 구현 완료를 뜻하지 않는다.
 
+## 2026-11-10 · 웹 구현 범위 (Android 미착수)
+
+**현재 구현 소스:** [web/preview/seed-standard.css](../../../../web/preview/seed-standard.css) → [style.css](../../../../web/preview/style.css) → [clan.css](../../../../web/preview/clan.css) 순서로 불러온다. 이것은 같은 SEED 토큰과 공통 스타일을 공유하는 **실제 웹 코드**이며, 이전의 문서상 약속만 남은 상태와 다르다.
+
+| 웹 표준 클래스 | 현재 연결 | 보존 원칙 |
+|---|---|---|
+| `.seed-text[data-text-role="caption"]` | 기존 `.muted`와 같은 선언 | 글자 수치 유지. 다른 4개 텍스트 역할 전체 구현을 주장하지 않음 |
+| `.seed-action[data-variant]` | 기본/solid/neutral-outline/ghost/reward-secondary, 기존 `.gallery-button` 별칭 | 기존 시연 버튼의 높이·패딩·색 그대로 |
+| `.seed-media` + 하위 label/fallback | 기존 `.media-frame`, `.media-label`, `.media-fallback` 별칭 | 1:1 비율, 이미지 72%·보상 86% 점유 규격 보존 |
+| `.seed-badge[data-tone]` | 기존 `.badge` 별칭과 3종 실제 시연 | 기존 배지 텍스트·padding 유지 |
+| `.seed-progress-track` / `.seed-progress-fill` | 기존 `.progress-track` 병용 | 실제 `--progress` 33.333%/58.333% 원본 유지 |
+| `.seed-icon` | 기존 공식 SVG mask 처리 | 56개 정본 경로 변경 없음 |
+| 공통 Foundation/Shell | 기존 `:root` 토큰·반응형·Header/Nav/Sheet 규칙을 표준 파일로 이동 | CSS 선언값 복사·추출만 하고 수치 교정 안 함 |
+
+**실제 전환:** HTML에는 기존 클래스와 새 표준 클래스를 같이 달아 호환한다. 표준 파일에는 기존 선언을 옮기고 alias selector를 추가했으며, `style.css`는 페이지별 레이아웃·표현만 소유한다. `clan.css`의 지역 구조·컴포넌트 변형은 기존대로 남겨 화면 형태를 변경하지 않는다. JS와 사용자 데이터·이미지 파일은 이 작업에서 수정하지 않는다.
+
+**수치 충돌의 처리:** 현행 preview 버튼 높이·색상 등과 v0.15에서 승인한 기준 사이에 차이가 남아 있다. 사용자가 **비율·데이터를 임의 변경하지 말라**고 요청했으므로, 표준 파일은 **현재 웹 시연값을 정확히 보존**했다. 문서/구현 간 차이의 조정이나 모든 Variant의 전체 구현은 별도 승인 대상이다.
+
+**실행 상태/검증:** `web/preview/seed-standard.test.mjs`에 클래스 연결과 현재 값/비율/데이터 보존 검사를 추가했다. 이는 문서·정적 코드 계약이며 사용자 육안 비교나 Compose 검증을 대체하지 않는다. 다음 작업에서 웹 공통 스타일을 사용하는 컴포넌트는 우선 `seed-standard.css`의 실제 구현을 인용한다.
+
+---
+
 ## 1. 세 가지를 분리한다
 
 | 구분 | 정본과 책임 | 매 페이지가 하는 일 |

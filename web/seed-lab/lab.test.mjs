@@ -54,3 +54,11 @@ test('body of the lab does not import the clan preview or app state',()=>{
   assert.doesNotMatch(html,/clan\.js|app\.js|supabase/);
   assert.match(js,/fetch\(ICON_ROOT\+"manifest.json"\)/);
 });
+
+test('thickness selection targets controls only and never writes aria-pressed to the progressbar',()=>{
+  assert.match(js,/const thicknessButtons=\$\$\("button\[data-thickness\]"\)/);
+});
+test('unavailable progress clears any old accessible value text',()=>{
+  const section=js.split('else if(p.state==="unavailable"){')[1].split('}else{')[0];
+  assert.match(section,/track\.removeAttribute\("aria-valuetext"\)/);
+});

@@ -302,3 +302,12 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 .palette-sample.warning i { background: var(--palette-orange-500); }
 .palette-sample.special i { background: var(--palette-purple-500); }
 .rank-change svg { color: var(--palette-blue-500); }
+/* Shared SVG icons: CSS paints currentColor through the approved source mask. */
+.seed-icon { display:inline-block; flex:0 0 auto; background:currentColor;
+  -webkit-mask-image:var(--seed-icon); mask-image:var(--seed-icon);
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-position:center; mask-position:center;
+  -webkit-mask-size:contain; mask-size:contain; }
+.glyph .seed-icon { display:block; width:100%; height:100%; }
+.rank-change .seed-icon { width:.9rem; height:.9rem; transform:rotate(-90deg); }
+.menu-theme-icon { width:20px; height:20px; }

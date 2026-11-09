@@ -9,7 +9,7 @@
   const svg = (key, cls='') => {
     const icon=seedIconNames[key];
     if(!icon)return '';
-    const path='assets/seed-icons/'+icon+'.svg';
+    const path='../../assets/icons/soft/v0.14/'+icon+'.svg';
     return `<span class="clan-svg ${cls}" data-seed-icon="${icon}" aria-hidden="true" style="-webkit-mask-image:url('${path}');mask-image:url('${path}')"></span>`;
   };
   const safe = t => String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

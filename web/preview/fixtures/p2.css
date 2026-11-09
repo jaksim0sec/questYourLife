@@ -63,7 +63,7 @@
 .p2-tabs{display:flex;gap:0;width:100%;border-bottom:1px solid var(--line)}
 .p2-tab{border-radius:0;background:transparent;min-width:50%;border-bottom:2px solid transparent}
 .p2-tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
-#p2-panel{font-size:13px}
+[role="tabpanel"]{font-size:13px}
 .p2-bad-tabs{display:flex;gap:26px;border-bottom:1px solid var(--line)}
 .p2-bad-tabs span{font-size:12px;padding:2px}
 .p2-segments{display:inline-flex;gap:3px;padding:3px;background:var(--shell-surface);border-radius:14px;max-width:100%}

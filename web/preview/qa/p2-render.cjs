@@ -23,7 +23,7 @@ const folder=path.resolve(process.env.P2_EVIDENCE_DIR||'docs/design/evidence/p2-
    const goodTexts=[...document.querySelectorAll('.p2-good *')].filter(e=>e.childNodes.length&&[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim())&&!e.closest('[hidden]'));
    const tooSmall=goodTexts.filter(e=>parseFloat(css(e).fontSize)<11.99).map(e=>({tag:e.tagName,cls:e.className,size:css(e).fontSize,text:e.textContent.slice(0,28)}));
    const action=el('[data-component="C-ACTION"] .p2-good .p2-touch'),icon=el('.p2-good .p2-icon'),wrong=el('.p2-bad .p2-icon-bad');
-   return {progress:measure(normal),badProgress:measure(bad),normalImageFit:css(el('.good-image img')).objectFit,badImageFit:css(el('.bad-image img')).objectFit,
+   return {progress:measure(normal),badProgress:measure(bad),normalImageFit:css(el('.good-image img')).objectFit,badImageFit:css(el('.bad-image img')).objectFit, imagesLoaded:[...document.querySelectorAll('.p2-good img')].map(x=>({src:x.currentSrc,complete:x.complete,width:x.naturalWidth})),
     actionHit:[rect(action).width,rect(action).height],iconHit:[rect(icon).width,rect(icon).height],badIconHit:[rect(wrong).width,rect(wrong).height],
     representativeFont:parseFloat(css(el('.p2-number')).fontSize),badDerivedFont:parseFloat(css(el('.p2-giant-derived')).fontSize),
     minFontIssues:tooSmall,surfaceFlat:el('.p2-good .p2-flat').children.length,badCards:el('.p2-bad .p2-bad-cards').children.length,
@@ -38,7 +38,7 @@ const folder=path.resolve(process.env.P2_EVIDENCE_DIR||'docs/design/evidence/p2-
   assert.ok(Math.abs(dom.progress.fill-.62)<.01,'rendered fill actual '+JSON.stringify(dom.progress));
   assert.ok(Math.abs(dom.badProgress.fill)<.005,'counterexample must show a real blank track');
   assert.equal(dom.progress.now,620);assert.ok(Math.abs(dom.progress.barHeight-10)<.5);
-  assert.equal(dom.normalImageFit,'contain');assert.equal(dom.badImageFit,'cover');
+  assert.equal(dom.normalImageFit,'contain');assert.equal(dom.badImageFit,'cover');assert.ok(dom.imagesLoaded.length>=2&&dom.imagesLoaded.every(x=>x.complete&&x.width>0),'normal fixture images must be decoded: '+JSON.stringify(dom.imagesLoaded));
   assert.ok(dom.actionHit[0]>=48&&dom.actionHit[1]>=48,'action target min48');
   assert.ok(dom.iconHit[0]>=48&&dom.iconHit[1]>=48,'icon target min48');
   assert.ok(dom.badIconHit[0]<48&&dom.badIconHit[1]<48,'bad icon target visibly too small');
@@ -56,7 +56,7 @@ const folder=path.resolve(process.env.P2_EVIDENCE_DIR||'docs/design/evidence/p2-
   assert.equal(await page.locator('#p2-results .p2-result:visible').count(),2);
   await page.locator('#p2-filter').click();assert.equal(await page.locator('#p2-results .p2-result:visible').count(),1);
   assert.equal(await page.locator('#p2-filter').getAttribute('aria-pressed'),'true');
-  await page.locator('#p2-tab-b').click();assert.equal(await page.locator('#p2-panel').innerText(),'멤버 패널');assert.equal(await page.locator('#p2-tab-b').getAttribute('aria-selected'),'true');
+  await page.locator('#p2-tab-b').click();assert.equal(await page.locator('#p2-panel-b').innerText(),'멤버 패널');assert.ok(await page.locator('#p2-panel-b').isVisible());assert.ok(await page.locator('#p2-panel-a').isHidden());assert.equal(await page.locator('#p2-tab-b').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#p2-tab-b').getAttribute('aria-controls'),'p2-panel-b');await page.keyboard.press('ArrowLeft');assert.ok(await page.locator('#p2-panel-a').isVisible());
   await page.locator('.p2-segment[data-period="지난 주"]').click();assert.equal(await page.locator('#p2-period-output').innerText(),'지난 주 기록 540');
   await page.locator('#p2-gesture-step').click();assert.equal(await page.locator('#p2-gesture-output').innerText(),'중간');
   await page.locator('#p2-gesture-handle').focus();await page.keyboard.press('ArrowUp');assert.equal(await page.locator('#p2-gesture-output').innerText(),'전체');

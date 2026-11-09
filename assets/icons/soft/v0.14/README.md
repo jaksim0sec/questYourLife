@@ -2,7 +2,7 @@
 
 **Current source of truth for the proposed icon pack.** Supplied by the user on 2026-11-05 as `soft-icons-v014-56.zip`. This replaces the earlier assistant-drawn 37-icon v0.14 files **at the same paths**. SVG content is byte-identical to the supplied core/additional files; the filenames are flattened for direct access.
 
-**2026-11-09 전환 안내:** 위 경로는 **현재 유효한 원본 정본**이다. `new`가 향후 앱 개발 브랜치로 전환될 때 승인된 원본 56종과 manifest/QA/STYLE을 공통 `assets/icons/soft/v0.14/`로 이전할 계획이며, 실제 이동·preview 참조 수정 전까지 이 경로를 계속 사용한다. `web/preview/assets/seed-icons/`의 18개 사본은 원본과 비교해 중복을 정리할 대상이다. [공통 에셋 관리 계약](../../../../docs/assets/README.md) 참고. 파일이 이미 이동했다고 가정하지 않는다.
+**2026-11-09 완료 기록:** 공식 56종과 manifest/QA/STYLE을 이 공통 정본 경로로 옮겼다. 이전 `web/preview/assets/seed-icons/`의 18개는 원본과 Git SHA가 일치해 제거했고 preview 코드를 이 경로로 참조하도록 수정했다. 이 변경으로 승인 도형·획 규칙은 바뀌지 않았다. [공통 관리 계약](../../../../docs/assets/README.md) 참고.
 
 ## Inventory
 

@@ -11,7 +11,7 @@
 | 작업 | 필요한 문서부터 읽기 |
 |---|---|
 | 제품 의도·화면 흐름 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [제품 색인](./product/README.md)의 관련 항목. 앱 정체성이나 전체 UX를 다루면 [VISION](./product/VISION.md)도 읽는다. |
-| 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](./design/seed/implementation/v015.md)과 [토큰](./design/seed/implementation/v015-tokens.json) → [INDEX](./design/seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](./design/seed/assets/icons/v0.14/README.md). |
+| 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](./design/seed/implementation/v015.md)과 [토큰](./design/seed/implementation/v015-tokens.json) → [INDEX](./design/seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](../assets/icons/soft/v0.14/README.md). |
 | 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](./design/SEED_AUTHORING_GUIDE.md) → [INDEX](./design/seed/INDEX.md)에서 기존 규칙과 대조. |
 | Android 코드 수정 | **현재** `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)를 읽고 실제 코드를 확인. `new`로 코드 이관 시 이 안내를 현황에 맞춰 갱신. |
 | SVG·이미지 관리/preview 에셋 이전 | [공통 에셋 관리 계약](./assets/README.md) → [SEED INDEX](./design/seed/INDEX.md)의 관련 아트·아이콘 문서 → 현재 사용처 코드와 자산 확인. |
@@ -43,7 +43,7 @@ SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Componen
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)
 - [작업별 문서 참고 지침](./AGENTS.md)
-- [SVG·래스터 공통 에셋 정본 및 이관 계약](./assets/README.md)
+- [SVG 공통 정본 이관 결과·래스터 이전 계약](./assets/README.md)
 
 ## 이전 브랜치에서 가져온 문서 무결성 기록
 

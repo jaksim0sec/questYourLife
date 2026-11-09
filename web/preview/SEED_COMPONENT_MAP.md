@@ -95,3 +95,8 @@
 - GitHub에서 ICON SHA 확인, 12개의 클랜 해시 렌더/링크 검증, 원본 AvatarComposer 위치값·RootFontSize·Header·Bottom Nav 보존 검사.
 - 실제 GitHub Pages 렌더, Android 실기기 TalkBack·IME, 200% 텍스트·보상/초대 서버 E2E는 **별도 검증 전 완료로 선언하지 않음**.
 - 이 매핑은 **기존 SEED를 클랜에 정확히 적용하기 위한 설명서**이지 v0.15 확정 시드 파일을 수정하거나 새 제품 정책으로 승격하는 문서가 아님.
+
+
+### 2026-11-09 경로 정정
+
+위 `assets/seed-icons/` 복사본 설명은 11월 8일 당시의 이력이다. SHA 동일성을 확인한 뒤 18개 사본을 제거하고 `../../assets/icons/soft/v0.14/` 정본을 직접 참조하도록 변경했다. 별도 Fill·sun/moon은 `../../assets/icons/preview/`로 이동했다. 보상 래스터는 아직 이전하지 않았다.

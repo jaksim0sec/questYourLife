@@ -72,8 +72,8 @@
 
 ## `new` 전환 상태 · 현재와 목표
 
-- **현재:** `new`에는 앱 코드가 없고 문서·웹 preview만 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
+- **현재:** `new`에는 앱 코드가 없고 문서·웹 preview 및 공통 SVG 원본이 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
 - **목표:** `new`는 장차 `main`에 상응하는 독립 개발 브랜치가 된다. 코드 편입 시 AGENT/IDEA와 기존 데이터·리소스·실행 기준을 실제 파일과 대조하고, 충돌 해결·회귀 검증 후 라우팅 문서를 갱신한다. 현재 문서 전용이라는 이유로 향후 개발 범위를 영구 제한하지 않는다.
-- **에셋:** 장래 공통 `assets/`로 원본 정본을 통일한다. 현재 `docs/design/seed/assets/icons/v0.14/` 및 `web/preview/assets/`는 이관 전 경로이며 사용처를 함께 옮기기 전까지 유지한다. [관리·이관 계획](./assets/README.md) 참고.
+- **에셋:** 공통 `assets/icons/soft/v0.14/` SVG 이전 및 preview 참조 변경 완료. PNG/WebP는 아직 기존 `web/preview/assets/`에 있으며 래스터의 공통 정본 이관은 미완료다. [관리·이관 현황](./assets/README.md) 참고.
 - 이 파일은 `docs/AGENTS.md`에 위치하므로 **루트 `AGENTS.md` 자동 탐색을 대신한다고 가정하지 않는다**. 새 작업에서는 명시적으로 읽는다.
 - 콘텐츠 원본은 `docs/archive/AGENTS-original-2026-11-04.md`에도 변경 없이 보존한다.

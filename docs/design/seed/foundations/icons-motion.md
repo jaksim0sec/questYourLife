@@ -45,8 +45,8 @@ references: [REF-001, REF-002, REF-004, REF-005]
 선 중심 아이콘은 반복 관찰 high 및 D-011 확정 방향. SVG 수치·모션 시간·미노출 focus/loading은 설계 제안이다. 아이콘 교체 시 슬롯·이름·선의 무게를 함께 확인한다. 연출 품질은 아직 구현·측정하지 않았다.
 
 
-**에셋 경로와 사용처:** `docs/design/seed/assets/icons/v0.14/`는 현재의 원본 정본이다. 미래의 `assets/icons/soft/v0.14/` 이전 및 preview의 `assets/seed-icons/` 중복 정리 계획은 [공통 에셋 관리 계약](../../../assets/README.md)을 따른다. 기존 56종의 도형·승인 규칙은 유지하며, 실제 이동 전에 링크를 새 경로로 바꾸지 않는다.
+**에셋 경로와 사용처:** 정본은 실제 `assets/icons/soft/v0.14/`로 옮겼다. preview의 SHA 일치 SVG 18개는 제거하고 참조를 바꿨다. [공통 에셋 관리 계약](../../../assets/README.md)은 이관 기록과 래스터 후속 작업을 소유한다. 56종의 승인 도형·규칙은 그대로 유지한다.
 
 ## v0.15 원본 우선순위
 
-[사용자 제공 Soft SVG 56종](../assets/icons/v0.14/README.md)은 시드의 **유일한 현행 UI 아이콘 정본**. 기존 37개 assistant-drawn SVG 및 고정 1.95/2.15 stroke 후보를 우선 사용하지 않는다. 다른 브랜드의 SVG를 찾아 대체하지 않는다. 보상 코인 이미지는 별도 art이고 `coins.svg`는 일반 pictogram임. Native 앱의 이미 승인된 클랜 나침반 등은 자동 변경 금지.
+[사용자 제공 Soft SVG 56종](../../../../assets/icons/soft/v0.14/README.md)은 시드의 **유일한 현행 UI 아이콘 정본**. 기존 37개 assistant-drawn SVG 및 고정 1.95/2.15 stroke 후보를 우선 사용하지 않는다. 다른 브랜드의 SVG를 찾아 대체하지 않는다. 보상 코인 이미지는 별도 art이고 `coins.svg`는 일반 pictogram임. Native 앱의 이미 승인된 클랜 나침반 등은 자동 변경 금지.

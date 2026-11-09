@@ -64,7 +64,7 @@
 ## v0.15 디자인 시드 합의
 
 **D-012 · SVG·컴포넌트 시각 규격 [디자인 시드 확정 · 2026-11-05]**
-- 사용자가 직접 제공한 Soft SVG **56종**(32 Outline + 5 Fill + 19 추가 Outline)을 공식 시드 SVG로 채택. `24×24 viewBox`, `stroke-width=1.8`, round cap/join, `currentColor`. HTML 시연이 아니라 [개별 SVG 파일](./design/seed/assets/icons/v0.14/README.md)이 원본이다.
+- 사용자가 직접 제공한 Soft SVG **56종**(32 Outline + 5 Fill + 19 추가 Outline)을 공식 시드 SVG로 채택. `24×24 viewBox`, `stroke-width=1.8`, round cap/join, `currentColor`. HTML 시연이 아니라 [개별 SVG 파일](../assets/icons/soft/v0.14/README.md)이 원본이다.
 - 기본 여백·Radius 16, 버튼 내부 아이콘 16–18, 아이콘/버튼 비율, 중립 Outline, 라이트/다크 의미색, 다크 보상용 노랑 CTA의 **흰색 텍스트·아이콘**, 7톤 Pill Badge, Progress 단일 컴포넌트, 10개 Surface 역할과 5개 텍스트 위계, 단일 트랙 Segmented를 **재사용 디자인 문법**으로 채택.
 - Bottom Sheet: 내용 기반 Min / Mid / Full / Closed, 손가락 실시간 추적, 놓은 위치 가까운 상태로 스냅. 내부 스크롤 상단↓/하단↑에서 이어서 시트 드래그. Footer 고정과 키보드/닫기 대체 조작 포함.
 - [최종 구현·검수 계약](./design/seed/implementation/v015.md)과 [기계 판독 규격](./design/seed/implementation/v015-tokens.json)을 채택 기준으로 등록. 승인 범위는 **웹으로 확인한 디자인 규칙**이며 독립 네이티브 앱 개발·CI·실기기 검증을 자동 승인하지 않는다.
@@ -79,10 +79,10 @@
 - 기존 D-011/D-012 승인값은 유지한다. 선택한 F-TYPE/F-GEOMETRY의 웹 표현은 이번 개편의 검수 시작 기준이며, 실제 화면 검증·제품 경제·IA·Android 승인과 구분한다.
 - 실제 구현은 [웹 어댑터 계약](./design/seed/implementation/v015.md)의 소유권과 인터페이스를 따른다. 공통 계약 확정은 P2/P3 제품 코드 변경 완료나 main 병합·공개 배포를 뜻하지 않는다.
 
-## D-014 · 공통 에셋 정본과 preview 이관 방향 [관리 기준 확정 · 이관 미실행 · 2026-11-09]
+## D-014 · 공통 에셋 정본과 preview 이관 방향 [SVG 이관 완료 · 래스터 미완료 · 2026-11-09]
 
 - SVG UI 아이콘과 래스터/3D 아트를 역할별로 구분하되, **동일한 소스 파일의 정본은 한 곳**에서 관리한다. 장차 저장소 루트 `assets/`를 공통 원본 위치로 사용한다. 세부 경로와 단계별 전환은 [에셋 관리 계약](./assets/README.md)을 따른다.
-- 기존 56개 Soft SVG의 실제 원본은 **이관 전까지** `docs/design/seed/assets/icons/v0.14/`이며 D-012의 승인된 도형·manifest/QA는 유지한다. `web/preview/assets/seed-icons/`의 중복 SVG는 원본 대조 후 공통 위치로 이동·참조 교체하는 것이 목표다.
+- 기존 56개 Soft SVG는 원본 Git blob SHA를 보존해 `assets/icons/soft/v0.14/`로 **이전 완료**. `web/preview/assets/seed-icons/`의 중복 18개를 삭제하고 참조를 공통 위치로 교체했다.
 - preview의 래스터와 별도 SVG/inline 도형도 사용처·원본·예외를 구분한다. 실제 경로 변경 시 CSS mask·JS/HTML·정적 서버 루트·GitHub Pages 경로를 동시에 갱신해 깨진 참조를 남기지 않는다.
 - Android `drawable`/`drawable-nodpi`는 플랫폼용 연결·변환 경로다. 기존 클랜 나침반, 마스코트·캐시·장착 자산 및 사용자 데이터의 식별자를 임의 변경하지 않는다.
-- **이번 결정 기록은 문서만 수정한다. SVG/PNG/WebP 파일 이동·중복 삭제·코드 참조 변경은 아직 수행하지 않았다.**
+- **2026-11-09 실현 상태:** SVG 이동·중복 삭제·preview HTML/CSS/JS 참조 변경만 수행했다 (`c0d360a`). PNG/WebP 파일 등록·이동, Android 코드 이관·배포는 미완료이며 별도 검증 대상이다.

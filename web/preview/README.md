@@ -7,14 +7,13 @@
 - `assets/mascot.png`, `assets/box.webp`: 홈 MHTML에서 실제 추출한 바이너리
 - `app.js`: 의도된 시연 수준의 hash 라우팅과 테마 전환 및 빈 메뉴/알림 시트
 
-## 공통 에셋으로 이관 예정 · 2026-11-09
+## 공통 SVG 에셋 전환 완료 · 2026-11-09
 
-**현재 실행 경로는 그대로 유지한다.** `web/preview/assets/seed-icons/`에 있는 공식 SVG 계열 사본 18개, `clan-bookmark-fill.svg`, `index.html`/JS 내 inline SVG 및 `box*.webp`·`mascot*.png`·`cosmetic_*.png`는 [공통 에셋 관리 계약](../../docs/assets/README.md)에 따라 원본/예외를 확인하고 **실제 파일 이동 시** 참조를 함께 바꿀 대상이다.
-
-- 목표는 향후 `new`가 앱 개발 브랜치가 될 때 루트 `assets/`를 SVG/이미지의 공통 소스로 사용하고, preview가 그 정본을 직접 참조하도록 만드는 것. **현행 56 SVG 원본은 아직** `docs/design/seed/assets/icons/v0.14/`에 있다.
-- `clan.js`의 CSS mask URL(`assets/seed-icons/<name>.svg`)과 HTML/CSS/JS 이미지 URL은 **페이지 주소 기준**으로 해석된다. 이관 시 새 경로·로컬 서버 루트·GitHub Pages base path를 함께 수정해야 한다.
-- 실제 전환 후에는 저장소 루트를 서빙하고 `/web/preview/`로 접근하도록 아래 실행 안내를 변경한다. 지금은 변경 전이므로 **기존 아래 실행 명령**을 계속 사용한다.
-- 이 절은 **이전 작업의 명세만 기록**한 것. SVG/PNG/WebP 파일, preview 코드, 기존 기능은 아직 이동·수정하지 않았다. 신규 아트 원본이나 별도 Fill 도형을 기존 승인 Soft SVG로 자동 대체하지 않는다.
+- 정본 `assets/icons/soft/v0.14/`의 공식 56종은 SVG 바이트를 유지해 이동했으며, preview의 `assets/seed-icons/` 중복 18종을 삭제했다.
+- `index.html`의 고정 SVG 15개는 공통 CSS mask 참조로 교체했고, `app.js` 하단 네비 Outline/Fill 및 `clan.js` 아이콘도 새 경로를 사용한다.
+- 클랜 책갈피 Fill, 메뉴 sun/moon은 별도 `assets/icons/preview/`에 둔다. 동적 깃발 SVG는 사용자 정의 색을 적용하는 코드이므로 독립 파일로 분리하지 않았다.
+- 보상·마스코트·장비 **PNG/WebP는 아직 `web/preview/assets/`에 그대로 있다.** 이미지 이전 완료로 표기하지 않는다.
+- [공통 관리 규칙](../../docs/assets/README.md) 참고. GitHub Pages 및 실제 기기 시각 검수는 별도.
 
 ## 범위
 
@@ -26,7 +25,7 @@
 
 ## 실행
 
-정적 서버에서 `web/preview/` 디렉터리를 루트로 서빙 (`python3 -m http.server 8000 -d web/preview`) 후 `http://localhost:8000/#home` 에 접속. 별도 빌드/패키지 설치 불필요.
+**저장소 루트에서** `python3 -m http.server 8000` 실행 후 `http://localhost:8000/web/preview/#home`에 접속. 공통 `assets/` 경로가 필요하므로 `web/preview`만 서버 루트로 삼는 과거 명령은 더 이상 사용하지 않는다. 별도 빌드/패키지 설치 불필요.
 
 `style.css` 원본 규칙은 보존하되 하단에 의미색 시연 오버라이드를 추가했음. 메뉴 시트의 테마 전환은 루트 색상 토큰 검수용. 미저장 페이지에 대한 디자인 채택이나 정보구조 확정은 이 프로토타입만으로 판단하지 않음.
 

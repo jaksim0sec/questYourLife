@@ -32,8 +32,8 @@ Default/Active/Disabled/Pressed/Focused. 장식 SVG는 읽기에서 숨기고, �
 
 ## v0.14 user-supplied authoritative icon source (proposed)
 
-[실제 SVG 56개](../assets/icons/v0.14/README.md) = Core Outline 32 + Fill 5 + Additional Outline 19. 사용자 제공 ZIP 원본을 **바이트 단위 그대로** 사용한다. `viewBox=0 0 24 24`, 기본 `stroke-width=1.8`, 둥근 cap/join, `currentColor`. 이 단락이 이전의 v0.6 `1.95` 후보 및 과거 v0.14 `2.15` 실험값보다 **본 아이콘 세트에 한해서** 우선한다. 이름/경로는 유지하고 별도 Fill이 없는 아이콘은 임의로 채우지 않는다. `check-circle-fill`의 mask는 Android 변환 시 검증 필수. `main`의 승인된 클랜 나침반 아이콘을 `users`로 자동 교체하지 않는다.
+[실제 SVG 56개](../../../../assets/icons/soft/v0.14/README.md) = Core Outline 32 + Fill 5 + Additional Outline 19. 사용자 제공 ZIP 원본을 **바이트 단위 그대로** 사용한다. `viewBox=0 0 24 24`, 기본 `stroke-width=1.8`, 둥근 cap/join, `currentColor`. 이 단락이 이전의 v0.6 `1.95` 후보 및 과거 v0.14 `2.15` 실험값보다 **본 아이콘 세트에 한해서** 우선한다. 이름/경로는 유지하고 별도 Fill이 없는 아이콘은 임의로 채우지 않는다. `check-circle-fill`의 mask는 Android 변환 시 검증 필수. `main`의 승인된 클랜 나침반 아이콘을 `users`로 자동 교체하지 않는다.
 
 ## v0.15 최종 채택
 
-정본 [Soft SVG 56종](../assets/icons/v0.14/README.md) · [name/Fill manifest](../assets/icons/v0.14/manifest.json) · [적용·검증](../implementation/v015.md). 32개 기본 Outline + 5개 Fill + 19개 추가 Outline. 다섯 Fill은 `home, chat, users, user, check-circle`이며 별도 파일로 상태 변경. `check-circle-fill`의 `mask`는 Android VectorDrawable에 바로 복사 불가; 실제 색/negative space를 유지하는 대응 구현과 렌더 검증 필수.
+정본 [Soft SVG 56종](../../../../assets/icons/soft/v0.14/README.md) · [name/Fill manifest](../../../../assets/icons/soft/v0.14/manifest.json) · [적용·검증](../implementation/v015.md). 32개 기본 Outline + 5개 Fill + 19개 추가 Outline. 다섯 Fill은 `home, chat, users, user, check-circle`이며 별도 파일로 상태 변경. `check-circle-fill`의 `mask`는 Android VectorDrawable에 바로 복사 불가; 실제 색/negative space를 유지하는 대응 구현과 렌더 검증 필수.

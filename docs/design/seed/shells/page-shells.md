@@ -73,3 +73,15 @@ Root의 좌측 화면명/우측 Outline 액션, Standard의 Back 또는 Close/�
 Back은 유효한 앱 내부 이전 이력으로, 직접 진입 시 해당 라우트의 기존 부모로 간다. 브라우저 Back을 별도 가짜 이력으로 대체하지 않는다. scroll은 URL 하나가 아닌 history entry별로 복원한다. Shell은 navigation·scroll·safe inset을 소유하고 클랜은 탭/필터 등 지역 상태만 소유한다. 지역 rerender가 무조건 window.scrollTo(0)를 호출하지 않게 한다. 닫기·메뉴·테마 전환도 원래 포커스와 탐색 맥락을 보존한다.
 
 하단 공간은 실제 측정된 고정 영역 높이와 safe inset을 Shell 한 곳에서 계산한다. 하단 활성 Fill/비활성 Outline은 D-012 승인 표현이며 목적지 IA와 별개다. 실제 탭 경로·클랜 나침반/웹 책갈피의 기존 적용 범위를 혼동하지 않는다.
+
+## 2026-11-10 · Shell과 본문 섹션 구분 (제안 보완)
+
+Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스크롤·safe-area**를 구분하는 기존 Shell이다. 페이지의 내용이 이벤트인지 상품인지 랭킹인지는 Shell 종류가 아니다.
+
+- Shell이 Header, Bottom Navigation, fixed CTA, 스크롤 본문 경계를 먼저 소유한다. 페이지는 이 안에서 [섹션·공간 배치](../patterns/page-composition.md)를 선택한다.
+- 본문 섹션은 선택적인 Header/Body/Footer와 세로·가로·격자·겹침 배치로 구성할 수 있다. 이것이 새로운 Top Navigation이나 새로운 Page Type을 뜻하지 않는다.
+- 고정 하단 CTA는 일반 섹션 Footer와 다르다. 고정할 필요가 실제 과업에서 확인될 때만 S-PAGE의 inset/keyboard/scroll 계약을 따른다.
+- 고정 헤더/바를 디자인할 때 페이지별 '빈 공간'을 임의 사용하지 않는다. D-011 승인 슬롯·타이틀 기준을 유지한다.
+- 기존 'Root/Detail' 유형을 페이지 콘텐츠의 기본 템플릿으로 오용하지 않는다. 같은 Root라도 퀘스트·클랜·홈은 내부 구성 목적이 다를 수 있다.
+
+공간 구조 추가만으로 기존 route·history·focus·safe-area와 D-012 하단 아이콘의 실제 구현 계약을 변경하지 않는다.

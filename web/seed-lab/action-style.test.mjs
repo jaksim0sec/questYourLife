@@ -19,7 +19,7 @@ test("canonical action target owns no visible stroke and face owns visual stroke
   assert.ok(base,"missing canonical target");
   assert.match(base,/border:\s*0(?:px)?\b/);
   assert.match(base,/padding:\s*0(?:px)?\b/);
-  assert.match(shared,/\.seed-action\[data-variant="neutral-outline"\]\s+\.seed-action__face\s*\{[^}]*border-color:\s*var\(--line\)/);
+  assert.match(shared,/\.seed-action\[data-variant="neutral-outline"\]\s+\.seed-action__face\s*\{[^}]*border-color:\s*var\(--seed-stroke-control/);
   assert.doesNotMatch(shared,/\.seed-action\[data-variant="neutral-outline"\]\s*\{[^}]*border:/);
 });
 test("button text size belongs to C-ACTION role and stays stable across variants",()=>{

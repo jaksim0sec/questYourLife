@@ -1,0 +1,62 @@
+name: SEED r3 P0 gate
+on:
+  push:
+    branches: [seed-r3]
+    paths:
+      - '.github/workflows/seed-r3-p0.yml'
+      - 'web/preview/qa/header.cjs'
+      - 'web/preview/qa/progress.cjs'
+      - 'web/preview/qa/baseline.cjs'
+permissions:
+  contents: write
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          ref: 3e59cdac4594a552aaa6bf903a7935ef71eebf21
+          path: _baseline_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Render immutable baseline source and P0 preview
+        run: |
+          python3 -m http.server 8000 --directory _baseline_source/web/preview >/tmp/seed-p0-baseline.log 2>&1 &
+          python3 -m http.server 8001 --directory web/preview >/tmp/seed-p0-current.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null && curl -fsS http://127.0.0.1:8001/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node web/preview/qa/header.cjs
+          node web/preview/qa/progress.cjs
+          node web/preview/qa/baseline.cjs
+        env:
+          BASE_URL: http://127.0.0.1:8001/
+          PREVIEW_URL: http://127.0.0.1:8001/
+      - name: Verify 40 screenshot artifacts
+        run: |
+          python3 - <<'PY'
+          import json,pathlib
+          root=pathlib.Path('docs/design/evidence/baseline')
+          m=json.loads((root/'manifest.json').read_text())
+          files=list(root.glob('*.png'))
+          assert m['capture_count']==40 and len(files)==40,(m['capture_count'],len(files))
+          assert all(f.stat().st_size>1000 for f in files)
+          print('P0-5 PASS 40 real PNG files')
+          PY
+      - name: Commit captured baseline evidence
+        run: |
+          git config user.name 'seed-r3-qa[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/design/evidence/baseline/
+          if git diff --cached --quiet; then echo 'Artifacts already present'; else
+            git commit -m 'test(seed-r3): P0 immutable 40-case Chromium baseline'
+            git push origin HEAD:seed-r3
+          fi

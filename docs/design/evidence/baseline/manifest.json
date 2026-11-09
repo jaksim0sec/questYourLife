@@ -1,0 +1,367 @@
+{
+  "source_ref": "new",
+  "source_sha": "3e59cdac4594a552aaa6bf903a7935ef71eebf21",
+  "capture_count": 40,
+  "captures": [
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 320,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-joined-320-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 320,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-joined-320-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 360,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-joined-360-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 360,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-joined-360-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 390,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-joined-390-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 390,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-joined-390-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 430,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-joined-430-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-joined",
+      "route": "clan",
+      "width": 430,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-joined-430-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 320,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-guest-320-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 320,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-guest-320-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 360,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-guest-360-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 360,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-guest-360-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 390,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-guest-390-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 390,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-guest-390-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 430,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-guest-430-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-guest",
+      "route": "clan",
+      "width": 430,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-guest-430-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 320,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-my-320-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 320,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-my-320-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 360,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-my-360-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 360,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-my-360-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 390,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-my-390-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 390,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-my-390-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 430,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-my-430-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-my",
+      "route": "clan-my",
+      "width": 430,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-my-430-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 320,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-reward-320-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 320,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-reward-320-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 360,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-reward-360-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 360,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-reward-360-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 390,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-reward-390-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 390,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-reward-390-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 430,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-reward-430-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-reward",
+      "route": "clan-reward",
+      "width": 430,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-reward-430-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 320,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-record-320-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 320,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-record-320-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 360,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-record-360-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 360,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-record-360-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 390,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-record-390-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 390,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-record-390-dark.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 430,
+      "theme": "light",
+      "file": "docs/design/evidence/baseline/clan-record-430-light.png",
+      "source": "new",
+      "errors": []
+    },
+    {
+      "label": "clan-record",
+      "route": "clan-record",
+      "width": 430,
+      "theme": "dark",
+      "file": "docs/design/evidence/baseline/clan-record-430-dark.png",
+      "source": "new",
+      "errors": []
+    }
+  ]
+}

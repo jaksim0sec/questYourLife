@@ -1,0 +1,18 @@
+name: SEED r3 P1 contract checks
+on:
+  push:
+    branches: [seed-r3]
+    paths:
+      - '.github/workflows/seed-r3-p1.yml'
+      - 'web/preview/qa/p1-contracts.cjs'
+      - 'docs/design/seed/**'
+      - 'docs/design/TOP_NAVIGATION.md'
+permissions: {contents: read}
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node web/preview/qa/p1-contracts.cjs

@@ -48,8 +48,4 @@
 
 이 문서는 **새 웹 시연과 이후 Android 이식의 상단 헤더 기준**으로 사용한다. 기존 Android 화면이 즉시 변경된다는 의미는 아니다.
 
-> **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
-
-## 공통 계약 r1의 웹 적용
-
-Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 역할·수치 매핑은 [C-TEXT](seed/components/text-hierarchy.md), 타깃·gutter·이력 계약은 [S-PAGE](seed/shells/page-shells.md)의 K10을 따른다. Glyph 박스와 실제 target의 중심을 맞추며 icon별 translateX로 액션 간격을 보정하지 않는다. 기존 다크 Shell은 웹 trial이며 헤더의 새 전역 색상 승인으로 기록하지 않는다.
+> **SEED r3:** D-012/D-011의 승인 범위는 위 본문에 유지한다. 이전 공통 계약 r1의 추가 구현 규칙은 [HISTORY](seed/HISTORY.md)에 보존했으며 **현재 적용 계약이 아니다**. 진행 단계는 P1-STATUS와 G-P1을 확인한다.

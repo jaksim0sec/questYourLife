@@ -1,0 +1,41 @@
+name: SEED r3 P2 component browser checks
+on:
+  push:
+    branches: [seed-r3]
+    paths:
+      - 'docs/design/seed/components/**'
+      - 'docs/design/seed/P2_TRACE.md'
+      - 'web/preview/fixtures/**'
+      - 'web/preview/qa/p2-*.cjs'
+      - '.github/workflows/seed-r3-p2.yml'
+permissions: {contents: read}
+jobs:
+  contracts-and-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: 21 canonical component contracts and LEDGER ownership
+        run: node web/preview/qa/p2-contracts.cjs
+      - name: Install Chromium browser automation
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Actual normal/dont browser render and interactions
+        run: |
+          python3 -m http.server 8001 --directory web/preview >/tmp/seed-p2-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8001/fixtures/p2.html >/dev/null; then break; fi
+            sleep 1
+          done
+          node web/preview/qa/p2-render.cjs
+          node web/preview/qa/progress.cjs
+        env:
+          PREVIEW_URL: http://127.0.0.1:8001/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seed-r3-p2-six-viewports-browser-screenshots
+          path: docs/design/evidence/p2-runtime/
+          if-no-files-found: warn
+          retention-days: 30

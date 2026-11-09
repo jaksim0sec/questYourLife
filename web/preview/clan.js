@@ -48,8 +48,15 @@
     <a href="#clan-invite" class="clan-inline-invite">${svg('userPlus')}<span>초대</span></a>
   </div></section>`;
   const rewardVisual=()=>`<img src="assets/box_gold.webp" class="clan-chest-img" alt="" loading="lazy" draggable="false">`;
-  const progress=({compact=false}={})=>`<div class="clan-progress-meta"><div><span>공동 기록</span><strong>620 <small>/ 1,000</small></strong></div><span class="clan-remaining">완료까지 380</span></div>
-      <div class="clan-progress-track ${compact?'is-compact':''}" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620"><span style="width:62%"></span></div>`;
+  // Single source for the progress number, visual fill, and accessible value.
+  const collectiveRecord = Object.freeze({current:620,target:1000});
+  const progress=({compact=false}={})=>{
+    const {current,target}=collectiveRecord;
+    const fraction=target>0?Math.max(0,Math.min(current/target,1)):0;
+    const formatted=n=>new Intl.NumberFormat('ko-KR').format(n);
+    return `<div class="clan-progress-meta"><div><span>공동 기록</span><strong>${formatted(current)} <small>/ ${formatted(target)}</small></strong></div><span class="clan-remaining">완료까지 ${formatted(Math.max(target-current,0))}</span></div>
+      <div class="progress-track ${compact?'is-compact':''}" role="progressbar" aria-label="이번 주 공동 기록" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${current}"><span style="--progress:${fraction*100}%"></span></div>`;
+  };
 
   const rewardItems=()=>`<div class="clan-reward-items"><div class="clan-reward-items-head"><h3>상자에 담길 꾸미기</h3><a href="#clan-reward">미리보기 ${svg('chevron')}</a></div><div class="clan-reward-item-rail">
     <span class="clan-reward-item"><img src="assets/cosmetic_blue_cap.png" alt="파란색 캡" loading="lazy"><small>캡</small></span>

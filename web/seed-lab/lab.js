@@ -64,6 +64,7 @@ function renderProgress(key){
   track.setAttribute("aria-busy",String(p.state==="loading"));
   if(p.state==="loading"){
     track.removeAttribute("aria-valuenow");
+    track.removeAttribute("aria-valuetext");
     label.textContent="불러오는 중";
     note.textContent="값을 모르는 동안 확정 퍼센트를 표시하지 않습니다.";
   }else if(p.state==="unavailable"){
@@ -71,8 +72,9 @@ function renderProgress(key){
     label.textContent="조회 불가";
     note.textContent="유효한 0과 조회 불가는 다릅니다. 막대를 숨깁니다.";
   }else{
-    track.setAttribute("aria-valuenow",String(p.value));
+    track.setAttribute("aria-valuenow",String(Math.min(p.value,p.max)));
     track.setAttribute("aria-valuemax",String(p.max));
+    track.setAttribute("aria-valuetext",fmt(p.value)+" / "+fmt(p.max)+(p.state==="over"?" · 초과":""));
     label.textContent=fmt(p.value)+" / "+fmt(p.max);
     note.textContent=p.state==="over"?
       "원본 초과 기여는 보존하고 막대만 100%로 제한합니다. 지급 완료 의미는 아닙니다.":

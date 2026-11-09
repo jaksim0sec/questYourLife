@@ -103,17 +103,27 @@ async function guest(page){
  assert.ok((await d.locator('[data-context=wardrobe]').innerText()).includes('장착 중'));
  assert.ok(await d.locator('[data-context=wardrobe] button').isDisabled(),'equip must be disabled');
  assert.equal(await d.locator('#nav').count(),0,'non-global bottom nav absent');
- for(const theme of ['light','dark']){
+ for(const width of [320,390,430])for(const theme of ['light','dark']){
+   await d.setViewportSize({width,height:844});
    await d.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
-   await d.screenshot({path:path.join(output,'dressing-390-'+theme+'.png'),fullPage:true});
+   const check=await d.evaluate(()=>{
+      const nodes=[...document.querySelectorAll('.dress-shell h1,.dress-shell h2,.dress-shell p,.dress-shell strong,.dress-shell small,.dress-shell span,.dress-shell button,.dress-header a')];
+      const fonts=nodes.filter(e=>e.getClientRects().length).map(e=>({text:e.textContent.trim().slice(0,25),size:parseFloat(getComputedStyle(e).fontSize),weight:parseInt(getComputedStyle(e).fontWeight)||400}));
+      return{overflow:document.documentElement.scrollWidth-innerWidth,fonts,assetOk:[...document.querySelectorAll('.dress-media img')].every(e=>e.complete&&e.naturalWidth>0)};
+   });
+   assert.ok(check.overflow<=1,'dressing overflow '+width+'/'+theme+' '+check.overflow);
+   assert.ok(check.assetOk,'dressing cap image load');
+   const f=check.fonts.filter(t=>t.size<11.98||(t.size<13.98&&t.weight>600));
+   assert.equal(f.length,0,'dressing typography '+JSON.stringify(f));
+   await d.screenshot({path:path.join(output,'dressing-'+width+'-'+theme+'.png'),fullPage:true});
  }
  await d.close();
  assert.equal(matrix.length,40);
- fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify({status:'passed',sourceBranch:'seed-r3-p2p3',baselineSha:'3e59cdac4594a552aaa6bf903a7935ef71eebf21',capturedAt:new Date().toISOString(),captureCount:matrix.length,dressingCount:2,matrix},null,2)+'\n');
+ fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify({status:'passed',sourceBranch:'seed-r3-p2p3',baselineSha:'3e59cdac4594a552aaa6bf903a7935ef71eebf21',capturedAt:new Date().toISOString(),captureCount:matrix.length,dressingCount:6,matrix},null,2)+'\n');
  const md=['# P3 Chromium Before/After 실제 화면 비교','','Before P0 기준 커밋: new@3e59cda. 사용자 원본 레퍼런스 이미지 4/7/8/9는 현 브랜치에 없어 3열 시각 판정에서 미검증.','', '| 조건 | Before P0 | After P3 |','|---|---|---|'];
  for(const m of matrix.filter(x=>x.width===390))md.push('| '+m.label+' '+m.width+' '+m.theme+' | [PNG](../baseline/'+m.before+') | [PNG]('+m.image+') |');
  md.push('','- 전체 40개 근거: [manifest.json](manifest.json).','- 꾸미기 맥락: [라이트](dressing-390-light.png), [다크](dressing-390-dark.png).');
  fs.writeFileSync(path.join(output,'COMPARISON.md'),md.join('\n')+'\n');
- console.log('P3 PASS: 40 browser screenshots and functional regressions, 2 item-context comparisons');
+ console.log('P3 PASS: 40 browser screenshots and functional regressions, 6 item-context comparisons');
  }finally{await browser.close()}
 })().catch(e=>{console.error('P3 QA FAILURE',e);process.exitCode=1});

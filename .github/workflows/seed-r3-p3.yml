@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Reinspect 21 contracts, 380 ledger rows, and 5 page intents
+        run: node web/preview/qa/p3-contract-check.cjs
       - name: Browser 40 screenshot matrix computed styles and functionality
         run: |
           node --check web/preview/app.js
@@ -32,19 +34,22 @@ jobs:
             if curl -fsS http://127.0.0.1:8001/qa/p3-dressing.html >/dev/null; then break; fi
             sleep 1
           done
+          node web/preview/qa/p2-render.cjs
           node web/preview/qa/p3-render.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: seed-r3-p3-render-matrix
-          path: docs/design/evidence/p3/
+          path: |
+            docs/design/evidence/p2/
+            docs/design/evidence/p3/
           if-no-files-found: warn
       - name: Commit verified P3 screenshot and computed evidence
         if: success()
         run: |
           git config user.name 'seed-r3-qa[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/design/evidence/p3/
+          git add docs/design/evidence/p2/ docs/design/evidence/p3/
           if git diff --cached --quiet; then echo 'P3 Evidence already committed'; else
             git commit -m 'test(seed-r3/P3): capture 40 actual layouts and contextual item screenshots'
             git push origin HEAD:seed-r3-p2p3

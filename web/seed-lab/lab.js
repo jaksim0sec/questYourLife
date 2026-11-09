@@ -84,7 +84,7 @@ function renderProgress(key){
   updatePressed(progressButtons,key,"progressChoice");
 }
 progressButtons.forEach(button=>button.addEventListener("click",()=>renderProgress(button.dataset.progressChoice)));
-const thicknessButtons=$("button[data-thickness]");
+const thicknessButtons=$$("button[data-thickness]");
 thicknessButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#progress-track").dataset.thickness=button.dataset.thickness;
   updatePressed(thicknessButtons,button.dataset.thickness,"thickness");

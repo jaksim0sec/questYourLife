@@ -197,3 +197,20 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 **실패:** 페이지마다 버튼의 padding/radius를 다시 쓰는 구조; '같은 디자인이니까'라는 이유로 모든 Surface를 하나의 거대한 Wrapper로 합침; 예외 때마다 새 공통 Variant 추가; 기존 SVG/원본 아트 임시 대체; CSS Preview 동작을 Compose 구현 완료로 오인.
 
 이번 문서는 기존 SEED 구조를 유지하면서 **표준 스타일을 코드에 연결하는 계약**만 추가한다. 새 라이브러리/코드 생성기/컴포넌트 레지스트리/에디터는 요구하지 않으며 사용자가 별도로 요청하기 전에는 만들지 않는다.
+
+
+---
+
+## 2026-11-10 · SEED Lab 시각 교정과 S-PAGE 골격 웹 매핑
+
+이 후속 구현은 **새 Page Type/Composite를 만들지 않고**, 기존 `S-PAGE`의 공간 책임을 CSS 기본 단위로 재사용한다. `P-PAGE-COMPOSE`는 목적·섹션 선택을, `S-PAGE`는 헤더·본문·하단 슬롯 경계를, `C-SURFACE`는 개별 그룹의 표현을 계속 소유한다.
+
+| 영역 | 실제 웹 인터페이스 | 금지/경계 |
+|---|---|---|
+| Shell 공간 기본형 | `.seed-page-shell`, `__header`, `__inner`, `__content`, `__section`, `__bottom` | Header 아이콘·라우트·네이게이션 목적지는 구현하지 않음 |
+| Bottom Sheet Footer | `.seed-sheet__footer[data-layout="paired|stacked|single"]` 및 `hidden` | Action 버튼 타입이 아닌 기존 버튼의 조합·배치 |
+| 조작 경계 | `--seed-stroke-control` / C-ACTION Outline, C-FIELD, C-CHECK, C-RADIO | 장식용 `--line`을 조작 경계에 재사용하지 않음 |
+| 이미지 상태 배지 | `.seed-media .seed-media__badge[data-tone="neutral"]` | 기존 7개 Status Badge 의미색 외 새 임의 variant 없음 |
+| Lab 지역 배치 | `web/seed-lab/lab.css` | 공통 Action 내부 padding/font/색 오버라이드 금지 |
+
+**근거/검증:** [시각 평가 보고서](../../../superpowers/reports/2026-11-10-seed-lab-visual-review.md), [정적 회귀 테스트](../../../../web/seed-lab/visual-polish.test.mjs). 해당 페이지의 Root/Detail/Utility 선택은 실제 앱 라우팅이나 네이티브 시각 승인으로 승격하지 않는다.

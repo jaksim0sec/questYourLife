@@ -16,7 +16,7 @@ test('loads the shared stylesheet before the page-specific sheets', () => {
 });
 
 test('uses actual shared component classes, not only a catalogue', () => {
-  for (const name of ['seed-action', 'seed-media', 'seed-badge', 'seed-progress-track', 'seed-icon', 'seed-text']) {
+  for (const name of ['seed-media', 'seed-badge', 'seed-progress-track', 'seed-icon', 'seed-text']) {
     assert.match(shared, new RegExp('\\.' + name + '(?![\\w-])'));
     assert.match(html, new RegExp('class="[^"]*\\b' + name + '\\b'));
   }
@@ -46,4 +46,11 @@ test('does not recreate shared component geometry inside page CSS', () => {
   for (const selector of ['.seed-action {', '.seed-media {', '.seed-badge {', '.progress-track {', '.seed-icon {']) {
     assert.ok(!local.includes(selector), selector);
   }
+});
+
+
+test('the historical gallery buttons are separate from canonical SEED Action', () => {
+  assert.match(shared, /\\.seed-action\\s*\\{/);
+  assert.doesNotMatch(html, /gallery-button seed-action/);
+  assert.match(local, /\\.gallery-button\\s*\\{/);
 });

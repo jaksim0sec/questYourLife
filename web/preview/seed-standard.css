@@ -68,6 +68,40 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 .tools .icon-btn:nth-last-child(4) .glyph { transform: translateX(1.5rem); }
 
 
+/* Shared navigation, bottom sheet and menu shell, unchanged. */
+#nav { position: fixed; z-index: 20; inset: auto 0px 0px; background: var(--nav-surface); border-top: 1px solid var(--line); padding-bottom: var(--safe); }
+
+.nav-inner { display: grid; grid-template-columns: repeat(5, 1fr); min-height: calc(3.9525rem); }
+
+.nav-link { display: grid; place-content: center; justify-items: center; gap: calc(0.2325rem); font-size: calc(0.6975rem); color: var(--sub); font-weight: 700; }
+
+.nav-link .glyph, .nav-link svg { display: block; width: calc(1.56938rem); height: calc(1.56938rem); }
+
+.nav-link[aria-current] { color: var(--nav-active); font-weight: 850; }
+
+#sheet { position: fixed; inset: auto 0px 0px; margin: 0px auto; width: min(100%, 42rem); max-width: none; min-height: min(185px, 40dvh); padding: 0 0 var(--safe); border: 0px; border-radius: 1.5rem 1.5rem 0px 0px; background: var(--surface); color: var(--text); }
+
+#sheet::backdrop { background: var(--scrim); }
+
+.handle { display: grid; place-items: center; height: 1.75rem; }
+
+.handle::before { content: ""; width: 2rem; height: 0.25rem; border-radius: 999px; background: var(--handle); }
+
+.sheet-head { display: flex; justify-content: space-between; align-items: center; padding-inline: 1rem 0.5rem; }
+
+.sheet-head h2 { font-size: 1.25rem; }
+
+body { display: grid; grid-template-rows: auto 1fr; }
+
+.handle { width: 100%; border: 0px; background: transparent; touch-action: none; cursor: ns-resize; }
+
+.sheet-body { padding: 0.5rem 1rem 1rem; }
+
+.menu-row { display: flex; align-items: center; gap: 0.75rem; width: 100%; min-height: 3rem; padding: 0.5rem 0.75rem; text-align: left; border: 0px; border-radius: 1rem; color: var(--text); background: var(--canvas); }
+
+.menu-state { margin-left: auto; color: var(--sub); font-size: 0.8125rem; }
+
+
 /* Canonical SEED selectors and unchanged preview aliases. */
 .muted, .seed-text[data-text-role="caption"] { color: var(--sub); font-size: 0.82rem; }
 .media-frame, .seed-media { position: relative; display: grid; place-items: center; aspect-ratio: 1 / 1; border-radius: 0.85rem; overflow: hidden; }

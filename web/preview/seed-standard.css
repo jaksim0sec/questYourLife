@@ -11,6 +11,63 @@
   --seed-on-reward: var(--on-reward);
 }
 
+/* Original preview foundation, font, header and actions; values unchanged. */
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+
+:root[data-theme="dark"] { color-scheme: dark; --canvas: #101115; --surface: #242329; --shell-surface: #16171b; --nav-surface: #242329; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
+
+/* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
+:root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@media (max-width: 479px) {
+  :root { font-size: clamp(1rem, calc(1rem + 1.43vw - 4.58px), 1.13rem); }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  :root { font-size: clamp(1rem, calc(1.13rem + 3.46px - 0.72vw), 1.13rem); }
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0px; min-height: 100dvh; }
+
+h1, h2 { margin: 0px; }
+
+a, button { color: inherit; font: inherit; }
+
+a { text-decoration: none; }
+
+button { cursor: pointer; }
+
+[hidden] { display: none !important; }
+
+button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: -3px; }
+
+.glyph, .glyph svg { display: block; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; }
+
+#header { position: sticky; top: 0px; z-index: 10; background: var(--shell-surface); padding-top: env(safe-area-inset-top, 0px); }
+
+.head, .nav-inner { width: min(100%, 72rem); margin-inline: auto; }
+
+.head { display: grid; align-items: center; grid-template-columns: minmax(0px, 1fr) auto; min-height: calc(3.5625rem); padding-inline: clamp(0.75rem, 3vw, 1.5rem); }
+
+.head.standard { grid-template-columns: minmax(3rem, 1fr) minmax(0px, auto) minmax(3rem, 1fr); }
+
+.head.standard > .icon-btn { margin-inline-start: -0.75rem; }
+
+.head h1 { font-size: 1.3rem; letter-spacing: -0.05em; font-weight: 850; overflow-wrap: anywhere; }
+
+.head.standard h1 { font-size: 0.9rem; text-align: center; }
+
+.tools { display: flex; justify-self: end; align-items: center; margin-inline-end: -0.75rem; }
+
+.icon-btn { display: inline-grid; place-items: center; width: 3rem; height: 3rem; border: 0px; border-radius: 1rem; background: transparent; }
+
+.tools .icon-btn:nth-last-child(2) .glyph { transform: translateX(0.5rem); }
+
+.tools .icon-btn:nth-last-child(3) .glyph { transform: translateX(1rem); }
+
+.tools .icon-btn:nth-last-child(4) .glyph { transform: translateX(1.5rem); }
+
+
 /* Canonical SEED selectors and unchanged preview aliases. */
 .muted, .seed-text[data-text-role="caption"] { color: var(--sub); font-size: 0.82rem; }
 .media-frame, .seed-media { position: relative; display: grid; place-items: center; aspect-ratio: 1 / 1; border-radius: 0.85rem; overflow: hidden; }

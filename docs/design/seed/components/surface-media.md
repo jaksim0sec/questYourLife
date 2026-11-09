@@ -79,3 +79,15 @@ Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 
 Surface 역할은 기본 경계·재질을 정한다. Interactive는 HTML button을 강제하는 역할명이 아니다. 이동이면 링크, 실행/선택이면 버튼, 정적이면 비조작 요소를 사용한다. 부모 안에 독립 행동이 필요하면 정적 그룹에 형제 링크/버튼을 둔다. 전체 링크 안에 다른 버튼을 넣지 않는다.
 
 강도는 정보 관계로 정한다. Plain→Divider→독립 면은 의사결정 순서이며 모든 화면을 세 형태로만 제한하는 새로운 Surface 목록이 아니다. 기존 10개 역할을 보존한다.
+
+## 2026-11-10 · 공간 배치와 Surface 소유권 (제안 보완)
+
+[공간 배치 규격](../patterns/layout-composition.md)은 자식의 세로/가로/격자/겹침 관계를 관리한다. 이 문서의 Plain/Outlined/Solid/Inset/Media/Reward 등 10종은 **표면 표현과 의미적 그룹 경계**를 관리한다. 두 체계는 직교하며 조합할 수 있지만, 레이아웃 선택이 곧 Card/Solid 선택은 아니다.
+
+- 반복 행이 비교의 중심이면 Plain + 세로 배치 + 기존 List를 우선 검토한다. 행 전체마다 새로운 Card/Shadow는 만들지 않는다.
+- 균일 상품 탐색이면 Grid 안에 기존 Image Frame과 정보 슬롯을 배치한다. 보유/가격/장착 상태를 Grid 내부 스타일로 정의하지 않는다.
+- 독립 프로모션 장면이면 Media/Reward를 명시적으로 선택하고 A-ART와 C-IMAGE를 따르되, **진행 관리·아이템 탐색·수령 결과까지 한 표면에 무조건 합치지 않는다.**
+- Image Frame의 모서리 Badge/State 슬롯은 C-IMAGE가 소유한다. 범용 Layer가 동일한 배치 계약을 재정의하지 않는다.
+- 섹션과 Surface를 일대일로 대응시키지 않는다. Section은 목적 단위, Surface는 표현상의 경계다.
+
+기존 10종 Surface 역할·토큰·금지 중첩 규칙은 변경하지 않는다.

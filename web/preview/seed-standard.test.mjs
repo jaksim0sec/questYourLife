@@ -50,7 +50,7 @@ test('does not recreate shared component geometry inside page CSS', () => {
 
 
 test('the historical gallery buttons are separate from canonical SEED Action', () => {
-  assert.match(shared, /\\.seed-action\\s*\\{/);
+  assert.match(shared, /\.seed-action\s*\{/);
   assert.doesNotMatch(html, /gallery-button seed-action/);
-  assert.match(local, /\\.gallery-button\\s*\\{/);
+  assert.match(local, /\.gallery-button\s*\{/);
 });

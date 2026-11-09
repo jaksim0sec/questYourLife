@@ -60,7 +60,7 @@
 .lab-control-card { display:grid; align-content:start; gap:12px; }
 .lab-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
 .lab-choice-stack { display:grid; gap:6px; }
-.lab-sheet-preview { margin-top:16px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+.lab-sheet-preview { margin-top:16px; display:grid; align-items:start; gap:16px; }
 .lab-sheet-preview > div { display:grid; gap:5px; min-width:0; }
 .lab-reward-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:14px; }
 .lab-reward-item { display:grid; min-width:0; gap:8px; }
@@ -97,3 +97,48 @@
   .lab-icon-toolbar .seed-field { width:100%; }
 }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+
+/* Workbench-only arrangement. Reusable shell / action appearance belongs to seed-standard.css. */
+.lab-sheet-preview-heading { display:grid; gap:5px; }
+.lab-sheet-controls { display:grid; justify-items:start; gap:10px; }
+.lab-sheet-controls .seed-segment { width:min(100%,370px); }
+.lab-sheet-controls .seed-segment button { min-width:0; padding-inline:14px; }
+.lab-sheet-controls > p { min-height:1.5em; }
+.lab-sheet-preview > .seed-action { justify-self:start; }
+.lab-shell-workbench { display:grid; gap:18px; }
+.lab-shell-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.lab-shell-toolbar > div:first-child { display:grid; gap:6px; max-width:340px; }
+.lab-shell-stage { padding:20px; border-radius:16px; background:var(--soft); }
+.lab-shell-stage > .seed-page-shell { max-width:460px; min-height:460px; margin-inline:auto; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:0 8px 22px #0000000d; }
+.lab-shell-header { min-height:58px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.lab-shell-header strong { font-size:.98rem; }
+.lab-shell-header > span { font-size:.68rem; color:var(--sub); }
+.lab-shell-stage [data-shell-kind="detail"] .lab-shell-header,
+.lab-shell-stage [data-shell-kind="utility"] .lab-shell-header { justify-content:center; position:relative; }
+.lab-shell-stage [data-shell-kind="detail"] #page-shell-header-meta,
+.lab-shell-stage [data-shell-kind="utility"] #page-shell-header-meta { position:absolute; left:20px; max-width:80px; }
+.lab-shell-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.lab-shell-metrics > div { display:grid; gap:3px; padding:14px; background:var(--surface); border:1px solid var(--line); border-radius:14px; }
+.lab-shell-metrics strong { font-size:1.4rem; line-height:1.2; }
+.lab-shell-metrics span { color:var(--sub); font-size:.72rem; }
+.lab-shell-section-title { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.lab-shell-section-title h4 { margin:0; font-size:.9rem; }
+.lab-shell-section-title > span { color:var(--sub); font-size:.72rem; }
+.lab-shell-row { display:flex; align-items:center; gap:12px; min-width:0; padding:12px 0; border-bottom:1px solid var(--line); }
+.lab-shell-row:last-child { border-bottom:0; }
+.lab-shell-row-mark { flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:12px; background:var(--soft); color:var(--brand); font-weight:800; font-size:.75rem; }
+.lab-shell-row > div { min-width:0; display:grid; gap:4px; }
+.lab-shell-row strong { font-size:.83rem; }
+.lab-shell-row > div > span { color:var(--sub); font-size:.71rem; }
+@media (max-width:700px) {
+  .lab-section-head { display:block; position:relative; }
+  .lab-section-head > .seed-badge { position:absolute; right:0; top:0; }
+  .lab-section-head .lab-overline { display:block; padding-right:92px; }
+  .lab-shell-stage { padding:12px; }
+  .lab-shell-stage > .seed-page-shell { min-height:480px; }
+}
+@media (max-width:359px) {
+  .lab-shell-stage { padding:8px; }
+  .lab-sheet-controls .seed-segment button { padding-inline:8px; }
+  .lab-shell-header { gap:8px; }
+}

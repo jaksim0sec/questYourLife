@@ -1,7 +1,7 @@
 # Agent instructions · document routing
 
-> 적용 범위: 문서 전용 `new` 브랜치의 `docs/`. 기존 코드 저장소의 개발 규칙은 `main`의 `AGENT.md`에서 따로 확인. 이 파일은 **작업별 읽기 경로를 지정**한다. 개발 규칙을 재정의하지 않는다.
-> 디자인·제품 정의 문서는 문서 전용 `new` 브랜치에 있다. `main`에는 별도로 병합되지 않았다.
+> 적용 범위: 현재 `new` 브랜치의 문서·웹 preview 및 향후 이 브랜치에 편입할 개발 작업의 **문서 라우팅**. `new`는 지금 앱 코드가 없지만, 장차 `main`에 상응하는 개발 브랜치로 전환할 예정임. 이 파일은 개발 규칙 자체를 재정의하지 않는다.
+> **현재 상태와 미래 목표를 구분한다.** 앱 코드가 편입되기 전까지 기존 코드의 권위 있는 개발 규칙은 `main`의 `AGENT.md`/`IDEA.md`이며, 새 자산·코드 이관은 별도 실행·검증이 필요하다.
 
 ## 1. 작업 시작 순서
 
@@ -10,6 +10,7 @@
 3. **제품 의미나 사용자 경험에 영향을 주는 작업:** [docs/product/README.md](./product/README.md)에서 주제별로 찾아 읽는다. 정체성을 새로 정의하거나 화면 전반을 설계할 때는 [docs/product/VISION.md](./product/VISION.md)도 필수다.
 4. **관련된 파일만 추가로 읽는다.** 단순 버그·빌드 작업에 모든 디자인 리서치를 읽지 않는다. 여러 영역이 연결되면 해당 영역의 문서를 함께 읽는다.
 5. 구현 전 **기존 코드와 문서의 현재 상태**를 확인한다. 문서의 미래 지향점, 기존 구현 상태, 미합의 사항을 같은 것으로 취급하지 않는다.
+6. **SVG·이미지를 추가/이동/참조하는 작업:** [공통 에셋 관리 계약](./assets/README.md)에서 현재 경로·향후 정본·웹/Android 출력 연결 방식을 먼저 확인한다. 정본 이동과 preview 참조 교체는 한 작업에서 검증한다.
 
 ## 2. 어떤 파일을 언제 읽는가
 
@@ -26,6 +27,7 @@
 | [docs/product/SOCIAL.md](./product/SOCIAL.md) | 친구·클랜·DM·경쟁·피드·공개 범위 | 관계의 목적과 공유·감시의 경계 |
 | [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
+| [docs/assets/README.md](./assets/README.md) | **SVG·이미지 등록, 원본 이동, preview/Android 참조 이관** | 현재 구조와 장래 공통 `assets/` 정본, 중복·호환성·검증 계약. 이관 실행 전에는 기존 경로 유지 |
 | [docs/design/SEED_AUTHORING_GUIDE.md](./design/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
 | [docs/design/seed/INDEX.md](./design/seed/INDEX.md) | **기존 디자인 시드를 읽거나 새 페이지·컴포넌트에 재사용할 때** | 필요한 Component/Pattern/Shell만 라우팅. 전부 읽지 않음 |
 | [docs/design/seed/AUDIT.md](./design/seed/AUDIT.md) | **8장 레퍼런스 추적·디자인 개선 전후 비교 시** | S2-01~08 참조와 Keep/Refine/Merge/Split/Add 판단 |
@@ -53,6 +55,7 @@
 | **AI 퀘스트 기능** | `DECISIONS` → `OPEN` → `QUESTS` + `QUESTBOOKS`(공유·참여 시) |
 | **친구·클랜·퀘스트북 소셜** | `DECISIONS` → `OPEN` → `SOCIAL` + `QUESTBOOKS` |
 | **보상/상자/캐시/마이페이지** | `DECISIONS` → `OPEN` → `REWARDS` + `AVATAR` |
+| **SVG/PNG/WebP 등록·이전 및 preview 참조 변경** | `DECISIONS` → `assets/README` → `design/seed/INDEX` → 해당 SVG/아트·이미지 명세 + 실제 경로 확인 |
 | **디자인 근거 확인** | `research/SUMMARY` → 필요할 때 원문 아카이브 → 공식 1차 문서 재확인 |
 | **기존 Android/DB 버그 수정** | `AGENT` → `IDEA` → 관련 기술 문서·코드 (사용자 경험·제품 의미가 바뀌면 `DECISIONS`/`OPEN` 및 관련 `product/` 추가) |
 | **웹 시연의 Android 이식** | `AGENT` + `IDEA` + `DECISIONS` + `OPEN` + 관련 `product/` + 합의된 최신 시연 사양(존재할 때만) |
@@ -65,10 +68,12 @@
 - `OPEN.md`의 가설이나 외부 리서치를 **승인된 디자인·기능 명세로 승격하지 않는다**. 사용자와 합의하면 `DECISIONS.md`의 짧은 결정 항목을 갱신하고, 필요한 상세 문서에 기록.
 - **시각 시드 미확정:** 색상, 탭 구조, 글래스 재질, 컴포넌트 치수, 마이페이지·홈 배치는 마음대로 잠그지 않는다. 합의는 모바일 웹 시연을 통해 진행한다.
 - 원문 발언은 제품 문서에서 보존하고, 새 해석은 `[해석]` 등으로 구분한다. 연구 원문 아카이브는 수정하지 않는다.
-- 기존 시스템·데이터·에셋 보존, 문서화 브랜치의 `main` 병합 금지 규칙은 `DECISIONS.md`를 참조. **이 AGENTS.md 변경 자체는 코드 구현을 허용하지 않는다.**
+- 기존 시스템·데이터·에셋 보존과 `main` 병합/코드 이관의 별도 검증 규칙은 `DECISIONS.md`를 참조. **브랜치의 미래 역할이 바뀌어도 이번 문서 수정만으로 앱 코드 이관·에셋 이동을 실행하지 않는다.**
 
-## 문서 전용 브랜치 안내
+## `new` 전환 상태 · 현재와 목표
 
-- `new`는 앱 코드가 없는 문서 작업 공간이다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
+- **현재:** `new`에는 앱 코드가 없고 문서·웹 preview만 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
+- **목표:** `new`는 장차 `main`에 상응하는 독립 개발 브랜치가 된다. 코드 편입 시 AGENT/IDEA와 기존 데이터·리소스·실행 기준을 실제 파일과 대조하고, 충돌 해결·회귀 검증 후 라우팅 문서를 갱신한다. 현재 문서 전용이라는 이유로 향후 개발 범위를 영구 제한하지 않는다.
+- **에셋:** 장래 공통 `assets/`로 원본 정본을 통일한다. 현재 `docs/design/seed/assets/icons/v0.14/` 및 `web/preview/assets/`는 이관 전 경로이며 사용처를 함께 옮기기 전까지 유지한다. [관리·이관 계획](./assets/README.md) 참고.
 - 이 파일은 `docs/AGENTS.md`에 위치하므로 **루트 `AGENTS.md` 자동 탐색을 대신한다고 가정하지 않는다**. 새 작업에서는 명시적으로 읽는다.
 - 콘텐츠 원본은 `docs/archive/AGENTS-original-2026-11-04.md`에도 변경 없이 보존한다.

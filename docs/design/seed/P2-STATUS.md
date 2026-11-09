@@ -11,7 +11,7 @@
 | P2 Tier3 | 작성·Fixture 통과 | C-FIELD/RADIO/SVG/CHECK 4종; 수동 완료/원본 SVG 보존 |
 | P2 21개 4계약 | 작성·형식 확인 | 각 컴포넌트에 Selection/Don't/Relations/Verification 정확히 1세트, Don't 사례 각3개, 원문 현행/이력 분리 |
 | P2 Fixture | **Chromium 통과** | [Actions #42535261431](https://github.com/jaksim0sec/questYourLife/actions/runs/42535261431), [21쌍 시험장](../../../web/preview/qa/p2-fixtures.html), [QA 코드](../../../web/preview/qa/p2-render.cjs) |
-| P2 matrix | **6/6 통과** | [320/390/430 × Light/Dark 계산값](../../evidence/p2/fixture-matrix.json), [6개 Screenshot](../../evidence/p2/) |
+| P2 matrix | **6/6 통과** | [320/390/430 × Light/Dark 계산값](../evidence/p2/fixture-matrix.json), [6개 Screenshot](../evidence/p2/) |
 | P2 LEDGER | 전수 소유 연결 | [P2_TRACE](P2_TRACE.md) 380행. 302 proposed/36 history/42 candidate이며 **과거 비교 숫자를 자동 승인하지 않음** |
 | G-P2 (자체 산출물 조건) | **통과(검증 범위 한정)** | 21계약·21 정상/반례 실제 렌더·380 P2 추적. 실제 제품 사용처와 P0 전후 비교는 P3 이후 별도 검증 |
 | G-P1 선행 조건 | **미통과** | T2 신규 독립 세션 결과 없음, T3 전수 의미 중복 검토 미완료. 사용자 후속 우선순위 변경에 따라 P2/P3 선구현을 분리 브랜치에서 진행함 |

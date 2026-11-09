@@ -4,6 +4,8 @@
 > 최상위 기준: 사용자 제공 `SEED_r3_execution_plan.md` 원문. 별도 대체 계획 없음.
 > **중요:** `G-P1`이 실패/차단 상태이므로 P2→P5는 실행하지 않는다. Draft PR [#9](https://github.com/jaksim0sec/questYourLife/pull/9)은 병합 금지.
 
+> **범위 주의:** 아래 P2~P5 미착수 표는 1차 `seed-r3` 기준 과거 스냅샷이다. 별도 2차 작업 브랜치의 최신 상태는 [P3-STATUS.md](P3-STATUS.md) 및 이 문서 말미를 참조.
+
 ## 1. ID별 상태와 근거
 
 | ID | 상태 | 산출물·근거 |
@@ -66,3 +68,10 @@
 - P1 검증/복귀 [9781f4d](https://github.com/jaksim0sec/questYourLife/commit/9781f4d8b9185e6b8b5ae3b9fcef5044c5b71f18) · [59dd3a7](https://github.com/jaksim0sec/questYourLife/commit/59dd3a79e13f437344eee341bb5dcd1546f24725) · [22ce04d](https://github.com/jaksim0sec/questYourLife/commit/22ce04d789c72999b0d26cf7de25ca01b9336aad).
 - P1 LEDGER 상세 [059b4b4](https://github.com/jaksim0sec/questYourLife/commit/059b4b4ede13e4481b9a5596542eaf0778356c03), C-STATUS T3 회귀 [7dde177](https://github.com/jaksim0sec/questYourLife/commit/7dde17717395f773178ec723247d34dd81e0fc31).
 - **재개 조건:** T2 외부 새 세션 결과와 T3 단일 규범 전수 확인으로 G-P1 모두 통과하면 **그때만 P2 Tier별 시작**. 그 전에는 Draft PR 유지, P2 산출물 없음.
+
+## 5. 후속 2차 브랜치 이력 · 2026-11-09
+
+- 사용자의 후속 우선순위 변경으로 **P2~P3 먼저 구현하고 브라우저 검증**, 단 G-P1 T2·T3는 미완료 유지. 별도 `seed-r3-p2p3` 분기에서만 진행.
+- P2: 21개 컴포넌트 4계약/반례 + 380행 추적 + 6조건 Normal/Don't Fixture 렌더, [P2-STATUS](P2-STATUS.md).
+- P3: Joined/Guest/My/Reward/Record 각 8조건=40화면 및 논글로벌 꾸미기 6조건, 실측·교정·회귀 성공 [P3-STATUS](P3-STATUS.md). [CI #42538118039](https://github.com/jaksim0sec/questYourLife/actions/runs/42538118039).
+- **G-P1 독립 검수/의미 감사 미완료, P3 G6 레거시 미통과/G7 P4 전 부분**. P4/P5 미착수. 1차 브랜치와 PR #9는 여전히 변경/머지하지 않음.

@@ -238,23 +238,23 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 
 .gallery-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; align-items: center; }
 
-.gallery-button { min-height: 2.5rem; padding: 0.55rem 0.9rem; border-radius: 0.75rem; font-size: 0.79rem; font-weight: 700; }
 
-.gallery-button.primary { border: 1px solid var(--brand); background: var(--brand); color: white; }
 
-.gallery-button.secondary { border: 1px solid var(--line); background: var(--surface); }
 
-.gallery-button.quiet { border: 0px; background: transparent; color: var(--brand); }
 
-.gallery-button.reward { display: grid; place-items: center; width: 100%; margin-top: 0.75rem; border: 0px; background: var(--reward); color: var(--on-reward); }
 
-.badge { border-radius: 999px; padding: 0.3rem 0.55rem; font-size: 0.68rem; font-weight: 800; }
 
-.badge.accent { background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); }
 
-.badge.neutral { background: var(--line); color: var(--sub); }
 
-.badge.outline { border: 1px solid var(--line); color: var(--text); }
+
+
+
+
+
+
+
+
+
 
 .gallery-progress { margin-top: 1.2rem; }
 
@@ -262,9 +262,9 @@ body[data-layer="global"]:has(.home-content) #main { padding-bottom: calc(4.25re
 
 .gallery-progress > div:first-child span { color: var(--sub); }
 
-.progress-track { height: 0.45rem; margin-top: 0.65rem; overflow: hidden; border-radius: 999px; background: var(--line); }
 
-.progress-track span { display: block; width: var(--progress, 0%); height: 100%; border-radius: inherit; background: var(--brand); }
+
+
 
 /* SEED palette trial (2026-11-07). Original MHTML skin, brand and reward are unchanged. */
 :root {

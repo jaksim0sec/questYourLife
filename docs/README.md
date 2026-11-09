@@ -1,6 +1,8 @@
-# 갓생패치 · 문서 전용 new 브랜치
+# 갓생패치 · new 브랜치 작업 안내
 
-이 브랜치는 **문서만 보관**한다. 기존 Android 코드·API·데이터·에셋은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 남아 있다.
+**현재** `new`는 제품/SEED 문서와 `web/preview/`가 중심이며, Android 앱 코드·API·DB 등은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있다. **향후** `new`는 `main`에 상응하는 개발 브랜치로 발전할 예정이다. 따라서 과거의 '문서 전용' 설명을 영구 제한 규칙으로 해석하지 않는다.
+
+현재 사용 중인 파일 경로는 유지하며, 코드·에셋 편입은 기존 기능/데이터와 충돌을 검토하고 검증한 후 별도로 실행한다. **이번 단계는 관리 문서만 수정했으며 자산 파일·preview 코드 이동은 하지 않았다.**
 
 ## 다음 작업에서 먼저 볼 곳
 
@@ -11,9 +13,10 @@
 | 제품 의도·화면 흐름 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [제품 색인](./product/README.md)의 관련 항목. 앱 정체성이나 전체 UX를 다루면 [VISION](./product/VISION.md)도 읽는다. |
 | 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](./design/seed/implementation/v015.md)과 [토큰](./design/seed/implementation/v015-tokens.json) → [INDEX](./design/seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](./design/seed/assets/icons/v0.14/README.md). |
 | 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](./design/SEED_AUTHORING_GUIDE.md) → [INDEX](./design/seed/INDEX.md)에서 기존 규칙과 대조. |
-| Android 코드 수정 | 먼저 `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md), 이어서 관련 코드와 해당 작업 문서. |
+| Android 코드 수정 | **현재** `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)를 읽고 실제 코드를 확인. `new`로 코드 이관 시 이 안내를 현황에 맞춰 갱신. |
+| SVG·이미지 관리/preview 에셋 이전 | [공통 에셋 관리 계약](./assets/README.md) → [SEED INDEX](./design/seed/INDEX.md)의 관련 아트·아이콘 문서 → 현재 사용처 코드와 자산 확인. |
 
-SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Components(재사용 부품과 상태), Patterns(부품 조합), Shells(화면 골격과 안전영역), Assets(아트와 SVG)로 나뉜다. 수치와 시각 규칙은 v0.15 적용 계약과 토큰에서 확인한다. 화면별 데이터·하단 탭 목적지·테마 기본값·글래스 채택·네이티브 적용은 결정 및 구현 상태를 따로 확인한다. 리서치·이전 시드·감사 기록은 근거를 추적할 때 연다.
+SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Components(재사용 부품과 상태), Patterns(부품 조합), Shells(화면 골격과 안전영역), Assets(아트의 표현 규칙과 현행 SVG 원본)로 나뉜다. 실제 에셋 원본의 장래 공통 위치는 [관리 계약](./assets/README.md)에 따로 정의한다. 수치와 시각 규칙은 v0.15 적용 계약과 토큰에서 확인한다. 화면별 데이터·하단 탭 목적지·테마 기본값·글래스 채택·네이티브 적용은 결정 및 구현 상태를 따로 확인한다. 리서치·이전 시드·감사 기록은 근거를 추적할 때 연다.
 
 ## 컨셉 이미지 4장 · 디자인 감성
 
@@ -40,6 +43,7 @@ SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Componen
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)
 - [작업별 문서 참고 지침](./AGENTS.md)
+- [SVG·래스터 공통 에셋 정본 및 이관 계약](./assets/README.md)
 
 ## 이전 브랜치에서 가져온 문서 무결성 기록
 
@@ -62,6 +66,6 @@ SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Componen
 | `docs/research/SUMMARY.md` | `docs/research/SUMMARY.md` | `98e1d4912bb76fec4976a82f5e3bd860242eadfa` |
 
 - `docs/research/2026-11-04-gpt-design-research.md`는 원문을 수정하지 않고 옮긴다.
-- 원래 루트 `AGENTS.md`는 [원본 아카이브](./archive/AGENTS-original-2026-11-04.md)에 그대로 보존했고, 현재 `docs/AGENTS.md`는 문서 전용 경로에 맞게 링크만 보정했다.
+- 원래 루트 `AGENTS.md`는 [원본 아카이브](./archive/AGENTS-original-2026-11-04.md)에 그대로 보존했다. `docs/AGENTS.md`는 초기 문서 라우터에서 향후 개발 브랜치·에셋 관리까지 다루는 현재 지침으로 변경되었으므로 과거의 '링크만 보정' 설명은 **이전 이관 당시의 기록**이다.
 - 링크 목적지만 변경한 문서도 원래 제품 의미·인용문은 유지한다.
 

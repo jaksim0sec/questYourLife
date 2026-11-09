@@ -18,7 +18,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 ## 선택적으로 읽기
 
 1. 기존 부품의 국소 수정은 해당 Component와 직접 의존성만 읽는다. 새 페이지는 제품 과업·콘텐츠·행동을 먼저 결정한다.
-2. 새 페이지는 P-HIERARCHY와 관련 Pattern에서 객체·그룹·표현을 결정한 뒤 S-PAGE와 필요한 Component를 읽는다. 아트의 역할을 선택할 때 A-ART를 추가한다.
+2. 새 페이지는 제품 목적·정보 객체를 확인하고 [페이지 구성](patterns/page-composition.md)에서 섹션, [공간 배치](patterns/layout-composition.md)에서 자식의 배치를 선택한다. P-HIERARCHY는 표현 비중을, S-PAGE는 Shell을, 기존 Component는 실제 UI 슬롯을 소유한다. 아트 역할 선택 시 A-ART를 읽는다.
 3. 제품 결정은 DECISIONS/OPEN을 확인하고, 원본·판단 충돌 때 R-INPUTS를 읽는다. 수치 선택 전·완료 보고 전에는 V-CHECKS를 따른다.
 4. 모든 파일을 매번 읽지 않는다. ID는 안정적으로 유지하고 경로/의존성 변경은 INDEX와 같은 변경에서 반영한다.
 
@@ -52,6 +52,8 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 | C-OVERLAY | Sheet·Dialog·Snackbar·Skeleton | component | 모달/피드백/빈 상태/로딩 | [components/overlay-feedback.md](components/overlay-feedback.md) | F-COLOR, F-TYPE, F-GEOMETRY, F-ICON-MOTION, C-ACTION | proposed | REF-003, SRC-TDS-SYSTEM |
 | P-ACTIONS | 버튼 그룹·수락/거절·Bottom CTA | pattern | 폭 비중/조합/하단 행동 | [patterns/action-layout.md](patterns/action-layout.md) | C-ACTION, C-SELECTION, F-GEOMETRY | proposed | REF-005/006/007, SRC-TDS-BOTTOM |
 | P-HIERARCHY | 콘텐츠 조합·비중·밀도 | pattern | 프로필/섹션/필터와 정렬 | [patterns/content-hierarchy.md](patterns/content-hierarchy.md) | C-LIST, C-SURFACE, C-STATUS, C-SELECTION, F-TYPE, F-GEOMETRY | proposed | REF-001–005 |
+| P-LAYOUT | 범용 공간 배치·섹션 구조 | pattern | 세로·가로·격자·겹침/비율·스크롤·책임 | [patterns/layout-composition.md](patterns/layout-composition.md) | F-GEOMETRY, C-SURFACE, C-IMAGE, C-LIST | proposed | D-011–013, REF-001–004 |
+| P-PAGE-COMPOSE | 페이지 섹션 구성과 선택 규칙 | pattern | 목적→섹션→배치→기존 부품으로 페이지를 구성할 때 | [patterns/page-composition.md](patterns/page-composition.md) | P-HIERARCHY, P-LAYOUT, C-SURFACE, S-PAGE | proposed | D-001, D-011–013 |
 | P-STATES | 빈·오류·오프라인·대기·복구 | pattern | 상태별 표현/실제 결과 | [patterns/state-feedback.md](patterns/state-feedback.md) | C-OVERLAY, C-STATUS, C-ACTION, C-FIELD | proposed | REF-001/003, U-02 |
 | P-SHEET | Bottom Sheet Flow | pattern | Sheet Footer·본문·Snap 조합 | [patterns/bottom-sheet-flow.md](patterns/bottom-sheet-flow.md) | C-SHEET, C-ACTION, C-TEXT, C-GESTURE, S-PAGE | proposed | U-05 |
 | P-BTN-ICON | Button + SVG Layout | pattern | 버튼 SVG/Label/Loading의 안정 배치 | [patterns/button-icon-layout.md](patterns/button-icon-layout.md) | C-ACTION, C-SVG, F-GEOMETRY, F-TYPE | proposed | U-05 |
@@ -98,7 +100,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 
 ## v0.14 SVG source · 2026-11-05 (proposed)
 
-- **[사용자 제공 최신 SVG 56개](assets/icons/v0.14/README.md)**: 기본 Outline 32 · Fill 5 · 추가 19, 24×24 / Stroke 1.8, 기존 37개 원본 경로 덮어쓰기
+- **[사용자 제공 최신 SVG 56개](../../../assets/icons/soft/v0.14/README.md)**: 기본 Outline 32 · Fill 5 · 추가 19, 24×24 / Stroke 1.8, 기존 37개 원본 경로 덮어쓰기
 - [v0.14 구현 인수인계](implementation/v014.md): 라운딩·획·실루엣·Android 적용 주의·검증 구분
 - v0.13은 롤백/비교 자료로 유지하며, main의 확정 클랜 나침반 네비는 교체하지 않는다.
 
@@ -106,7 +108,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 
 1. **[v0.15 확정 디자인·검증·적용 계약](implementation/v015.md)** — 결정의 범위, 컴포넌트/제스처/컨테이너 사용 규칙, 실제 검증·미검증 분리
 2. **[v0.15 디자인 토큰 JSON](implementation/v015-tokens.json)** — 앱 구현 시 숫자·의미색·아이콘 크기·Surface·Sheet 상태를 한 곳에서 읽음
-3. **[사용자 제공 SVG 56종 원본](assets/icons/v0.14/README.md)** + [manifest](assets/icons/v0.14/manifest.json) — 반드시 이 소스를 인용. v0.13 및 최초 v0.14는 비교 이력
+3. **[사용자 제공 SVG 56종 원본](../../../assets/icons/soft/v0.14/README.md)** + [manifest](../../../assets/icons/soft/v0.14/manifest.json) — 반드시 이 소스를 인용. v0.13 및 최초 v0.14는 비교 이력
 4. 화면별 구현에는 C-ACTION/C-SURFACE/C-SHEET 등 필요한 **직접 의존 문서만** 추가로 읽는다. 기존 `AGENT.md`, 제품 D-001~D-011, 앱 리소스 정본과 충돌 시 자동 이식하지 않는다.
 
 **상태 구분:** [Seed confirmed] 웹/디자인 규격 승인 · [Native pending] Compose/VectorDrawable/실기기/탭 IA 등 구현 미완료. 새 시드 문서를 늘리기보다 여기의 원칙을 재사용한다.
@@ -137,3 +139,11 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - 헤더·이력·safe inset: [NAV-TOP](../TOP_NAVIGATION.md) / [S-PAGE](shells/page-shells.md).
 - A/B 고정 클래스·지역 상태·이력 인터페이스: [v0.15 웹 어댑터](implementation/v015.md).
 - 반례와 인수: [V-CHECKS](VALIDATION.md). 원격 등록·브라우저·Native 검증의 상태는 각각 별도다.
+
+## 2026-11-10 · 범용 공간 배치와 페이지 구성 (제안 규격, 웹/Native 미적용)
+
+- **페이지를 새로 설계할 때:** [페이지 구성](patterns/page-composition.md) → [공간 배치](patterns/layout-composition.md) → [정보 위계](patterns/content-hierarchy.md) → 해당 기존 Component/Surface/Shell 순서로 참조. 이는 제작 순서이며 문서의 실제 계층을 추가한 것이 아니다.
+- **공간 배치만 수정할 때:** [공간 배치](patterns/layout-composition.md) + [간격](foundations/geometry.md)과 관련 Component만 확인.
+- **기존 버튼·배지·이미지 등 단일 부품 수정:** 이전 Component 직접 라우팅을 유지. 페이지 전체 절차를 억지로 적용하지 않는다.
+- **소유권:** 기존 D-011/D-012의 Header/SVG/컴포넌트 및 D-013의 '새 Composite/Page Type 계층 없음'을 보존. 이 두 문서는 Pattern의 선택 규격이고 승인되지 않은 새 기능이나 구현 API가 아니다.
+- **근거/검증:** 사용자 시안 11541/11537/11535/11539/11454/11432의 공간 관계를 참조했지만 그 안의 게임/경제 기능은 채택하지 않음. 페이지 실제 화면 검수는 별도.

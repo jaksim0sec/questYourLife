@@ -22,10 +22,16 @@
 - Create `docs/superpowers/reports/2026-11-10-seed-lab-visual-review.md`: evidence and handoff.
 
 **Tasks**
-1. [ ] Record failing tests for S-PAGE slots, sheet footer variants, contrast/semantics and mobile headings. Verify RED against current source.
-2. [ ] Implement shared tokens, fields/choices, badge and shell geometry, preserving legacy preview isolation.
-3. [ ] Implement sheet/footer variants and Page Shell interactive showcase, with existing file structure.
-4. [ ] Improve demonstration density, sample image metadata and responsive section headings without new global types.
+1. [x] Record failing tests for S-PAGE slots, sheet footer variants, contrast/semantics and mobile headings. Verify RED against current source.
+2. [x] Implement shared tokens, fields/choices, badge and shell geometry, preserving legacy preview isolation.
+3. [x] Implement sheet/footer variants and Page Shell interactive showcase, with existing file structure.
+4. [x] Improve demonstration density, sample image metadata and responsive section headings without new global types.
 5. [ ] Verify static contract/tests and actual served Pages where accessible; report browser/physical touch/IME limits accurately.
 
 **Review focus:** 320px width with long Korean labels, 200% typography and stacked footer; absent footer does not reserve space; sheet min height and footer do not overlap; surface/badge contrast in both themes; actual image and SVG file references stay unchanged.
+
+
+## Verification record
+- Contract fixtures: 6 new visual-polish checks + 5 retained Action checks all passed using equivalent assertions against the GitHub-fetched source in the tool runtime (11/11). This is **not** a local Node `node --test` invocation.
+- Additional parser/structure observations: `lab.js` parsed after removal of the single ESM import, HTML id values unique, CSS braces balanced, and the branch diff touched only planned files.
+- Pages deployment and actual Chromium mobile appearance/gestures are **separate gates**. Even a successful Pages workflow does not certify E2E UI.

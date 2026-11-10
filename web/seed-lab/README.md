@@ -111,3 +111,9 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 - 사용자가 얇은 A/B 헤더를 미세 확대 후 최종 선택했다. Lab의 비교 토글·덮어쓰기 스타일을 제거하고 기존 preview 및 Lab의 **공통** `seed-standard.css`에 등록했다.
 - 헤더 Root/Standard 값과 Bottom Navigation 웹 아이콘 매핑의 정본은 `docs/design/TOP_NAVIGATION.md`, `docs/design/seed/components/bottom-navigation.md` 및 `v015-tokens.json`의 `topNavigation`·`webNavigationSet`이다.
 - 기존 Global/Global Inner/Non-Global/Bottom Sheet 분류, 시트/페이지 동작 구조, 일반 컴포넌트 타입/56종 공식 SVG는 변경하지 않았다. Android 앱 이식·실기기 검증은 별도다.
+
+## C-AVATAR 착장 시연 (2026-11-10)
+
+컴포넌트 탭의 `#mascot-avatar`에는 **기본/모자/헤드폰/동시 착용** 시연이 있다. 실제 `main` 원본과 SHA가 같은 이미지 10개를 `assets/art/mascot/` + `assets/art/cosmetics/`에서 불러와 Feature(부모 폭)/Profile(64)/Row(40) 캔버스로 렌더한다. 크기를 바꿔도 같은 정규화 좌표와 장비별 zIndex가 적용된다. 이미지를 단독 상품 카드로 표시하는 C-IMAGE와 달리 이 컴포넌트는 사용자의 **프로필 사진에 해당하는 정체성 표현**이다.
+
+웹 CSS는 기존 `../preview/seed-standard.css`의 `.seed-mascot-avatar`가 소유한다. 이 Lab의 `seed-visual.css`는 배열 간격만 담당한다. 시험용 버튼은 실제 장착 데이터·보유량을 수정하지 않는다. 구체 API는 `docs/design/seed/components/avatar.md`를 참조.

@@ -70,3 +70,8 @@ Loading에서도 제목 역할과 예상 콘텐츠 폭을 유지한다. 오류 �
 ## 공통 계약 r1의 스케일 선택
 
 이번 웹 개편은 위 기존 스케일 표를 검수 시작값으로 사용한다. 의미 역할은 [C-TEXT](../components/text-hierarchy.md)의 Display/Title/Section/Body/Caption 5개이며 `type.item`/`type.support`는 수치 스케일 이름이다. 역할·HTML heading·실제 크기를 동일 개념으로 합치지 않는다. 기본 16 기준 rem으로 변환하고 기존 RootFont trial은 보존한다. 시각 부적합이 확인되면 리드가 영향과 반례를 갖춰 개정하며 Native 승인값으로 자동 이식하지 않는다.
+
+## 2026-11-10 · Top Navigation 타이포 확정값 (D-015)
+
+일반 텍스트 위계(`type.root`, `type.detail`, `C-TEXT`)의 2026-11-08 시작 스케일은 **헤더의 최종 시각값이 아니다**. 사용자는 Root/Standard 헤더의 *얇은 비교안*을 채택했다. 상단만 Pretendard Variable 우선(시스템 폴백), Root `1.30rem / 650 / -0.025em / line-height 1.35`, Standard `1.08rem / 620 / -0.018em`으로 확정했다. 헤더 전용 표현의 단일 기준은 [NAV-TOP](../../TOP_NAVIGATION.md)이다.
+동일 의미 Title 역할은 유지하지만, 공통 `.seed-text[data-text-style=root|standard]`를 모든 페이지에서 변경하지 않는다. 실제 Top Navigation은 `.seed-top-nav__title`과 기존 preview `.head h1`이 이 값을 소유한다. Android/일반 본문 Typography 전체로 자동 전파하지 않는다.

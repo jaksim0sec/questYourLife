@@ -52,7 +52,7 @@
   const isRoot = key => routes[key]?.[2] === 'global';
 
   // Official SVG assets are referenced from the shared root, not copied into preview.
-  const navIcons = {home:['home','home-fill'], quests:['check-circle','check-circle-fill'], dm:['chat','chat-fill'], clan:['bookmark','clan-bookmark-fill'], me:['user','user-fill']};
+  const navIcons = {home:['home','home-fill'], quests:['check-circle','check-circle-fill'], dm:['chat','chat-fill'], clan:['bookmark','clan-bookmark-fill'], me:['me-smile','me-smile-fill']};
   function updateNav(active) {
     nav.querySelectorAll('.nav-link').forEach(link => {
       const key=link.getAttribute('href').slice(1);
@@ -60,7 +60,7 @@
       const node=link.querySelector('.seed-icon');
       if (!node || !navIcons[key]) return;
       const file=navIcons[key][key===active?1:0];
-      const path=(key==='clan' && key===active) ? '../../assets/icons/preview/' : '../../assets/icons/soft/v0.14/';
+      const path=(key==='me'||(key==='clan'&&key===active)) ? '../../assets/icons/preview/' : '../../assets/icons/soft/v0.14/';
       node.style.setProperty('--seed-icon', "url('"+path+file+".svg')");
     });
   }

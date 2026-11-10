@@ -96,6 +96,20 @@ test('My smile states share the preview-only source and do not mutate 56 canonic
  assert.match(js,/item\.outlineBase\|\|/);
 });
 
+test('selected smile preserves outline silhouette and uses a distinct readable cutout face',()=>{
+ const outline=text('../../assets/icons/preview/me-smile.svg');
+ const selected=text('../../assets/icons/preview/me-smile-fill.svg');
+ const r=Number(outline.match(/<circle cx="12" cy="12" r="([\d.]+)"/)[1]);
+ const stroke=Number(outline.match(/stroke-width="([\d.]+)"/)[1]);
+ const filledR=Number(selected.match(/M12 1\.9a([\d.]+)/)[1]);
+ assert.ok(Math.abs(filledR-(r+stroke/2))<1e-6,'Fill must match outline outer radius including half stroke');
+ assert.match(selected,/fill-rule="evenodd"/);
+ assert.match(selected,/M9\.2 8\.65a\.95/);
+ assert.match(selected,/M14\.8 8\.65a\.95/);
+ assert.match(selected,/M7\.55 12\.98 C8\.05/);
+ assert.match(css,/\.seed-bottom-nav__link \.seed-icon \{ --seed-icon-size:1\.56938rem/);
+});
+
 test('approved light header is shared across Root and Standard instead of a Lab override',()=>{
  const styles=text('./seed-visual.css');
  assert.doesNotMatch(html,/data-header-weight|seed-header-weight-controls/);

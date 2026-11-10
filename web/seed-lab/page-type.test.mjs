@@ -107,3 +107,14 @@ test('approved light header is shared across Root and Standard instead of a Lab 
  assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.08rem;[^}]*font-weight:620/);
  assert.match(css,/--seed-top-glyph:1\.59rem/);
 });
+
+test('approved header gutter remains shared with preview home and clan content',()=>{
+ const preview=text('../preview/style.css');
+ const clan=text('../preview/clan.css');
+ assert.match(css,/--seed-page-gutter:20px/);
+ assert.match(css,/@media \(max-width:359px\) \{ :root \{ --seed-page-gutter:16px;/);
+ assert.match(css,/\.head \{[^}]*padding-inline:var\(--seed-page-gutter,20px\)/);
+ assert.match(css,/\.seed-top-nav__inner \{[^}]*padding-inline:var\(--seed-page-gutter,1\.25rem\)/);
+ assert.match(preview,/\.home-content \{[^}]*var\(--seed-page-gutter,20px\)/);
+ assert.match(clan,/\.clan-section\{[^}]*var\(--seed-page-gutter,20px\)/);
+});

@@ -50,3 +50,9 @@ references: [REF-001, REF-002, REF-004, REF-005]
 ## v0.15 원본 우선순위
 
 [사용자 제공 Soft SVG 56종](../../../../assets/icons/soft/v0.14/README.md)은 시드의 **유일한 현행 UI 아이콘 정본**. 기존 37개 assistant-drawn SVG 및 고정 1.95/2.15 stroke 후보를 우선 사용하지 않는다. 다른 브랜드의 SVG를 찾아 대체하지 않는다. 보상 코인 이미지는 별도 art이고 `coins.svg`는 일반 pictogram임. Native 앱의 이미 승인된 클랜 나침반 등은 자동 변경 금지.
+
+## 2026-11-10 · 웹 Navigation 아이콘 채택 범위 (D-015)
+
+- Top Navigation 렌더 박스는 `1.59rem`, Bottom Navigation은 기존 `1.56938rem`으로 **각 슬롯의 기준을 유지**한다. 원본 24 viewBox, 획 1.8, round cap/join은 보존. 같은 파일이라도 렌더 크기와 optical area는 다를 수 있다.
+- 웹 전역 하단 클랜 활성은 `assets/icons/preview/clan-bookmark-fill.svg`, 마이 비활성/활성은 `assets/icons/preview/me-smile.svg`/`me-smile-fill.svg`를 사용자 시연 승인에 따라 사용한다. 추가 웹 소스는 **기존 Soft SVG 56종을 바꾼 것이 아니다.** 파일·상태 연결은 [C-BOTTOM](../components/bottom-navigation.md), 공통 에셋 관리 계약에서 정의한다.
+- 상단은 계속 Outline이고 화면별 아이콘 수·행동은 맥락에 따라 선택한다. Android의 기존 네비 이미지 및 IA는 자동 변경하지 않는다.

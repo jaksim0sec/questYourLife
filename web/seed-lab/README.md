@@ -96,3 +96,12 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 - 브랜치 소스 확인 및 정적 검수: 7개 탭, 원래 Shell 단일 인스턴스, 기존 sheet/asset ID 유지, JavaScript 파싱, HTML 태그/ID 및 CSS 괄호 검증.
 - 브라우저/Node 전체 실행, 포커스·모바일 터치, 320/360/390/430 폭·테마/200% 확대, 실제 PNG 디코드 및 Sheet 스크롤 제스처는 **별도 확인해야 함**.
 - 페이지 이름과 실제 도메인 플로우의 Shell 소속을 새로 확정하지 않는다. 시연 샘플과 승인 계약을 구분한다.
+
+## 페이지 분류·Navigation Set·Image Frame (2026-11-10)
+
+- **페이지 유형 4종:** Global / Global Inner / Non-Global / Bottom Sheet. 이들은 기존 5개 S-PAGE Shell 역할을 대체하지 않고 상·하단 Navigation의 **표시·보존 상태만 결정**한다. Global은 Root+하단 표시, Global Inner는 Standard+하단 표시, Non-Global은 Standard+하단 숨김, Bottom Sheet는 부모 상태를 유지하는 Overlay다.
+- **공통 웹 실행 계약:** `../preview/seed-page-contract.mjs`의 `PAGE_TYPES`, `applyPageType`, `selectWebNav`; `../preview/seed-standard.css`가 실제 Top/Bottom Nav 외형과 hidden/safe inset을 소유한다. Lab의 `seed-visual.mjs`는 재구현이 아니라 해당 계약을 사용한다.
+- **new와 맞춘 시각 기준:** Root/Standard 구조, 5개 균등 하단 탭, 활성 색·원본 Fill, 버튼 타깃/아이콘·라벨의 축. 클랜 북마크에는 활성 Fill 원본이 없으므로 중립 Outline의 색 강조를 사용. 탭 경로/최종 정보구조는 O-003 경계에 남긴다.
+- **C-IMAGE:** 기존 `.seed-media` 1:1 `item` contain, thumbnail/scene 비율, loading/loaded/error/폴백, 이미지 외부의 가격·이름·상태 정렬. 기존 3D PNG/SVG 원본을 변경하지 않는다.
+- **Lab:** [페이지·네비 시연](./?panel=shells)과 [컴포넌트·이미지](./?panel=components)에서 상태와 외형을 함께 본다. 기존 Sheet·Pattern·에셋 시연은 보존한다.
+- 검증 범위: Page Type 상태·하단 선택·시트 부모 보존 모의 DOM 통과, HTML/JS/CSS 정적 구조 확인, GitHub Pages 빌드 성공. Node 전체 테스트·Chromium 픽셀/모바일 실기기·Android Compose 이식은 미검증이다.

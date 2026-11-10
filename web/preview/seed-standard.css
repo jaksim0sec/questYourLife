@@ -1,8 +1,8 @@
 @charset "utf-8";
-/* Web-only typography trial for Root/Standard navigation and sheet headers. */
+/* D-015 approved web typography for Root/Standard navigation and sheet headers. */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
-/* Original preview foundation, font, header and actions; values unchanged. */
-:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+/* Original preview foundation and action aliases; Top Navigation now follows D-015. */
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); --seed-page-gutter:20px; font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
 
 :root[data-theme="dark"] { color-scheme: dark; --canvas: #101115; --surface: #242329; --shell-surface: #16171b; --nav-surface: #242329; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
@@ -344,7 +344,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-bottom-nav__link .seed-icon { --seed-icon-size:1.56938rem; }
 .seed-bottom-nav__link[aria-current="page"] { color:var(--nav-active); font-weight:850; }
 .seed-bottom-nav__link:focus-visible { outline:2px solid var(--brand); outline-offset:-2px; }
-@media (max-width:359px) { .seed-top-nav__inner, .head { padding-inline:16px; } }
+@media (max-width:359px) { :root { --seed-page-gutter:16px; } }
 /* C-IMAGE · preserve the established Frame and actual asset, while handling state. */
 .seed-media[data-media-kind="item"] { aspect-ratio:1 / 1; }
 .seed-media[data-media-kind="thumbnail"],.seed-media[data-media-kind="scene"],.seed-media[data-media-kind="hero"] { aspect-ratio:var(--media-ratio,1 / 1); }

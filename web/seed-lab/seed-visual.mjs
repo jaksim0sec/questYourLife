@@ -2,6 +2,7 @@
  * The actual visibility decisions come from the shared web contract.
  */
 import {WEB_NAV_ITEMS,applyPageType,selectWebNav,getPageType} from "../preview/seed-page-contract.mjs";
+import {MASCOT_EQUIPMENT,mountMascotAvatar} from "../preview/seed-mascot-avatar.mjs";
 const $=(s,p=document)=>p.querySelector(s);
 const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
 $$("[data-seed-panel]").forEach(button=>button.addEventListener("click",()=>{
@@ -160,4 +161,30 @@ if(shell){
   });
   setDestination("home");
   render("root","global");
+}
+
+/* C-AVATAR showcase uses the same component and image URLs as future pages. */
+const avatarOptions={
+  none:[],
+  hat:[2],
+  audio:[1003],
+  both:[1003,2]
+};
+const avatarButtons=$$("[data-avatar-outfit]");
+const avatarFeature=$("#seed-avatar-feature");
+if(avatarFeature){
+  const avatarProfile=$("#seed-avatar-profile");
+  const avatarRow=$("#seed-avatar-row");
+  function showAvatarOutfit(option){
+    if(!Object.hasOwn(avatarOptions,option))return;
+    const equipmentIds=avatarOptions[option];
+    const names=equipmentIds.map(id=>MASCOT_EQUIPMENT[id].name).join(", ");
+    mountMascotAvatar(avatarFeature,{equipmentIds,scale:"fluid",label:"마스코트 프로필"+(names?" · "+names:"")});
+    mountMascotAvatar(avatarProfile,{equipmentIds,scale:"profile",decorative:true});
+    mountMascotAvatar(avatarRow,{equipmentIds,scale:"row",decorative:true});
+    for(const b of avatarButtons)b.setAttribute("aria-pressed",String(b.dataset.avatarOutfit===option));
+    $("#seed-avatar-state").textContent=(names||"기본 마스코트")+" · 실제 아이템 원본 / 같은 좌표 / 크기 비례. 시연에서 보유 상태는 변경하지 않습니다.";
+  }
+  for(const b of avatarButtons)b.addEventListener("click",()=>showAvatarOutfit(b.dataset.avatarOutfit));
+  showAvatarOutfit("both");
 }

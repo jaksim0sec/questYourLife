@@ -32,21 +32,7 @@
 .seed-spatial-stack{grid-template-rows:repeat(3,1fr)}.seed-spatial-row{grid-template-columns:1fr 2fr 1fr}.seed-spatial-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr)}
 .seed-spatial-layer{position:relative}.seed-spatial-layer i{height:100%}.seed-spatial-layer b{position:absolute;right:8px;top:8px;padding:4px 8px;background:var(--reward);color:var(--on-reward);border-radius:6px;font-size:.72rem}
 .seed-visual-references{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
-.seed-viz-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);min-height:64px;align-items:center;gap:2px}
-.seed-viz-header .seed-viz-leading{display:flex;align-items:center;justify-content:start}
-.seed-viz-header .seed-viz-trailing{display:flex;align-items:center;justify-content:end}
-.seed-viz-header #page-shell-title{text-align:center;overflow-wrap:anywhere}
-.seed-viz-header[data-nav-role="root"]{grid-template-columns:minmax(0,1fr) auto}
-.seed-viz-header[data-nav-role="root"] .seed-viz-leading{display:none}
-.seed-viz-header[data-nav-role="root"] #page-shell-title{grid-column:1;grid-row:1;text-align:start}
-.seed-viz-header[data-nav-role="root"] .seed-viz-trailing{grid-column:2;grid-row:1}
-.seed-viz-header [hidden],#shell-nav[hidden],#shell-fixed-cta[hidden],#shell-special-content[hidden],#shell-immersive-content[hidden],#shell-utility-content[hidden],#shell-overlay-content[hidden],#shell-common-list[hidden],#page-shell-bottom[hidden]{display:none!important}
-.seed-viz-bottom-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
-.seed-viz-bottom-nav button{display:grid;justify-items:center;align-content:center;gap:3px;min-width:0;min-height:54px;padding:5px 0;border:0;background:transparent;color:var(--sub);font:inherit;font-size:.7rem;font-weight:600;cursor:pointer}
-.seed-viz-bottom-nav button[aria-current="page"]{color:var(--nav-active)}
-.seed-viz-bottom-nav .seed-icon{--seed-icon-size:27px}
-.seed-viz-bottom-nav button:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
-#shell-fixed-cta{padding:8px 0}
+.seed-top-nav__inner [hidden],#shell-nav[hidden],#shell-fixed-cta[hidden],#shell-special-content[hidden],#shell-immersive-content[hidden],#shell-utility-content[hidden],#shell-overlay-content[hidden],#shell-common-list[hidden],#page-shell-bottom[hidden]{display:none!important}
 #shell-immersive-content{display:grid;justify-items:center;gap:9px;text-align:center}
 #shell-immersive-content .seed-media{width:min(100%,200px)}
 #shell-overlay-content{display:grid;gap:14px}

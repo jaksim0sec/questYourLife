@@ -234,3 +234,9 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 - **Top/Bottom Navigation**은 [TOP_NAVIGATION](../../../TOP_NAVIGATION.md)와 [C-BOTTOM](../components/bottom-navigation.md)을 사용. `new` 웹 시각값 보존, 새 Glyph 생성 금지.
 - **Item Image Frame**은 기존 [C-IMAGE](../components/image-frame.md)에서 담당, Loading/Loaded/Error와 아이템 상태를 분리. Lab은 정본의 시연 소비자다.
 - 계약의 보장은 이 파일을 참조하는 **웹 소비자 범위**. Android Compose는 동일한 분류/네비게이션/프레임에 대한 별도 구현·검증이 필요하다.
+
+## D-015 승인 헤더·네비 동기화 (2026-11-10)
+
+이전의 상단 헤더 `850 / -.05em` 및 화면별 간격 보정은 웹 공통 구현값이 아니다. **단일 스타일 소유자**는 `web/preview/seed-standard.css`이고, `.head`(기존 preview)와 `.seed-top-nav__title`(SEED Lab/신규 웹 화면)이 같은 Pretendard Variable·Title 수치를 소비한다. 헤더 구성 선택은 `seed-page-contract.mjs`의 네 페이지 타입 가시성 계약과 D-011 Root/Standard 역할에 따른다.
+최종 Root `1.30rem/650`, Standard `1.08rem/620`, Glyph `1.59rem`, Target `3rem`, 최소 높이 `3.5rem`을 별도 페이지 CSS에 복제하지 않는다. Lab의 얇은 A/B variant CSS는 확정 후 삭제됐다. 웹 하단 탭의 아이콘 경로는 `WEB_NAV_ITEMS`가 소유하며 Lab과 preview가 같은 파일 세트를 참조한다. 기존 일반 `C-TEXT` 스케일/버튼·이미지·카드 규격을 헤더 때문에 바꾸지 않는다.
+규격은 [NAV-TOP](../../TOP_NAVIGATION.md) 및 [v015-tokens.json](v015-tokens.json)에 기록했다. Node 회귀 검사는 `web/seed-lab/page-type.test.mjs`로, 실제 화면의 광학적 판단과 Native는 별도다.

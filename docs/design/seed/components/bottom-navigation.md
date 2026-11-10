@@ -51,5 +51,19 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 - **전역 하단 바:** 현재 `new` 웹 기준의 중립 표면·상단 경계, **5개 균등 슬롯**, `3.9525rem` content 최소 높이, 아이콘 약 `1.56938rem`, Label 약 `.6975rem`, icon-label gap `.2325rem`. 이 숫자는 새 디자인 토큰 제안이 아닌 기존 `new` CSS 실측값이며, 페이지 전용 override로 복제하지 않는다.
 - 시각 기준 이름: 홈 / 퀘스트 / 디엠 / 클랜 / 마이. 전역 탭에 대한 의미·루트 이동은 `Global` 기준, `Global Inner`에서는 부모 활성 탭을 유지한다. `Non-Global`에서는 하단 바 전체를 숨긴다.
 - 활성 색 `--nav-active`, inactive `--sub`, 하나의 `aria-current="page"`만 허용. `data-nav-key`가 route 자체를 새로 정의하는 것은 아니다.
-- 원본 56 SVG: 홈 `home/home-fill`, 퀘스트 `check-circle/check-circle-fill`, 디엠 `chat/chat-fill`, 마이 `user/user-fill`. **클랜 북마크에는 Fill 원본이 없음**: `bookmark.svg`를 유지하고 색/라벨 강조만 한다. 없는 `bookmark-fill.svg`를 참조하거나 Outline에 강제로 fill을 적용하지 않는다.
+- 웹 시연 SVG 매핑(D-015): 홈 `home/home-fill`, 퀘스트 `check-circle/check-circle-fill`, 디엠 `chat/chat-fill`은 공식 v0.14 원본. 클랜 `bookmark`(공식) / `clan-bookmark-fill`(독립 preview 정본), 마이 `me-smile` / `me-smile-fill`(독립 preview 정본). 모두 비활성 Outline·활성 별도 Fill을 사용한다. 공식 56종의 개수·파일·manifest는 변경하지 않는다. **기존 main Android 클랜 나침반에는 이 웹 매핑을 자동 적용하지 않는다.**
 - 실제 바텀 네비게이션은 화면마다 재제작하지 않는다. 공통 `.seed-bottom-nav` / `.seed-bottom-nav__link`가 외형을 제공하며 `S-PAGE`가 노출과 safe inset을 책임진다. HTML `nav`의 링크 라우트는 실제 서비스 Router가 소유한다.
+
+## 2026-11-10 · 웹 내비 시각 매핑 확정 (D-015)
+
+| 슬롯 (웹 시연) | 비활성 파일 | 활성 파일 | 원본 위치 |
+|---|---|---|---|
+| 홈 | `home.svg` | `home-fill.svg` | `assets/icons/soft/v0.14/` |
+| 퀘스트 | `check-circle.svg` | `check-circle-fill.svg` | `assets/icons/soft/v0.14/` |
+| 디엠 | `chat.svg` | `chat-fill.svg` | `assets/icons/soft/v0.14/` |
+| 클랜 | `bookmark.svg` | `clan-bookmark-fill.svg` | 활성만 `assets/icons/preview/` |
+| 마이 | `me-smile.svg` | `me-smile-fill.svg` | `assets/icons/preview/` |
+
+- 웹 하단 5슬롯·균등 폭·`1.56938rem` 렌더 크기·`.6975rem` 라벨·`.2325rem` 간격을 유지. **상단의 1.59rem과 같은 값으로 강제하지 않는다.** 광학적 균형은 렌더링에서 판단한다.
+- 선택 시 `aria-current=page`는 하나만 설정하고 색 + 전용 Fill + 라벨을 함께 사용한다. 전체 IA·라우트 정책은 여전히 O-003 미결.
+- `assets/icons/preview/`는 이름이 preview인 **현행 파일 경로**다. 이 세 파일의 웹 Navigation 디자인 채택은 승인됐으나 파일을 강제로 기존 Soft 56종 manifest에 섞지 않는다.

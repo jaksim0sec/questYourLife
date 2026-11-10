@@ -202,3 +202,11 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 | 실행 상태 | **Node 테스트 실제 실행, Chromium 픽셀/모바일 터치, Pages 배포 동기화, Android Compose/실기기 검증은 이번 작업에서 수행하지 않음** |
 
 **경계:** 정적 일치와 사용자 시연 선택은 기록할 수 있으나, 새 커밋의 웹 렌더링이 새로 검증됐다고 주장하지 않는다. 실기기 가독성·200% 확대·폰트 CDN 실패 fallback 및 Pages 배포 여부는 해당 단계에서 확인한다. 일반 UI `type.root` 등 범용 타이포·기존 Android 리소스는 이번 승인으로 바꾸지 않는다.
+
+## 2026-11-10 · 웹 마이 Smile Fill 시각 회귀 교정
+
+- 원인: 신규 `me-smile-fill.svg`가 Outline의 `r=9.2 + stroke/2=0.9` 광학적 외곽을 빠뜨려 활성 상태에서 약 9% 작아 보임. 입 컷아웃도 Outline과 일관되지 않았음.
+- 적용: 별도 활성 SVG의 바깥 반지름 `10.1`, 두 눈·입의 독립 투명 컷아웃. `web/preview/seed-page-contract.mjs`와 `web/preview/app.js`의 파일명·경로·기존 inactive/active 상태 매핑은 유지.
+- CairoSVG 래스터 비교: 25px 출력에서 Outline/Fill 각각 23×21px의 유효 alpha 외곽, 96px에서 각각 82×82px. SVG `viewBox=24`, 하단 CSS glyph `1.56938rem` 불변.
+- 기존 공식 Soft SVG 56종, 클랜 Fill, 헤더·페이지 타입·터치 타깃·네비 순서는 변경하지 않음. 정적 Node 테스트에 실루엣 반지름·컷아웃 구조 단언 추가.
+- **미검증:** GitHub Pages 최신 배포 및 실제 Chrome/모바일에서의 최종 CSS-mask 스크린샷. 시연 확인과 사용자의 시각 검수는 별도.

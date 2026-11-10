@@ -63,12 +63,13 @@ test('unavailable progress clears any old accessible value text',()=>{
   assert.match(section,/track\.removeAttribute\("aria-valuetext"\)/);
 });
 
-test('shell and footer controls bind to element lists so later interactions can initialize',()=>{
+test('page controls have a single shared owner and sheet footer still initializes',()=>{
+  const viewer=text('./seed-visual.mjs');
   assert.equal((html.match(/data-shell-choice=/g)||[]).length,3);
+  assert.equal((html.match(/data-page-type-choice=/g)||[]).length,4);
   assert.equal((html.match(/data-footer-choice=/g)||[]).length,4);
-  assert.match(js,/const shellButtons=\$\$\("button\[data-shell-choice\]"\)/);
+  assert.match(viewer,/const shellButtons=\$\$\("button\[data-shell-choice\]"\)/);
+  assert.doesNotMatch(js,/const shellButtons=\$\$\("button\[data-shell-choice\]"\)/);
   assert.match(js,/footerButtons=\$\$\("button\[data-footer-choice\]"\)/);
-  assert.match(js,/shellButtons\.forEach\(/);
-  assert.match(js,/footerButtons\.forEach\(/);
   assert.match(js,/\$\("#sheet-open"\)\.addEventListener\("click"/);
 });

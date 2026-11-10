@@ -8,7 +8,7 @@ test("Page Shell remains an S-PAGE layout primitive rather than a new page type"
   assert.match(html,/class="seed-page-shell"[^>]*data-shell-kind="root"/);
   for(const slot of ["header","content","section","bottom"])assert.match(seed,new RegExp("\\.seed-page-shell__"+slot+"\\b"));
   for(const role of ["root","detail","utility"])assert.match(html,new RegExp('data-shell-choice="'+role+'"'));
-  assert.match(js,/function renderPageShell\(/);
+  assert.match(read("./seed-visual.mjs"),/function render\(kind,explicitType\)/);
   assert.doesNotMatch(style,/\.seed-page-shell__content\s*\{/);
 });
 

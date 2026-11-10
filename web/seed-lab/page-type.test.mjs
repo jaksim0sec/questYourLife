@@ -74,10 +74,10 @@ test('canonical Lab exposes all four page types and illustrates the C-IMAGE stat
 test('Root and Standard headers share a visual scale without icon-order shifts',()=>{
  assert.match(css,/\.head, \.seed-top-nav__inner\s*\{/);
  assert.match(css,/font-family:"Pretendard Variable"/);
- assert.match(css,/\.head h1\s*\{[^}]*font-size:1\.28rem/);
- assert.match(css,/\.head\.standard h1\s*\{[^}]*font-size:1\.06rem/);
- assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-size:1\.28rem/);
- assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.06rem/);
+ assert.match(css,/\.head h1\s*\{[^}]*font-size:1\.30rem/);
+ assert.match(css,/\.head\.standard h1\s*\{[^}]*font-size:1\.08rem/);
+ assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-size:1\.30rem/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.08rem/);
  assert.match(css,/\.seed-top-nav\.seed-page-shell__header\s*\{[^}]*background:var\(--canvas\)/);
  assert.match(css,/\.sheet-head, \.seed-sheet__head\s*\{/);
  assert.doesNotMatch(css,/\.tools \.icon-btn:nth-last-child/);
@@ -95,14 +95,15 @@ test('My smile states share the preview-only source and do not mutate 56 canonic
  assert.match(text('../preview/index.html'),/assets\/icons\/preview\/me-smile\.svg/);
  assert.match(js,/item\.outlineBase\|\|/);
 });
-test('header-weight A B switch is local to the Lab Shell and works with Root or Standard',()=>{
+
+test('approved light header is shared across Root and Standard instead of a Lab override',()=>{
  const styles=text('./seed-visual.css');
- for(const weight of ['current','light'])assert.match(html,new RegExp('data-header-weight="'+weight+'"'));
- assert.match(html,/id="page-shell" data-header-weight="current"/);
- assert.match(js,/shell\.dataset\.headerWeight=weight/);
- assert.match(js,/setPressed\(weightButtons,weight,"headerWeight"\)/);
- assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.30rem; font-weight:650/);
- assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.08rem; font-weight:620/);
- assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-weight:720/);
- assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-weight:700/);
+ assert.doesNotMatch(html,/data-header-weight|seed-header-weight-controls/);
+ assert.doesNotMatch(js,/setHeaderWeight|weightButtons/);
+ assert.doesNotMatch(styles,/data-header-weight|seed-header-weight-controls/);
+ assert.match(css,/\.head h1\s*\{[^}]*font-size:1\.30rem;[^}]*font-weight:650/);
+ assert.match(css,/\.head\.standard h1\s*\{[^}]*font-size:1\.08rem;[^}]*font-weight:620/);
+ assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-size:1\.30rem;[^}]*font-weight:650/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.08rem;[^}]*font-weight:620/);
+ assert.match(css,/--seed-top-glyph:1\.59rem/);
 });

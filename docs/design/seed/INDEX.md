@@ -160,3 +160,9 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - [계열별 규격·코드 진입점](implementation/component-families.md): C-TEXT의 의미/Scale/가중치, C-ACTION의 허용 6종과 금색 서브브랜드, C-LIST/C-FIELD/C-STATUS 등 기존 계열의 표현 책임을 **신규 계층 없이** 묶어 설명한다.
 - 확정 수치와 proposed 후보를 구분하며, 재사용 표현 정본은 `web/preview/seed-standard.css`. `web/preview/style.css`/클랜 지역 CSS에 동일 속성을 재정의하지 않는다.
 - 새로운 Hero 디자인·XSmall 버튼·새 브랜드 색·SVG·아트·Android UI·페이지 템플릿은 도입하지 않는다.
+
+## C-AVATAR 웹 구현 경로 · 2026-11-10
+
+기존 `C-AVATAR` 항목의 단순 문서 정의를 **코드로 연결**했다. `components/avatar.md` (역할·Anatomy·상태·좌표·레이어 우선순위) → `web/preview/seed-mascot-avatar.mjs` (합성·렌더) + `web/preview/seed-standard.css` (공통 클래스) → `web/seed-lab/?panel=components#mascot-avatar` (크기별 실사용 시연) → `web/preview/seed-mascot-avatar.test.mjs` (합성 테스트). 기존 21개 컴포넌트 집합을 늘리지 않고 C-AVATAR의 누락 구현만 보강한다.
+
+원본 자산은 `assets/art/mascot/`와 `assets/art/cosmetics/`이며 `docs/assets/README.md`가 복사 SHA·레거시 중복 보존을 기록한다. 이 구현은 웹 컴포넌트 수준이고, 실기기 비주얼 확정 및 Android 이식은 별도다.

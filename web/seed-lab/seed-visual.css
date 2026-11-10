@@ -55,3 +55,12 @@
 .seed-media-specimens article { display:grid; align-content:start; gap:7px; min-width:0; }
 .seed-media-specimens .seed-media__fallback { padding:12px; text-align:center; font-size:.79rem; line-height:1.45; }
 @media(max-width:750px) { .seed-page-type-matrix { grid-template-columns:repeat(2,minmax(0,1fr)); }.seed-media-specimens { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+/* SEED Lab C-AVATAR fixture: placement only. Avatar visual anatomy is shared CSS. */
+.seed-avatar-showcase { display:flex; align-items:center; gap:20px; }
+.seed-avatar-showcase__stage { flex:1; display:grid; justify-items:center; align-content:center; gap:12px; min-width:0; padding:16px; }
+#seed-avatar-feature { width:min(100%,240px); }
+.seed-avatar-showcase__sizes { flex:0 0 auto; display:grid; gap:16px; }
+.seed-avatar-showcase__sizes>div { display:grid; justify-items:center; gap:8px; }
+.seed-avatar-showcase__choices { width:min(100%,420px); }
+@media (max-width:430px) { .seed-avatar-showcase { flex-direction:column; } .seed-avatar-showcase__sizes { display:flex; align-items:end; gap:24px; } }

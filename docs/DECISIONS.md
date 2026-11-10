@@ -86,3 +86,16 @@
 - preview의 래스터와 별도 SVG/inline 도형도 사용처·원본·예외를 구분한다. 실제 경로 변경 시 CSS mask·JS/HTML·정적 서버 루트·GitHub Pages 경로를 동시에 갱신해 깨진 참조를 남기지 않는다.
 - Android `drawable`/`drawable-nodpi`는 플랫폼용 연결·변환 경로다. 기존 클랜 나침반, 마스코트·캐시·장착 자산 및 사용자 데이터의 식별자를 임의 변경하지 않는다.
 - **2026-11-09 실현 상태:** SVG 이동·중복 삭제·preview HTML/CSS/JS 참조 변경만 수행했다 (`c0d360a`). PNG/WebP 파일 등록·이동, Android 코드 이관·배포는 미완료이며 별도 검증 대상이다.
+
+## D-015 · 웹 Navigation 시각 규격 확정 [사용자 승인 · 2026-11-10]
+
+**승인 범위:** `feat/seed-layout-composition-20261110` 웹 시연에서 직접 비교해 채택한 **얇은 헤더(미세 확대 후)** 및 웹 하단 아이콘. SEED 재사용 규격에 반영하며 Android 자동 이식·실제 제품 IA 승인과는 구분한다.
+
+- **Root:** Pretendard Variable 우선(시스템 한글 폴백), `1.30rem / 650 / -0.025em / line-height 1.35`. 왼쪽 페이지 제목, 오른쪽 맥락별 Outline 아이콘.
+- **Standard:** 같은 서체, `1.08rem / 620 / -0.018em`. 왼쪽 Back 또는 Close, 중앙 제목, 오른쪽 맥락별 액션. Global Inner와 Non-Global 공통.
+- **기하·표면:** Header 최소 높이 `3.5rem`, 터치 타깃 `3rem`(48px 기준), 헤더 SVG 렌더 박스 `1.59rem`, 공식 `24×24 / stroke 1.8` 원본은 유지. 같은 화면의 좌우 gutter는 360px 미만 16px, 그 이상 20px. 아이콘 순서별 `translateX` 보정 금지. 헤더는 바로 아래 페이지 배경과 자연스럽게 연결한다.
+- **하단 Web Navigation:** 기존 5개 시연 슬롯, 비활성 Outline / 활성 독립 Fill+색·라벨을 유지. 클랜 활성 `assets/icons/preview/clan-bookmark-fill.svg`, 마이 비활성/활성 `assets/icons/preview/me-smile.svg`, `me-smile-fill.svg`를 채택. 공식 Soft SVG 56개 파일과 manifest는 변경하지 않는다.
+- **페이지 타입:** Global / Global Inner / Non-Global / Bottom Sheet 가시성 계약을 유지. 시트는 부모 페이지 네비 상태를 대체하지 않으며 자체 Header만 가진다.
+- **소유권:** 디자인 정본은 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), [C-BOTTOM](./design/seed/components/bottom-navigation.md), [S-PAGE](./design/seed/shells/page-shells.md), [웹 토큰](./design/seed/implementation/v015-tokens.json), 구현 정본은 `web/preview/seed-standard.css`와 `seed-page-contract.mjs`. Lab A/B 덮어쓰기는 종료한다.
+
+실제 루트의 구성·경로/딥링크 O-003, 기존 Android의 클랜 나침반 및 D-012 Soft 56종 채택은 그대로 보존한다.

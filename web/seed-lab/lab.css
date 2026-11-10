@@ -142,3 +142,9 @@
   .lab-sheet-controls .seed-segment button { padding-inline:8px; }
   .lab-shell-header { gap:8px; }
 }
+/* This page owns only Lab framing; all canonical component styles remain in seed-standard.css. */
+.lab-intro { max-width:800px; margin-bottom:20px; }
+.lab-wrap { padding-top:28px; }
+.lab-nav-wrap { margin-bottom:22px; }
+.lab-panel > .family-nav { margin-top:4px; }
+.family-nav a:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }

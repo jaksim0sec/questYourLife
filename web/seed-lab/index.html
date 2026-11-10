@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-seed-lab data-theme="light">
+<html lang="ko" data-seed-lab data-seed-family-preview data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,7 +7,9 @@
   <title>SEED Lab | 갓생패치</title>
   <link rel="stylesheet" href="../preview/seed-standard.css">
   <link rel="stylesheet" href="./lab.css">
+  <link rel="stylesheet" href="./families.css">
   <script type="module" src="./lab.js"></script>
+  <script type="module" src="./families.js"></script>
 </head>
 <body>
   <header class="lab-header">
@@ -18,19 +20,160 @@
   </header>
   <main class="lab-wrap">
     <div class="lab-intro">
-      <div class="lab-kicker"><span class="lab-signal"></span> 실험 환경 <span>SEED v0.15 · Web only</span></div>
-      <h1 class="seed-text" data-text-role="display">같은 규칙으로<br><span class="lab-highlight">더 나은 화면을 만든다</span></h1>
-      <p class="seed-text" data-text-role="body">배치, 선택 상태, 색상과 화면 골격을 직접 비교하는 디자인 실험실입니다.</p>
+      <div class="lab-kicker"><span class="lab-signal"></span> DESIGN SYSTEM <span>갓생패치 · SEED v0.15</span></div>
+      <h1 class="seed-text" data-text-role="title" data-text-style="root">SEED 컴포넌트 실험실</h1>
+      <p class="seed-text" data-text-role="body" data-text-style="body">정본의 타이포·버튼·상태·공간 구성·에셋을 한 곳에서 검증합니다.</p>
     </div>
     <div class="lab-nav-wrap">
       <div role="tablist" aria-label="실험 영역" class="lab-tabs">
-        <button id="tab-layout" type="button" role="tab" aria-controls="panel-layout" aria-selected="true" tabindex="0" data-panel-target="layout">배치와 구성</button>
-        <button id="tab-state" type="button" role="tab" aria-controls="panel-state" aria-selected="false" tabindex="-1" data-panel-target="state">상태와 행동</button>
+        <button id="tab-components" type="button" role="tab" aria-controls="panel-components" aria-selected="true" tabindex="0" data-panel-target="components">컴포넌트</button>
+        <button id="tab-layout" type="button" role="tab" aria-controls="panel-layout" aria-selected="false" tabindex="-1" data-panel-target="layout">배치와 구성</button>
+        <button id="tab-state" type="button" role="tab" aria-controls="panel-state" aria-selected="false" tabindex="-1" data-panel-target="state">동작 검증</button>
         <button id="tab-assets" type="button" role="tab" aria-controls="panel-assets" aria-selected="false" tabindex="-1" data-panel-target="assets">에셋과 표면</button>
       </div>
     </div>
 
-    <section id="panel-layout" role="tabpanel" aria-labelledby="tab-layout" data-panel="layout" class="lab-panel">
+
+    <section id="panel-components" role="tabpanel" aria-labelledby="tab-components" data-panel="components" class="lab-panel">
+      <div class="lab-section-head">
+        <div>
+          <span class="lab-overline">C-TEXT · C-ACTION · COMPONENT FAMILIES</span>
+          <h2 class="seed-text" data-text-role="title" data-text-style="standard">컴포넌트 패밀리</h2>
+          <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">같은 계열에서 역할·크기·상태를 비교합니다. 공식 수치와 미승인 후보는 구분합니다.</p>
+        </div>
+        <span class="seed-badge" data-tone="neutral">공통 스타일 기준</span>
+      </div>
+  <nav class="family-nav" aria-label="컴포넌트 계열">
+    <a href="#typography">Typography</a><a href="#actions">Action</a><a href="#status">Status</a><a href="#inputs">Input</a><a href="#lists">List & Media</a><a href="#surfaces">Surface & Icon</a>
+  </nav>
+  <section class="family-section" id="typography" aria-labelledby="title-type">
+    <div class="family-section-head">
+      <div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">01 · C-TEXT + F-TYPE</p><h2 id="title-type" class="seed-text" data-text-role="section" data-text-style="section">Typography</h2><p class="seed-text" data-text-role="body" data-text-style="support" data-text-tone="secondary">의미 역할 5개, 시각 스케일 10개. 서체는 기존 시스템 폰트.</p></div>
+      <span class="seed-badge" data-tone="neutral">D-012 / K03</span>
+    </div>
+    <div class="family-type-gallery">
+      <article class="family-type-row"><div class="family-type-info"><strong>Root Title</strong><code>title / root · 26/34 · 700</code></div><h3 class="seed-text" data-text-role="title" data-text-style="root">퀘스트</h3></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Standard Title</strong><code>title / standard · 18/26 · 600</code></div><p class="seed-text" data-text-role="title" data-text-style="standard">클랜 상세</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Hero</strong><code>display / hero · 24/32 · 700</code></div><p class="seed-text" data-text-role="display" data-text-style="hero">이번 주의 기록</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Number</strong><code>display / number · 24/32 · 700</code></div><p class="seed-text" data-text-role="display" data-text-style="number">1,240</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Section</strong><code>section · 18/26 · 700</code></div><p class="seed-text" data-text-role="section" data-text-style="section">오늘의 활동</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Item</strong><code>body / item · 16/24 · 600</code></div><p class="seed-text" data-text-role="body" data-text-style="item">일본어 단어 복습</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Body</strong><code>body · 16/24 · 400</code></div><p class="seed-text" data-text-role="body" data-text-style="body">목표를 나누어 실천하고 진행을 기록합니다.</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Support</strong><code>caption / support · 14/20 · 400</code></div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">어제 오후 6:20 · 최근 업데이트</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Caption</strong><code>caption · 12/18 · 500</code></div><p class="seed-text" data-text-role="caption" data-text-style="caption">보조 안내</p></article>
+      <article class="family-type-row"><div class="family-type-info"><strong>Number Small</strong><code>body / number-small · 16/24 · 600</code></div><p class="seed-text" data-text-role="body" data-text-style="number-small">12,600</p></article>
+    </div>
+    <div class="family-note seed-surface" data-surface="subtle"><p class="seed-text" data-text-role="body" data-text-style="support">의미상 제목과 실제 크기는 독립입니다. 긴 소개문을 Hero로 키우거나 문단 전체를 브랜드색으로 강조하지 않습니다. 숫자는 같은 표기 폭을 사용합니다.</p></div>
+    <div class="family-inline-example">
+      <span class="seed-text" data-text-role="body" data-text-style="body">기본 본문</span>
+      <span class="seed-text" data-text-role="body" data-text-style="body" data-text-weight="medium">중요도 중간</span>
+      <span class="seed-text" data-text-role="body" data-text-style="body" data-text-weight="strong">부분 강조</span>
+      <span class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">보조 정보</span>
+    </div>
+  </section>
+  <section class="family-section" id="actions" aria-labelledby="title-actions">
+    <div class="family-section-head">
+      <div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">02 · C-ACTION + P-ACTIONS</p><h2 id="title-actions" class="seed-text" data-text-role="section" data-text-style="section">Action Button</h2><p class="seed-text" data-text-role="body" data-text-style="support" data-text-tone="secondary">기존 허용 6종. 높이·아이콘·상태·너비는 독립 속성입니다.</p></div><span class="seed-badge" data-tone="neutral">K07</span>
+    </div>
+    <div class="family-switches">
+      <div class="family-switch"><span class="seed-text" data-text-role="caption" data-text-style="support">Size</span><div class="seed-segment" role="group" aria-label="버튼 크기"><button type="button" data-family-size="small" aria-pressed="false">Small</button><button type="button" data-family-size="default" aria-pressed="true">Default</button><button type="button" data-family-size="large" aria-pressed="false">Large</button></div></div>
+      <div class="family-switch"><span class="seed-text" data-text-role="caption" data-text-style="support">Width</span><div class="seed-segment" role="group" aria-label="버튼 너비"><button type="button" data-family-width="hug" aria-pressed="true">Hug</button><button type="button" data-family-width="fill" aria-pressed="false">Fill</button></div></div>
+    </div>
+    <div class="family-action-grid" id="family-actions-approved">
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Brand Solid</strong><span class="seed-badge" data-tone="brand" data-size="xs">High</span></div><button type="button" class="seed-action" data-variant="brand-solid" data-size="default"><span class="seed-action__face"><span class="seed-action__label">시작하기</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">주요 행동 1개</p></article>
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Neutral Solid</strong><span class="seed-badge" data-tone="neutral" data-size="xs">High</span></div><button type="button" class="seed-action" data-variant="neutral-solid" data-size="default"><span class="seed-action__face"><span class="seed-action__label">확인하기</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">중립적 대표 확정</p></article>
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Neutral Weak</strong><span class="seed-badge" data-tone="neutral" data-size="xs">Medium</span></div><button type="button" class="seed-action" data-variant="neutral-weak" data-size="default"><span class="seed-action__face"><span class="seed-action__label">목록 보기</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">일반 실행</p></article>
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Neutral Outline</strong><span class="seed-badge" data-tone="neutral" data-size="xs">Low</span></div><button type="button" class="seed-action" data-variant="neutral-outline" data-size="default"><span class="seed-action__face"><span class="seed-action__label">닫기</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">보조 행동</p></article>
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Ghost</strong><span class="seed-badge" data-tone="neutral" data-size="xs">Low</span></div><button type="button" class="seed-action" data-variant="ghost" data-size="default"><span class="seed-action__face"><span class="seed-action__label">더 알아보기</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">부가 설명·이동</p></article>
+      <article class="family-action-cell seed-surface" data-surface="solid"><div class="family-action-meta"><strong>Reward Secondary</strong><span class="seed-badge" data-tone="reward" data-size="xs">Gold</span></div><button type="button" class="seed-action" data-variant="reward-secondary" data-size="default"><span class="seed-action__face"><span class="seed-action__label">보상 안내</span></span></button><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">기존 서브브랜드 톤</p></article>
+    </div>
+    <h3 class="seed-text family-subtitle" data-text-role="section" data-text-style="section">상태와 슬롯</h3>
+    <div class="family-state-grid">
+      <article class="family-state-cell seed-surface" data-surface="solid"><p class="seed-text" data-text-role="caption" data-text-style="support">아이콘 + 라벨</p><button type="button" class="seed-action" data-variant="brand-solid" data-size="default"><span class="seed-action__face"><span class="seed-action__icon"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/plus.svg')" aria-hidden="true"></span></span><span class="seed-action__label">추가하기</span></span></button></article>
+      <article class="family-state-cell seed-surface" data-surface="solid"><p class="seed-text" data-text-role="caption" data-text-style="support">Loading / 자리 유지</p><button type="button" class="seed-action" data-variant="brand-solid" data-size="default" aria-busy="true" aria-label="처리 중"><span class="seed-action__face"><span class="seed-action__label">처리 중</span></span></button></article>
+      <article class="family-state-cell seed-surface" data-surface="solid"><p class="seed-text" data-text-role="caption" data-text-style="support">Disabled / 실제 비활성</p><button type="button" class="seed-action" data-variant="neutral-outline" data-size="default" disabled><span class="seed-action__face"><span class="seed-action__label">사용 불가</span></span></button></article>
+    </div>
+    <div class="family-note seed-surface" data-surface="subtle"><p class="seed-text" data-text-role="caption" data-text-style="support">Brand Weak와 Brand Outline은 과거 문서에만 존재한 후보로, 아래 실험 영역에서만 활성화됩니다. Critical은 의미색/대비 승인 전 미구현입니다.</p><div class="family-candidates"><button type="button" class="seed-action" data-variant="brand-weak" data-size="default"><span class="seed-action__face"><span class="seed-action__label">Brand Weak · 후보</span></span></button><button type="button" class="seed-action" data-variant="brand-outline" data-size="default"><span class="seed-action__face"><span class="seed-action__label">Brand Outline · 후보</span></span></button></div></div>
+  </section>
+  <section class="family-section" id="status" aria-labelledby="title-status">
+    <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">03 · C-STATUS</p><h2 id="title-status" class="seed-text" data-text-role="section" data-text-style="section">Badge & Progress</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">상태는 표시하고, 선택은 컨트롤로 처리합니다.</p></div><span class="seed-badge" data-tone="neutral">K08</span></div>
+    <div class="family-badge-grid">
+      <div><span class="seed-badge" data-tone="neutral">중립</span><span class="seed-badge" data-tone="neutral" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="brand">브랜드</span><span class="seed-badge" data-tone="brand" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="success">완료됨</span><span class="seed-badge" data-tone="success" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="info">안내</span><span class="seed-badge" data-tone="info" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="warning">주의</span><span class="seed-badge" data-tone="warning" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="danger">제한</span><span class="seed-badge" data-tone="danger" data-size="xs">XS</span></div>
+      <div><span class="seed-badge" data-tone="reward">보상</span><span class="seed-badge" data-tone="reward" data-size="xs">XS</span></div>
+    </div>
+    <div class="family-progress-head"><p class="seed-text" data-text-role="body" data-text-style="item">실제 값과 표시 폭</p><p id="family-progress-label" class="seed-text" data-text-role="body" data-text-style="number-small">620 / 1,000</p></div>
+    <div class="family-progress-picker" role="radiogroup" aria-label="진행률 예제">
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="0">0</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="620" checked>620</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="1000">1,000</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="1200">1,200</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="loading">로딩</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="unavailable">조회 불가</label>
+    </div>
+    <div id="family-progress-list" class="family-progress-list">
+      <div class="family-progress-row"><p class="seed-text" data-text-role="caption" data-text-style="support">Micro · 6px</p><div class="progress-track" role="progressbar" aria-label="Micro 예제" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620" data-thickness="micro" data-progress-state="ready" style="--progress:62%"><span class="progress-fill"></span></div></div>
+      <div class="family-progress-row"><p class="seed-text" data-text-role="caption" data-text-style="support">Default · 10px</p><div class="progress-track" role="progressbar" aria-label="Default 예제" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620" data-thickness="default" data-progress-state="ready" style="--progress:62%"><span class="progress-fill"></span></div></div>
+      <div class="family-progress-row"><p class="seed-text" data-text-role="caption" data-text-style="support">Featured · 12px</p><div class="progress-track" role="progressbar" aria-label="Featured 예제" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620" data-thickness="featured" data-progress-state="ready" style="--progress:62%"><span class="progress-fill"></span></div></div>
+    </div>
+    <p id="family-progress-note" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">초과 기여는 숫자로 남고, 막대는 100%까지만 채웁니다.</p>
+  </section>
+  <section class="family-section" id="inputs" aria-labelledby="title-inputs">
+    <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">04 · C-FIELD / C-CHECK / C-RADIO / C-SEGMENT</p><h2 id="title-inputs" class="seed-text" data-text-role="section" data-text-style="section">입력과 선택</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">컴포넌트 모양보다 동작의 의미를 먼저 구분합니다.</p></div></div>
+    <div class="family-input-grid">
+      <div class="seed-surface family-input-cell" data-surface="solid"><div class="seed-field-group"><label class="seed-field-label" for="family-field">목표 이름</label><input class="seed-field" id="family-field" type="text" placeholder="예: 일본어 복습" aria-describedby="family-field-help"><span class="seed-field-help" id="family-field-help">Placeholder는 Label의 대체물이 아닙니다.</span></div></div>
+      <div class="seed-surface family-input-cell" data-surface="solid"><p class="seed-text" data-text-role="body" data-text-style="item">선택 상태</p><label class="seed-choice"><input id="family-check" type="checkbox">알림 받기</label><label class="seed-choice"><input name="family-radio" value="a" type="radio" checked>기본 정보</label><label class="seed-choice"><input name="family-radio" value="b" type="radio">자세히 보기</label></div>
+      <div class="seed-surface family-input-cell" data-surface="solid"><p class="seed-text" data-text-role="body" data-text-style="item">같은 데이터의 보기 전환</p><div class="seed-segment" role="group" aria-label="보기 전환"><button type="button" data-view="day" aria-pressed="true">오늘</button><button type="button" data-view="week" aria-pressed="false">이번 주</button><button type="button" data-view="month" aria-pressed="false">이번 달</button></div><p class="seed-text" id="family-selection-feedback" data-text-role="caption" data-text-style="support" data-text-tone="secondary" aria-live="polite">오늘 · 기본 정보</p></div>
+    </div>
+  </section>
+  <section class="family-section" id="lists" aria-labelledby="title-list">
+    <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">05 · C-LIST + C-IMAGE</p><h2 id="title-list" class="seed-text" data-text-role="section" data-text-style="section">List & Media</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">같은 정보 축, 다른 콘텐츠. 미디어는 상태와 비율을 보존합니다.</p></div></div>
+    <div class="family-content-grid">
+      <div class="seed-surface" data-surface="solid"><div class="seed-list">
+        <div class="seed-list__item"><div class="seed-list__prefix"><span class="seed-text" data-text-role="body" data-text-style="number-small">1</span></div><div class="seed-list__content"><p class="seed-text" data-text-role="body" data-text-style="item">이번 주 학습 기여</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">기록 예제 · 비교 행</p></div><div class="seed-list__suffix"><span class="seed-text" data-text-role="body" data-text-style="number-small">1,240</span></div></div>
+        <div class="seed-list__item" data-align="top"><div class="seed-list__prefix"><span class="seed-text" data-text-role="body" data-text-style="number-small">2</span></div><div class="seed-list__content"><p class="seed-text" data-text-role="body" data-text-style="item">여러 줄로 이어질 수 있는 활동 설명을 포함한 예제</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">메타 정보를 숨기지 않고 줄바꿈합니다.</p></div><div class="seed-list__suffix"><span class="seed-badge" data-tone="neutral" data-size="xs">기록</span></div></div>
+        <div class="seed-list__item"><div class="seed-list__content"><p class="seed-text" data-text-role="body" data-text-style="item">보조 행동이 따로 있는 정적 행</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">부모 행에는 가짜 클릭 없음</p></div><div class="seed-list__suffix"><button class="seed-action" data-size="small" data-variant="neutral-outline" type="button"><span class="seed-action__face"><span class="seed-action__label">보기</span></span></button></div></div>
+      </div></div>
+      <div class="family-media-grid">
+        <article><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/01_school_locker.png" alt="학교 사물함"></div><p class="seed-text" data-text-role="body" data-text-style="item">학교 사물함</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">A1 / contain</p></article>
+        <article><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/06_wooden_chest.png" alt="나무 보물상자"></div><p class="seed-text" data-text-role="body" data-text-style="item">나무 상자</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">A1 / contain</p></article>
+        <article><div class="seed-media" data-media-kind="item" data-media-state="loaded" data-media-fit="contain"><img class="seed-media__image" src="../../assets/art/rewards/08_premium_glowing_chest.png" alt="빛나는 프리미엄 상자"></div><p class="seed-text" data-text-role="body" data-text-style="item">빛나는 상자</p><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">A1 / contain</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="family-section" id="surfaces" aria-labelledby="title-surface">
+    <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">06 · C-SURFACE + C-ICON</p><h2 id="title-surface" class="seed-text" data-text-role="section" data-text-style="section">Surface & Icon</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">공간 배치가 아닌 표현 역할 10종. 아이콘은 원본 SVG를 재사용.</p></div></div>
+    <div class="family-surface-grid">
+      <div class="seed-surface" data-surface="plain"><p class="seed-text" data-text-role="body" data-text-style="item">Plain</p><p class="seed-text" data-text-role="caption" data-text-style="support">배경 없는 섹션</p></div>
+      <div class="seed-surface" data-surface="solid"><p class="seed-text" data-text-role="body" data-text-style="item">Solid</p><p class="seed-text" data-text-role="caption" data-text-style="support">독립된 정보 묶음</p></div>
+      <div class="seed-surface" data-surface="outlined"><p class="seed-text" data-text-role="body" data-text-style="item">Outlined</p><p class="seed-text" data-text-role="caption" data-text-style="support">경계를 드러내는 면</p></div>
+      <div class="seed-surface" data-surface="subtle"><p class="seed-text" data-text-role="body" data-text-style="item">Subtle</p><p class="seed-text" data-text-role="caption" data-text-style="support">약한 그룹</p></div>
+      <div class="seed-surface" data-surface="inset"><p class="seed-text" data-text-role="body" data-text-style="item">Inset</p><p class="seed-text" data-text-role="caption" data-text-style="support">안쪽 구역</p></div>
+      <div class="seed-surface" data-surface="raised"><p class="seed-text" data-text-role="body" data-text-style="item">Raised</p><p class="seed-text" data-text-role="caption" data-text-style="support">상위 면</p></div>
+      <button type="button" class="seed-surface" data-surface="interactive"><p class="seed-text" data-text-role="body" data-text-style="item">Interactive</p><p class="seed-text" data-text-role="caption" data-text-style="support">실제 클릭 응답</p></button>
+      <div class="seed-surface" data-surface="media"><p class="seed-text" data-text-role="body" data-text-style="item">Media</p><p class="seed-text" data-text-role="caption" data-text-style="support">이미지 중심</p></div>
+      <div class="seed-surface" data-surface="reward"><p class="seed-text" data-text-role="body" data-text-style="item">Reward</p><p class="seed-text" data-text-role="caption" data-text-style="support">보상 의미에 한정</p></div>
+      <div class="seed-surface" data-surface="overlay"><p class="seed-text" data-text-role="body" data-text-style="item">Overlay</p><p class="seed-text" data-text-role="caption" data-text-style="support">겹침 우선면</p></div>
+    </div>
+    <div class="family-icons">
+      <button type="button" class="seed-icon-action" aria-label="검색 시연" data-icon-action="검색"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/search.svg')" aria-hidden="true"></span></button>
+      <button type="button" class="seed-icon-action" aria-label="알림 시연" data-icon-action="알림"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/bell.svg')" aria-hidden="true"></span></button>
+      <button type="button" class="seed-icon-action" aria-label="더보기 시연" data-icon-action="더보기"><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/more.svg')" aria-hidden="true"></span></button>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">실제 타깃 48px, Glyph 24px. 56개 원본은 기존 SEED Lab의 에셋 탭에서 확인.</p>
+    </div>
+  </section>
+  <output class="family-output seed-surface" data-surface="solid" id="family-feedback" role="status" aria-live="polite">컴포넌트를 선택하면 이곳에 시연 동작만 기록됩니다.</output>
+
+      <div class="family-footer">
+        <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">디자인 수치·색상·SVG는 기존 정본을 따릅니다. 후보 Variant는 시연 전용이며 제품 데이터는 변경하지 않습니다.</p>
+      </div>
+    </section>
+
+    <section id="panel-layout" role="tabpanel" aria-labelledby="tab-layout" data-panel="layout" class="lab-panel" hidden>
       <div class="lab-section-head"><div><span class="lab-overline">P-LAYOUT · C-IMAGE · C-LIST</span><h2 class="seed-text" data-text-role="title">같은 데이터, 다른 공간 관계</h2><p class="seed-text" data-text-role="caption">이름·상태·이미지는 유지하고 배치 방식만 바꿉니다</p></div><span class="seed-badge" data-tone="info">실험 01</span></div>
       <div class="lab-workbench seed-surface" data-surface="solid">
         <div class="lab-toolbar"><strong class="lab-toolbar-label">배치 방법</strong><div class="seed-segment" role="group" aria-label="배치 방법">

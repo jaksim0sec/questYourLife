@@ -51,3 +51,12 @@
 5. 해당 수정이 D-012 숫자·색·SVG 원본을 바꾸는 경우 **승인 없이 진행하지 않고 보고**.
 
 이 결과는 **SEED 패밀리 구현 1차 개편**이며 21개 전체 Composable 구현, 제품 시연 검증이나 Android 이관 완료를 의미하지 않는다.
+
+## 보완 정정 · 기존 SEED Lab 통합 (2026-11-10)
+- 사용자 요구의 시각화 대상은 **별도 `families.html` 페이지가 아니라 기존 `web/seed-lab/index.html` 자체**였음을 확인했다.
+- 원래의 배치/구성, 동작/시트, 에셋 탭을 제거하지 않고, Typography·Action·Status·Input·List·Media·Surface의 동일 계열 예제를 `index.html` 첫 탭에 통합했다.
+- `families.html`은 원래 링크의 호환용 이동 안내만 제공한다. 중복된 시연 페이지를 유지하지 않는다.
+- 실제 디자인의 공통 구현은 변경하지 않는다. `families.css`는 배치, `lab.css`는 Lab 프레임에만 적용한다.
+- Lab 첫 화면의 과도한 2행 Hero·전체 문장 브랜드 강조를 기존 승인 Root Title/Body 계층으로 대체했다. **타이포 수치·색상 토큰은 변경하지 않았다.**
+- 런타임: 독립 모듈끼리 전체 DOM 이벤트를 공유하지 않도록 Family Action/Interactive 선택 범위를 컴포넌트 패널 안으로 제한했다. 테마는 원래 Lab 헤더를 사용한다.
+- 검증: 통합 UI의 고유 ID, panel/tab 연동, 기존 필수 ID·asset path 보존, 두 JS module 구문 및 인터랙션 모의 실행, 기존 테스트 계약을 구분한다. 실제 Pages 배포 및 모바일 렌더는 검증 완료 전까지 미확인.

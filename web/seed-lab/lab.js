@@ -28,6 +28,8 @@ tabs.forEach((tab,index)=>{
     event.preventDefault();selectPanel(tabs[next].dataset.panelTarget,true);
   });
 });
+const requestedPanel=new URLSearchParams(window.location.search).get("panel");
+selectPanel(["components","layout","state","assets"].includes(requestedPanel)?requestedPanel:"components");
 $("#theme-toggle").addEventListener("click",()=>{
   const dark=root.dataset.theme!=="dark";
   root.dataset.theme=dark?"dark":"light";

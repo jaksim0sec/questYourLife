@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 const read=file=>readFileSync(new URL(file,import.meta.url),'utf8');
-const html=read('./families.html'),css=read('./families.css'),js=read('./families.js'),standard=read('../preview/seed-standard.css');
+const html=read('./index.html'),legacy=read('./families.html'),css=read('./families.css'),js=read('./families.js'),standard=read('../preview/seed-standard.css');
 test('family catalog uses one standard CSS; local CSS is layout only',()=>{
   assert.match(html,/href="\.\.\/preview\/seed-standard\.css"/);
   assert.match(html,/href="\.\/families\.css"/);
@@ -42,4 +42,11 @@ test('Input/List/Media/SVG examples preserve native semantics and original asset
     assert.ok(html.includes(asset)&&existsSync(new URL('../../assets/art/rewards/'+asset,import.meta.url)));
   assert.match(html,/soft\/v0\.14\/search\.svg/);
   assert.doesNotMatch(js,/supabase|fetch\(|localStorage|sessionStorage/);
+});
+test('component gallery is the first tab of the canonical Lab and the previous URL redirects',()=>{
+  assert.match(html,/id="tab-components"[^>]*aria-selected="true"/);
+  assert.match(html,/id="panel-components"[^>]*data-panel="components"/);
+  assert.match(html,/src="\.\/families\.js"/);
+  assert.match(legacy,/url=\.\/\?panel=components/);
+  for(const name of ['layout','state','assets'])assert.ok(html.includes('id="panel-'+name+'"'));
 });

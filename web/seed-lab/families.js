@@ -3,7 +3,7 @@ const $=(selector,parent=document)=>parent.querySelector(selector);
 const $$=(selector,parent=document)=>Array.from(parent.querySelectorAll(selector));
 const report=message=>{$("#family-feedback").textContent=message;};
 const theme=$("#family-theme");
-theme.addEventListener("click",()=>{
+if(theme)theme.addEventListener("click",()=>{
   const dark=document.documentElement.dataset.theme!=="dark";
   document.documentElement.dataset.theme=dark?"dark":"light";
   theme.querySelector(".seed-action__label").textContent=dark?"라이트 모드":"다크 모드";
@@ -25,7 +25,8 @@ widthButtons.forEach(button=>button.addEventListener("click",()=>{
   setChoice(widthButtons,"familyWidth",width);
   report("승인 Action 6종의 너비: "+width+" · 크기/톤 유지");
 }));
-$$(".seed-action").forEach(button=>button.addEventListener("click",()=>{
+const familyRoot=$("#panel-components")||document;
+$$(".seed-action",familyRoot).forEach(button=>button.addEventListener("click",()=>{
   if(button.matches("a")||button.disabled||button.getAttribute("aria-busy")==="true")return;
   if(button===theme||button.closest(".family-switches"))return;
   report("시연 동작 · "+(button.querySelector(".seed-action__label")?.textContent||"액션")+" · 실제 데이터 변경 없음");
@@ -64,5 +65,5 @@ $("#family-check").addEventListener("change",showSelection);
 $$('input[name="family-radio"]').forEach(input=>input.addEventListener("change",showSelection));
 $("#family-field").addEventListener("input",event=>report("입력 중 · "+event.target.value.length+"글자. 저장·계정 변경 없음"));
 $$("[data-icon-action]").forEach(button=>button.addEventListener("click",()=>report(button.dataset.iconAction+" 시연 · Glyph 24 / Target 48")));
-$('[data-surface="interactive"]').addEventListener("click",()=>report("Interactive Surface 클릭됨 · 실제 페이지 이동 없음"));
+$('#panel-components [data-surface="interactive"]').addEventListener("click",()=>report("Interactive Surface 클릭됨 · 실제 페이지 이동 없음"));
 renderProgress("620");

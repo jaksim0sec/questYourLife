@@ -56,7 +56,7 @@ node --test web/seed-lab/*.test.mjs
 
 ## 패밀리별 공통 스타일 카탈로그 · 2026-11-10
 
-[컴포넌트 패밀리 시연장](families.html)은 기존 `seed-standard.css`만 실제 디자인 표현 정본으로 가져오는 **별도 테스트 페이지**다. 기존 `index.html`/클랜 시연을 교체하지 않는다.
+[컴포넌트 패밀리 시연장](./?panel=components)은 **기존 `index.html`의 첫 탭에 통합**됐다. 옛 `families.html` 주소는 기존 Lab의 해당 탭으로 연결한다. 공통 외형은 `seed-standard.css`가 소유하고 기존 배치·동작·에셋 탭을 보존한다.
 
 - [패밀리 설계·허용 조합](../../docs/design/seed/implementation/component-families.md): Typography 5 의미 역할 × 기존 10 Scale, K07 승인 Action 6종 × Small/Default/Large, Gold 서브브랜드 버튼, Loading/Disabled, Status, List, Field, Media, Surface, Icon.
 - [공통 CSS](../preview/seed-standard.css): 표현 규격·슬롯 소유. `families.css`는 시연장의 항목 배치·반응형 정렬만 소유. 기존 `web/preview/index.html`, `style.css`, `clan.css`는 수정하지 않았다.

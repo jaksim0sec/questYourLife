@@ -75,3 +75,7 @@ Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 �
 - 제목/액션은 화면별 의미를 유지한다. 검색·알림·메뉴를 모든 화면에 세 개씩 넣는 규칙이 아니다. `Global Inner`와 `Non-Global`은 같은 Standard 헤더 외형을 사용하지만 하단 전역바 표시 여부가 다르다.
 
 **공통 웹 구현:** `web/preview/seed-standard.css`의 `.head`(기존 preview), `.seed-top-nav`(Lab 및 새로운 화면), 페이지 타입 `seed-page-contract.mjs`. 헤더 A/B 전용 override를 제거하고 위 값을 기본으로 채택한다. Compose 이식은 별도.
+
+### 알림 Bell 하단 연결 보정 (2026-11-10)
+
+웹 Root/Standard 알림 버튼의 도형은 `assets/icons/preview/bell-connected.svg`를 사용한다. 하단 추의 양 끝을 종 본체 밑선(`y=17.5`)에 이어 열린 모양으로 보이지 않게 교정한 별도 Outline SVG다. 기존 공식 `assets/icons/soft/v0.14/bell.svg`는 D-012의 56종 정본이므로 변경하지 않는다. 두 SVG 모두 `24×24` viewBox, `stroke-width=1.8`, `currentColor`이며 헤더 타깃·크기·기타 아이콘은 D-015 그대로다.

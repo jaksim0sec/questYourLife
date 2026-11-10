@@ -86,8 +86,13 @@
       <div><span class="seed-badge" data-tone="reward">보상</span><span class="seed-badge" data-tone="reward" data-size="xs">XS</span></div>
     </div>
     <div class="family-progress-head"><p class="seed-text" data-text-role="body" data-text-style="item">실제 값과 표시 폭</p><p id="family-progress-label" class="seed-text" data-text-role="body" data-text-style="number-small">620 / 1,000</p></div>
-    <div class="family-progress-picker" role="group" aria-label="진행률 예제">
-      <button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="0"><span class="seed-action__face"><span class="seed-action__label">0</span></span></button><button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="620" aria-pressed="true"><span class="seed-action__face"><span class="seed-action__label">620</span></span></button><button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="1000"><span class="seed-action__face"><span class="seed-action__label">1,000</span></span></button><button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="1200"><span class="seed-action__face"><span class="seed-action__label">1,200</span></span></button><button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="loading"><span class="seed-action__face"><span class="seed-action__label">로딩</span></span></button><button type="button" class="seed-action" data-variant="neutral-outline" data-size="small" data-value="unavailable"><span class="seed-action__face"><span class="seed-action__label">조회 불가</span></span></button>
+    <div class="family-progress-picker" role="radiogroup" aria-label="진행률 예제">
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="0">0</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="620" checked>620</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="1000">1,000</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="1200">1,200</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="loading">로딩</label>
+      <label class="seed-choice"><input type="radio" name="family-progress" data-value="unavailable">조회 불가</label>
     </div>
     <div id="family-progress-list" class="family-progress-list">
       <div class="family-progress-row"><p class="seed-text" data-text-role="caption" data-text-style="support">Micro · 6px</p><div class="progress-track" role="progressbar" aria-label="Micro 예제" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620" data-thickness="micro" data-progress-state="ready" style="--progress:62%"><span class="progress-fill"></span></div></div>

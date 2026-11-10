@@ -31,7 +31,7 @@ $$(".seed-action").forEach(button=>button.addEventListener("click",()=>{
   report("시연 동작 · "+(button.querySelector(".seed-action__label")?.textContent||"액션")+" · 실제 데이터 변경 없음");
 }));
 const progressValues={zero:0,"0":0,"620":620,"1000":1000,"1200":1200,loading:0,unavailable:null};
-const progressButtons=$$("[data-value]");
+const progressButtons=$$('input[name="family-progress"]');
 function renderProgress(key){
   const p=normalizeProgress(progressValues[key],1000,{loading:key==="loading"});
   const noValue=p.state==="unavailable",isLoading=p.state==="loading";
@@ -49,9 +49,9 @@ function renderProgress(key){
   }
   $("#family-progress-label").textContent=isLoading?"진행 중":noValue?"조회 불가":p.value.toLocaleString("ko-KR")+" / 1,000";
   $("#family-progress-note").textContent=noValue?"유효한 0과 조회 불가는 다릅니다. 막대를 숨깁니다.":isLoading?"값을 모를 때 확정 퍼센트를 표시하지 않습니다.":p.state==="over"?"실제 초과 기여는 보존하고 막대만 100%로 제한합니다.":"현재 표시 폭 "+p.percent.toFixed(1).replace(/\.0$/,"")+"%.";
-  setChoice(progressButtons,"value",key);
+  progressButtons.forEach(button=>button.checked=button.dataset.value===key);
 }
-progressButtons.forEach(button=>button.addEventListener("click",()=>renderProgress(button.dataset.value)));
+progressButtons.forEach(button=>button.addEventListener("change",()=>renderProgress(button.dataset.value)));
 const views=$$("[data-view]");
 views.forEach(button=>button.addEventListener("click",()=>{setChoice(views,"view",button.dataset.view);showSelection();}));
 function showSelection(){

@@ -26,6 +26,8 @@ test('six approved Action variants, separate proposal scope, and state demonstra
   assert.match(js,/actionSamples\.forEach\(action=>action\.dataset\.size=size\)/);
 });
 test('Status inputs map to the same progress normalization and ARIA',()=>{
+  assert.match(html,/role="radiogroup" aria-label="진행률 예제"/);
+  assert.match(js,/progressButtons\.forEach\(button=>button\.checked=button\.dataset\.value===key\)/);
   assert.match(js,/import \{normalizeProgress\} from "\.\/progress\.mjs"/);
   for(const value of ['0','620','1000','1200','loading','unavailable'])assert.ok(html.includes('data-value="'+value+'"'));
   for(const thickness of ['micro','default','featured'])assert.ok(html.includes('data-thickness="'+thickness+'"'));

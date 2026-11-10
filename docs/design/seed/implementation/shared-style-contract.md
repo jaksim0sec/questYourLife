@@ -227,3 +227,10 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 **자동 반영의 범위:** 페이지에서 `seed-*` 정본 클래스를 실제로 쓰는 부분은 공통 CSS 변경의 영향을 받는다. `.gallery-button` 같은 독립 레거시 표현과 Android Compose는 자동 변경되지 않는다. 프리뷰 지역 파일에 공통 폰트·Radius·색 Override를 추가해 "동일해 보이게" 만드는 방법은 금지한다.
 
 프로토콜: 책임·현재 값 확인 → 의존 관계·Cascade 조사 → RED 재현 → CSS 정본 교정 → GREEN/legacy 회귀 → 실제 렌더 검증 별도. 이번 추가 문서는 기존 D-011~013 및 Android 구현 승인을 확대하지 않는다.
+
+## 2026-11-10 · 페이지 유형/Navigation Set/Image Frame 단일 소유권
+
+- **Page Type 4종**(Global/Global Inner/Non-Global/Bottom Sheet)은 [S-PAGE](../shells/page-shells.md)의 가시성 상태 계약. Shell 5역할의 별도 표시. 공통 `seed-page-contract.mjs`와 `seed-standard.css`를 참조하며 페이지별 임의 Bottom Nav on/off를 제거한다.
+- **Top/Bottom Navigation**은 [TOP_NAVIGATION](../../../TOP_NAVIGATION.md)와 [C-BOTTOM](../components/bottom-navigation.md)을 사용. `new` 웹 시각값 보존, 새 Glyph 생성 금지.
+- **Item Image Frame**은 기존 [C-IMAGE](../components/image-frame.md)에서 담당, Loading/Loaded/Error와 아이템 상태를 분리. Lab은 정본의 시연 소비자다.
+- 계약의 보장은 이 파일을 참조하는 **웹 소비자 범위**. Android Compose는 동일한 분류/네비게이션/프레임에 대한 별도 구현·검증이 필요하다.

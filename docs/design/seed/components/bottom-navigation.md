@@ -45,3 +45,11 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 ## 2026-11-07 클랜 시연 아이콘 보정
 
 `new/web/preview`에서 클랜 탭은 최초 MHTML에 보존된 **책갈피**이며 SEED v0.14 `bookmark.svg`와 같은 외곽 경로다. 선택 시 활성용 Fill 경로로 전환하되 같은 실루엣을 유지한다. 이전에 `main` 앱의 나침반을 가져온 시도는 잘못된 해석으로 철회했다. `main`의 기존 나침반 SVG와 제품용 디자인 결정은 손대지 않으며 웹 시연에서만 책갈피를 사용한다.
+
+## 웹 Navigation Set 구현 기준 · `new/web/preview`의 보존된 시각 언어
+
+- **전역 하단 바:** 현재 `new` 웹 기준의 중립 표면·상단 경계, **5개 균등 슬롯**, `3.9525rem` content 최소 높이, 아이콘 약 `1.56938rem`, Label 약 `.6975rem`, icon-label gap `.2325rem`. 이 숫자는 새 디자인 토큰 제안이 아닌 기존 `new` CSS 실측값이며, 페이지 전용 override로 복제하지 않는다.
+- 시각 기준 이름: 홈 / 퀘스트 / 디엠 / 클랜 / 마이. 전역 탭에 대한 의미·루트 이동은 `Global` 기준, `Global Inner`에서는 부모 활성 탭을 유지한다. `Non-Global`에서는 하단 바 전체를 숨긴다.
+- 활성 색 `--nav-active`, inactive `--sub`, 하나의 `aria-current="page"`만 허용. `data-nav-key`가 route 자체를 새로 정의하는 것은 아니다.
+- 원본 56 SVG: 홈 `home/home-fill`, 퀘스트 `check-circle/check-circle-fill`, 디엠 `chat/chat-fill`, 마이 `user/user-fill`. **클랜 북마크에는 Fill 원본이 없음**: `bookmark.svg`를 유지하고 색/라벨 강조만 한다. 없는 `bookmark-fill.svg`를 참조하거나 Outline에 강제로 fill을 적용하지 않는다.
+- 실제 바텀 네비게이션은 화면마다 재제작하지 않는다. 공통 `.seed-bottom-nav` / `.seed-bottom-nav__link`가 외형을 제공하며 `S-PAGE`가 노출과 safe inset을 책임진다. HTML `nav`의 링크 라우트는 실제 서비스 Router가 소유한다.

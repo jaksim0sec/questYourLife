@@ -85,3 +85,32 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 - 기존 'Root/Detail' 유형을 페이지 콘텐츠의 기본 템플릿으로 오용하지 않는다. 같은 Root라도 퀘스트·클랜·홈은 내부 구성 목적이 다를 수 있다.
 
 공간 구조 추가만으로 기존 route·history·focus·safe-area와 D-012 하단 아이콘의 실제 구현 계약을 변경하지 않는다.
+
+## K10 보완 · 4가지 페이지 분류와 Navigation Set 가시성 계약 (2026-11-10)
+
+> **범위:** 갓생패치 웹 SEED 사용을 위한 **페이지와 네비게이션의 관계**를 구체화한다. 이것은 `Root/Detail/Utility/Immersive/Overlay`의 기존 Shell을 대체하는 새 디자인/컴포넌트 계층이 아니다. D-013의 계층 신설 금지를 지키며, 네비게이션 가시성 상태만 S-PAGE가 소유한다. 웹 적용 계약이고 Android 자동 이식을 뜻하지 않는다.
+
+### 페이지 역할과 가시성 · 필수
+
+| 페이지 역할 `data-page-type` | 대상 화면의 성격 / 예시 | 상단 Navigation Set | 하단 전역 Navigation Set | 고정 CTA / Overlay | Shell |
+|---|---|---|---|---|---|
+| **Global** (`global`) | 다섯 전역 목적지의 최상위 화면(홈·퀘스트·디엠·클랜·마이) | **Root 표시**: 좌측 굵은 페이지명, 우측 맥락별 Outline 액션 | **표시**, 활성 목적지 1개 | 기본 inline, 고정 CTA는 예외 | Root |
+| **Global Inner** (`global-inner`) | 전역 목적지에서 들어가는 내부 화면(예: 퀘스트 상세·랭킹·상점) | **Standard 표시**: Back, 중앙 제목, 필요한 우측 액션 | **표시**, 현재 소속 전역 목적지 유지 | 필요할 때만 fixed CTA | Detail/Utility 등 맥락 |
+| **Non-Global** (`non-global`) | 전역 바를 벗어나는 집중·작업 화면(예: 꾸미기·출석·프로필·대화방) | **Standard 표시 기본**: Back과 Close 중 실제 의미에 맞게 선택 | **숨김** | 독립 CTA 또는 집중 콘텐츠 가능 | Detail/Utility/Immersive 등 맥락 |
+| **Bottom Sheet** (`bottom-sheet`) | 현재 페이지 위에 표시되는 보조 흐름(예: 알림·필터) | **부모 상단 대체 금지**. Sheet 내부 Handle/Header/Close | **Sheet 내부 없음**. 부모 네비는 DOM/선택 상태를 유지하고 모달에 의해 가림 | C-SHEET/P-SHEET Snap/Focus/고정 Footer | Overlay |
+
+이 표는 **페이지의 형태·탐색 구조를 결정**하며, 안에 어떤 정보·섹션·A1/A2 이미지를 어떻게 배치할지는 P-PAGE-COMPOSE와 P-LAYOUT이 별도로 결정한다. Global Inner와 Non-Global 모두 Detail Shell을 사용할 수 있지만 **하단 바 가시성은 서로 다르다**.
+
+### 보장해야 할 상태/전환
+1. Global → Global Inner: 상단 Root→Standard, 하단 **유지**, 활성 전역 목적지(부모 탭) 유지. 뒤로가기는 실제 이전 상태·스크롤 복귀.
+2. Global/Global Inner → Non-Global: 상단 Standard, 하단 **숨김**. 마지막 콘텐츠/고정 CTA의 하단 padding은 숨긴 네비 높이를 예약하지 않는다.
+3. Non-Global → Global Inner: 기존 소속 전역 목적지와 활성 상태 복원. 새 탭을 임의 선택하지 않는다.
+4. 어느 페이지에서든 Bottom Sheet: **부모의 page type/네비/scroll 위치를 바꾸지 않고**, C-SHEET를 modal overlay로 열고 닫으면 이전 포커스 복원. 부모 네비는 시트 뒤에서 별도 선택 이벤트를 처리하지 않는다.
+5. Safe inset은 Shell **1회**: visible bottom nav + optional fixed CTA + OS inset. Sheet 내부 Footer와 부모 Shell이 같은 inset을 이중 계산하지 않는다.
+6. 직접 진입·Back·Close·키보드·200% 텍스트에서 올바른 상단 버튼, 하단 가시성, 현재 목적지, 포커스가 유지돼야 한다.
+
+### 페이지 분류 예제와 결정 범위
+
+전역 5탭 이름/순서는 현재 `new/web/preview`의 **웹 시각화 기준**이다. 실제 제품 라우트·딥링크·Android에 적용할 최종 IA는 O-003과 충돌 여부를 별도 합의한다. 해당 예시 페이지들의 Global Inner/Non-Global 소속은 웹 시연 분류 기준이며 콘텐츠/제품 기능이 구현됐다는 뜻은 아니다.
+
+**웹 계약의 공통 진입점:** `web/preview/seed-page-contract.mjs`에서 네 가지 상태를 정의하고 `applyPageType`이 표준 `.seed-page-shell[data-page-type]`을 갱신한다. `bottom-sheet`는 부모 타입으로 직접 대입할 수 없으며 기존 C-SHEET를 연다. `web/preview/seed-standard.css`가 nav 가시성과 공통 외형을 소유한다. Lab은 이 코드를 그대로 소비한다.

@@ -46,3 +46,22 @@ S2-03/05/06/07/08 5개 자료를 이미지 목적별로 비교. A-ART·C-SURFACE
 
 
 아트 강도 A1/A2/A3는 [A-ART](../assets/reward-art.md)의 현행 적용 절을 따른다.
+
+## 기존 C-IMAGE의 웹 Item Frame 계약 보완 (2026-11-10)
+
+**새로운 아이템 카드/이미지 컴포넌트를 양산하지 않는다.** 이미 있는 `C-IMAGE`를 공통 **Image Frame**으로 사용한다. 프레임은 이미지의 비율·피팅·로딩/오류·기본 Overlay 슬롯을 소유하고 **상품명·가격·설명·구매/장착 액션은 프레임 외부의 정보 객체**가 소유한다.
+
+| 역할 · `data-media-kind` | 권장 fit | 비율 | 사용할 때 |
+|---|---|---|---|
+| `item` | `contain` | 기본 **1:1** | 투명 PNG/3D 오브젝트, 보상 상자, 장착 아이템, 책장/격자형 진열 |
+| `thumbnail` | `cover` | 콘텐츠별, 같은 모음에서 일관 | 퀘스트북 표지, 배경이 있는 콘텐츠 미리보기 |
+| `scene` (`hero` 표기와 의미 대응) | 배경 있는 장면은 `cover`, 단일 오브젝트면 `contain` | **페이지 구도에 맞게 지정** | 이벤트 패널·소개·보상 히어로, 이미지 내 텍스트 안전영역 필수 |
+
+**기본 웹 API**: `.seed-media[data-media-kind="item|thumbnail|scene"][data-media-fit="contain|cover"][data-media-state="loading|loaded|error"]`, 하위 `.seed-media__image`, 선택 `.seed-media__badge`, `.seed-media__fallback`, `--media-ratio`. 표준 이미지는 외부에서 이미지/의미를 공급한다. 원본 경로는 `assets/art/` 정본을 재사용한다.
+
+- 상태 `loading/loaded/error`는 프레임 안에서 해결. **상태 전환 중에도 ratio, 모서리, 바깥 Item Title/Price/Action, grid 위치를 유지**한다. 네트워크 실패 시 폴백을 노출하고 오류를 숨기지 않는다.
+- `owned/selected/equipped/locked`는 별도 **도메인 상태**. 프레임 자체의 image loading과 혼동 금지. Badge는 의미 있는 위치에 모서리당 1개, 전체 기본 2개 이하. 선택 체크/가격/장착 상태를 겹겹이 올려 정보 중복 금지.
+- 투명 PNG는 잘리지 않게 기존 `contain` + 안전 padding 사용. `A1` 아이템을 크게 늘려 A2 이벤트 장면이라 주장하지 않는다. A2/A3 아트의 연출 강도는 A-ART로 넘긴다.
+- 아이템 진열 예시: `C-IMAGE` 1:1 Frame → 외부 Item Name → 별도 C-CREDIT 가격/상태. 같은 Grid의 썸네일 크기·이미지 점유율·메타 기준선을 정렬. `thumbnail`/Scene은 각기 다른 원본 목적을 가진다.
+- image `alt`는 기능 정보일 때 제공하되 바깥 텍스트가 정확히 반복 설명하는 경우 빈 `alt=""`를 사용한다. 로딩·실패 시 별도 접근성 설명.
+- **단일 공통 스타일:** `web/preview/seed-standard.css`에 프레임 규칙을 둔다. Lab이 이 규칙을 보여주되 페이지별 임시 CSS로 프레임의 기본 크기·Radius·fit을 재정의하지 않는다.

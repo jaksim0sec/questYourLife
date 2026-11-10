@@ -53,3 +53,10 @@
 ## 공통 계약 r1의 웹 적용
 
 Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 역할·수치 매핑은 [C-TEXT](seed/components/text-hierarchy.md), 타깃·gutter·이력 계약은 [S-PAGE](seed/shells/page-shells.md)의 K10을 따른다. Glyph 박스와 실제 target의 중심을 맞추며 icon별 translateX로 액션 간격을 보정하지 않는다. 기존 다크 Shell은 웹 trial이며 헤더의 새 전역 색상 승인으로 기록하지 않는다.
+
+## 웹 Top Navigation Set 구현 · `new` 시연과 D-011 정본 연결
+
+- Root: `new/web/preview/style.css`의 왼쪽 큰 타이틀/오른쪽 Outline 액션을 같은 패밀리로 사용한다. 기존 헤더 높이 `3.5625rem`, Root Title `1.3rem / 850 / -0.05em`, Icon Target `3rem`은 **현재 웹 참조 치수**다. 다른 앱의 값을 새 승인 토큰이라 부르지 않는다.
+- Standard: 왼쪽 실제 Back **또는** Close, 중앙 제목 `0.9rem`, 오른쪽 선택 보조 액션. 양쪽 슬롯의 균형으로 실제 중앙을 유지. Back/Close의 의미를 단순 장식으로 대체하지 않는다.
+- 공통 스타일의 진입점은 `.seed-top-nav[data-nav-role="root|standard"]`; 페이지는 제목·행동만 공급. 개별 페이지가 폰트·패딩·Icon glyph를 재정의하지 않는다.
+- `Global`은 Root, `Global Inner`와 `Non-Global`은 Standard 기본. `Bottom Sheet`는 상단 네비를 교체하지 않고 시트 내부 Header만 사용. 이에 대한 *가시성*의 단일 규정은 `S-PAGE`다.

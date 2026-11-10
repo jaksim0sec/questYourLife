@@ -321,8 +321,8 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__leading { grid-column:1; grid-row:1; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__trailing { grid-column:3; grid-row:1; }
 .seed-top-nav .seed-icon-action { width:3rem; min-height:3rem; }
-.seed-page-shell__bottom[data-bottom-role="navigation"] { border:0; padding:0; background:var(--nav-surface); }
-.seed-bottom-nav { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0; min-height:3.9525rem; width:min(100%,var(--seed-page-max,72rem)); margin-inline:auto; border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom,0px); background:var(--nav-surface); }
+.seed-page-shell__bottom[data-bottom-role="navigation"] { border:0; padding:0 0 env(safe-area-inset-bottom,0px); background:var(--nav-surface); }
+.seed-bottom-nav { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0; min-height:3.9525rem; width:min(100%,var(--seed-page-max,72rem)); margin-inline:auto; border-top:1px solid var(--line); padding-bottom:0; background:var(--nav-surface); }
 .seed-bottom-nav__link { display:grid; align-content:center; justify-items:center; min-width:0; min-height:3.9525rem; gap:.2325rem; padding:4px 0; border:0; background:transparent; color:var(--sub); font:inherit; font-weight:700; font-size:.6975rem; text-decoration:none; cursor:pointer; }
 .seed-bottom-nav__link .seed-icon { --seed-icon-size:1.56938rem; }
 .seed-bottom-nav__link[aria-current="page"] { color:var(--nav-active); font-weight:850; }
@@ -341,4 +341,4 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media .seed-media__badge { max-width:calc(100% - 16px); }
 
 /* Parent shell owns the safe inset once when navigation is hidden but fixed CTA remains. */
-.seed-page-shell__bottom[data-bottom-role="navigation"] > [data-fixed-cta] { background:var(--nav-surface); padding:8px var(--seed-page-gutter) max(8px,env(safe-area-inset-bottom,0px)); }
+.seed-page-shell__bottom[data-bottom-role="navigation"] > [data-fixed-cta] { background:var(--nav-surface); padding:8px var(--seed-page-gutter); }

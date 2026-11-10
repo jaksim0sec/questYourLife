@@ -52,6 +52,6 @@ test("actual Shell roles and navigation assets are based on the canonical manife
  assert.match(scripts,/function render\(kind\)/);
  assert.match(scripts,/aria-current/);
  assert.match(scripts,/shell-open-sheet/);
- assert.match(scripts,/data-shell-destination/);
+ assert.match(scripts,/data-nav-key/);
  assert.match(index,/data-panel-target="shells"/);
 });

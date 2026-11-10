@@ -63,8 +63,8 @@ if(shell){
     b.setAttribute("aria-pressed","false");b.textContent=label;shellGroup.append(b);
   }
   const shellButtons=$$("button[data-shell-choice]");
-  const typeButtons=$("button[data-page-type-choice]");
-  const weightButtons=$("button[data-header-weight]");
+  const typeButtons=$$("button[data-page-type-choice]");
+  const weightButtons=$$("button[data-header-weight]");
   const nav=$("#shell-nav");
   const reason=$("#page-shell-rationale");
   const contracts=document.createElement("div");contracts.className="seed-viz-contracts";

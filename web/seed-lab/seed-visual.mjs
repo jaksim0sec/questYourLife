@@ -17,7 +17,7 @@ if(shell){
   const header=top.querySelector(".seed-page-shell__inner");
   const content=shell.querySelector(".seed-page-shell__content");
   const bottom=$("#page-shell-bottom");
-  const icon=name=>'<span class="seed-icon" aria-hidden="true" style=\'--seed-icon:url("../../assets/icons/soft/v0.14/'+name+'.svg")\'></span>';
+  const icon=name=>'<span class="seed-icon" aria-hidden="true" style=\'--seed-icon:url("'+(name==='bell'?'../../assets/icons/preview/bell-connected.svg':'../../assets/icons/soft/v0.14/'+name+'.svg')+'")\'></span>';
   const navIcon=item=>'<span class="seed-icon" aria-hidden="true" style=\'--seed-icon:url("'+(item.outlineBase||"../../assets/icons/soft/v0.14/")+item.outline+'.svg")\'></span>';
   top.classList.add("seed-top-nav");
   header.className="seed-page-shell__inner seed-top-nav__inner";

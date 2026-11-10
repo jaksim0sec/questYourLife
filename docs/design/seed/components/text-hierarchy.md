@@ -42,3 +42,7 @@ references: [D-001, D-009, S2-04, S2-08, U-05]
 공통 CSS의 `.seed-text`는 승인된 F-TYPE의 26/34·18/26·24/32·16/24·14/20·12/18을 실제 스타일에 대응시킨다. `data-text-weight`는 선택적 강조 축(숫자/크기 변경 없음), `data-text-tone=secondary`는 보조 전경 축이다. 별도 폰트나 새로운 Text 계층을 만들지 않는다. 실험용 Hero 남발은 정본의 사례가 될 수 없다.
 
 새 패밀리 속성은 표현 단위의 연결·사용법 보완이며 D-012의 기존 시각 규격을 바꾸는 승인이 아니다. 기존 `data-text-style=strong`은 호환용 별칭으로 남긴다.
+
+## D-015 · 헤더 전용 표현과 일반 Title 역할 분리
+
+Root·Standard 화면명은 의미상 여전히 `Title`이다. 다만 **Top Navigation 컴포넌트가 소유하는 승인 웹 시각값**은 Root `1.30rem / 650`, Standard `1.08rem / 620`, Pretendard Variable 우선이며 범용 텍스트 스타일의 `26/34·700`, `18/26·600`을 일괄 바꿔서는 안 된다. 일반 화면 본문·Section·Hero·리스트의 기존 F-TYPE/이 컴포넌트 규칙은 유지한다. [NAV-TOP](../../TOP_NAVIGATION.md)이 폰트·자간·Glyph 크기·정렬 수치의 유일한 헤더 정본이다.

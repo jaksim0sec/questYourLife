@@ -62,3 +62,13 @@ test('unavailable progress clears any old accessible value text',()=>{
   const section=js.split('else if(p.state==="unavailable"){')[1].split('}else{')[0];
   assert.match(section,/track\.removeAttribute\("aria-valuetext"\)/);
 });
+
+test('shell and footer controls bind to element lists so later interactions can initialize',()=>{
+  assert.equal((html.match(/data-shell-choice=/g)||[]).length,3);
+  assert.equal((html.match(/data-footer-choice=/g)||[]).length,4);
+  assert.match(js,/const shellButtons=\$\$\("button\[data-shell-choice\]"\)/);
+  assert.match(js,/footerButtons=\$\$\("button\[data-footer-choice\]"\)/);
+  assert.match(js,/shellButtons\.forEach\(/);
+  assert.match(js,/footerButtons\.forEach\(/);
+  assert.match(js,/\$\("#sheet-open"\)\.addEventListener\("click"/);
+});

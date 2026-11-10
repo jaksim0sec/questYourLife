@@ -94,7 +94,7 @@ const pageModes={
   detail:{title:"퀘스트 상세",meta:"뒤로 슬롯",heading:"한 가지 목표에 집중",description:"표준 헤더와 상세 본문을 분리하고, 필요할 때만 고정 CTA 영역을 확보합니다.",bottom:"고정 CTA 슬롯 · 필요할 때만 표시",rationale:"Detail: 본문과 선택적인 고정 CTA를 분리합니다. 전역 Navigation은 실제 플로우에서 결정합니다."},
   utility:{title:"기록 수정",meta:"닫기 슬롯",heading:"입력에 방해받지 않는 화면",description:"폼·키보드·확정 동작의 경계를 Shell에서 관리합니다.",bottom:"폼 확인 영역 · IME/실기기 별도 검증",rationale:"Utility: 키보드와 안전 영역의 소유권을 Shell 한 곳에 둡니다. 이 화면은 정적인 구조 시연입니다."}
 };
-const shellButtons=$("button[data-shell-choice]");
+const shellButtons=$$("button[data-shell-choice]");
 function renderPageShell(kind){
   const mode=pageModes[kind];if(!mode)return;
   $("#page-shell").dataset.shellKind=kind;
@@ -199,7 +199,7 @@ loadIcons();
 
 const sheet=$("#lab-sheet"),handle=$(".seed-sheet__handle",sheet),sheetBody=$(".seed-sheet__body",sheet);
 let snap="min",lastFocus=null,dragging=null,footerLayout="paired";
-const footer=$("#sheet-footer"),footerButtons=$("button[data-footer-choice]");
+const footer=$("#sheet-footer"),footerButtons=$$("button[data-footer-choice]");
 const footerDescriptions={
   none:"없음: 입력·정보 열람 시. 상단 닫기와 핸들만 사용합니다.",
   single:"단일: 다음 단계 하나만 표시. 군더더기 없는 단일 CTA입니다.",

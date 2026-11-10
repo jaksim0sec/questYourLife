@@ -82,3 +82,18 @@ mountMascotAvatar(document.querySelector('#profile-mascot'), {
 - `mountMascotAvatar`는 1개의 `role=img`와 `aria-label`로 합성 결과를 읽어주고 개별 장비 이미지는 장식 처리한다. 인접한 프로필 이름이 이미 설명하면 `decorative:true`로 중복 읽기를 방지한다.
 - 이미지가 없으면 빈 장비만 감추고, 얼굴 로드 실패일 때 `data-state=error`와 대체 텍스트를 보인다. `Loading/Fallback/Missing equipment` 의미 상태는 각각 분리한다. 클릭/편집/장착은 아바타 안에서 자동 제공하지 않으며 부모 링크·버튼이 동작과 48px 타깃을 소유한다.
 - `web/seed-lab/?panel=components#mascot-avatar`에서 착장 4종 및 Feature/Profile/Row 크기를 비교할 수 있다. 디바이스 브라우저 합성·200% 확대 최종 육안 검수는 별도다.
+
+## S05 · Big/Middle/Small과 아바타 이미지 scale의 경계
+
+S05의 **Big / Middle / Small은 프로필에 어떤 정보를 얼마나 보여줄지**를 결정하는 [P-HIERARCHY의 정보 역할](../patterns/content-hierarchy.md)이다. **C-AVATAR는 프로필 전체 레이아웃이 아니라 얼굴·장비를 합성한 한 개의 Identity 이미지**만 소유한다. 이름·보조 정보·역할·헤더 위치·버튼과의 간격은 이 이미지에 합쳐 넣지 않는다.
+
+| 독립 축 | 선택·책임 | 하지 않을 것 |
+|---|---|---|
+| **프로필 정보 역할** | P-HIERARCHY에서 `Big / Middle / Small`의 Identity/선택적 메타/선택적 Action과 공간 관계 결정 | 각 역할을 고정된 카드 높이·패딩·아바타 크기로 매핑 |
+| **아바타 이미지 크기** | 기존 `scale=row|profile|hero|fluid`로 정사각형 합성 캔버스의 출력 크기 조절 | `Big=hero, Middle=profile, Small=row` 강제. 정보 역할 이름을 C-AVATAR 옵션으로 추가 |
+| **이미지 표현** | 기존 `presentation=transparent|framed`; 마스코트는 `contain`과 원본 장비의 전체 형태 보존 | 캡슐형 프로필·원형 crop·흰 프레임을 기본값으로 강제 |
+| **행/헤더의 상호작용** | C-LIST는 반복 행의 Prefix/Content/Suffix, S-PAGE/NAV-TOP은 헤더 Back/Title/우측 슬롯 소유 | 아바타 안에 내비게이션/장착/구매 버튼을 자동 삽입 |
+
+**서로 다른 예:** 큰 정보 영역에서도 화면 과업에 따라 `row` 이미지가 적합할 수 있고, 이미지가 시각적 중심인 짧은 소개에서는 `hero`로 보여도 정보는 Small(이름 중심)일 수 있다. `scale=fluid`는 Big만을 위한 별도 프로필 타입이 아니다. 실제 출력 크기와 정보 역할은 해당 화면의 첫 시선·가용 폭으로 독립 선택한다.
+
+**표시·검수:** `web/seed-lab/?panel=components#mascot-avatar`의 Feature/Profile/Row 및 착장 전환은 기존 C-AVATAR의 **크기·레이어 합성 검증**이며 Big/Middle/Small 정보 패턴의 완성된 화면 검증이 아니다. 프로필 구성 시 320~430 폭, 긴 한글 이름, 보조 정보 유무, 200% 확대와 원본 장비 2종 이상의 합성에서 이름·추가 정보·동작을 별도 검수한다. 단일 원본 이미지·ID·좌표·zIndex·접근성 대체 설명은 현행 정본 그대로 유지한다. **NonGlobal 채팅방 헤더의 Middle 정보 배치와 실제 Back/Title 충돌 검증은 U06의 책임**이다.

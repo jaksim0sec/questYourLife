@@ -35,7 +35,7 @@ test('Bottom Sheet is an overlay and never overwrites its parent page classifica
 });
 test('five new-reference destinations use original active SVG assets',()=>{
  assert.deepEqual(WEB_NAV_ITEMS.map(x=>x.key),['home','quests','dm','clan','me']);
- assert.equal(WEB_NAV_ITEMS.find(x=>x.key==='clan').active,'bookmark');
+ assert.equal(WEB_NAV_ITEMS.find(x=>x.key==='clan').active,'clan-bookmark-fill');
  assert.equal(WEB_NAV_ITEMS.find(x=>x.key==='quests').active,'check-circle-fill');
  const links=WEB_NAV_ITEMS.map(item=>{
   const style={};return{dataset:{navKey:item.key},attrs:{},
@@ -48,7 +48,9 @@ test('five new-reference destinations use original active SVG assets',()=>{
  assert.match(links[1].styleValues['--seed-icon'],/check-circle-fill.svg/);
  selectWebNav(nav,'clan');
  assert.deepEqual(links.filter(x=>x.attrs['aria-current']==='page').map(x=>x.dataset.navKey),['clan']);
- assert.match(links[3].styleValues['--seed-icon'],/bookmark.svg/);
+ assert.match(links[3].styleValues['--seed-icon'],/assets\/icons\/preview\/clan-bookmark-fill\.svg/);
+ selectWebNav(nav,'home');
+ assert.match(links[3].styleValues['--seed-icon'],/assets\/icons\/soft\/v0\.14\/bookmark\.svg/);
  assert.throws(()=>selectWebNav(nav,'invalid'),RangeError);
 });
 test('canonical Lab exposes all four page types and illustrates the C-IMAGE states',()=>{

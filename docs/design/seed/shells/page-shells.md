@@ -114,3 +114,8 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 전역 5탭 이름/순서는 현재 `new/web/preview`의 **웹 시각화 기준**이다. 실제 제품 라우트·딥링크·Android에 적용할 최종 IA는 O-003과 충돌 여부를 별도 합의한다. 해당 예시 페이지들의 Global Inner/Non-Global 소속은 웹 시연 분류 기준이며 콘텐츠/제품 기능이 구현됐다는 뜻은 아니다.
 
 **웹 계약의 공통 진입점:** `web/preview/seed-page-contract.mjs`에서 네 가지 상태를 정의하고 `applyPageType`이 표준 `.seed-page-shell[data-page-type]`을 갱신한다. `bottom-sheet`는 부모 타입으로 직접 대입할 수 없으며 기존 C-SHEET를 연다. `web/preview/seed-standard.css`가 nav 가시성과 공통 외형을 소유한다. Lab은 이 코드를 그대로 소비한다.
+
+## 2026-11-10 · D-015 웹 헤더·네비 시각 동기화
+
+위 K10에서 `Glyph24`라고 쓴 값은 원본 SVG viewBox/당시 기본 출력 기준이다. 사용자가 승인한 **현재 웹 헤더 렌더 크기**는 `1.59rem`, target `3rem`, 최소 높이 `3.5rem`, gutter `360 미만 16px / 이상 20px`이다. 실제 제목/글꼴 값과 surface 연결은 [NAV-TOP](../../TOP_NAVIGATION.md)과 `v015-tokens.json`이 소유한다. 과거 `24`나 `60` 후보를 별도 새 웹 CSS 값으로 재적용하지 않는다.
+Global은 Root, Global Inner·Non-Global은 Standard 헤더를 공유한다. Bottom Sheet의 자체 Header와 부모 네비 보존 규칙은 변화 없음. 이 변경은 Shell 종류 추가나 Android 이식이 아니다.

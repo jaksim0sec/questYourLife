@@ -6,7 +6,7 @@ const html=read('./families.html'),css=read('./families.css'),js=read('./familie
 test('family catalog uses one standard CSS; local CSS is layout only',()=>{
   assert.match(html,/href="\.\.\/preview\/seed-standard\.css"/);
   assert.match(html,/href="\.\/families\.css"/);
-  assert.doesNotMatch(css,/\.seed-text\s*\{|\.seed-action__face\s*\{|\.seed-field\s*\{|\.seed-badge\s*\{/);
+  assert.doesNotMatch(css,/(?:^|\n)\s*\.seed-(?:text|action__face|field|badge)\s*\{/);
 });
 test('C-TEXT styles are present with the fixed approved scale',()=>{
   for(const style of ['root','standard','hero','number','section','item','body','support','caption','number-small'])

@@ -1,7 +1,7 @@
 /* SEED Mirror: the indexed source files, not specimen markup, own the definitions. */
 const $=(s,p=document)=>p.querySelector(s);
 const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
-const mapRoot=$("#seed-map-panel");
+const mapRoot=$("#panel-map");
 if(mapRoot){
 const els={list:$("#seed-source-list"),search:$("#seed-source-search"),category:$("#seed-source-category"),count:$("#seed-source-count"),title:$("#seed-doc-title"),status:$("#seed-doc-status"),meta:$("#seed-doc-meta"),body:$("#seed-doc-body"),raw:$("#seed-doc-raw"),outline:$("#seed-doc-outline"),link:$("#seed-doc-link"),summary:$("#seed-map-summary"),notice:$("#seed-doc-notice")};
 const kinds={foundation:"Foundation",component:"Component",pattern:"Pattern",shell:"Shell",asset:"Asset",implementation:"Implementation",governance:"Governance",reference:"Reference"};

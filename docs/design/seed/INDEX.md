@@ -13,6 +13,8 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 
 기준: 중립적이고 정돈된 조작 UI + 굵기 있는 명확한 정보 계층 + 붉은 도장 정체성 + 표현력 있는 3D 보상. 컨셉의 콘텐츠·탭 수·배치를 복제하지 않는다. 새 토큰/상태는 제안, 기존 상단은 승인 정본이다.
 
+**2026-11-10 D-015 추가 승인:** 상단 Root/Standard의 최종 서체·폰트 크기·굵기·아이콘/여백 및 웹 하단 마이 스마일·클랜 Fill 매핑은 [NAV-TOP](../TOP_NAVIGATION.md) → [C-BOTTOM](components/bottom-navigation.md) → [기계 판독값](implementation/v015-tokens.json)으로 진입한다. 공통 CSS는 `web/preview/seed-standard.css`가 단독 소유하고 Lab A/B 시험 스타일은 종료했다. 기존 Soft 56종과 전체 제품 IA는 그대로 둔다.
+
 **에셋 작업 진입:** SVG/PNG/WebP의 파일 정본·미래 공통 경로·preview 참조 이전은 [공통 에셋 관리 계약](../../assets/README.md)이 소유한다. 이 INDEX의 `A-ART`, `C-IMAGE`, `F-ICON-MOTION`은 각각 **표현·프레임·아이콘 규격**을 소유한다. 실제 파일의 위치를 여기서 중복 선언하거나 이관 전 경로를 앞서 바꾸지 않는다.
 
 ## 선택적으로 읽기

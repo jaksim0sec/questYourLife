@@ -55,3 +55,35 @@ test('DOM presentation uses fractional percent geometry and profile-image semant
   assert.equal(root.attrs['aria-hidden'],'true');
   assert.equal(root.attrs.role,undefined);
 });
+
+test('asset bytes retain main Git blob identity for face and nine cosmetics', async()=>{
+  const {readFileSync}=await import('node:fs');
+  const {createHash}=await import('node:crypto');
+  const sources={
+    'mascot/mascot_face_stamp.png':'96c85bd1c12b5aba5795a19daec969970b7ec68d',
+    'cosmetics/cosmetic_beanie.png':'c5921af83cd999315bafd2356f97ed0640740fa3',
+    'cosmetics/cosmetic_cream_cap.png':'9e83179694aaa3f38d734a822668ef4a36a4952b',
+    'cosmetics/cosmetic_blue_cap.png':'be5521c24cf7195b76b793d6dc2363e76edc2608',
+    'cosmetics/cosmetic_charcoal_cap.png':'cf5de57bce5cf8eb0763c6815dc1e4e9e7cbb677',
+    'cosmetics/cosmetic_backward_cap.png':'a62829b1dc81a86cff4bfa7bccc7e84bb41c2ac9',
+    'cosmetics/cosmetic_bucket_hat.png':'ee58b1ba432ee7e409598d33ae6e92b6d6773d33',
+    'cosmetics/cosmetic_cream_headphones.png':'a40d1934fbce902c4a6717392fafd9d170fb8003',
+    'cosmetics/cosmetic_black_headphones.png':'81dffcf7f2127d1af63f1d4f21f6fd74d415cb89',
+    'cosmetics/cosmetic_white_airpods_pair.png':'ed2b2aad60c374fec58d029b845c7bfa01f447a4'
+  };
+  for(const [path,sha] of Object.entries(sources)){
+    const bytes=readFileSync(new URL('../../assets/art/'+path,import.meta.url));
+    assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a',path);
+    const gitBlobSha=createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex');
+    assert.equal(gitBlobSha,sha,path);
+  }
+});
+test('C-AVATAR owns appearance in shared SEED CSS, not Lab page overrides',async()=>{
+  const {readFileSync}=await import('node:fs');
+  const css=readFileSync(new URL('./seed-standard.css',import.meta.url),'utf8');
+  const lab=readFileSync(new URL('../seed-lab/seed-visual.css',import.meta.url),'utf8');
+  assert.match(css,/\.seed-mascot-avatar__layer \{[^}]*object-fit:contain/);
+  assert.match(css,/\.seed-mascot-avatar\[data-scale="fluid"\]/);
+  assert.match(css,/isolation:isolate/);
+  assert.doesNotMatch(lab,/\.seed-mascot-avatar__layer/);
+});

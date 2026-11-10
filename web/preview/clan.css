@@ -4,7 +4,7 @@ body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}
 /* Clan v3. Section background is always the same token as the global header. */
 .clan-layout{--clan-ink:var(--text);--clan-muted:var(--sub);--clan-surface:var(--shell-surface);--clan-canvas:var(--canvas);--clan-stroke:var(--line);background:var(--clan-canvas);max-width:46rem;margin:0 auto;display:grid;gap:0;padding:0 0 1.2rem;color:var(--clan-ink)}
 .clan-layout *{box-sizing:border-box;min-width:0}
-.clan-section{background:var(--clan-surface);padding:.89rem 1.03rem 1.04rem}
+.clan-section{background:var(--clan-surface);padding:.89rem var(--seed-page-gutter,20px) 1.04rem}
 .clan-section h2,.clan-section h3,.clan-section p{margin:0}
 .clan-section h2{font-size:1.06rem;font-weight:790;line-height:1.35;letter-spacing:-.04em}
 .clan-svg{width:1.1rem;height:1.1rem;flex-shrink:0;display:inline-block;vertical-align:middle;background-color:currentColor;-webkit-mask-position:center;-webkit-mask-size:contain;-webkit-mask-repeat:no-repeat;mask-position:center;mask-size:contain;mask-repeat:no-repeat}

@@ -359,3 +359,15 @@ body { display: grid; grid-template-rows: auto 1fr; }
 
 /* Parent shell owns the safe inset once when navigation is hidden but fixed CTA remains. */
 .seed-page-shell__bottom[data-bottom-role="navigation"] > [data-fixed-cta] { background:var(--nav-surface); padding:8px var(--seed-page-gutter); }
+
+/* C-AVATAR: one responsive identity canvas. Equipment coordinates are percentages of
+   the full square, not pixels, and are calculated only by seed-mascot-avatar.mjs. */
+.seed-mascot-avatar { --seed-avatar-side:4rem; display:block; position:relative; isolation:isolate; flex:0 0 auto; width:min(100%,var(--seed-avatar-side)); aspect-ratio:1 / 1; min-width:0; }
+.seed-mascot-avatar[data-scale="row"] { --seed-avatar-side:2.5rem; }
+.seed-mascot-avatar[data-scale="profile"] { --seed-avatar-side:4rem; }
+.seed-mascot-avatar[data-scale="hero"] { --seed-avatar-side:6.5rem; }
+.seed-mascot-avatar[data-scale="fluid"] { --seed-avatar-side:100%; }
+.seed-mascot-avatar[data-presentation="framed"] { background:var(--surface); border-radius:var(--seed-radius-surface,16px); }
+.seed-mascot-avatar__layer { display:block; position:absolute; max-width:none; object-fit:contain; object-position:center; margin:0; padding:0; pointer-events:none; }
+.seed-mascot-avatar__fallback { display:none; position:absolute; inset:0; place-items:center; border:1px solid var(--line); border-radius:var(--seed-radius-surface,16px); color:var(--sub); font-size:.75rem; }
+.seed-mascot-avatar[data-state="error"] .seed-mascot-avatar__fallback { display:grid; }

@@ -37,3 +37,8 @@ Default/Active/Disabled/Pressed/Focused. 장식 SVG는 읽기에서 숨기고, �
 ## v0.15 최종 채택
 
 정본 [Soft SVG 56종](../../../../assets/icons/soft/v0.14/README.md) · [name/Fill manifest](../../../../assets/icons/soft/v0.14/manifest.json) · [적용·검증](../implementation/v015.md). 32개 기본 Outline + 5개 Fill + 19개 추가 Outline. 다섯 Fill은 `home, chat, users, user, check-circle`이며 별도 파일로 상태 변경. `check-circle-fill`의 `mask`는 Android VectorDrawable에 바로 복사 불가; 실제 색/negative space를 유지하는 대응 구현과 렌더 검증 필수.
+
+## D-015 · 웹 하단 네비게이션 추가 원본
+
+공식 Soft SVG 56종(원본 SHA·manifest)은 그대로이다. 사용자 승인된 웹 시연은 `assets/icons/preview/`의 독립 파일 `clan-bookmark-fill.svg`, `me-smile.svg`, `me-smile-fill.svg`를 **C-BOTTOM에서 지정한 일부 탭 슬롯에만** 사용한다. 파일 경로의 `preview`는 현행 원본 위치이며 임시 A/B 디자인 상태를 의미하지 않는다.
+세 파일 모두 24 viewBox의 단독 경로이고 활성 Fill은 Outline에 CSS fill을 강제한 것이 아니라 별도 SVG다. 하단의 active/outline 상태·스크린리더 라벨은 [C-BOTTOM](bottom-navigation.md) 소유, 원본 파일의 등록·사용처는 `docs/assets/README.md`가 소유한다.

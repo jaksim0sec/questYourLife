@@ -12,7 +12,7 @@
 .seed-visual-block{display:grid;gap:16px;margin:24px 0 34px}
 .seed-visual-block-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .seed-visual-block-head h3{font-size:1.09rem;font-weight:700}
-.seed-visual-block-head button,.seed-visual-doclink,.seed-visual-references button{border:1px solid var(--seed-stroke-control,var(--line));border-radius:12px;background:var(--surface);color:var(--text);min-height:44px;padding:9px 13px;font-size:.8rem;font-weight:600;cursor:pointer}
+.seed-visual-block-head button,.seed-visual-doclink,.seed-visual-references button{border:1px solid var(--seed-stroke-control,var(--line));border-radius:12px;background:var(--surface);color:var(--text);min-height:48px;padding:9px 13px;font-size:.8rem;font-weight:600;cursor:pointer}
 .seed-visual-colors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .seed-visual-colors>div{min-width:0;display:grid;gap:8px}
 .seed-visual-colors i{display:block;height:64px;border-radius:14px;border:1px solid var(--line)}

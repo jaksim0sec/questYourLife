@@ -53,3 +53,15 @@ node --test web/seed-lab/*.test.mjs
 실험 화면을 보여 준 사실만으로 디자인 승인이나 21개 전부 구현 완료로 표시하지 않는다. 오류가 나오면 페이지별 override보다 기존 SEED 계약과 단일 공통 CSS 소유권부터 확인한다.
 
 관련 정본: `docs/design/seed/implementation/v015.md`, `docs/design/seed/patterns/layout-composition.md`, `docs/design/seed/patterns/page-composition.md`.
+
+## 패밀리별 공통 스타일 카탈로그 · 2026-11-10
+
+[컴포넌트 패밀리 시연장](families.html)은 기존 `seed-standard.css`만 실제 디자인 표현 정본으로 가져오는 **별도 테스트 페이지**다. 기존 `index.html`/클랜 시연을 교체하지 않는다.
+
+- [패밀리 설계·허용 조합](../../docs/design/seed/implementation/component-families.md): Typography 5 의미 역할 × 기존 10 Scale, K07 승인 Action 6종 × Small/Default/Large, Gold 서브브랜드 버튼, Loading/Disabled, Status, List, Field, Media, Surface, Icon.
+- [공통 CSS](../preview/seed-standard.css): 표현 규격·슬롯 소유. `families.css`는 시연장의 항목 배치·반응형 정렬만 소유. 기존 `web/preview/index.html`, `style.css`, `clan.css`는 수정하지 않았다.
+- `brand-weak`, `brand-outline`은 기존 문서상 후보이므로 **`data-seed-family-preview`의 명시적 실험 scope에서만** 표현. Critical variant와 새 색상·토큰은 미승인이라 추가하지 않는다.
+- 기존 Preview에서 실제로 `.seed-*` 공통 클래스를 쓰는 요소만 자동 반영된다. `.gallery-button` 같은 레거시 독립 클래스는 기존 모습 그대로 유지되고 Android Compose로 자동 복제되지는 않는다.
+- 테스트: `node --test web/preview/seed-standard.test.mjs web/seed-lab/*.test.mjs`. 테스트 파일이 존재한다는 것만으로 Node/브라우저 실행 완료를 주장하지 않는다.
+
+실제 시각 QA 및 미검증 항목은 [계열 개편 구현 보고](../../docs/superpowers/reports/2026-11-10-seed-component-families-review.md)를 참조.

@@ -43,3 +43,15 @@ test("SEED source is linked from all visual experiments, not only listed in raw 
  assert.match(index,/id="panel-foundation"/);
  assert.doesNotMatch(visualCss,/(?:^|\n)\s*\.seed-(?:action|text|surface|field|badge)\s*\{/);
 });
+test("actual Shell roles and navigation assets are based on the canonical manifest",()=>{
+ const scripts=read("./seed-visual.mjs");
+ const manifest=JSON.parse(read("../../assets/icons/soft/v0.14/manifest.json"));
+ const names=new Set([...manifest.base,...manifest.fill,...manifest.additional]);
+ for(const icon of ["home","home-fill","chat","chat-fill","users","users-fill","user","user-fill","left","close","search","more"])assert.ok(names.has(icon),icon);
+ for(const role of ["root","detail","utility","immersive","overlay"])assert.ok(scripts.includes(role+':{title:'),role);
+ assert.match(scripts,/function render\(kind\)/);
+ assert.match(scripts,/aria-current/);
+ assert.match(scripts,/shell-open-sheet/);
+ assert.match(scripts,/data-shell-destination/);
+ assert.match(index,/data-panel-target="shells"/);
+});

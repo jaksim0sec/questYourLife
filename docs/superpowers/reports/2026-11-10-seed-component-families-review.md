@@ -71,3 +71,21 @@
 - 시연은 정의를 설명하는 근거일 뿐, 페이지 생성기나 새 계층이 아니다. 기존 Layout/State/Asset 기능과 실제 시트 UI 보존.
 - 원본 읽기와 클릭 테스트는 별개. 원문 네트워크 요청 및 GitHub Pages/실기기 화면은 최종 검증 전에 완료로 선언하지 않는다.
 - 공통 스타일시트는 이 UI 변경에 의해 수정되지 않는다. `seed-map.css`는 Lab 문서 뷰어만 스타일링하며 승인값을 소유하지 않는다.
+
+## 사용자 교정 반영 · SEED Lab 시각화 · 정본 → 실제 프레임 → 검증
+
+사용자 교정: SEED Lab은 Markdown 본문을 보여주는 문서 뷰어가 아니다. 어떤 규격과 역할이 **실제 화면에 어떤 차이로 나타나는지** 보여주는 검사면이다.
+
+- **전체 지도:** 6개 정의 영역(Foundation, Component, Pattern, Shell/Navigation, State/Gesture, Assets/Evidence)을 선택해 실제 시연 탭으로 이동. 정본 원문 54개는 보조적인 접이식 브라우저로 이동.
+- **Foundation:** 기존 `seed-standard.css` 변수의 실제 Canvas/Surface/Brand/Reward/Foreground/Secondary, K03 Typography, Geometry 간격/터치, Outline/Fill SVG를 표현. 새로운 색상·수치를 제안하지 않음.
+- **Pattern:** 세로/가로/격자/겹침 네 가지 공간 관계와 `목적 → 정보·행동 → 의미 섹션 → 배치·기존 컴포넌트` 결정 절차를 시각적으로 표시. 레이아웃은 콘텐츠명이 아니다.
+- **Shell & Navigation:** 기존 Shell 3종 UI를 독립 탭으로 이동. `seed-visual.mjs`가 Root/Detail/Utility/Immersive/Overlay 5개 역할을 시연하고, 상단 Root/Standard 헤더, 오른쪽 Outline 아이콘 액션, Bottom Navigation Outline/Active Fill, 선택적 고정 CTA, C-SHEET 실제 팝업을 연결.
+- **승인 경계:** Root/Standard 상단 구조 D-011은 확정. Bottom Navigation의 활성 Fill 시각은 D-012로 확정됐으나 탭 수·순서·목적지는 O-003 미결. 시연상의 홈/DM/클랜/마이는 **제품 확정 IA가 아닌 예시**.
+- **소유권:** 버튼·타이포·토큰·SVG는 정본 그대로. `seed-visual.css`는 새로운 Lab 시연의 배치만 소유. `lab.js`에서 기존 Shell이 `#page-shell-bottom`을 문자로 덮는 회귀를 차단. `seed-map.mjs`는 시연별 정본 링크를 접이식 원문 뷰어로 연결.
+- **기존 기능 보존:** Badge/Progress, Button/Input, Grid/Rail/Rows, Sheet Footer/Drag, 원본 PNG 8 / SVG 56, Surface, 공통 CSS 유지.
+
+### 실행 및 검증 경계
+
+- 브랜치 소스 확인 및 정적 검수: 7개 탭, 원래 Shell 단일 인스턴스, 기존 sheet/asset ID 유지, JavaScript 파싱, HTML 태그/ID 및 CSS 괄호 검증.
+- 브라우저/Node 전체 실행, 포커스·모바일 터치, 320/360/390/430 폭·테마/200% 확대, 실제 PNG 디코드 및 Sheet 스크롤 제스처는 **별도 확인해야 함**.
+- 페이지 이름과 실제 도메인 플로우의 Shell 소속을 새로 확정하지 않는다. 시연 샘플과 승인 계약을 구분한다.

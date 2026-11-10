@@ -17,7 +17,7 @@ export const WEB_NAV_ITEMS=Object.freeze([
   Object.freeze({key:"quests",label:"퀘스트",outline:"check-circle",active:"check-circle-fill"}),
   Object.freeze({key:"dm",label:"디엠",outline:"chat",active:"chat-fill"}),
   Object.freeze({key:"clan",label:"클랜",outline:"bookmark",active:"clan-bookmark-fill",activeBase:"../../assets/icons/preview/"}),
-  Object.freeze({key:"me",label:"마이",outline:"user",active:"user-fill"})
+  Object.freeze({key:"me",label:"마이",outline:"me-smile",active:"me-smile-fill",outlineBase:"../../assets/icons/preview/",activeBase:"../../assets/icons/preview/"})
 ]);
 export function getPageType(type){
   if(!Object.hasOwn(PAGE_TYPES,type))throw new RangeError("Unknown SEED page type: "+String(type));
@@ -50,7 +50,10 @@ export function selectWebNav(nav,key,iconBase="../../assets/icons/soft/v0.14/"){
     const active=item.key===key;
     if(active)link.setAttribute("aria-current","page");else link.removeAttribute("aria-current");
     const icon=link.querySelector(".seed-icon");
-    if(icon)icon.style.setProperty("--seed-icon",'url("'+(active&&item.activeBase?item.activeBase:iconBase)+(active?item.active:item.outline)+'.svg")');
+    if(icon){
+      const base=active?(item.activeBase||iconBase):(item.outlineBase||iconBase);
+      icon.style.setProperty("--seed-icon",'url("'+base+(active?item.active:item.outline)+'.svg")');
+    }
   }
   return chosen;
 }

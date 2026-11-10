@@ -307,6 +307,35 @@
       <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">실제 타깃 48px, Glyph 24px. 56개 원본은 기존 SEED Lab의 에셋 탭에서 확인.</p>
     </div>
   </section>
+
+  <section class="family-section" id="mascot-avatar" aria-labelledby="title-mascot-avatar">
+    <div class="family-section-head">
+      <div>
+        <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">C-AVATAR · 공유 프로필 이미지</p>
+        <h2 class="seed-text" data-text-role="section" data-text-style="section" id="title-mascot-avatar">마스코트 아바타 · 착장 레이어</h2>
+        <p class="seed-text" data-text-role="body" data-text-style="support">Android 원본 좌표 사용 · 크기 비례 · 장비별 Z 우선순위</p>
+      </div>
+      <button type="button" class="seed-action" data-variant="neutral-weak" data-size="small" data-seed-doc="C-AVATAR"><span class="seed-action__face"><span class="seed-action__label">규격 보기</span></span></button>
+    </div>
+    <div class="seed-avatar-showcase">
+      <div class="seed-avatar-showcase__stage seed-surface" data-surface="subtle">
+        <div id="seed-avatar-feature" aria-label="마스코트 착장 시연"></div>
+        <p class="seed-text" data-text-role="caption" data-text-style="support">Feature · 부모 폭을 따라가는 1:1 캔버스</p>
+      </div>
+      <div class="seed-avatar-showcase__sizes">
+        <div><div id="seed-avatar-profile"></div><span class="seed-text" data-text-role="caption" data-text-style="caption">Profile 64</span></div>
+        <div><div id="seed-avatar-row"></div><span class="seed-text" data-text-role="caption" data-text-style="caption">Row 40</span></div>
+      </div>
+    </div>
+    <div class="seed-segment seed-avatar-showcase__choices" role="group" aria-label="시연용 착장 조합">
+      <button type="button" data-avatar-outfit="none" aria-pressed="false">기본</button>
+      <button type="button" data-avatar-outfit="hat" aria-pressed="false">모자</button>
+      <button type="button" data-avatar-outfit="audio" aria-pressed="false">헤드폰</button>
+      <button type="button" data-avatar-outfit="both" aria-pressed="true">함께</button>
+    </div>
+    <p id="seed-avatar-state" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary" role="status">마스코트 조합 확인</p>
+  </section>
+
   <output class="family-output seed-surface" data-surface="solid" id="family-feedback" role="status" aria-live="polite">컴포넌트를 선택하면 이곳에 시연 동작만 기록됩니다.</output>
 
       <div class="family-footer">

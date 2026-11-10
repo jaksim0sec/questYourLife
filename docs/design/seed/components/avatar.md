@@ -90,8 +90,8 @@ S05의 **Big / Middle / Small은 프로필에 어떤 정보를 얼마나 보여�
 | 독립 축 | 선택·책임 | 하지 않을 것 |
 |---|---|---|
 | **프로필 정보 역할** | P-HIERARCHY에서 `Big / Middle / Small`의 Identity/선택적 메타/선택적 Action과 공간 관계 결정 | 각 역할을 고정된 카드 높이·패딩·아바타 크기로 매핑 |
-| **아바타 이미지 크기** | 기존 `scale=row|profile|hero|fluid`로 정사각형 합성 캔버스의 출력 크기 조절 | `Big=hero, Middle=profile, Small=row` 강제. 정보 역할 이름을 C-AVATAR 옵션으로 추가 |
-| **이미지 표현** | 기존 `presentation=transparent|framed`; 마스코트는 `contain`과 원본 장비의 전체 형태 보존 | 캡슐형 프로필·원형 crop·흰 프레임을 기본값으로 강제 |
+| **아바타 이미지 크기** | 기존 `scale=row\|profile\|hero\|fluid`로 정사각형 합성 캔버스의 출력 크기 조절 | `Big=hero, Middle=profile, Small=row` 강제. 정보 역할 이름을 C-AVATAR 옵션으로 추가 |
+| **이미지 표현** | 기존 `presentation=transparent\|framed`; 마스코트는 `contain`과 원본 장비의 전체 형태 보존 | 캡슐형 프로필·원형 crop·흰 프레임을 기본값으로 강제 |
 | **행/헤더의 상호작용** | C-LIST는 반복 행의 Prefix/Content/Suffix, S-PAGE/NAV-TOP은 헤더 Back/Title/우측 슬롯 소유 | 아바타 안에 내비게이션/장착/구매 버튼을 자동 삽입 |
 
 **서로 다른 예:** 큰 정보 영역에서도 화면 과업에 따라 `row` 이미지가 적합할 수 있고, 이미지가 시각적 중심인 짧은 소개에서는 `hero`로 보여도 정보는 Small(이름 중심)일 수 있다. `scale=fluid`는 Big만을 위한 별도 프로필 타입이 아니다. 실제 출력 크기와 정보 역할은 해당 화면의 첫 시선·가용 폭으로 독립 선택한다.

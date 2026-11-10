@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="./lab.css">
   <link rel="stylesheet" href="./families.css">
   <link rel="stylesheet" href="./seed-map.css">
+  <link rel="stylesheet" href="./seed-visual.css">
   <script type="module" src="./lab.js"></script>
   <script type="module" src="./families.js"></script>
   <script type="module" src="./seed-map.mjs"></script>
+  <script type="module" src="./seed-visual.mjs"></script>
 </head>
 <body>
   <header class="lab-header">
@@ -28,9 +30,11 @@
     </div>
     <div class="lab-nav-wrap">
       <div role="tablist" aria-label="실험 영역" class="lab-tabs">
-        <button id="tab-map" type="button" role="tab" aria-controls="panel-map" aria-selected="true" tabindex="0" data-panel-target="map">SEED 정의</button>
+        <button id="tab-map" type="button" role="tab" aria-controls="panel-map" aria-selected="true" tabindex="0" data-panel-target="map">전체 지도</button>
+        <button id="tab-foundation" type="button" role="tab" aria-controls="panel-foundation" aria-selected="false" tabindex="-1" data-panel-target="foundation">Foundation</button>
         <button id="tab-components" type="button" role="tab" aria-controls="panel-components" aria-selected="false" tabindex="-1" data-panel-target="components">컴포넌트</button>
         <button id="tab-layout" type="button" role="tab" aria-controls="panel-layout" aria-selected="false" tabindex="-1" data-panel-target="layout">배치와 구성</button>
+        <button id="tab-shells" type="button" role="tab" aria-controls="panel-shells" aria-selected="false" tabindex="-1" data-panel-target="shells">페이지·네비</button>
         <button id="tab-state" type="button" role="tab" aria-controls="panel-state" aria-selected="false" tabindex="-1" data-panel-target="state">동작 검증</button>
         <button id="tab-assets" type="button" role="tab" aria-controls="panel-assets" aria-selected="false" tabindex="-1" data-panel-target="assets">에셋과 표면</button>
       </div>
@@ -44,6 +48,18 @@
         <p class="seed-text" data-text-role="body" data-text-style="body">SEED Lab은 정의의 거울입니다. 문서별 목적, 의존성, 승인 상태, 정본 원문을 확인하고 아래 실험과 연결합니다.</p>
         <p id="seed-map-summary" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">SEED 정본 색인 로딩 중</p>
       </div>
+      <nav class="seed-visual-navigation" aria-label="SEED 영역별 실제 시연">
+        <button type="button" data-seed-panel="foundation"><strong>Foundation</strong><span>색·타이포·크기·아이콘</span><small>수치와 역할</small></button>
+        <button type="button" data-seed-panel="components"><strong>Component</strong><span>기존 21개 컴포넌트</span><small>Variant · State</small></button>
+        <button type="button" data-seed-panel="layout"><strong>Pattern</strong><span>네 가지 공간 관계</span><small>목적 → 섹션 → 배치</small></button>
+        <button type="button" data-seed-panel="shells"><strong>Shell / Navigation</strong><span>Shell 5종과 상하단 내비</span><small>이력·스크롤·안전영역</small></button>
+        <button type="button" data-seed-panel="state"><strong>State / Gesture</strong><span>진행률·시트·입력 동작</span><small>실제 이벤트와 상태</small></button>
+        <button type="button" data-seed-panel="assets"><strong>Assets / Evidence</strong><span>원본 SVG 56 · 보상 PNG 8</span><small>표현·원본·검증</small></button>
+      </nav>
+      <div class="seed-visual-chain"><span>SEED 정본</span><b>→</b><span>공통 스타일</span><b>→</b><span>실제 페이지</span><b>→</b><span>검증 결과</span></div>
+      <h3 class="seed-text" data-text-role="section" data-text-style="section">정본과 근거 자료</h3>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">아래 문서 검색은 규격을 확인하는 수단입니다. SEED를 시연하는 것 자체를 대신하지 않습니다.</p>
+      <details class="seed-source-disclosure" id="lab-source-details"><summary>54개 정본 문서 찾아보기</summary>
       <div class="lab-map-paths">
         <div><strong>Foundation</strong><span>철학 · 색 · 타이포 · 크기 · 아이콘과 모션</span></div>
         <div><strong>Component</strong><span>구조 · 역할 · Variant · 상태 · 접근성</span></div>
@@ -77,9 +93,47 @@
           </details>
         </article>
       </div>
+      </details>
       <div class="lab-map-status-key">
         <p>상태 안내: 문서 전체의 status와 개별 조항의 승인 범위는 다릅니다. 실제 합의는 D-011/D-012/D-013과 v0.15로 확인하고, 실행/시각 검증은 별도입니다.</p>
       </div>
+    </section>
+
+    <section id="panel-foundation" role="tabpanel" aria-labelledby="tab-foundation" data-panel="foundation" class="lab-panel" hidden>
+      <div class="lab-section-head"><div><span class="lab-overline">F-PRINCIPLES · F-COLOR · F-TYPE · F-GEOMETRY · F-ICON-MOTION</span><h2 class="seed-text" data-text-role="title" data-text-style="standard">Foundation · 규격의 실제 표현</h2><p class="seed-text" data-text-role="body" data-text-style="support">새 디자인이 아니라 기존 공통 CSS에서 실제 사용하는 토큰과 스케일입니다.</p></div></div>
+      <div class="seed-visual-block">
+        <div class="seed-visual-block-head"><h3>의미색 · 테마</h3><button type="button" data-seed-doc="F-COLOR">F-COLOR 정의</button></div>
+        <div class="seed-visual-colors">
+          <div><i style="background:var(--canvas)"></i><strong>Canvas</strong><code>--canvas</code></div>
+          <div><i style="background:var(--surface)"></i><strong>Surface</strong><code>--surface</code></div>
+          <div><i style="background:var(--brand)"></i><strong>Brand</strong><code>--brand</code></div>
+          <div><i style="background:var(--reward)"></i><strong>Reward</strong><code>--reward</code></div>
+          <div><i style="background:var(--text)"></i><strong>Text</strong><code>--text</code></div>
+          <div><i style="background:var(--sub)"></i><strong>Secondary</strong><code>--sub</code></div>
+        </div>
+        <p class="lab-rationale">Light/Dark는 상단 테마 버튼으로 비교. 레거시 Preview와 승인 토큰의 색차는 임의 조정하지 않습니다.</p>
+      </div>
+      <div class="seed-visual-block">
+        <div class="seed-visual-block-head"><h3>Typography · 의미와 스케일</h3><button type="button" data-seed-doc="F-TYPE">F-TYPE 정의</button></div>
+        <div class="seed-visual-type">
+          <p class="seed-text" data-text-role="title" data-text-style="root">Root · 페이지 제목</p>
+          <p class="seed-text" data-text-role="section" data-text-style="section">Section · 정보 그룹의 제목</p>
+          <p class="seed-text" data-text-role="body" data-text-style="body">Body · 읽는 정보의 기본 계층</p>
+          <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">Support · 시간이나 맥락을 설명하는 짧은 정보</p>
+        </div>
+        <p class="lab-rationale">5개 의미 역할과 10개 사용 스케일은 구분. 긴 문장 전체의 Brand Red 강조나 Hero 크기 남발은 금지.</p>
+      </div>
+      <div class="seed-visual-block">
+        <div class="seed-visual-block-head"><h3>Geometry · 공통 간격과 실제 Target</h3><button type="button" data-seed-doc="F-GEOMETRY">F-GEOMETRY 정의</button></div>
+        <div class="seed-visual-space"><div><span>Inline 8</span><i style="width:8px"></i></div><div><span>Item 12</span><i style="width:12px"></i></div><div><span>Group 16</span><i style="width:16px"></i></div><div><span>Section 24</span><i style="width:24px"></i></div><div><span>Touch 48</span><i style="width:48px"></i></div></div>
+        <p class="lab-rationale">버튼 표시 34/43/48와 비중첩 터치 Target 48을 분리하고, 안전영역은 Shell이 소유합니다.</p>
+      </div>
+      <div class="seed-visual-block">
+        <div class="seed-visual-block-head"><h3>원본 SVG · Outline / Fill</h3><button type="button" data-seed-doc="F-ICON-MOTION">F-ICON-MOTION 정의</button></div>
+        <div class="seed-visual-icons"><div><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/home.svg')" aria-hidden="true"></span>Outline</div><div><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/home-fill.svg')" aria-hidden="true"></span>Active Fill 원본</div><div><span class="seed-icon" style="--seed-icon:url('../../assets/icons/soft/v0.14/bell.svg')" aria-hidden="true"></span>Glyph 24 / Target 48</div></div>
+        <p class="lab-rationale">Fill은 별도 원본을 사용. 감소된 모션·키보드 조작은 F-ICON-MOTION/C-GESTURE 정본을 따릅니다.</p>
+      </div>
+      <button type="button" class="seed-visual-doclink" data-seed-doc="F-PRINCIPLES">F-PRINCIPLES · 표현 철학 확인</button>
     </section>
 
     <section id="panel-components" role="tabpanel" aria-labelledby="tab-components" data-panel="components" class="lab-panel" hidden>
@@ -243,6 +297,19 @@
         <section class="seed-surface" data-surface="plain"><div class="lab-example-heading"><span class="seed-badge" data-tone="neutral" data-size="xs">Plain</span><h3 class="seed-text" data-text-role="section">이번 주 활동</h3></div><div class="lab-metric-row"><div><strong class="lab-metric-number">12</strong><span class="seed-text" data-text-role="caption">활동 완료</span></div><div><strong class="lab-metric-number">4</strong><span class="seed-text" data-text-role="caption">새로운 도전</span></div></div><p class="seed-text" data-text-role="caption">배경 없이 간격으로만 구획</p></section>
         <section class="seed-surface" data-surface="solid"><div class="lab-example-heading"><span class="seed-badge" data-tone="neutral" data-size="xs">Solid</span><h3 class="seed-text" data-text-role="section">이번 주 활동</h3></div><div class="lab-metric-row"><div><strong class="lab-metric-number">12</strong><span class="seed-text" data-text-role="caption">활동 완료</span></div><div><strong class="lab-metric-number">4</strong><span class="seed-text" data-text-role="caption">새로운 도전</span></div></div><p class="seed-text" data-text-role="caption">독립 경계가 필요할 때만 면 추가</p></section>
       </div>
+      <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">P-LAYOUT · P-PAGE-COMPOSE</span><h2 class="seed-text" data-text-role="section" data-text-style="section">네 가지 범용 공간 관계</h2><p class="seed-text" data-text-role="body" data-text-style="support">콘텐츠가 '랭킹'인지 '상품'인지가 아니라 요소들이 어떤 관계로 배치되는지를 정의합니다.</p></div></div>
+      <div class="seed-visual-spatial">
+        <article><strong>세로 · Stack</strong><div class="seed-spatial-stack"><i></i><i></i><i></i></div><p>읽기 순서 / 반복 행</p></article>
+        <article><strong>가로 · Row</strong><div class="seed-spatial-row"><i></i><i></i><i></i></div><p>Fit · Equal · Weighted · Rail</p></article>
+        <article><strong>격자 · Grid</strong><div class="seed-spatial-grid"><i></i><i></i><i></i><i></i></div><p>같은 기준으로 여러 객체 비교</p></article>
+        <article><strong>겹침 · Layer</strong><div class="seed-spatial-layer"><i></i><b>상태</b></div><p>Base / Foreground / 안전영역</p></article>
+      </div>
+      <div class="seed-visual-chain"><span>페이지 목적</span><b>→</b><span>정보·행동</span><b>→</b><span>의미 섹션</span><b>→</b><span>배치·기존 부품</span></div>
+      <div class="seed-visual-references"><button type="button" data-seed-doc="P-LAYOUT">P-LAYOUT 정의</button><button type="button" data-seed-doc="P-PAGE-COMPOSE">P-PAGE-COMPOSE 정의</button><button type="button" data-seed-doc="P-HIERARCHY">P-HIERARCHY 정의</button></div>
+    </section>
+
+    <section id="panel-shells" role="tabpanel" aria-labelledby="tab-shells" data-panel="shells" class="lab-panel" hidden>
+      <div class="lab-section-head"><div><span class="lab-overline">S-PAGE · NAV-TOP · C-BOTTOM · P-SHEET</span><h2 class="seed-text" data-text-role="title" data-text-style="standard">Shell · 페이지와 네비게이션</h2><p class="seed-text" data-text-role="body" data-text-style="support">Root / Detail / Utility / Immersive / Overlay는 새 콘텐츠 템플릿이 아니라 탐색·고정 영역·스크롤의 책임 구분입니다.</p></div><span class="seed-badge" data-tone="neutral">O-003 IA 미확정</span></div>
       <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">S-PAGE · P-PAGE-COMPOSE</span><h2 class="seed-text" data-text-role="title">페이지도 공통 골격에서 시작</h2><p class="seed-text" data-text-role="caption">화면 목적에 따라 Header · 본문 · 고정 영역을 구분합니다</p></div><span class="seed-badge" data-tone="info">실험 07</span></div>
       <div class="seed-surface lab-shell-workbench" data-surface="solid">
         <div class="lab-shell-toolbar"><div><strong class="lab-toolbar-label">S-PAGE 구조</strong><p class="seed-text" data-text-role="caption">Root · Detail · Utility는 새 페이지 타입이 아닌 기존 Shell 역할입니다</p></div>
@@ -272,6 +339,7 @@
         </div>
         <p class="lab-rationale" id="page-shell-rationale">Root: 주 스크롤 영역과 전역 탐색 공간을 구분합니다. 시각적 슬롯만 시연하며 이동 기능은 없습니다.</p>
       </div>
+      <div class="seed-visual-references"><button type="button" data-seed-doc="S-PAGE">S-PAGE 정본</button><button type="button" data-seed-doc="NAV-TOP">NAV-TOP 승인</button><button type="button" data-seed-doc="C-BOTTOM">C-BOTTOM 미결</button><button type="button" data-seed-doc="P-SHEET">P-SHEET 흐름</button></div>
     </section>
 
     <section id="panel-state" role="tabpanel" aria-labelledby="tab-state" data-panel="state" class="lab-panel" hidden>

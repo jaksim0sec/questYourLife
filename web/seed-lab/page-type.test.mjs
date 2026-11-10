@@ -132,3 +132,14 @@ test('approved header gutter remains shared with preview home and clan content',
  assert.match(preview,/\.home-content \{[^}]*var\(--seed-page-gutter,20px\)/);
  assert.match(clan,/\.clan-section\{[^}]*var\(--seed-page-gutter,20px\)/);
 });
+
+test('header bell is visually closed at its bottom and preview/Lab reuse the same source',()=>{
+ const bell=text('../../assets/icons/preview/bell-connected.svg');
+ assert.match(bell,/viewBox="0 0 24 24"/);
+ assert.match(bell,/stroke-width="1\.8"/);
+ assert.match(bell,/M9\.5 17\.5q2\.5 5\.5 5 0/);
+ assert.match(bell,/H4\.3q-1\.4 0 -\.7-1\.2l1\.6-3Z/);
+ assert.match(text('../preview/index.html'),/assets\/icons\/preview\/bell-connected\.svg/);
+ assert.match(js,/assets\/icons\/preview\/bell-connected\.svg/);
+ assert.match(js,/icon\("bell"\)/);
+});

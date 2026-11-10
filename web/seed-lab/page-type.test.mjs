@@ -101,8 +101,8 @@ test('header-weight A B switch is local to the Lab Shell and works with Root or 
  assert.match(html,/id="page-shell" data-header-weight="current"/);
  assert.match(js,/shell\.dataset\.headerWeight=weight/);
  assert.match(js,/setPressed\(weightButtons,weight,"headerWeight"\)/);
- assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__title\s*\{\s*font-weight:650/);
- assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{\s*font-weight:620/);
+ assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.30rem; font-weight:650/);
+ assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:1\.08rem; font-weight:620/);
  assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-weight:720/);
  assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-weight:700/);
 });

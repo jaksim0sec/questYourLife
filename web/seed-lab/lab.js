@@ -29,7 +29,7 @@ tabs.forEach((tab,index)=>{
   });
 });
 const requestedPanel=new URLSearchParams(window.location.search).get("panel");
-selectPanel(["map","components","layout","state","assets"].includes(requestedPanel)?requestedPanel:"map");
+selectPanel(["map","foundation","components","layout","shells","state","assets"].includes(requestedPanel)?requestedPanel:"map");
 $("#theme-toggle").addEventListener("click",()=>{
   const dark=root.dataset.theme!=="dark";
   root.dataset.theme=dark?"dark":"light";
@@ -100,7 +100,7 @@ const shellButtons=$$("button[data-shell-choice]");
 function renderPageShell(kind){
   const mode=pageModes[kind];if(!mode)return;
   $("#page-shell").dataset.shellKind=kind;
-  for(const [id,key] of [["#page-shell-title","title"],["#page-shell-header-meta","meta"],["#page-shell-heading","heading"],["#page-shell-description","description"],["#page-shell-bottom","bottom"],["#page-shell-rationale","rationale"]])$(id).textContent=mode[key];
+  for(const [id,key] of [["#page-shell-title","title"],["#page-shell-header-meta","meta"],["#page-shell-heading","heading"],["#page-shell-description","description"],["#page-shell-rationale","rationale"]])$(id).textContent=mode[key];
   updatePressed(shellButtons,kind,"shellChoice");
 }
 shellButtons.forEach(button=>button.addEventListener("click",()=>renderPageShell(button.dataset.shellChoice)));

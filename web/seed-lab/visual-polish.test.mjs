@@ -47,3 +47,11 @@ test("mobile section headings can consume full available title width",()=>{
   assert.match(style,/@media \(max-width:700px\)[\s\S]*\.lab-section-head/);
   assert.match(style,/\.lab-section-head\s*>\s*\.seed-badge\s*\{[^}]*position:absolute/);
 });
+test("five Shell roles and real navigation interactions remain in canonical Lab",()=>{
+ const mirror=read("./seed-visual.mjs");
+ for(const role of ['root','detail','utility','immersive','overlay'])assert.ok(mirror.includes(role+':{title:'),role);
+ for(const piece of ["shell-back","shell-close","shell-nav","shell-fixed-cta","shell-open-sheet"])assert.ok(mirror.includes(piece),piece);
+ assert.match(mirror,/aria-current/);
+ assert.match(mirror,/O-003 미확정/);
+ assert.doesNotMatch(js,/\["#page-shell-bottom","bottom"\]/);
+});

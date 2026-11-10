@@ -82,7 +82,7 @@ async function show(id,navigate=false){
  els.body.replaceChildren(el("p","GitHub 정본을 읽고 있습니다.","lab-map-empty"));
  drawMeta(item,{});
  els.notice.textContent="문서의 status와 개별 조항의 승인 범위는 다릅니다. D-011/D-012/D-013 및 v0.15를 함께 확인해야 합니다.";
- if(navigate){$("#tab-map").click();const u=new URL(location.href);u.searchParams.set("panel","map");u.searchParams.set("spec",id);history.replaceState(null,"",u.pathname+u.search+u.hash);mapRoot.scrollIntoView({block:"start",behavior:"smooth"});}
+ if(navigate){$("#lab-source-details").open=true;$("#tab-map").click();const u=new URL(location.href);u.searchParams.set("panel","map");u.searchParams.set("spec",id);history.replaceState(null,"",u.pathname+u.search+u.hash);mapRoot.scrollIntoView({block:"start",behavior:"smooth"});}
  const serial=++request;
  try{
   const path="https://raw.githubusercontent.com/jaksim0sec/questYourLife/"+commit+"/"+item.path;
@@ -117,6 +117,12 @@ function wireExamples(){
   if(!ids.length)continue;const links=el("div","정본: ","lab-map-demo-links");showRefs(ids,links);section.append(links);
  }
 }
+document.addEventListener("click",event=>{
+ const link=event.target.closest("[data-seed-doc]");
+ if(!link)return;
+ const id=link.dataset.seedDoc;
+ if(items.some(x=>x.id===id))show(id,true);
+});
 els.search.addEventListener("input",drawList);els.category.addEventListener("change",drawList);
 (async()=>{
  try{

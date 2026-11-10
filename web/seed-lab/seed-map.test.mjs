@@ -33,3 +33,13 @@ test("render uses pinned version, textContent and not unsanitized HTML",()=>{
 test("no canonical .seed component appearance overridden by mirror CSS",()=>{
  assert.doesNotMatch(css,/(?:^|\n)\s*\.seed-(?:action|text|surface|field|badge)\s*\{/);
 });
+test("SEED source is linked from all visual experiments, not only listed in raw text",()=>{
+ const mirror=read("./seed-visual.mjs"),visualCss=read("./seed-visual.css");
+ for(const name of ['foundation','components','layout','shells','state','assets'])assert.match(index,new RegExp('data-seed-panel="'+name+'"'));
+ assert.match(js,/\[data-seed-doc\]/);
+ assert.match(js,/lab-source-details/);
+ assert.match(mirror,/tab\.click\(\)/);
+ assert.match(index,/id="panel-shells"/);
+ assert.match(index,/id="panel-foundation"/);
+ assert.doesNotMatch(visualCss,/(?:^|\n)\s*\.seed-(?:action|text|surface|field|badge)\s*\{/);
+});

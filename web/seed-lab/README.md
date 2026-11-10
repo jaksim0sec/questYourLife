@@ -101,7 +101,13 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 
 - **페이지 유형 4종:** Global / Global Inner / Non-Global / Bottom Sheet. 이들은 기존 5개 S-PAGE Shell 역할을 대체하지 않고 상·하단 Navigation의 **표시·보존 상태만 결정**한다. Global은 Root+하단 표시, Global Inner는 Standard+하단 표시, Non-Global은 Standard+하단 숨김, Bottom Sheet는 부모 상태를 유지하는 Overlay다.
 - **공통 웹 실행 계약:** `../preview/seed-page-contract.mjs`의 `PAGE_TYPES`, `applyPageType`, `selectWebNav`; `../preview/seed-standard.css`가 실제 Top/Bottom Nav 외형과 hidden/safe inset을 소유한다. Lab의 `seed-visual.mjs`는 재구현이 아니라 해당 계약을 사용한다.
-- **new와 맞춘 시각 기준:** Root/Standard 구조, 5개 균등 하단 탭, 활성 색·원본 Fill, 버튼 타깃/아이콘·라벨의 축. 클랜 북마크에는 활성 Fill 원본이 없으므로 중립 Outline의 색 강조를 사용. 탭 경로/최종 정보구조는 O-003 경계에 남긴다.
+- **D-015 확정 시각 기준:** Root `1.30rem/650`, Standard `1.08rem/620`, Pretendard Variable, 상단 Glyph `1.59rem`/target `3rem`, 20px(좁은 화면 16px) gutter. 하단 5개 시연 슬롯에서 클랜은 독립 `clan-bookmark-fill.svg`, 마이는 `me-smile.svg`/`me-smile-fill.svg`로 웹 매핑 확정. 공식 56종은 보존한다. 탭 경로/최종 제품 IA는 O-003에 남긴다.
 - **C-IMAGE:** 기존 `.seed-media` 1:1 `item` contain, thumbnail/scene 비율, loading/loaded/error/폴백, 이미지 외부의 가격·이름·상태 정렬. 기존 3D PNG/SVG 원본을 변경하지 않는다.
 - **Lab:** [페이지·네비 시연](./?panel=shells)과 [컴포넌트·이미지](./?panel=components)에서 상태와 외형을 함께 본다. 기존 Sheet·Pattern·에셋 시연은 보존한다.
 - 검증 범위: Page Type 상태·하단 선택·시트 부모 보존 모의 DOM 통과, HTML/JS/CSS 정적 구조 확인, GitHub Pages 빌드 성공. Node 전체 테스트·Chromium 픽셀/모바일 실기기·Android Compose 이식은 미검증이다.
+
+## D-015 웹 시각 승인과 A/B 종료 (2026-11-10)
+
+- 사용자가 얇은 A/B 헤더를 미세 확대 후 최종 선택했다. Lab의 비교 토글·덮어쓰기 스타일을 제거하고 기존 preview 및 Lab의 **공통** `seed-standard.css`에 등록했다.
+- 헤더 Root/Standard 값과 Bottom Navigation 웹 아이콘 매핑의 정본은 `docs/design/TOP_NAVIGATION.md`, `docs/design/seed/components/bottom-navigation.md` 및 `v015-tokens.json`의 `topNavigation`·`webNavigationSet`이다.
+- 기존 Global/Global Inner/Non-Global/Bottom Sheet 분류, 시트/페이지 동작 구조, 일반 컴포넌트 타입/56종 공식 SVG는 변경하지 않았다. Android 앱 이식·실기기 검증은 별도다.

@@ -115,7 +115,7 @@ if(shell){
     $("#shell-search").hidden=!rootRole;
     $("#shell-bell").hidden=!rootRole;
     $("#shell-more").hidden=kind==="immersive";
-    const fixedCta=kind==="detail"||kind==="utility";
+    const fixedCta=kind==="utility";
     $("#shell-fixed-cta").hidden=!fixedCta;
     const state=applyPageType(shell,currentRoute,{fixedCta});
     header.dataset.navRole=state.header;

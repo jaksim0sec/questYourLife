@@ -65,3 +65,5 @@ S2-03/05/06/07/08 5개 자료를 이미지 목적별로 비교. A-ART·C-SURFACE
 - 아이템 진열 예시: `C-IMAGE` 1:1 Frame → 외부 Item Name → 별도 C-CREDIT 가격/상태. 같은 Grid의 썸네일 크기·이미지 점유율·메타 기준선을 정렬. `thumbnail`/Scene은 각기 다른 원본 목적을 가진다.
 - image `alt`는 기능 정보일 때 제공하되 바깥 텍스트가 정확히 반복 설명하는 경우 빈 `alt=""`를 사용한다. 로딩·실패 시 별도 접근성 설명.
 - **단일 공통 스타일:** `web/preview/seed-standard.css`에 프레임 규칙을 둔다. Lab이 이 규칙을 보여주되 페이지별 임시 CSS로 프레임의 기본 크기·Radius·fit을 재정의하지 않는다.
+
+- 기존 `data-media-kind="hero"`는 `scene`과 같은 비율/표현 맥락의 **호환 별칭**이다. 이미 쓰는 컨테이너 이름을 대량 교체하지 않는다.

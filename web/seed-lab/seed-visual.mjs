@@ -18,6 +18,7 @@ if(shell){
   const content=shell.querySelector(".seed-page-shell__content");
   const bottom=$("#page-shell-bottom");
   const icon=name=>'<span class="seed-icon" aria-hidden="true" style=\'--seed-icon:url("../../assets/icons/soft/v0.14/'+name+'.svg")\'></span>';
+  const navIcon=item=>'<span class="seed-icon" aria-hidden="true" style=\'--seed-icon:url("'+(item.outlineBase||"../../assets/icons/soft/v0.14/")+item.outline+'.svg")\'></span>';
   top.classList.add("seed-top-nav");
   header.className="seed-page-shell__inner seed-top-nav__inner";
   header.dataset.navRole="root";
@@ -50,7 +51,7 @@ if(shell){
   bottom.dataset.bottomRole="navigation";
   const links=WEB_NAV_ITEMS.map(item=>
     '<button class="seed-bottom-nav__link" type="button" data-nav-key="'+item.key+'">'+
-    icon(item.outline)+'<span>'+item.label+'</span></button>').join("");
+    navIcon(item)+'<span>'+item.label+'</span></button>').join("");
   bottom.innerHTML='<nav class="seed-bottom-nav" id="shell-nav" aria-label="웹 기준 전역 탐색">'+links+'</nav>'+
     '<div id="shell-fixed-cta" data-fixed-cta hidden>'+
     '<button id="shell-cta-button" class="seed-action" data-variant="brand-solid" data-size="default" data-width="fill" type="button">'+

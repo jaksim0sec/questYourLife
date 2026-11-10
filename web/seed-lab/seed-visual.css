@@ -55,14 +55,3 @@
 .seed-media-specimens article { display:grid; align-content:start; gap:7px; min-width:0; }
 .seed-media-specimens .seed-media__fallback { padding:12px; text-align:center; font-size:.79rem; line-height:1.45; }
 @media(max-width:750px) { .seed-page-type-matrix { grid-template-columns:repeat(2,minmax(0,1fr)); }.seed-media-specimens { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-
-/* A/B trial: only the Lab Shell heading weight changes; all other geometry and tokens stay shared. */
-.seed-header-weight-controls { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 14px; }
-.seed-header-weight-controls .seed-segment { max-width:100%; }
-.seed-header-weight-controls .seed-segment button { min-width:0; }
-#page-shell[data-header-weight="light"] .seed-top-nav__title { font-size:1.30rem; font-weight:650; }
-#page-shell[data-header-weight="light"] .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__title { font-size:1.08rem; font-weight:620; }
-@media(max-width:440px) {
-  .seed-header-weight-controls .seed-segment { width:100%; }
-  .seed-header-weight-controls .seed-segment button { padding-inline:8px; }
-}

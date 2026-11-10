@@ -99,3 +99,12 @@
 - **소유권:** 디자인 정본은 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), [C-BOTTOM](./design/seed/components/bottom-navigation.md), [S-PAGE](./design/seed/shells/page-shells.md), [웹 토큰](./design/seed/implementation/v015-tokens.json), 구현 정본은 `web/preview/seed-standard.css`와 `seed-page-contract.mjs`. Lab A/B 덮어쓰기는 종료한다.
 
 실제 루트의 구성·경로/딥링크 O-003, 기존 Android의 클랜 나침반 및 D-012 Soft 56종 채택은 그대로 보존한다.
+
+## D-016 · 웹 마스코트 아바타 조합 계약 [사용자 요청에 따른 SEED 적용 · 2026-11-10]
+
+- 기존 `C-AVATAR`가 **사용자 프로필 사진에 상응하는 기본 신원 표시**임을 명시한다. My·클랜·DM·출석 등의 큰/작은 프로필에 동일한 마스코트 얼굴과 장착 데이터를 재사용한다. 캐릭터를 꼭 원형 프로필 사진 크롭에 넣지 않는다.
+- `main`의 원본 얼굴 1개·임시 장비 9개를 Git blob 그대로 공통 `assets/art/mascot/` 및 `assets/art/cosmetics/`로 이관. 공식 UI SVG 56종, Android 리소스·ID·장착 기능은 보존한다.
+- 기존 Android의 정규화 1:1 좌표를 웹 C-AVATAR의 시작값으로 재사용하고, 장비별 위치·크기·zIndex를 설정 가능하게 한다. 같은 슬롯은 하나만 선택, 모자+귀장비 등 다른 슬롯은 함께 합성할 수 있다. 모든 화면 크기에서 비율을 보존한다.
+- 공통 웹 C-AVATAR의 표현·계약은 `web/preview/seed-mascot-avatar.mjs` 및 `seed-standard.css` 한 곳이 소유한다. 별도의 디자인 시스템이나 새 페이지 유형을 만들지 않는다. 사용자 데이터 저장/서비스 장착·Native 구현 및 기기별 아트 시각 승인은 별개다.
+
+세부 명세와 초깃값은 [C-AVATAR](./design/seed/components/avatar.md), 파일 소유권은 [에셋 계약](./assets/README.md)에 둔다.

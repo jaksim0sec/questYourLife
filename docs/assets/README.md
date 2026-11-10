@@ -82,3 +82,6 @@ SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래�
 - `web/preview/seed-page-contract.mjs`의 `WEB_NAV_ITEMS`가 Lab의 마이/클랜 표시 파일을 선택하고, `web/preview/app.js`도 같은 원본 경로를 참조한다. 별도 파일 복제·불필요한 manifest 신설 없이 사용처를 유지한다.
 - 기존 Android `main`의 클랜 나침반, 공식 Soft 56 원본, 보상·마스코트와 인앱 자산 ID는 그대로. 실제 Native 변환/사용은 별도 승인 작업이다.
 
+### 알림 Bell 연결형 웹 원본 (2026-11-10)
+
+`assets/icons/preview/bell-connected.svg`를 헤더 알림 아이콘의 웹 정본으로 추가했다. 공식 Soft 56종 `bell.svg`는 수정하지 않았고, `web/preview/index.html`과 `web/seed-lab/seed-visual.mjs`가 새 파일을 참조한다. 종 본체의 밑선과 하단 추 곡선의 양 끝을 연결했으며 도형·색·터치 슬롯 규격은 기존 헤더와 같다.

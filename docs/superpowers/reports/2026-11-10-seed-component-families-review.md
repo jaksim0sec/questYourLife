@@ -60,3 +60,14 @@
 - Lab 첫 화면의 과도한 2행 Hero·전체 문장 브랜드 강조를 기존 승인 Root Title/Body 계층으로 대체했다. **타이포 수치·색상 토큰은 변경하지 않았다.**
 - 런타임: 독립 모듈끼리 전체 DOM 이벤트를 공유하지 않도록 Family Action/Interactive 선택 범위를 컴포넌트 패널 안으로 제한했다. 테마는 원래 Lab 헤더를 사용한다.
 - 검증: 통합 UI의 고유 ID, panel/tab 연동, 기존 필수 ID·asset path 보존, 두 JS module 구문 및 인터랙션 모의 실행, 기존 테스트 계약을 구분한다. 실제 Pages 배포 및 모바일 렌더는 검증 완료 전까지 미확인.
+
+## 최종 요구 교정 · SEED Lab은 정본의 거울 (2026-11-10)
+
+잘못된 접근: 별도 families.html → 기존 Lab 첫 탭에 컴포넌트 갤러리 → 여전히 SEED 전반을 빠뜨림.
+
+교정된 구조: **SEED 정의 전체 지도 → 특정 규격의 공식 원문 → 관련 Component/Pattern/Shell/Assets/Implementation 시연**.
+
+- INDEX에 등록된 38개 정본과 16개 부가 문서, 총 54개 항목을 GitHub 파일 경로·INDEX 상태·depends_on·sourceCommit 기준으로 표시.
+- 시연은 정의를 설명하는 근거일 뿐, 페이지 생성기나 새 계층이 아니다. 기존 Layout/State/Asset 기능과 실제 시트 UI 보존.
+- 원본 읽기와 클릭 테스트는 별개. 원문 네트워크 요청 및 GitHub Pages/실기기 화면은 최종 검증 전에 완료로 선언하지 않는다.
+- 공통 스타일시트는 이 UI 변경에 의해 수정되지 않는다. `seed-map.css`는 Lab 문서 뷰어만 스타일링하며 승인값을 소유하지 않는다.

@@ -56,7 +56,7 @@ node --test web/seed-lab/*.test.mjs
 
 ## 패밀리별 공통 스타일 카탈로그 · 2026-11-10
 
-[컴포넌트 패밀리 시연장](./?panel=components)은 **기존 `index.html`의 첫 탭에 통합**됐다. 옛 `families.html` 주소는 기존 Lab의 해당 탭으로 연결한다. 공통 외형은 `seed-standard.css`가 소유하고 기존 배치·동작·에셋 탭을 보존한다.
+[컴포넌트 패밀리 시연장](./?panel=components)은 기존 `index.html`의 **두 번째 탭**에 통합됐다. 첫 탭은 SEED 전체 정본 지도다. 옛 `families.html` 주소는 기존 Lab의 해당 탭으로 연결한다. 공통 외형은 `seed-standard.css`가 소유하고 기존 배치·동작·에셋 탭을 보존한다.
 
 - [패밀리 설계·허용 조합](../../docs/design/seed/implementation/component-families.md): Typography 5 의미 역할 × 기존 10 Scale, K07 승인 Action 6종 × Small/Default/Large, Gold 서브브랜드 버튼, Loading/Disabled, Status, List, Field, Media, Surface, Icon.
 - [공통 CSS](../preview/seed-standard.css): 표현 규격·슬롯 소유. `families.css`는 시연장의 항목 배치·반응형 정렬만 소유. 기존 `web/preview/index.html`, `style.css`, `clan.css`는 수정하지 않았다.
@@ -65,3 +65,16 @@ node --test web/seed-lab/*.test.mjs
 - 테스트: `node --test web/preview/seed-standard.test.mjs web/seed-lab/*.test.mjs`. 테스트 파일이 존재한다는 것만으로 Node/브라우저 실행 완료를 주장하지 않는다.
 
 실제 시각 QA 및 미검증 항목은 [계열 개편 구현 보고](../../docs/superpowers/reports/2026-11-10-seed-component-families-review.md)를 참조.
+
+## SEED Lab · 전체 정본을 보여주는 거울 (2026-11-10)
+
+SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재 SEED에서 실제로 무엇이 어떻게 정의되어 있는지를 보여주는 것**이다.
+
+- **첫 탭 SEED 정의 지도**: [SEED 전체 지도](./?panel=map). INDEX 등재 38개(Foundation 5, Component 21, Pattern 7, Shell 2, Asset 1, Reference 1, Governance 1), 주변 계약·검토 문서 16개, 총 54개 정본 경로를 탐색.
+- 검색/분류 → 이름·ID·용도·문서 상태·의존 관계 → **실제 GitHub 원문**. 원문은 색인에 고정한 Git 커밋을 기준으로 읽으며, raw 텍스트로도 확인 가능.
+- **다음 탭**: 컴포넌트의 구현 예제, 배치/구성, 동작 검증, 에셋/표면. 시연에서 연결된 정본 ID를 눌러 원문으로 이동 가능. 예시가 규격을 재정의하지 않는다.
+- 명세 위치: `docs/design/seed/INDEX.md`와 기존 C/F/P/S/Implementation. 브라우저 표시/탐색 코드: `seed-map.mjs`, 로컬 뷰어 스타일: `seed-map.css`, 로컬 색인: `seed-sources.json`.
+- 승인 경계: 문서 전체가 proposed여도 D-011/D-012/v0.15의 일부 조항은 이미 확정일 수 있다. 반대로 `approved` 상태를 Android 구현/실기기 검증 완료로 해석하면 안 된다.
+- 정본 원문 조회가 막히면 실패를 알리고 GitHub 원문 링크를 제공한다. 네트워크 없이 원문 전체가 저장돼 있는 오프라인 뷰어라고 주장하지 않는다.
+- INDEX의 경로/상태나 정본 내용이 변경되면 색인 기준 커밋을 재생성하고 검증해야 한다. `seed-map.test.mjs`는 INDEX 항목 수와 파일 경로를 검증한다.
+- 디자인 토큰, SVG, 기존 공통 컴포넌트 CSS, Android, 앱 데이터는 이 단계에서 손대지 않았다.

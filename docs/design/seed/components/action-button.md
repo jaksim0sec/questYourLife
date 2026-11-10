@@ -103,3 +103,11 @@ Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 
 Pressed/Loading에서 scale·font-weight·padding·border-width를 바꾸지 않는다. focus는 크기를 밀지 않는 ring을 사용한다. 버튼 label과 아이콘은 한 정렬 그룹이다. 일반 링크도 의미 있는 이름·키보드 포커스·실제 목적지를 갖는다. 같은 영역에서 같은 목적지의 텍스트 링크와 가짜 개별 버튼을 반복하지 않는다.
 
 아트가 장식이면 비클릭이어도 된다. 클릭처럼 보이는 카드·Chevron·Pressed는 실제 대응 동작이 있을 때만 사용한다. 서버 기능이 없는 시연에 지급 완료·구매 완료를 암시하는 버튼을 두지 않는다.
+
+## 2026-11-10 · Action 패밀리 구현·실험 구분
+
+[컴포넌트 패밀리 지도](../implementation/component-families.md)에 Variant / Size / Width / Icon / State의 독립 축과 예시를 정리한다. **기존 승인 6종**(`brand-solid`, `neutral-solid`, `neutral-weak`, `neutral-outline`, `ghost`, `reward-secondary`)과 Small/Default/Large(34/43/48)는 기존대로 유지한다.
+
+**서브브랜드 Gold는 이미 `reward-secondary`로 존재**하며 기본 테마 색을 바꾸거나 새 별도 버튼 클래스를 만들지 않는다. Brand Weak / Brand Outline은 기존 본문에 언급됐지만 K07의 허용 구현 목록에는 없는 **후보**다. 필요한 경우 공통 CSS에서 명시적 실험 scope에만 활성화하고, 채택 전 전역 페이지에는 적용하지 않는다. Critical은 별도 의미색 승인 전 임의로 브랜드 빨강을 복용하지 않는다.
+
+공통 로딩 표현은 내부 Label/Icon 슬롯의 자리·버튼 target을 보존한다. 이벤트 중복 차단 및 로딩 종료/오류 복원은 호출자가 구현·검증한다. 버튼 사이의 비율·고정 여부는 여전히 P-ACTIONS와 S-PAGE 책임이다.

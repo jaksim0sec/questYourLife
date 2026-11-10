@@ -214,3 +214,16 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 | Lab 지역 배치 | `web/seed-lab/lab.css` | 공통 Action 내부 padding/font/색 오버라이드 금지 |
 
 **근거/검증:** [시각 평가 보고서](../../../superpowers/reports/2026-11-10-seed-lab-visual-review.md), [정적 회귀 테스트](../../../../web/seed-lab/visual-polish.test.mjs). 해당 페이지의 Root/Detail/Utility 선택은 실제 앱 라우팅이나 네이티브 시각 승인으로 승격하지 않는다.
+
+## 2026-11-10 · 계열별 구현 수렴 (기존 시드 외형 보존)
+
+[Component Family Map](component-families.md)에서 기존 C-TEXT/C-ACTION/C-LIST/C-FIELD/C-STATUS/C-IMAGE/C-SURFACE를 계열별로 찾아간다. 실제 공통 웹 진입점은 `web/preview/seed-standard.css` 한 곳이며 지역 CSS는 섹션 배치만 소유한다.
+
+- 텍스트: K03의 **role / style / HTML heading 분리**. 5의미 역할을 각기 승인된 스케일로 매핑하고 동일 속성 재정의는 공통 코드에서만 한다. 실험용 큰 도입 문구를 새로운 Font Token이라고 부르지 않는다.
+- 버튼: K07 허용 6색/강도, size3, width2, 실제 상태 분리. 기존 Secondary Gold를 재사용하며 Brand Weak/Outline은 **실험용 후보 scope**로만 제공한다.
+- List/Field: 기존 K09·C-FIELD Anatomy에 맞춰 표준 class가 슬롯·간격·Control 상태를 소유하도록 보완한다. 새로운 화면별 ListCard나 검색 화면을 정의하지 않는다.
+- Badge/Progress/Media/Surface/Choice: 이미 승인된 7 Tone, 3 Thickness, 10 Surface, fit·상태 등 속성을 같은 계열로 묶는다. 추가 스타일 복제보다 기존 속성의 정확한 연결을 우선한다.
+
+**자동 반영의 범위:** 페이지에서 `seed-*` 정본 클래스를 실제로 쓰는 부분은 공통 CSS 변경의 영향을 받는다. `.gallery-button` 같은 독립 레거시 표현과 Android Compose는 자동 변경되지 않는다. 프리뷰 지역 파일에 공통 폰트·Radius·색 Override를 추가해 "동일해 보이게" 만드는 방법은 금지한다.
+
+프로토콜: 책임·현재 값 확인 → 의존 관계·Cascade 조사 → RED 재현 → CSS 정본 교정 → GREEN/legacy 회귀 → 실제 렌더 검증 별도. 이번 추가 문서는 기존 D-011~013 및 Android 구현 승인을 확대하지 않는다.

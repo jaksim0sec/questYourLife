@@ -152,3 +152,9 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - **기존 버튼·배지·이미지 등 단일 부품 수정:** 이전 Component 직접 라우팅을 유지. 페이지 전체 절차를 억지로 적용하지 않는다.
 - **소유권:** 기존 D-011/D-012의 Header/SVG/컴포넌트 및 D-013의 '새 Composite/Page Type 계층 없음'을 보존. 이 두 문서는 Pattern의 선택 규격이고 승인되지 않은 새 기능이나 구현 API가 아니다.
 - **근거/검증:** 사용자 시안 11541/11537/11535/11539/11454/11432의 공간 관계를 참조했지만 그 안의 게임/경제 기능은 채택하지 않음. 페이지 실제 화면 검수는 별도.
+
+## 2026-11-10 · 계열별 컴포넌트 표현 카탈로그 (보완/실험 구분)
+
+- [계열별 규격·코드 진입점](implementation/component-families.md): C-TEXT의 의미/Scale/가중치, C-ACTION의 허용 6종과 금색 서브브랜드, C-LIST/C-FIELD/C-STATUS 등 기존 계열의 표현 책임을 **신규 계층 없이** 묶어 설명한다.
+- 확정 수치와 proposed 후보를 구분하며, 재사용 표현 정본은 `web/preview/seed-standard.css`. `web/preview/style.css`/클랜 지역 CSS에 동일 속성을 재정의하지 않는다.
+- 새로운 Hero 디자인·XSmall 버튼·새 브랜드 색·SVG·아트·Android UI·페이지 템플릿은 도입하지 않는다.

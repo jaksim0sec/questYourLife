@@ -91,20 +91,7 @@ thicknessButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#progress-track").dataset.thickness=button.dataset.thickness;
   updatePressed(thicknessButtons,button.dataset.thickness,"thickness");
 }));
-const pageModes={
-  root:{title:"홈",meta:"액션 슬롯",heading:"계속 이어가는 작은 도전",description:"정보를 목적에 따라 섹션으로 나누고, 전역 탐색 공간을 예약합니다.",bottom:"하단 Navigation 슬롯 · 실제 경로 없음",rationale:"Root: 주 스크롤과 전역 탐색을 분리합니다. 미리보기는 탐색을 실행하지 않습니다."},
-  detail:{title:"퀘스트 상세",meta:"뒤로 슬롯",heading:"한 가지 목표에 집중",description:"표준 헤더와 상세 본문을 분리하고, 필요할 때만 고정 CTA 영역을 확보합니다.",bottom:"고정 CTA 슬롯 · 필요할 때만 표시",rationale:"Detail: 본문과 선택적인 고정 CTA를 분리합니다. 전역 Navigation은 실제 플로우에서 결정합니다."},
-  utility:{title:"기록 수정",meta:"닫기 슬롯",heading:"입력에 방해받지 않는 화면",description:"폼·키보드·확정 동작의 경계를 Shell에서 관리합니다.",bottom:"폼 확인 영역 · IME/실기기 별도 검증",rationale:"Utility: 키보드와 안전 영역의 소유권을 Shell 한 곳에 둡니다. 이 화면은 정적인 구조 시연입니다."}
-};
-const shellButtons=$$("button[data-shell-choice]");
-function renderPageShell(kind){
-  const mode=pageModes[kind];if(!mode)return;
-  $("#page-shell").dataset.shellKind=kind;
-  for(const [id,key] of [["#page-shell-title","title"],["#page-shell-header-meta","meta"],["#page-shell-heading","heading"],["#page-shell-description","description"],["#page-shell-rationale","rationale"]])$(id).textContent=mode[key];
-  updatePressed(shellButtons,kind,"shellChoice");
-}
-shellButtons.forEach(button=>button.addEventListener("click",()=>renderPageShell(button.dataset.shellChoice)));
-renderPageShell("root");
+// S-PAGE modes and PageType navigation are initialized once by seed-visual.mjs.
 
 renderProgress("620");
 

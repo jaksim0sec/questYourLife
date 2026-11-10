@@ -339,3 +339,6 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media[data-media-fit="cover"] .seed-media__image { object-fit:cover; padding:0; }
 .seed-media[data-media-fit="contain"] .seed-media__image { object-fit:contain; padding:8%; }
 .seed-media .seed-media__badge { max-width:calc(100% - 16px); }
+
+/* Parent shell owns the safe inset once when navigation is hidden but fixed CTA remains. */
+.seed-page-shell__bottom[data-bottom-role="navigation"] > [data-fixed-cta] { background:var(--nav-surface); padding:8px var(--seed-page-gutter) max(8px,env(safe-area-inset-bottom,0px)); }

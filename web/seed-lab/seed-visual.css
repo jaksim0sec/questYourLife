@@ -56,3 +56,16 @@
 .seed-viz-contracts span{font-size:.75rem;color:var(--sub);line-height:1.5}
 @media(max-width:750px){.seed-visual-navigation{grid-template-columns:repeat(2,minmax(0,1fr))}.seed-visual-colors{grid-template-columns:repeat(3,minmax(0,1fr))}.seed-visual-spatial{grid-template-columns:repeat(2,minmax(0,1fr))}.seed-viz-contracts{grid-template-columns:1fr}}
 @media(max-width:440px){.seed-visual-navigation button{padding:12px;min-height:124px}.seed-visual-space{grid-template-columns:repeat(3,minmax(0,1fr))}.seed-visual-chain>b{display:none}}
+
+/* Only Lab specimen/decision-table arrangement. Core navigation and image anatomy
+ * are owned by seed-standard.css, not by this page.
+ */
+.seed-page-type-matrix { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+.seed-page-type-matrix>div { display:grid; gap:8px; align-content:start; padding:12px; background:var(--soft); border-radius:12px; min-width:0; }
+.seed-page-type-matrix strong { font-size:.83rem; }
+.seed-page-type-matrix span { font-size:.76rem; line-height:1.5; color:var(--sub); }
+.seed-media-contract-demo { display:grid; gap:14px; margin:24px 0; }
+.seed-media-specimens { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.seed-media-specimens article { display:grid; align-content:start; gap:7px; min-width:0; }
+.seed-media-specimens .seed-media__fallback { padding:12px; text-align:center; font-size:.79rem; line-height:1.45; }
+@media(max-width:750px) { .seed-page-type-matrix { grid-template-columns:repeat(2,minmax(0,1fr)); }.seed-media-specimens { grid-template-columns:repeat(2,minmax(0,1fr)); } }

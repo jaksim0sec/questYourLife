@@ -247,6 +247,45 @@
       </div>
     </div>
   </section>
+
+    <div class="seed-media-contract-demo" aria-label="C-IMAGE 아이템 프레임 상태 시연">
+      <div class="lab-section-head"><div>
+        <span class="lab-overline">C-IMAGE · ITEM FRAME</span>
+        <h3 class="seed-text" data-text-role="section" data-text-style="section">같은 프레임, 다른 이미지 상태</h3>
+        <p class="seed-text" data-text-role="body" data-text-style="support">아이템은 1:1 contain. 이름·가격·장착 정보는 이미지 바깥에서 정렬합니다.</p>
+      </div></div>
+      <div class="seed-media-specimens">
+        <article>
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loaded">
+            <img class="seed-media__image" src="../../assets/art/rewards/06_wooden_chest.png" alt="">
+            <span class="seed-badge seed-media__badge" data-tone="neutral" data-size="xs">보유</span>
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">나무 상자</p><p class="seed-text" data-text-role="caption" data-text-style="support">보유 · Loaded</p>
+        </article>
+        <article>
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loading">
+            <span class="seed-media__fallback" role="status">이미지 불러오는 중</span>
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">배송 상자</p><p class="seed-text" data-text-role="caption" data-text-style="support">Loading · 같은 크기 유지</p>
+        </article>
+        <article>
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="error">
+            <span class="seed-media__fallback" role="status">이미지 표시 불가</span>
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">아이템 이름 유지</p><p class="seed-text" data-text-role="caption" data-text-style="support">Error · 메타데이터 보존</p>
+        </article>
+        <article>
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loaded">
+            <img class="seed-media__image" src="../../assets/art/rewards/04_mint_tin.png" alt="">
+            <span class="seed-badge seed-media__badge" data-tone="success" data-size="xs">선택</span>
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">민트 틴케이스</p><p class="seed-text" data-text-role="caption" data-text-style="support">선택은 이미지 로딩과 별도</p>
+        </article>
+      </div>
+      <div class="seed-visual-references"><button type="button" data-seed-doc="C-IMAGE">C-IMAGE 규격</button><button type="button" data-seed-doc="A-ART">A-ART 강도·사용법</button></div>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">배경형 썸네일과 A2 전용 장면은 목적에 맞는 별도 에셋이 있어야 합니다. 아이템 그림을 확대한 것으로 대신하지 않습니다.</p>
+    </div>
+
   <section class="family-section" id="surfaces" aria-labelledby="title-surface">
     <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">06 · C-SURFACE + C-ICON</p><h2 id="title-surface" class="seed-text" data-text-role="section" data-text-style="section">Surface & Icon</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">공간 배치가 아닌 표현 역할 10종. 아이콘은 원본 SVG를 재사용.</p></div></div>
     <div class="family-surface-grid">
@@ -310,6 +349,26 @@
 
     <section id="panel-shells" role="tabpanel" aria-labelledby="tab-shells" data-panel="shells" class="lab-panel" hidden>
       <div class="lab-section-head"><div><span class="lab-overline">S-PAGE · NAV-TOP · C-BOTTOM · P-SHEET</span><h2 class="seed-text" data-text-role="title" data-text-style="standard">Shell · 페이지와 네비게이션</h2><p class="seed-text" data-text-role="body" data-text-style="support">Root / Detail / Utility / Immersive / Overlay는 새 콘텐츠 템플릿이 아니라 탐색·고정 영역·스크롤의 책임 구분입니다.</p></div><span class="seed-badge" data-tone="neutral">O-003 IA 미확정</span></div>
+
+      <div class="lab-section-head lab-section-gap">
+        <div><span class="lab-overline">S-PAGE · 4 PAGE ROLES</span>
+        <h3 class="seed-text" data-text-role="section" data-text-style="section">실제 페이지 분류와 내비게이션 가시성</h3>
+        <p class="seed-text" data-text-role="body" data-text-style="support">이 분류는 기존 Root / Detail / Utility / Immersive / Overlay Shell과 별개입니다. Global Inner는 하단바를 유지하고, Non-Global은 숨깁니다.</p></div>
+      </div>
+      <div class="seed-segment" role="group" aria-label="페이지 유형 선택">
+        <button type="button" data-page-type-choice="global" aria-pressed="true">글로벌</button>
+        <button type="button" data-page-type-choice="global-inner" aria-pressed="false">글로벌 이너</button>
+        <button type="button" data-page-type-choice="non-global" aria-pressed="false">논글로벌</button>
+        <button type="button" data-page-type-choice="bottom-sheet" aria-pressed="false">바텀시트</button>
+      </div>
+      <div class="seed-page-type-matrix" aria-label="페이지 유형별 화면 상태">
+        <div><strong>글로벌</strong><span>상단 Root</span><span>하단 전역바 표시</span></div>
+        <div><strong>글로벌 이너</strong><span>상단 Standard</span><span>하단 전역바 유지</span></div>
+        <div><strong>논글로벌</strong><span>상단 Standard</span><span>하단 전역바 숨김</span></div>
+        <div><strong>바텀시트</strong><span>자체 Handle/Header</span><span>부모 페이지·활성 탭 보존</span></div>
+      </div>
+      <p class="lab-rationale" id="page-type-status" aria-live="polite">Global: 상단 Root + 하단 전역 Navigation. 현재 선택 탭 1개.</p>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">하단 5탭의 이름과 디자인은 new의 현재 웹 시연 기준. 제품 딥링크·목적지 최종 확정은 별도 O-003.</p>
       <div class="lab-section-head lab-section-gap"><div><span class="lab-overline">S-PAGE · P-PAGE-COMPOSE</span><h2 class="seed-text" data-text-role="title">페이지도 공통 골격에서 시작</h2><p class="seed-text" data-text-role="caption">화면 목적에 따라 Header · 본문 · 고정 영역을 구분합니다</p></div><span class="seed-badge" data-tone="info">실험 07</span></div>
       <div class="seed-surface lab-shell-workbench" data-surface="solid">
         <div class="lab-shell-toolbar"><div><strong class="lab-toolbar-label">S-PAGE 구조</strong><p class="seed-text" data-text-role="caption">Root · Detail · Utility는 새 페이지 타입이 아닌 기존 Shell 역할입니다</p></div>

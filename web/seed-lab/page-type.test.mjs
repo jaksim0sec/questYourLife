@@ -61,3 +61,15 @@ test('canonical Lab exposes all four page types and illustrates the C-IMAGE stat
  assert.match(js,/applyPageType\(shell,currentRoute,\{fixedCta\}\)/);
  assert.doesNotMatch(js,/bookmark-fill.svg/);
 });
+
+test('Root and Standard headers share a visual scale without icon-order shifts',()=>{
+ assert.match(css,/\.head, \.seed-top-nav__inner\s*\{/);
+ assert.match(css,/font-family:"Pretendard Variable"/);
+ assert.match(css,/\.head h1\s*\{[^}]*font-size:1\.18rem/);
+ assert.match(css,/\.head\.standard h1\s*\{[^}]*font-size:\.98rem/);
+ assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-size:1\.18rem/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-size:\.98rem/);
+ assert.match(css,/\.seed-top-nav\.seed-page-shell__header\s*\{[^}]*background:var\(--canvas\)/);
+ assert.match(css,/\.sheet-head, \.seed-sheet__head\s*\{/);
+ assert.doesNotMatch(css,/\.tools \.icon-btn:nth-last-child/);
+});

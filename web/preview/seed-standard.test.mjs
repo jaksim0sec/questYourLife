@@ -54,3 +54,37 @@ test('the historical gallery buttons are separate from canonical SEED Action', (
   assert.doesNotMatch(html, /gallery-button seed-action/);
   assert.match(local, /\.gallery-button\s*\{/);
 });
+
+test('the typography family is owned by approved C-TEXT role and style scales',()=>{
+  for(const role of ['display','title','section','body','caption'])assert.ok(shared.includes('.seed-text[data-text-role="'+role+'"]'));
+  for(const style of ['root','standard','hero','number','section','item','body','support','caption','number-small'])
+    assert.ok(shared.includes('data-text-style="'+style+'"'),style);
+  assert.match(shared,/\.seed-text\[data-text-style="root"\][^{]*\{[^}]*1\.625rem/);
+  assert.match(shared,/\.seed-text\[data-text-style="support"\][^{]*\{[^}]*\.875rem/);
+  assert.match(shared,/data-text-weight="strong"/);
+  assert.doesNotMatch(shared,/\.seed-text\[data-text-role="display"\][^{]*\{[^}]*clamp\(/);
+});
+
+test('existing action sizes and approved six variants stay canonical',()=>{
+  for(const variant of ['brand-solid','neutral-solid','neutral-weak','neutral-outline','ghost','reward-secondary'])
+    assert.ok(shared.includes('.seed-action[data-variant="'+variant+'"]'),variant);
+  for(const size of ['small','large'])assert.ok(shared.includes('.seed-action[data-size="'+size+'"]'));
+  assert.match(shared,/\.seed-action\s*\{[^}]*min-height:3rem/);
+  assert.match(shared,/\.seed-action__face\s*\{[^}]*min-height:43px/);
+  assert.match(shared,/\.seed-action\[data-size="small"\] \.seed-action__face\s*\{[^}]*min-height:34px/);
+  assert.match(shared,/\.seed-action\[data-size="large"\] \.seed-action__face\s*\{[^}]*min-height:48px/);
+});
+
+test('proposed brand treatments are scoped and action loading does not alter its face box',()=>{
+  assert.match(shared,/:root\[data-seed-family-preview\] \.seed-action\[data-variant="brand-weak"\]/);
+  assert.match(shared,/:root\[data-seed-family-preview\] \.seed-action\[data-variant="brand-outline"\]/);
+  assert.match(shared,/\.seed-action\[aria-busy="true"\] \.seed-action__label/);
+  assert.match(shared,/\.seed-action\[aria-busy="true"\] \.seed-action__face::after/);
+  assert.doesNotMatch(local,/\.seed-action__face\s*\{/);
+});
+
+test('existing List, Field and Icon contract slots are shared, not page overrides',()=>{
+  for(const part of ['seed-list__item','seed-list__prefix','seed-list__content','seed-list__suffix','seed-field-group','seed-field-label','seed-field-help','seed-icon-action'])
+    assert.ok(shared.includes('.'+part),part);
+  assert.doesNotMatch(local,/\.seed-list__item\s*\{/);
+});

@@ -227,7 +227,7 @@
     "preferredWidth": "hug"
   },
   "svg": {
-    "source": "docs/design/seed/assets/icons/v0.14",
+    "source": "assets/icons/soft/v0.14",
     "total": 56,
     "outlineCore": 32,
     "fill": 5,
@@ -382,5 +382,71 @@
     "applicability": "web/preview only",
     "a11y": "Preserve user browser font preferences and zoom; verify large text and mobile devices separately",
     "notes": "Mobile rem scale raised ~6% vs previous trial. Baseline remains browser initial font; no device-specific UA or physical pixel assumption."
+  },
+  "topNavigation": {
+    "status": "approved-web-design-2026-11-10-D-015",
+    "scope": "Root and Standard headers only; not global typography or Android",
+    "fontFamily": "\"Pretendard Variable\", \"Apple SD Gothic Neo\", \"Noto Sans KR\", \"Malgun Gothic\", system-ui, sans-serif",
+    "root": {
+      "fontSizeRem": 1.3,
+      "fontWeight": 650,
+      "letterSpacingEm": -0.025,
+      "lineHeight": 1.35
+    },
+    "standard": {
+      "fontSizeRem": 1.08,
+      "fontWeight": 620,
+      "letterSpacingEm": -0.018
+    },
+    "minHeightRem": 3.5,
+    "glyphSizeRem": 1.59,
+    "targetSizeRem": 3,
+    "gutterCssPx": {
+      "under360": 16,
+      "from360": 20
+    },
+    "alignment": "shared title/content gutter; glyph in 48px target with common optical inset, no per-icon translateX",
+    "surface": "match the page surface (Lab canvas; existing preview shell surface)",
+    "bottomSheet": "independent header, shared font family; parent navigation preserved"
+  },
+  "webNavigationSet": {
+    "status": "approved-web-visual-mapping-2026-11-10-D-015",
+    "scope": "web preview and SEED Lab; root destination semantics and deep links remain O-003",
+    "bottomGlyphSizeRem": 1.56938,
+    "active": "separate Fill plus emphasis color and label",
+    "inactive": "Outline plus muted label",
+    "items": [
+      {
+        "key": "home",
+        "label": "홈",
+        "outline": "assets/icons/soft/v0.14/home.svg",
+        "active": "assets/icons/soft/v0.14/home-fill.svg"
+      },
+      {
+        "key": "quests",
+        "label": "퀘스트",
+        "outline": "assets/icons/soft/v0.14/check-circle.svg",
+        "active": "assets/icons/soft/v0.14/check-circle-fill.svg"
+      },
+      {
+        "key": "dm",
+        "label": "디엠",
+        "outline": "assets/icons/soft/v0.14/chat.svg",
+        "active": "assets/icons/soft/v0.14/chat-fill.svg"
+      },
+      {
+        "key": "clan",
+        "label": "클랜",
+        "outline": "assets/icons/soft/v0.14/bookmark.svg",
+        "active": "assets/icons/preview/clan-bookmark-fill.svg"
+      },
+      {
+        "key": "me",
+        "label": "마이",
+        "outline": "assets/icons/preview/me-smile.svg",
+        "active": "assets/icons/preview/me-smile-fill.svg"
+      }
+    ],
+    "canonicalSoftSvgCountPreserved": 56
   }
 }

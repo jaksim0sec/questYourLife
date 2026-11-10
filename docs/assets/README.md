@@ -74,3 +74,11 @@ assets/                                  # SVG 공통 원본 생성됨, 래스�
 - [ ] 사용처가 없어진 사본만 삭제하고 회귀/404 검증
 
 SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래스터·Android 자산은 충분한 검증과 변경 승인 전까지 기존 경로를 보존한다.
+
+## 2026-11-10 · D-015 웹 하단 Navigation 추가 SVG 채택
+
+- 기존 `assets/icons/soft/v0.14/` 공식 56종과 `manifest.json`은 변경하지 않는다.
+- 사용자가 웹 시연에서 승인한 **클랜 활성** `assets/icons/preview/clan-bookmark-fill.svg`, **마이 비활성/활성** `assets/icons/preview/me-smile.svg` 및 `me-smile-fill.svg`는 현재 위치 그대로 **웹 Navigation 추가 정본**으로 취급한다. `preview`라는 디렉터리명은 기존 경로이며 승인되지 않은 임시 시안이라는 뜻이 아니다.
+- `web/preview/seed-page-contract.mjs`의 `WEB_NAV_ITEMS`가 Lab의 마이/클랜 표시 파일을 선택하고, `web/preview/app.js`도 같은 원본 경로를 참조한다. 별도 파일 복제·불필요한 manifest 신설 없이 사용처를 유지한다.
+- 기존 Android `main`의 클랜 나침반, 공식 Soft 56 원본, 보상·마스코트와 인앱 자산 ID는 그대로. 실제 Native 변환/사용은 별도 승인 작업이다.
+

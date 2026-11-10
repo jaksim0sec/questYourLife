@@ -33,10 +33,15 @@ test('Bottom Sheet is an overlay and never overwrites its parent page classifica
  assert.equal(fixture.nav.hidden,false);
  assert.throws(()=>getPageType('other'),RangeError);
 });
-test('five new-reference destinations use original active SVG assets',()=>{
+test('five web destinations preserve canonical SVGs and preview-only active variants',()=>{
  assert.deepEqual(WEB_NAV_ITEMS.map(x=>x.key),['home','quests','dm','clan','me']);
  assert.equal(WEB_NAV_ITEMS.find(x=>x.key==='clan').active,'clan-bookmark-fill');
  assert.equal(WEB_NAV_ITEMS.find(x=>x.key==='quests').active,'check-circle-fill');
+ const my=WEB_NAV_ITEMS.find(x=>x.key==='me');
+ assert.equal(my.outline,'me-smile');
+ assert.equal(my.active,'me-smile-fill');
+ assert.equal(my.outlineBase,'../../assets/icons/preview/');
+ assert.equal(my.activeBase,'../../assets/icons/preview/');
  const links=WEB_NAV_ITEMS.map(item=>{
   const style={};return{dataset:{navKey:item.key},attrs:{},
    setAttribute(k,v){this.attrs[k]=v;},removeAttribute(k){delete this.attrs[k];},
@@ -51,6 +56,10 @@ test('five new-reference destinations use original active SVG assets',()=>{
  assert.match(links[3].styleValues['--seed-icon'],/assets\/icons\/preview\/clan-bookmark-fill\.svg/);
  selectWebNav(nav,'home');
  assert.match(links[3].styleValues['--seed-icon'],/assets\/icons\/soft\/v0\.14\/bookmark\.svg/);
+ assert.match(links[4].styleValues['--seed-icon'],/assets\/icons\/preview\/me-smile\.svg/);
+ selectWebNav(nav,'me');
+ assert.match(links[4].styleValues['--seed-icon'],/assets\/icons\/preview\/me-smile-fill\.svg/);
+ assert.deepEqual(links.filter(x=>x.attrs['aria-current']==='page').map(x=>x.dataset.navKey),['me']);
  assert.throws(()=>selectWebNav(nav,'invalid'),RangeError);
 });
 test('canonical Lab exposes all four page types and illustrates the C-IMAGE states',()=>{
@@ -72,4 +81,28 @@ test('Root and Standard headers share a visual scale without icon-order shifts',
  assert.match(css,/\.seed-top-nav\.seed-page-shell__header\s*\{[^}]*background:var\(--canvas\)/);
  assert.match(css,/\.sheet-head, \.seed-sheet__head\s*\{/);
  assert.doesNotMatch(css,/\.tools \.icon-btn:nth-last-child/);
+});
+
+test('My smile states share the preview-only source and do not mutate 56 canonical icons',()=>{
+ for(const [file,needle] of [['me-smile.svg','stroke-width="1.8"'],['me-smile-fill.svg','fill-rule="evenodd"']]){
+  const source=text('../../assets/icons/preview/'+file);
+  assert.match(source,/<svg[^>]*viewBox="0 0 24 24"/);
+  assert.ok(source.includes(needle));
+ }
+ const preview=text('../preview/app.js');
+ assert.match(preview,/me:\['me-smile','me-smile-fill'\]/);
+ assert.match(preview,/key==='me'/);
+ assert.match(text('../preview/index.html'),/assets\/icons\/preview\/me-smile\.svg/);
+ assert.match(js,/item\.outlineBase\|\|/);
+});
+test('header-weight A B switch is local to the Lab Shell and works with Root or Standard',()=>{
+ const styles=text('./seed-visual.css');
+ for(const weight of ['current','light'])assert.match(html,new RegExp('data-header-weight="'+weight+'"'));
+ assert.match(html,/id="page-shell" data-header-weight="current"/);
+ assert.match(js,/shell\.dataset\.headerWeight=weight/);
+ assert.match(js,/setPressed\(weightButtons,weight,"headerWeight"\)/);
+ assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__title\s*\{\s*font-weight:650/);
+ assert.match(styles,/#page-shell\[data-header-weight="light"\] \.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{\s*font-weight:620/);
+ assert.match(css,/\.seed-top-nav__title\s*\{[^}]*font-weight:720/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*font-weight:700/);
 });

@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="../preview/seed-standard.css">
   <link rel="stylesheet" href="./lab.css">
   <link rel="stylesheet" href="./families.css">
+  <link rel="stylesheet" href="./seed-map.css">
   <script type="module" src="./lab.js"></script>
   <script type="module" src="./families.js"></script>
+  <script type="module" src="./seed-map.mjs"></script>
 </head>
 <body>
   <header class="lab-header">
@@ -26,7 +28,8 @@
     </div>
     <div class="lab-nav-wrap">
       <div role="tablist" aria-label="실험 영역" class="lab-tabs">
-        <button id="tab-components" type="button" role="tab" aria-controls="panel-components" aria-selected="true" tabindex="0" data-panel-target="components">컴포넌트</button>
+        <button id="tab-map" type="button" role="tab" aria-controls="panel-map" aria-selected="true" tabindex="0" data-panel-target="map">SEED 정의</button>
+        <button id="tab-components" type="button" role="tab" aria-controls="panel-components" aria-selected="false" tabindex="-1" data-panel-target="components">컴포넌트</button>
         <button id="tab-layout" type="button" role="tab" aria-controls="panel-layout" aria-selected="false" tabindex="-1" data-panel-target="layout">배치와 구성</button>
         <button id="tab-state" type="button" role="tab" aria-controls="panel-state" aria-selected="false" tabindex="-1" data-panel-target="state">동작 검증</button>
         <button id="tab-assets" type="button" role="tab" aria-controls="panel-assets" aria-selected="false" tabindex="-1" data-panel-target="assets">에셋과 표면</button>
@@ -34,7 +37,52 @@
     </div>
 
 
-    <section id="panel-components" role="tabpanel" aria-labelledby="tab-components" data-panel="components" class="lab-panel">
+    <section id="panel-map" role="tabpanel" aria-labelledby="tab-map" data-panel="map" class="lab-panel">
+      <div class="lab-map-head">
+        <span class="lab-overline">SEED INDEX · DEFINITIONS · IMPLEMENTATION · VALIDATION</span>
+        <h2 class="seed-text" data-text-role="title" data-text-style="standard">SEED 전체 정의 지도</h2>
+        <p class="seed-text" data-text-role="body" data-text-style="body">SEED Lab은 정의의 거울입니다. 문서별 목적, 의존성, 승인 상태, 정본 원문을 확인하고 아래 실험과 연결합니다.</p>
+        <p id="seed-map-summary" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">SEED 정본 색인 로딩 중</p>
+      </div>
+      <div class="lab-map-paths">
+        <div><strong>Foundation</strong><span>철학 · 색 · 타이포 · 크기 · 아이콘과 모션</span></div>
+        <div><strong>Component</strong><span>구조 · 역할 · Variant · 상태 · 접근성</span></div>
+        <div><strong>Pattern & Shell</strong><span>위계 · 공간 배치 · 페이지 흐름과 안전 영역</span></div>
+        <div><strong>Implementation & Evidence</strong><span>승인 규격 · 공통 CSS · 근거 · 검증과 미결</span></div>
+      </div>
+      <div class="lab-map-layout">
+        <aside class="lab-map-sidebar" aria-label="정본 탐색">
+          <div class="lab-map-search">
+            <label for="seed-source-search">정본 검색</label>
+            <input id="seed-source-search" class="seed-field" type="search" placeholder="예: C-ACTION, 공간 배치">
+            <label for="seed-source-category">영역</label>
+            <select id="seed-source-category"><option value="all">전체 정의</option></select>
+          </div>
+          <p id="seed-source-count" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">읽는 중</p>
+          <div id="seed-source-list" class="lab-map-source-list" aria-label="정본 목록"></div>
+        </aside>
+        <article class="lab-map-document" aria-label="선택된 SEED 정본">
+          <header class="lab-map-doc-head">
+            <span id="seed-doc-status" class="lab-map-status">정의 상태</span>
+            <h3 id="seed-doc-title" class="seed-text" data-text-role="section" data-text-style="section">SEED 문서</h3>
+            <a id="seed-doc-link" target="_blank" rel="noopener noreferrer" href="https://github.com/jaksim0sec/questYourLife/blob/feat/seed-layout-composition-20261110/docs/design/seed/INDEX.md">GitHub 정본 보기</a>
+          </header>
+          <dl id="seed-doc-meta" class="lab-map-meta"></dl>
+          <p id="seed-doc-notice" class="lab-map-note">문서상 제안, 확정, 구현, 실기기 검증은 각각 다릅니다.</p>
+          <nav id="seed-doc-outline" class="lab-map-outline" aria-label="문서 목차"></nav>
+          <div id="seed-doc-body" class="lab-map-body" aria-live="polite"></div>
+          <details class="lab-map-raw">
+            <summary>원문 그대로 보기 · Markdown / JSON / CSS</summary>
+            <pre id="seed-doc-raw"></pre>
+          </details>
+        </article>
+      </div>
+      <div class="lab-map-status-key">
+        <p>상태 안내: 문서 전체의 status와 개별 조항의 승인 범위는 다릅니다. 실제 합의는 D-011/D-012/D-013과 v0.15로 확인하고, 실행/시각 검증은 별도입니다.</p>
+      </div>
+    </section>
+
+    <section id="panel-components" role="tabpanel" aria-labelledby="tab-components" data-panel="components" class="lab-panel" hidden>
       <div class="lab-section-head">
         <div>
           <span class="lab-overline">C-TEXT · C-ACTION · COMPONENT FAMILIES</span>

@@ -16,7 +16,7 @@ test('the lab references the existing common CSS rather than a second component 
   assert.doesNotMatch(labCss,/\.seed-action__face\s*\{/);
 });
 test('each declared lab tab has a real panel',()=>{
-  for(const name of ['components','layout','state','assets']){
+  for(const name of ['map','components','layout','state','assets']){
     assert.ok(html.includes('id="tab-'+name+'"'));
     assert.ok(html.includes('id="panel-'+name+'"'));
     assert.ok(html.includes('aria-controls="panel-'+name+'"'));

@@ -83,3 +83,8 @@ Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오
 - page.inset은 360 CSS px 미만1rem, 이상1.25rem. 같은 라우트의 헤더·본문은 같은 gutter와 가용 외곽 폭을 참조한다. OS safe inset은 별도다.
 - 표시 높이는 확대 시 상한이 아니며 텍스트가 필요하면 성장한다. topBarMin/bottomBarMin 등 기존 후보 수치를 무조건 고정 높이로 사용하지 않는다.
 - Glyph 박스 정렬과 타깃 중심은 [NAV-TOP](../../TOP_NAVIGATION.md), 실제 고정 영역·이력은 [S-PAGE](../shells/page-shells.md)가 소유한다.
+
+## 2026-11-10 · 웹 Top Navigation 기하 확정 (D-015)
+
+이 문서 상단의 `size.topBarMin=60` 및 과거 `glyph 24`는 기존 제안·v0.6 이력이다. **웹에서 채택한 Root/Standard Top Navigation**은 최소 높이 `3.5rem`, 터치 target `3rem`(기본 16px에서 48px), Glyph 렌더 `1.59rem`이다. SVG 원본 viewBox 24/획 1.8을 변경한 값이 아니다. OS top safe inset은 별도이며 폰트 확장 시 높이는 늘어날 수 있다.
+웹 Shell의 좌우 gutter는 `360px 미만 16px`, 그 이상 `20px`으로 본문과 헤더에 공통 적용한다. target과 glyph를 중앙 정렬하고 가장자리 optical inset만 공통으로 사용한다. `:nth-last-child` 등의 순서별 glyph 이동은 허용하지 않는다. 범용 버튼·Icon Button 크기와 Android 수치는 이 변경에서 수정하지 않는다. [NAV-TOP](../../TOP_NAVIGATION.md)과 [S-PAGE](../shells/page-shells.md)가 소유한다.

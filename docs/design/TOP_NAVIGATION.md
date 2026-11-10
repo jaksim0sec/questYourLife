@@ -54,9 +54,24 @@
 
 Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 역할·수치 매핑은 [C-TEXT](seed/components/text-hierarchy.md), 타깃·gutter·이력 계약은 [S-PAGE](seed/shells/page-shells.md)의 K10을 따른다. Glyph 박스와 실제 target의 중심을 맞추며 icon별 translateX로 액션 간격을 보정하지 않는다. 기존 다크 Shell은 웹 trial이며 헤더의 새 전역 색상 승인으로 기록하지 않는다.
 
-## 웹 Top Navigation Set 구현 · `new` 시연과 D-011 정본 연결
+## 웹 Top Navigation Set 확정 수치 · D-015 (2026-11-10)
 
-- Root: `new/web/preview/style.css`의 왼쪽 큰 타이틀/오른쪽 Outline 액션을 같은 패밀리로 사용한다. 기존 헤더 높이 `3.5625rem`, Root Title `1.3rem / 850 / -0.05em`, Icon Target `3rem`은 **현재 웹 참조 치수**다. 다른 앱의 값을 새 승인 토큰이라 부르지 않는다.
-- Standard: 왼쪽 실제 Back **또는** Close, 중앙 제목 `0.9rem`, 오른쪽 선택 보조 액션. 양쪽 슬롯의 균형으로 실제 중앙을 유지. Back/Close의 의미를 단순 장식으로 대체하지 않는다.
-- 공통 스타일의 진입점은 `.seed-top-nav[data-nav-role="root|standard"]`; 페이지는 제목·행동만 공급. 개별 페이지가 폰트·패딩·Icon glyph를 재정의하지 않는다.
-- `Global`은 Root, `Global Inner`와 `Non-Global`은 Standard 기본. `Bottom Sheet`는 상단 네비를 교체하지 않고 시트 내부 Header만 사용. 이에 대한 *가시성*의 단일 규정은 `S-PAGE`다.
+> D-011의 Root/Standard 구조를 유지하면서 사용자가 웹 시연의 **얇은 버전**을 선택했다. 이전 `1.3rem / 850 / -0.05em`, Standard `0.9rem`은 **과거 구현값**이며 현재 정본이 아니다.
+
+| 속성 | Root (Global) | Standard (Global Inner / Non-Global) |
+|---|---|---|
+| 글꼴 | Pretendard Variable 우선, 한글 시스템 폴백 | 동일 |
+| 크기 | `1.30rem` | `1.08rem` |
+| 굵기 | `650` | `620` |
+| 자간 | `-0.025em` | `-0.018em` |
+| 제목 배치 | 좌측 정렬 | 좌측 Back/Close + 중앙 제목 |
+| 아이콘·터치 | `1.59rem` Glyph, `3rem` target | 동일 |
+
+- 헤더 최소 높이 `3.5rem`; 상단 SVG는 공식 24 viewBox, 1.8 획, round cap/join을 유지한다. `1.59rem`은 **웹에서 SVG를 그리는 크기**이지 SVG 파일 자체의 좌표 변경이 아니다.
+- 화면 헤더와 콘텐츠의 좌우 기준선은 같은 gutter를 사용한다. 웹 기준 `360 CSS px 미만 16px`, 그 이상 `20px`. Glyph는 48px target 중앙 배치, 가장자리에는 `(target - glyph)/2`만큼의 공통 optical inset을 적용한다. 아이콘 번호나 순서에 따른 개별 translateX 금지.
+- 헤더 Surface는 페이지와 연결된 중립 표면을 사용한다. Lab Shell은 `--canvas`이고, 기존 웹 preview에서는 콘텐츠와 동일한 `--shell-surface`를 사용한다. 밝은 배경·다크 테마를 일률적인 단일 HEX로 강제하지 않는다.
+- Top Navigation 타이틀은 범용 본문용 `type.root`/`type.detail`의 초기 실험값을 무조건 가져오지 않는다. **헤더의 표현 수치는 NAV-TOP이 소유**하며 글로벌 전체 글자 크기를 함께 바꾸지 않는다.
+- Bottom Sheet는 별도 Handle/Header를 갖고 부모 Root/Standard를 교체하지 않는다. Sheet 헤더도 같은 Pretendard 계열을 사용하나 `Root/Standard` 타이틀 치수로 강제 통합하지 않는다.
+- 제목/액션은 화면별 의미를 유지한다. 검색·알림·메뉴를 모든 화면에 세 개씩 넣는 규칙이 아니다. `Global Inner`와 `Non-Global`은 같은 Standard 헤더 외형을 사용하지만 하단 전역바 표시 여부가 다르다.
+
+**공통 웹 구현:** `web/preview/seed-standard.css`의 `.head`(기존 preview), `.seed-top-nav`(Lab 및 새로운 화면), 페이지 타입 `seed-page-contract.mjs`. 헤더 A/B 전용 override를 제거하고 위 값을 기본으로 채택한다. Compose 이식은 별도.

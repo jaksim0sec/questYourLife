@@ -64,7 +64,6 @@ if(shell){
   }
   const shellButtons=$$("button[data-shell-choice]");
   const typeButtons=$$("button[data-page-type-choice]");
-  const weightButtons=$$("button[data-header-weight]");
   const nav=$("#shell-nav");
   const reason=$("#page-shell-rationale");
   const contracts=document.createElement("div");contracts.className="seed-viz-contracts";
@@ -143,13 +142,6 @@ if(shell){
     feedback.textContent="웹 전역 탐색 기준: "+item.label+" 선택. 실제 앱 라우트/딥링크 구성은 O-003 별도.";
     if(currentRoute==="global")render("root","global");
   }
-  function setHeaderWeight(weight){
-    if(weight!=="current"&&weight!=="light")return;
-    shell.dataset.headerWeight=weight;
-    setPressed(weightButtons,weight,"headerWeight");
-  }
-  for(const b of weightButtons)b.addEventListener("click",()=>setHeaderWeight(b.dataset.headerWeight));
-  setHeaderWeight("current");
   for(const b of shellButtons)b.addEventListener("click",()=>render(b.dataset.shellChoice));
   for(const b of typeButtons)b.addEventListener("click",()=>changeType(b.dataset.pageTypeChoice));
   for(const b of nav.querySelectorAll(".seed-bottom-nav__link"))b.addEventListener("click",()=>setDestination(b.dataset.navKey));

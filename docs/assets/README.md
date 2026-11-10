@@ -85,3 +85,12 @@ SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래�
 ### 알림 Bell 연결형 웹 원본 (2026-11-10)
 
 `assets/icons/preview/bell-connected.svg`를 헤더 알림 아이콘의 웹 정본으로 추가했다. 공식 Soft 56종 `bell.svg`는 수정하지 않았고, `web/preview/index.html`과 `web/seed-lab/seed-visual.mjs`가 새 파일을 참조한다. 종 본체의 밑선과 하단 추 곡선의 양 끝을 연결했으며 도형·색·터치 슬롯 규격은 기존 헤더와 같다.
+
+## 2026-11-10 · main 마스코트·임시 꾸미기 아트 공통 정본 등록
+
+- 등록 브랜치 `feat/seed-layout-composition-20261110`, Git 객체 복사 커밋 `8b72124b76ab9d8783223784206bb2059c3f14cb`. 원본 `main/app/src/main/res/drawable-nodpi/`에서 **바이너리를 디코딩하거나 재압축하지 않고 동일 Git blob SHA를 재사용**했다.
+- 마스코트 얼굴 1개: `assets/art/mascot/mascot_face_stamp.png` (SHA `96c85bd1c12b5aba5795a19daec969970b7ec68d`).
+- 임시 장비 PNG 9개: `assets/art/cosmetics/` 아래 `cosmetic_beanie`, `cosmetic_cream_cap`, `cosmetic_blue_cap`, `cosmetic_charcoal_cap`, `cosmetic_backward_cap`, `cosmetic_bucket_hat`, `cosmetic_cream_headphones`, `cosmetic_black_headphones`, `cosmetic_white_airpods_pair` (모두 `.png`).
+- 기존 `web/preview/assets/mascot_face_stamp.png`와 일부 `cosmetic_*.png`는 **레거시 참조 호환을 위해 유지**한다. 웹용 새로운 조합은 `web/preview/seed-mascot-avatar.mjs`에서 공통 `../../assets/art/` 경로만 사용한다. 뒤늦은 중복 제거는 기존 사용처 전환·실제 렌더 검증 후 별개 작업이다.
+- 데이터상 `1002` 라임 별은 현재 원본 PNG가 없으므로 가짜 아트 파일이나 임의 대체 이미지를 추가하지 않는다. 상품명·아이템 ID·장착 동작은 기존 `main`의 `CosmeticCatalog.kt` / `CosmeticArt.kt`와 구분해 보존한다.
+- 공통 C-AVATAR의 좌표/zIndex/용도는 `docs/design/seed/components/avatar.md`. 원본 이미지에 별도 크롭·리사이즈·품질 보정은 적용하지 않았다.

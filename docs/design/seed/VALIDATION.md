@@ -185,3 +185,20 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 **이번 작업으로 확인하지 않은 것:** 실제 HTML/Compose 렌더, 원본 에셋 표시, 320/390/430 픽셀 품질, 클릭·상태·스크롤 동작, 사용자 선호, 최종 디자인 승인. 그 결과를 새로 '통과'로 기록하지 않는다.
 
 검증을 매 단계에 무차별 추가하는 대신, **어느 판단이 실패했는가**부터 분리한다. 목적 오판이면 페이지·섹션으로, 내부 슬롯 문제면 기존 Component로, 실제 CSS/상태 문제면 구현으로 복귀한다.
+
+## D-015 · 2026-11-10 헤더 A/B 승인 및 SEED 동기화
+
+**범위:** 사용자가 웹 SEED Lab에서 비교한 얇은 Top Navigation 버전을 승인. Root `1.30rem/650`, Standard `1.08rem/620`으로 정식 선택; 상단 Pretendard Variable, 자간, glyph `1.59rem`, target `3rem`, 공통 gutter를 NAV-TOP과 공통 CSS·기계 토큰에 동기화했다. Lab A/B 조작과 override는 제거했다.
+
+| 확인 구분 | 결과 |
+|---|---|
+| 승인 출처·경계 | DECISIONS `D-015` 반영. O-006은 Top Nav 세부만 종료, O-003 실제 앱 IA는 미결 유지 |
+| 구현/SEED 값 대조 | 기존 preview `.head`와 Lab `.seed-top-nav`의 Root·Standard 크기·굵기·자간·Glyph 일치 확인 |
+| Gutter/Surface | 웹 Root 헤더와 Home/Clan 콘텐츠의 동일 `--seed-page-gutter` 사용, Shell의 `--canvas` 연결 유지 |
+| 아이콘 연결 | 클랜 활성 Fill, 마이 비활성/활성 Smile 자산 경로 확인; `WEB_NAV_ITEMS`·preview 연결과 HTML 초기 경로 대조 |
+| 자산 보존 | `assets/icons/soft/v0.14/manifest.json` Git blob SHA가 `new` 브랜치와 동일, Soft SVG 56종 규격·승인 상태 유지 |
+| 문서 동기화 | NAV-TOP / C-BOTTOM / F-TYPE / F-GEOMETRY / F-ICON-MOTION / C-SVG / C-TEXT / S-PAGE / v015 / Shared Style / Assets / INDEX / Lab README의 역할·숫자·예외 기록 |
+| 정적 계약 확인 | 코드/토큰/문서 20개 핵심 항목 일치 확인. 기존 `web/seed-lab/page-type.test.mjs`에 승인값과 gutter·A/B 제거 검사 반영 |
+| 실행 상태 | **Node 테스트 실제 실행, Chromium 픽셀/모바일 터치, Pages 배포 동기화, Android Compose/실기기 검증은 이번 작업에서 수행하지 않음** |
+
+**경계:** 정적 일치와 사용자 시연 선택은 기록할 수 있으나, 새 커밋의 웹 렌더링이 새로 검증됐다고 주장하지 않는다. 실기기 가독성·200% 확대·폰트 CDN 실패 fallback 및 Pages 배포 여부는 해당 단계에서 확인한다. 일반 UI `type.root` 등 범용 타이포·기존 Android 리소스는 이번 승인으로 바꾸지 않는다.

@@ -240,3 +240,11 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 이전의 상단 헤더 `850 / -.05em` 및 화면별 간격 보정은 웹 공통 구현값이 아니다. **단일 스타일 소유자**는 `web/preview/seed-standard.css`이고, `.head`(기존 preview)와 `.seed-top-nav__title`(SEED Lab/신규 웹 화면)이 같은 Pretendard Variable·Title 수치를 소비한다. 헤더 구성 선택은 `seed-page-contract.mjs`의 네 페이지 타입 가시성 계약과 D-011 Root/Standard 역할에 따른다.
 최종 Root `1.30rem/650`, Standard `1.08rem/620`, Glyph `1.59rem`, Target `3rem`, 최소 높이 `3.5rem`을 별도 페이지 CSS에 복제하지 않는다. Lab의 얇은 A/B variant CSS는 확정 후 삭제됐다. 웹 하단 탭의 아이콘 경로는 `WEB_NAV_ITEMS`가 소유하며 Lab과 preview가 같은 파일 세트를 참조한다. 기존 일반 `C-TEXT` 스케일/버튼·이미지·카드 규격을 헤더 때문에 바꾸지 않는다.
 규격은 [NAV-TOP](../../TOP_NAVIGATION.md) 및 [v015-tokens.json](v015-tokens.json)에 기록했다. Node 회귀 검사는 `web/seed-lab/page-type.test.mjs`로, 실제 화면의 광학적 판단과 Native는 별도다.
+
+## 2026-11-10 · C-AVATAR 공통 클래스 사용 여부 검수
+
+**현행 결론:** 기존 SEED의 `.seed-text`, `.seed-action`, `.seed-surface`, `.seed-media`, `.seed-badge`, `.seed-list`, `.seed-icon` 등은 이미 `web/preview/seed-standard.css`에 구현돼 있으며 SEED Lab의 HTML에서 클래스+Variant를 소비한다. 따라서 별도의 클래스 생성 시스템, CSS layer, 신규 구조 계층을 도입할 근거는 없다. 다만 과거 `web/preview/style.css`·`clan.css`의 **레거시 화면 전부가 자동으로 이 표준을 쓰는 것은 아니다**. 기존 Alias는 호환성 범위에서 유지하고 새 화면은 정본 클래스를 우선 사용한다.
+
+**이번 누락 해결:** C-AVATAR 문서는 있었으나 웹 공통 합성 클래스/실행 함수가 없어 개별 화면에서 마스코트 레이어를 반복할 위험이 확인됐다. `.seed-mascot-avatar[data-scale][data-presentation]`, `__layer`, `__fallback`의 **외형만 공통 CSS가 소유**한다. 좌표·아이템 ID·개별 우선순위는 `seed-mascot-avatar.mjs`, 페이지가 소유하는 것은 배치 폭·실제 사용자 장착 데이터와 접근성 라벨뿐이다. Lab의 `seed-visual.css`는 시연 간격·배열만 담당하며 개별 장비 레이어 스타일을 재정의하지 않는다.
+
+**웹 vs Android:** 기존 Android `AvatarComposer`는 한 번에 장비 1개를 합성한다. 이번 웹 컴포넌트는 같은 원본 좌표/아이템 ID를 재사용하면서 *서로 다른 슬롯* 동시 착용과 zIndex를 추가 지원하지만 Android 구현 완료를 의미하지 않는다. Android는 `@Composable DressedAvatar`가 별도 코드 소유자다.

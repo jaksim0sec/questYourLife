@@ -150,7 +150,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 ## 2026-11-11 · 상품 컨테이너 시각 표현 정교화
 
 - **상품 목록/카드 작업:** [P-HIERARCHY S06](patterns/content-hierarchy.md)에서 통합 카드·오픈 진열 우선순위를 선택 → [C-SURFACE S06](components/surface-media.md)의 외곽선/배경/버튼 컨테이너 → [C-IMAGE](components/image-frame.md)의 비율·contain·경계 → 기존 C-TEXT/C-CREDIT/C-ACTION 및 P-LAYOUT을 사용한다. **신규 Component/Surface 종류는 없음.**
-- 공통 스타일 `web/preview/seed-standard.css`의 `.seed-item-display`은 조합 배치만 재사용한다. 같은 이미지와 가격을 `web/seed-lab/?panel=components`에서 비교 가능. 버튼이 있는 상품은 통합 카드 우선 권장하며 실제 시각/동작 승인은 별도 검증한다.
+- 공통 스타일 `web/preview/seed-standard.css`의 `.seed-item-display`은 조합 배치만 재사용한다. **유동 높이 + 조밀한 Identity/Value + Action 자연 흐름**이 기본이며 Grid/Rail의 무조건적인 stretch·CTA auto push는 비권장. 같은 이미지와 가격을 `web/seed-lab/?panel=components`에서 비교 가능. 버튼이 있는 상품은 통합 카드 우선 권장하며 실제 시각/동작 승인은 별도 검증한다.
 
 ## 2026-11-10 · 범용 공간 배치와 페이지 구성 (제안 규격, 웹/Native 미적용)
 

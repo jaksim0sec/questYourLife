@@ -37,7 +37,7 @@
 ## 기존 가설 · 아직 선택되지 않음
 
 **O-022 · 컨셉 추출 시드 v0.1의 승인·실험 [제안/검증 전 · 2026-11-05]**
-- 문서 진입: [seed/INDEX](./design/seed/INDEX.md), 원본·채택/교정/제외: [references/inputs](./design/seed/references/inputs.md), 후속 검수: [VALIDATION](./design/seed/VALIDATION.md).
+- 문서 진입: [seed/INDEX](../seed/INDEX.md), 원본·채택/교정/제외: [references/inputs](../seed/references/inputs.md), 후속 검수: [VALIDATION](../seed/VALIDATION.md).
 - 사용자 지정 방향: 컨셉의 전체 감성·3D 표현 유지, 통일성·정보 계층·버튼 위계·padding 교정, 일반 UI 장식 제한. 정확한 토큰·새 상태 동작의 최종 승인과 구분한다.
 - 후속 조정 U-04: radius 소폭 증가, 버튼 내부 글자·아이콘 축소 및 padding 확보, 따뜻한 브랜드 빨강을 문서 후보값에 반영. 버튼 높이·터치 영역·본문 타이포·상단 기준은 보존하며 새 정량값은 시각 승인 전이다.
 - 미결: 라이트/다크 기본 정책·정확 색/글자/크기/여백·Brand Weak 채택·실제 상태별 반응·하단 목적지/활성 스타일·글래스. 기존 O-003/005/006/009/010/011을 대체하지 않는다.

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 const read=file=>readFileSync(new URL(file,import.meta.url),'utf8');
-const html=read('./index.html'),legacy=read('./families.html'),css=read('./families.css'),js=read('./families.js'),standard=read('../preview/seed-standard.css');
+const html=read('./index.html'),legacy=read('./families.html'),css=read('./families.css'),js=read('./families.js'),standard=read('../../seed/styles/seed-standard.css');
 test('family catalog uses one standard CSS; local CSS is layout only',()=>{
   assert.match(html,/href="\.\.\/preview\/seed-standard\.css"/);
   assert.match(html,/href="\.\/families\.css"/);
@@ -76,9 +76,9 @@ test('Filter Chip uses C-SELECTION, one real selection group and no navigation s
 });
 
 test('composition gate binds source identity to credit, filters, and restrained typography',()=>{
-  const compose=read('../..\/docs/design/seed/patterns/page-composition.md');
-  const credit=read('../..\/docs/design/seed/components/credit-value.md');
-  const selection=read('../..\/docs/design/seed/components/selection-controls.md');
+  const compose=read('../..\/seed/patterns/page-composition.md');
+  const credit=read('../..\/seed/components/credit-value.md');
+  const selection=read('../..\/seed/components/selection-controls.md');
   assert.match(compose,/컴포넌트 출처/);
   assert.match(compose,/C-CREDIT/);
   assert.match(compose,/주목 그룹/);
@@ -103,8 +103,8 @@ test('U10 Filter Chip keeps a 48px target but gives its visible pill tighter opt
 });
 
 test('U10 page composition avoids repeated hero/overline immediately under the filter for one result group',()=>{
-  const composition=read('../../docs/design/seed/patterns/page-composition.md');
-  const selection=read('../../docs/design/seed/components/selection-controls.md');
+  const composition=read('../../seed/patterns/page-composition.md');
+  const selection=read('../../seed/components/selection-controls.md');
   assert.match(composition,/필터 바로 아래/);
   assert.match(composition,/같은 결과/);
   assert.match(composition,/독립 섹션/);

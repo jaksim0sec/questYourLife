@@ -31,7 +31,7 @@ node --test web/seed-lab/*.test.mjs
 | 07 | Root / Detail / Utility 공통 골격 | S-PAGE의 Header/본문/하단 슬롯만 재사용, 새 Page Type 아님 |
 | Sheet Footer | 없음 / 단일 / 이중 / 세로 | 기존 C-ACTION의 크기·톤을 조합. Body 스크롤과 Footer 고정 분리 |
 
-공통 표현은 `../preview/seed-standard.css`가 소유하고, `lab.css`는 테스트 콘텐츠의 배치만 소유한다.
+공통 표현은 `../../seed/styles/seed-standard.css`가 소유하고, `lab.css`는 테스트 콘텐츠의 배치만 소유한다.
 
 ### 2026-11-10 · 시각 개선에 따른 실제 파일 책임
 
@@ -52,14 +52,14 @@ node --test web/seed-lab/*.test.mjs
 
 실험 화면을 보여 준 사실만으로 디자인 승인이나 21개 전부 구현 완료로 표시하지 않는다. 오류가 나오면 페이지별 override보다 기존 SEED 계약과 단일 공통 CSS 소유권부터 확인한다.
 
-관련 정본: `docs/design/seed/implementation/v015.md`, `docs/design/seed/patterns/layout-composition.md`, `docs/design/seed/patterns/page-composition.md`.
+관련 정본: `seed/implementation/v015.md`, `seed/patterns/layout-composition.md`, `seed/patterns/page-composition.md`.
 
 ## 패밀리별 공통 스타일 카탈로그 · 2026-11-10
 
 [컴포넌트 패밀리 시연장](./?panel=components)은 기존 `index.html`의 **컴포넌트 탭**에 통합됐다. 첫 탭은 SEED 전체 지도이고, Foundation과 Shell·Navigation이 별도 탭으로 추가됐다. 옛 `families.html` 주소는 기존 Lab의 해당 탭으로 연결한다. 공통 외형은 `seed-standard.css`가 소유하고 기존 배치·동작·에셋 탭을 보존한다.
 
-- [패밀리 설계·허용 조합](../../docs/design/seed/implementation/component-families.md): Typography 5 의미 역할 × 기존 10 Scale, K07 승인 Action 6종 × Small/Default/Large, Gold 서브브랜드 버튼, Loading/Disabled, Status, List, Field, Media, Surface, Icon.
-- [공통 CSS](../preview/seed-standard.css): 표현 규격·슬롯 소유. `families.css`는 시연장의 항목 배치·반응형 정렬만 소유. 기존 `web/preview/index.html`, `style.css`, `clan.css`는 수정하지 않았다.
+- [패밀리 설계·허용 조합](../../seed/implementation/component-families.md): Typography 5 의미 역할 × 기존 10 Scale, K07 승인 Action 6종 × Small/Default/Large, Gold 서브브랜드 버튼, Loading/Disabled, Status, List, Field, Media, Surface, Icon.
+- [공통 CSS](../../seed/styles/seed-standard.css): 표현 규격·슬롯 소유. `families.css`는 시연장의 항목 배치·반응형 정렬만 소유. 기존 `web/preview/index.html`, `style.css`, `clan.css`는 수정하지 않았다.
 - `brand-weak`, `brand-outline`은 기존 문서상 후보이므로 **`data-seed-family-preview`의 명시적 실험 scope에서만** 표현. Critical variant와 새 색상·토큰은 미승인이라 추가하지 않는다.
 - 기존 Preview에서 실제로 `.seed-*` 공통 클래스를 쓰는 요소만 자동 반영된다. `.gallery-button` 같은 레거시 독립 클래스는 기존 모습 그대로 유지되고 Android Compose로 자동 복제되지는 않는다.
 - 테스트: `node --test web/preview/seed-standard.test.mjs web/seed-lab/*.test.mjs`. 테스트 파일이 존재한다는 것만으로 Node/브라우저 실행 완료를 주장하지 않는다.
@@ -73,7 +73,7 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 - **첫 탭 SEED 정의 지도**: [SEED 전체 지도](./?panel=map). INDEX 등재 38개(Foundation 5, Component 21, Pattern 7, Shell 2, Asset 1, Reference 1, Governance 1), 주변 계약·검토 문서 16개, 총 54개 정본 경로를 탐색.
 - 검색/분류 → 이름·ID·용도·문서 상태·의존 관계 → **실제 GitHub 원문**. 원문은 색인에 고정한 Git 커밋을 기준으로 읽으며, raw 텍스트로도 확인 가능.
 - **다음 탭**: 컴포넌트의 구현 예제, 배치/구성, 동작 검증, 에셋/표면. 시연에서 연결된 정본 ID를 눌러 원문으로 이동 가능. 예시가 규격을 재정의하지 않는다.
-- 명세 위치: `docs/design/seed/INDEX.md`와 기존 C/F/P/S/Implementation. 브라우저 표시/탐색 코드: `seed-map.mjs`, 로컬 뷰어 스타일: `seed-map.css`, 로컬 색인: `seed-sources.json`.
+- 명세 위치: `seed/INDEX.md`와 기존 C/F/P/S/Implementation. 브라우저 표시/탐색 코드: `seed-map.mjs`, 로컬 뷰어 스타일: `seed-map.css`, 로컬 색인: `seed-sources.json`.
 - 승인 경계: 문서 전체가 proposed여도 D-011/D-012/v0.15의 일부 조항은 이미 확정일 수 있다. 반대로 `approved` 상태를 Android 구현/실기기 검증 완료로 해석하면 안 된다.
 - 정본 원문 조회가 막히면 실패를 알리고 GitHub 원문 링크를 제공한다. 네트워크 없이 원문 전체가 저장돼 있는 오프라인 뷰어라고 주장하지 않는다.
 - INDEX의 경로/상태나 정본 내용이 변경되면 색인 기준 커밋을 재생성하고 검증해야 한다. `seed-map.test.mjs`는 INDEX 항목 수와 파일 경로를 검증한다.
@@ -100,7 +100,7 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 ## 페이지 분류·Navigation Set·Image Frame (2026-11-10)
 
 - **페이지 유형 4종:** Global / Global Inner / Non-Global / Bottom Sheet. 이들은 기존 5개 S-PAGE Shell 역할을 대체하지 않고 상·하단 Navigation의 **표시·보존 상태만 결정**한다. Global은 Root+하단 표시, Global Inner는 Standard+하단 표시, Non-Global은 Standard+하단 숨김, Bottom Sheet는 부모 상태를 유지하는 Overlay다.
-- **공통 웹 실행 계약:** `../preview/seed-page-contract.mjs`의 `PAGE_TYPES`, `applyPageType`, `selectWebNav`; `../preview/seed-standard.css`가 실제 Top/Bottom Nav 외형과 hidden/safe inset을 소유한다. Lab의 `seed-visual.mjs`는 재구현이 아니라 해당 계약을 사용한다.
+- **공통 웹 실행 계약:** `../preview/seed-page-contract.mjs`의 `PAGE_TYPES`, `applyPageType`, `selectWebNav`; `../../seed/styles/seed-standard.css`가 실제 Top/Bottom Nav 외형과 hidden/safe inset을 소유한다. Lab의 `seed-visual.mjs`는 재구현이 아니라 해당 계약을 사용한다.
 - **D-015 확정 시각 기준:** Root `1.30rem/650`, Standard `1.08rem/620`, Pretendard Variable, 상단 Glyph `1.59rem`/target `3rem`, 20px(좁은 화면 16px) gutter. 하단 5개 시연 슬롯에서 클랜은 독립 `clan-bookmark-fill.svg`, 마이는 `me-smile.svg`/`me-smile-fill.svg`로 웹 매핑 확정. 공식 56종은 보존한다. 탭 경로/최종 제품 IA는 O-003에 남긴다.
 - **C-IMAGE:** 기존 `.seed-media` 1:1 `item` contain, thumbnail/scene 비율, loading/loaded/error/폴백, 이미지 외부의 가격·이름·상태 정렬. 기존 3D PNG/SVG 원본을 변경하지 않는다.
 - **Lab:** [페이지·네비 시연](./?panel=shells)과 [컴포넌트·이미지](./?panel=components)에서 상태와 외형을 함께 본다. 기존 Sheet·Pattern·에셋 시연은 보존한다.
@@ -109,11 +109,11 @@ SEED Lab의 우선 목적은 컴포넌트의 외형 나열이 아니라 **현재
 ## D-015 웹 시각 승인과 A/B 종료 (2026-11-10)
 
 - 사용자가 얇은 A/B 헤더를 미세 확대 후 최종 선택했다. Lab의 비교 토글·덮어쓰기 스타일을 제거하고 기존 preview 및 Lab의 **공통** `seed-standard.css`에 등록했다.
-- 헤더 Root/Standard 값과 Bottom Navigation 웹 아이콘 매핑의 정본은 `docs/design/TOP_NAVIGATION.md`, `docs/design/seed/components/bottom-navigation.md` 및 `v015-tokens.json`의 `topNavigation`·`webNavigationSet`이다.
+- 헤더 Root/Standard 값과 Bottom Navigation 웹 아이콘 매핑의 정본은 `seed/TOP_NAVIGATION.md`, `seed/components/bottom-navigation.md` 및 `v015-tokens.json`의 `topNavigation`·`webNavigationSet`이다.
 - 기존 Global/Global Inner/Non-Global/Bottom Sheet 분류, 시트/페이지 동작 구조, 일반 컴포넌트 타입/56종 공식 SVG는 변경하지 않았다. Android 앱 이식·실기기 검증은 별도다.
 
 ## C-AVATAR 착장 시연 (2026-11-10)
 
 컴포넌트 탭의 `#mascot-avatar`에는 **기본/모자/헤드폰/동시 착용** 시연이 있다. 실제 `main` 원본과 SHA가 같은 이미지 10개를 `assets/art/mascot/` + `assets/art/cosmetics/`에서 불러와 Feature(부모 폭)/Profile(64)/Row(40) 캔버스로 렌더한다. 크기를 바꿔도 같은 정규화 좌표와 장비별 zIndex가 적용된다. 이미지를 단독 상품 카드로 표시하는 C-IMAGE와 달리 이 컴포넌트는 사용자의 **프로필 사진에 해당하는 정체성 표현**이다.
 
-웹 CSS는 기존 `../preview/seed-standard.css`의 `.seed-mascot-avatar`가 소유한다. 이 Lab의 `seed-visual.css`는 배열 간격만 담당한다. 시험용 버튼은 실제 장착 데이터·보유량을 수정하지 않는다. 구체 API는 `docs/design/seed/components/avatar.md`를 참조.
+웹 CSS는 기존 `../../seed/styles/seed-standard.css`의 `.seed-mascot-avatar`가 소유한다. 이 Lab의 `seed-visual.css`는 배열 간격만 담당한다. 시험용 버튼은 실제 장착 데이터·보유량을 수정하지 않는다. 구체 API는 `seed/components/avatar.md`를 참조.

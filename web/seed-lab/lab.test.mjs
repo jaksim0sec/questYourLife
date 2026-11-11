@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync,existsSync} from 'node:fs';
 const text=path=>readFileSync(new URL(path,import.meta.url),'utf8');
 const html=text('./index.html');
-const css=text('../preview/seed-standard.css');
+const css=text('../../seed/styles/seed-standard.css');
 const labCss=text('./lab.css');
 const js=text('./lab.js');
 
@@ -75,9 +75,9 @@ test('page controls have a single shared owner and sheet footer still initialize
 });
 
 test('S06 item B uses one parent with two actual presentations and responsive shared geometry',()=>{
-  const contract=text('../../docs/design/seed/patterns/content-hierarchy.md');
-  const surface=text('../../docs/design/seed/components/surface-media.md');
-  const frame=text('../../docs/design/seed/components/image-frame.md');
+  const contract=text('../../seed/patterns/content-hierarchy.md');
+  const surface=text('../../seed/components/surface-media.md');
+  const frame=text('../../seed/components/image-frame.md');
   assert.match(contract,/버튼이 들어가면 통합 카드형 외부 컨테이너 사용을 권장/);
   assert.match(contract,/1:1 비율과 contain/);
   assert.match(surface,/바깥 카드·border·그림자 없음/);

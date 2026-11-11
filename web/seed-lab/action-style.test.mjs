@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 
 const read=path=>readFileSync(new URL(path,import.meta.url),"utf8");
-const shared=read("../preview/seed-standard.css");
+const shared=read("../../seed/styles/seed-standard.css");
 const legacyCss=read("../preview/style.css");
 const legacyHtml=read("../preview/index.html");
 const labHtml=read("./index.html");

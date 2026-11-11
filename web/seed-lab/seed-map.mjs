@@ -135,6 +135,6 @@ els.search.addEventListener("input",drawList);els.category.addEventListener("cha
   wireExamples();drawList();
   const preferred=new URLSearchParams(location.search).get("spec");
   await show(items.some(x=>x.id===preferred)?preferred:"SEED-INDEX");
- }catch(error){els.summary.textContent="SEED INDEX 조회 실패: "+error.message;els.list.replaceChildren(el("p","문서 색인 로드 실패. GitHub의 docs/design/seed/INDEX.md를 확인하세요."));}
+ }catch(error){els.summary.textContent="SEED INDEX 조회 실패: "+error.message;els.list.replaceChildren(el("p","문서 색인 로드 실패. GitHub의 seed/INDEX.md를 확인하세요."));}
 })();
 }

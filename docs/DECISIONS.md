@@ -41,7 +41,7 @@
 - Root: **좌측 굵은 타이틀**(필요할 때 전환/선택 버튼), 우측 **Outline 액션 아이콘**. 검색·알림·메뉴는 예시일 뿐 전 화면 고정 필수는 아님.
 - Standard: 좌측 **Back 또는 Close**, **중앙 제목**, 우측 화면 맥락별 보조 액션. 중간 제목의 설명 배지·버튼은 화면 필요에 따라 사용.
 - 헤더는 정제된 중립 표면, 선 중심 아이콘, 일관된 정렬과 여백 유지. 게임 장식·브랜드색 강제 삽입 금지.
-- **Bottom Navigation, 상세 숫자 토큰 및 글래스 효과는 미확정.** 구현/시연용 기준: [TOP_NAVIGATION.md](./design/TOP_NAVIGATION.md).
+- **Bottom Navigation, 상세 숫자 토큰 및 글래스 효과는 미확정.** 구현/시연용 기준: [TOP_NAVIGATION.md](../seed/TOP_NAVIGATION.md).
 
 ## 진행 방식과 보존 규칙
 
@@ -67,7 +67,7 @@
 - 사용자가 직접 제공한 Soft SVG **56종**(32 Outline + 5 Fill + 19 추가 Outline)을 공식 시드 SVG로 채택. `24×24 viewBox`, `stroke-width=1.8`, round cap/join, `currentColor`. HTML 시연이 아니라 [개별 SVG 파일](../assets/icons/soft/v0.14/README.md)이 원본이다.
 - 기본 여백·Radius 16, 버튼 내부 아이콘 16–18, 아이콘/버튼 비율, 중립 Outline, 라이트/다크 의미색, 다크 보상용 노랑 CTA의 **흰색 텍스트·아이콘**, 7톤 Pill Badge, Progress 단일 컴포넌트, 10개 Surface 역할과 5개 텍스트 위계, 단일 트랙 Segmented를 **재사용 디자인 문법**으로 채택.
 - Bottom Sheet: 내용 기반 Min / Mid / Full / Closed, 손가락 실시간 추적, 놓은 위치 가까운 상태로 스냅. 내부 스크롤 상단↓/하단↑에서 이어서 시트 드래그. Footer 고정과 키보드/닫기 대체 조작 포함.
-- [최종 구현·검수 계약](./design/seed/implementation/v015.md)과 [기계 판독 규격](./design/seed/implementation/v015-tokens.json)을 채택 기준으로 등록. 승인 범위는 **웹으로 확인한 디자인 규칙**이며 독립 네이티브 앱 개발·CI·실기기 검증을 자동 승인하지 않는다.
+- [최종 구현·검수 계약](../seed/implementation/v015.md)과 [기계 판독 규격](../seed/implementation/v015-tokens.json)을 채택 기준으로 등록. 승인 범위는 **웹으로 확인한 디자인 규칙**이며 독립 네이티브 앱 개발·CI·실기기 검증을 자동 승인하지 않는다.
 - 기존 `main` Android 앱의 클랜 **나침반** 아이콘과 마스코트/캐시 래스터, 확정 TOP_NAVIGATION은 보존한다. 실제 탭 목적지·화면 데이터·경제 정책은 변경하지 않는다.
 
 > **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.
@@ -75,9 +75,9 @@
 ## D-013 · 공통 선택·조합 계약 r1 [개편 적용 확정 · 2026-11-08]
 
 - 사용자가 공통 계약의 결정 책임을 리드에게 위임했다. 제공 보고서·이미지·기존 정본과 현행 웹 소스를 근거로 페이지 제작 판단, 텍스트 역할 매핑, Surface·정보 객체·행동·상태의 관계와 웹 작업자 인터페이스를 결정했다.
-- 분야별 기존 정본의 **공통 계약 r1 적용 절**이 해당 분야를 소유한다. [INDEX](./design/seed/INDEX.md)에서 읽기 경로를 확인한다. 새 Composite/Page Type 계층을 신설하지 않는다.
+- 분야별 기존 정본의 **공통 계약 r1 적용 절**이 해당 분야를 소유한다. [INDEX](../seed/INDEX.md)에서 읽기 경로를 확인한다. 새 Composite/Page Type 계층을 신설하지 않는다.
 - 기존 D-011/D-012 승인값은 유지한다. 선택한 F-TYPE/F-GEOMETRY의 웹 표현은 이번 개편의 검수 시작 기준이며, 실제 화면 검증·제품 경제·IA·Android 승인과 구분한다.
-- 실제 구현은 [웹 어댑터 계약](./design/seed/implementation/v015.md)의 소유권과 인터페이스를 따른다. 공통 계약 확정은 P2/P3 제품 코드 변경 완료나 main 병합·공개 배포를 뜻하지 않는다.
+- 실제 구현은 [웹 어댑터 계약](../seed/implementation/v015.md)의 소유권과 인터페이스를 따른다. 공통 계약 확정은 P2/P3 제품 코드 변경 완료나 main 병합·공개 배포를 뜻하지 않는다.
 
 ## D-014 · 공통 에셋 정본과 preview 이관 방향 [SVG 이관 완료 · 래스터 미완료 · 2026-11-09]
 
@@ -96,7 +96,7 @@
 - **기하·표면:** Header 최소 높이 `3.5rem`, 터치 타깃 `3rem`(48px 기준), 헤더 SVG 렌더 박스 `1.59rem`, 공식 `24×24 / stroke 1.8` 원본은 유지. 같은 화면의 좌우 gutter는 360px 미만 16px, 그 이상 20px. 아이콘 순서별 `translateX` 보정 금지. 헤더는 바로 아래 페이지 배경과 자연스럽게 연결한다.
 - **하단 Web Navigation:** 기존 5개 시연 슬롯, 비활성 Outline / 활성 독립 Fill+색·라벨을 유지. 클랜 활성 `assets/icons/preview/clan-bookmark-fill.svg`, 마이 비활성/활성 `assets/icons/preview/me-smile.svg`, `me-smile-fill.svg`를 채택. 공식 Soft SVG 56개 파일과 manifest는 변경하지 않는다.
 - **페이지 타입:** Global / Global Inner / Non-Global / Bottom Sheet 가시성 계약을 유지. 시트는 부모 페이지 네비 상태를 대체하지 않으며 자체 Header만 가진다.
-- **소유권:** 디자인 정본은 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), [C-BOTTOM](./design/seed/components/bottom-navigation.md), [S-PAGE](./design/seed/shells/page-shells.md), [웹 토큰](./design/seed/implementation/v015-tokens.json), 구현 정본은 `web/preview/seed-standard.css`와 `seed-page-contract.mjs`. Lab A/B 덮어쓰기는 종료한다.
+- **소유권:** 디자인 정본은 [TOP_NAVIGATION](../seed/TOP_NAVIGATION.md), [C-BOTTOM](../seed/components/bottom-navigation.md), [S-PAGE](../seed/shells/page-shells.md), [웹 토큰](../seed/implementation/v015-tokens.json), 구현 정본은 `seed/styles/seed-standard.css`와 `seed-page-contract.mjs`. Lab A/B 덮어쓰기는 종료한다.
 
 실제 루트의 구성·경로/딥링크 O-003, 기존 Android의 클랜 나침반 및 D-012 Soft 56종 채택은 그대로 보존한다.
 
@@ -107,4 +107,4 @@
 - 기존 Android의 정규화 1:1 좌표를 웹 C-AVATAR의 시작값으로 재사용하고, 장비별 위치·크기·zIndex를 설정 가능하게 한다. 같은 슬롯은 하나만 선택, 모자+귀장비 등 다른 슬롯은 함께 합성할 수 있다. 모든 화면 크기에서 비율을 보존한다.
 - 공통 웹 C-AVATAR의 표현·계약은 `web/preview/seed-mascot-avatar.mjs` 및 `seed-standard.css` 한 곳이 소유한다. 별도의 디자인 시스템이나 새 페이지 유형을 만들지 않는다. 사용자 데이터 저장/서비스 장착·Native 구현 및 기기별 아트 시각 승인은 별개다.
 
-세부 명세와 초깃값은 [C-AVATAR](./design/seed/components/avatar.md), 파일 소유권은 [에셋 계약](./assets/README.md)에 둔다.
+세부 명세와 초깃값은 [C-AVATAR](../seed/components/avatar.md), 파일 소유권은 [에셋 계약](./assets/README.md)에 둔다.

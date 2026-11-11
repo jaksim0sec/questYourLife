@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {PAGE_TYPES,WEB_NAV_ITEMS,getPageType,applyPageType,selectWebNav} from '../preview/seed-page-contract.mjs';
 const text=p=>readFileSync(new URL(p,import.meta.url),'utf8');
 const html=text('./index.html');
-const css=text('../preview/seed-standard.css');
+const css=text('../../seed/styles/seed-standard.css');
 const js=text('./seed-visual.mjs');
 function makeShell(){
  const header={dataset:{}},nav={hidden:false},bottom={hidden:false};

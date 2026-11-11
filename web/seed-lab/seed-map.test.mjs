@@ -5,7 +5,7 @@ const read=p=>readFileSync(new URL(p,import.meta.url),"utf8");
 const index=read("./index.html"),catalog=JSON.parse(read("./seed-sources.json"));
 const js=read("./seed-map.mjs"),css=read("./seed-map.css");
 test("all INDEX definitions are represented in the Lab",()=>{
- const lines=read("../../docs/design/seed/INDEX.md").split("\n").filter(x=>/^\| (?:F-|C-|P-|S-|A-|NAV-|R-|V-)/.test(x));
+ const lines=read("../../seed/INDEX.md").split("\n").filter(x=>/^\| (?:F-|C-|P-|S-|A-|NAV-|R-|V-)/.test(x));
  assert.equal(catalog.items.filter(x=>x.fromIndex).length,lines.length);
  for(const row of lines)assert.ok(catalog.items.some(x=>x.id===row.split("|")[1].trim()));
  const expected={foundation:5,component:21,pattern:7,shell:2};

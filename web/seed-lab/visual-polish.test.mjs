@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 const read=(f)=>readFileSync(new URL(f,import.meta.url),"utf8");
-const html=read("./index.html"),js=read("./lab.js"),style=read("./lab.css"),seed=read("../preview/seed-standard.css");
+const html=read("./index.html"),js=read("./lab.js"),style=read("./lab.css"),seed=read("../../seed/styles/seed-standard.css");
 
 test("Page Shell remains an S-PAGE layout primitive rather than a new page type",()=>{
   assert.match(html,/class="seed-page-shell"[^>]*data-shell-kind="root"/);

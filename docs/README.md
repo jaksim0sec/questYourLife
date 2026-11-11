@@ -1,8 +1,8 @@
 # 갓생패치 · new 브랜치 작업 안내
 
-**현재** `new`는 제품/SEED 문서와 `web/preview/`가 중심이며, Android 앱 코드·API·DB 등은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있다. **향후** `new`는 `main`에 상응하는 개발 브랜치로 발전할 예정이다. 따라서 과거의 '문서 전용' 설명을 영구 제한 규칙으로 해석하지 않는다.
+**현재** `new`는 제품 문서와 루트 `seed/`가 중심이며 `web/preview/`는 재구축을 위해 비워 둔 상태이며, Android 앱 코드·API·DB 등은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있다. **향후** `new`는 `main`에 상응하는 개발 브랜치로 발전할 예정이다. 따라서 과거의 '문서 전용' 설명을 영구 제한 규칙으로 해석하지 않는다.
 
-현재 사용 중인 파일 경로는 유지하며, 코드·에셋 편입은 기존 기능/데이터와 충돌을 검토하고 검증한 후 별도로 실행한다. **이번 단계는 관리 문서만 수정했으며 자산 파일·preview 코드 이동은 하지 않았다.**
+현재 사용 중인 파일 경로는 유지하며, 코드·에셋 편입은 기존 기능/데이터와 충돌을 검토하고 검증한 후 별도로 실행한다. **디자인 SEED는 루트 `seed/`, 공통 CSS는 `seed/styles/seed-standard.css`로 옮겼다. 기존 Preview는 `archive/preview-legacy-2026-11-11/`에 보존하고 활성 `web/preview/`는 비워 뒀다.**
 
 ## 다음 작업에서 먼저 볼 곳
 
@@ -11,10 +11,10 @@
 | 작업 | 필요한 문서부터 읽기 |
 |---|---|
 | 제품 의도·화면 흐름 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [제품 색인](./product/README.md)의 관련 항목. 앱 정체성이나 전체 UX를 다루면 [VISION](./product/VISION.md)도 읽는다. |
-| 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](./design/seed/implementation/v015.md)과 [토큰](./design/seed/implementation/v015-tokens.json) → [INDEX](./design/seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](./design/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](../assets/icons/soft/v0.14/README.md). |
-| 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](./design/SEED_AUTHORING_GUIDE.md) → [INDEX](./design/seed/INDEX.md)에서 기존 규칙과 대조. |
+| 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](../seed/implementation/v015.md)과 [토큰](../seed/implementation/v015-tokens.json) → [INDEX](../seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](../seed/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](../assets/icons/soft/v0.14/README.md). |
+| 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](../seed/SEED_AUTHORING_GUIDE.md) → [INDEX](../seed/INDEX.md)에서 기존 규칙과 대조. |
 | Android 코드 수정 | **현재** `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)를 읽고 실제 코드를 확인. `new`로 코드 이관 시 이 안내를 현황에 맞춰 갱신. |
-| SVG·이미지 관리/preview 에셋 이전 | [공통 에셋 관리 계약](./assets/README.md) → [SEED INDEX](./design/seed/INDEX.md)의 관련 아트·아이콘 문서 → 현재 사용처 코드와 자산 확인. |
+| SVG·이미지 관리/preview 에셋 이전 | [공통 에셋 관리 계약](./assets/README.md) → [SEED INDEX](../seed/INDEX.md)의 관련 아트·아이콘 문서 → 현재 사용처 코드와 자산 확인. |
 
 SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Components(재사용 부품과 상태), Patterns(부품 조합), Shells(화면 골격과 안전영역), Assets(아트의 표현 규칙과 현행 SVG 원본)로 나뉜다. 실제 에셋 원본의 장래 공통 위치는 [관리 계약](./assets/README.md)에 따로 정의한다. 수치와 시각 규칙은 v0.15 적용 계약과 토큰에서 확인한다. 화면별 데이터·하단 탭 목적지·테마 기본값·글래스 채택·네이티브 적용은 결정 및 구현 상태를 따로 확인한다. 리서치·이전 시드·감사 기록은 근거를 추적할 때 연다.
 
@@ -29,17 +29,17 @@ SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Componen
 | 다크 탐색·클랜 피드·퀘스트북 상세 (S2-07) | 어두운 바탕에서 썸네일과 활동 사진이 먼저 눈에 들어온다. 상세는 큰 대표 이미지에서 목표·기간·진행·참여로 읽는 순서가 이어진다. 사람의 활동이 보이고, 보조 수치와 액션은 그 흐름을 받친다. |
 | 시즌·레이드·획득 이미지 (S2-06) | 금속 테두리, 보석, 광원과 그림자로 상자와 획득물에 무게가 생긴다. 획득 연출에서 허용할 표현 강도의 상한을 보여준다. |
 
-이미지의 탭 구성, 화면별 명암 배정, 문구·수치·시즌 패스·가격·레이드·XP·보석은 시안의 예시다. 적용 범위는 [DECISIONS](./DECISIONS.md)와 [OPEN](./OPEN.md), 참조 추적은 [입력 기록](./design/seed/references/inputs.md)의 S2-05~08을 따른다.
+이미지의 탭 구성, 화면별 명암 배정, 문구·수치·시즌 패스·가격·레이드·XP·보석은 시안의 예시다. 적용 범위는 [DECISIONS](./DECISIONS.md)와 [OPEN](./OPEN.md), 참조 추적은 [입력 기록](../seed/references/inputs.md)의 S2-05~08을 따른다.
 
 ## 전체 문서 색인
 
 - [확정사항](./DECISIONS.md) / [미결사항](./OPEN.md)
 - [제품 철학·퀘스트·소셜·보상·마스코트](./product/README.md)
-- [컨셉 이미지 → 디자인 시드 추출·분산 가이드](./design/SEED_AUTHORING_GUIDE.md)
+- [컨셉 이미지 → 디자인 시드 추출·분산 가이드](../seed/SEED_AUTHORING_GUIDE.md)
 - [Superpowers 디자인 시드 정합화 제안](./superpowers/specs/2026-11-05-design-seed-reconciliation-design.md) / [단계별 실행 계획](./superpowers/plans/2026-11-05-design-seed-reconciliation.md)
-- [디자인 시드 · 선택 독해 INDEX](./design/seed/INDEX.md) — 영역별 문서와 v0.15 확정 범위
-- [첨부 8장 전수 감사](./design/seed/AUDIT.md) / [SEED 컴포넌트 커버리지](./design/seed/COVERAGE.md) / [실제 검증·미결](./design/seed/VALIDATION.md)
-- [디자인 확정 · Top Navigation](./design/TOP_NAVIGATION.md)
+- [디자인 시드 · 선택 독해 INDEX](../seed/INDEX.md) — 영역별 문서와 v0.15 확정 범위
+- [첨부 8장 전수 감사](../seed/AUDIT.md) / [SEED 컴포넌트 커버리지](../seed/COVERAGE.md) / [실제 검증·미결](../seed/VALIDATION.md)
+- [디자인 확정 · Top Navigation](../seed/TOP_NAVIGATION.md)
 - [디자인 리서치 요약 및 출처](./research/SUMMARY.md)
 - [2026-11-04 GPT 리서치 원문 보관](./research/2026-11-04-gpt-design-research.md)
 - [작업별 문서 참고 지침](./AGENTS.md)
@@ -54,7 +54,7 @@ SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Componen
 | `AGENTS.md` | `docs/AGENTS.md` | `1e82959a750a1b34c12149ac6cf0e7c95e62614d` |
 | `docs/DECISIONS.md` | `docs/DECISIONS.md` | `6340f31192c16dc03e16c1afaad05b3074fdd354` |
 | `docs/OPEN.md` | `docs/OPEN.md` | `ab3d849f512c8a1a16213259951536b3923e8d2d` |
-| `docs/design/TOP_NAVIGATION.md` | `docs/design/TOP_NAVIGATION.md` | `de9a15b6e8bb9232a582955939283f04c7e6cdc3` |
+| `seed/TOP_NAVIGATION.md` | `seed/TOP_NAVIGATION.md` | `de9a15b6e8bb9232a582955939283f04c7e6cdc3` |
 | `docs/product/AVATAR.md` | `docs/product/AVATAR.md` | `41c64dfda834c8923a7c8a12808ec8be5d21d2b4` |
 | `docs/product/QUESTBOOKS.md` | `docs/product/QUESTBOOKS.md` | `991b43dfa61c9ac8ffb28ca3d3e7a293dfe2350a` |
 | `docs/product/QUESTS.md` | `docs/product/QUESTS.md` | `1a8718dc12b4fde13da93dce29f34d25889d0442` |

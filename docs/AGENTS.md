@@ -28,12 +28,12 @@
 | [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
 | [docs/assets/README.md](./assets/README.md) | **SVG·이미지 등록, 원본 이동, preview/Android 참조 이관** | 현재 구조와 장래 공통 `assets/` 정본, 중복·호환성·검증 계약. 이관 실행 전에는 기존 경로 유지 |
-| [docs/design/SEED_AUTHORING_GUIDE.md](./design/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
-| [docs/design/seed/INDEX.md](./design/seed/INDEX.md) | **기존 디자인 시드를 읽거나 새 페이지·컴포넌트에 재사용할 때** | 필요한 Component/Pattern/Shell만 라우팅. 전부 읽지 않음 |
-| [docs/design/seed/AUDIT.md](./design/seed/AUDIT.md) | **8장 레퍼런스 추적·디자인 개선 전후 비교 시** | S2-01~08 참조와 Keep/Refine/Merge/Split/Add 판단 |
-| [docs/design/seed/COVERAGE.md](./design/seed/COVERAGE.md) | **컴포넌트 누락·중복·SEED와의 비교 시** | 실제 필요한 컴포넌트만 보강, SEED 전체 복제 금지 |
-| [docs/design/seed/VALIDATION.md](./design/seed/VALIDATION.md) | **시드 승인·렌더 검증·완료 보고 전** | 실제 실행 검증과 미검증 사항을 구분 |
-| [docs/design/TOP_NAVIGATION.md](./design/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
+| [seed/SEED_AUTHORING_GUIDE.md](../seed/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
+| [seed/INDEX.md](../seed/INDEX.md) | **기존 디자인 시드를 읽거나 새 페이지·컴포넌트에 재사용할 때** | 필요한 Component/Pattern/Shell만 라우팅. 전부 읽지 않음 |
+| [seed/AUDIT.md](../seed/AUDIT.md) | **8장 레퍼런스 추적·디자인 개선 전후 비교 시** | S2-01~08 참조와 Keep/Refine/Merge/Split/Add 판단 |
+| [seed/COVERAGE.md](../seed/COVERAGE.md) | **컴포넌트 누락·중복·SEED와의 비교 시** | 실제 필요한 컴포넌트만 보강, SEED 전체 복제 금지 |
+| [seed/VALIDATION.md](../seed/VALIDATION.md) | **시드 승인·렌더 검증·완료 보고 전** | 실제 실행 검증과 미검증 사항을 구분 |
+| [seed/TOP_NAVIGATION.md](../seed/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
 | [docs/research/SUMMARY.md](./research/SUMMARY.md) | 내비게이션·디자인 시스템·글래스·모션·텍스트 규칙 선정 | 검증된 외부 근거, **확신도 및 연구 공백** |
 | [docs/research/2026-11-04-gpt-design-research.md](./research/2026-11-04-gpt-design-research.md) | 원래 리서치 표현/맥락 복원, 출처 추적, 재검증 | **수정하지 않는 원문 아카이브**. 채팅 인용 태그는 독립 URL 아님 |
 
@@ -74,6 +74,6 @@
 
 - **현재:** `new`에는 앱 코드가 없고 문서·웹 preview 및 공통 SVG 원본이 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
 - **목표:** `new`는 장차 `main`에 상응하는 독립 개발 브랜치가 된다. 코드 편입 시 AGENT/IDEA와 기존 데이터·리소스·실행 기준을 실제 파일과 대조하고, 충돌 해결·회귀 검증 후 라우팅 문서를 갱신한다. 현재 문서 전용이라는 이유로 향후 개발 범위를 영구 제한하지 않는다.
-- **에셋:** 공통 `assets/icons/soft/v0.14/` SVG 이전 및 preview 참조 변경 완료. PNG/WebP는 아직 기존 `web/preview/assets/`에 있으며 래스터의 공통 정본 이관은 미완료다. [관리·이관 현황](./assets/README.md) 참고.
+- **에셋:** 공통 `assets/icons/soft/v0.14/` SVG 이전 및 preview 참조 변경 완료. 기존 Preview의 고유 래스터 3종은 전역 `assets/art/`에 보존했고, 이전 Preview는 `archive/preview-legacy-2026-11-11/`에 이관했다. [관리·이관 현황](./assets/README.md) 참고.
 - 이 파일은 `docs/AGENTS.md`에 위치하므로 **루트 `AGENTS.md` 자동 탐색을 대신한다고 가정하지 않는다**. 새 작업에서는 명시적으로 읽는다.
 - 콘텐츠 원본은 `docs/archive/AGENTS-original-2026-11-04.md`에도 변경 없이 보존한다.

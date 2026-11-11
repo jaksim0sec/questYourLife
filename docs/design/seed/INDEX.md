@@ -166,3 +166,11 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 기존 `C-AVATAR` 항목의 단순 문서 정의를 **코드로 연결**했다. `components/avatar.md` (역할·Anatomy·상태·좌표·레이어 우선순위) → `web/preview/seed-mascot-avatar.mjs` (합성·렌더) + `web/preview/seed-standard.css` (공통 클래스) → `web/seed-lab/?panel=components#mascot-avatar` (크기별 실사용 시연) → `web/preview/seed-mascot-avatar.test.mjs` (합성 테스트). 기존 21개 컴포넌트 집합을 늘리지 않고 C-AVATAR의 누락 구현만 보강한다.
 
 원본 자산은 `assets/art/mascot/`와 `assets/art/cosmetics/`이며 `docs/assets/README.md`가 복사 SHA·레거시 중복 보존을 기록한다. 이 구현은 웹 컴포넌트 수준이고, 실기기 비주얼 확정 및 Android 이식은 별도다.
+
+
+## 2026-11-11 · U11 통합 QA 인수 경로
+
+- **원 제안 S01~S09 / R01~R04의 인수 상태, 코드·문서·시연·실기기 분리:** [V-CHECKS · U11 QA 장부](VALIDATION.md#2026-11-11--u11-최종-통합-qa-및-인수-판단-s01s09)를 우선 확인. 아래 기존 Component·Pattern의 승인 상태는 그대로 유지한다.
+- **구성 의도부터 판단할 때:** [P-PAGE-COMPOSE](patterns/page-composition.md) → [P-LAYOUT](patterns/layout-composition.md) → [P-HIERARCHY](patterns/content-hierarchy.md) → 필요한 C-SURFACE/C-IMAGE/C-AVATAR/C-OVERLAY/C-SVG·C-TEXT. 기존 4 Page Type과 일반 Banner/이벤트 A의 구별을 유지한다.
+- **실제 웹 공통 클래스와 확대 문제:** [Shared Style](implementation/shared-style-contract.md), `web/preview/seed-standard.css`, 루트 font·SVG fallback 및 기존 Button/Nav 예외. **새 런타임/새 token 없음**.
+- **현재 통합 인수 보류:** 레거시 `Global Inner` 클랜의 하단 Navigation 숨김(실제 CSS 충돌), NonGlobal 긴 헤더 값 겹침, U04·U05·U07 실화면·실데이터 검증 누락. U10 Pill 대상은 사용자 지시로 **보류**. GitHub Pages 배포/분리된 Chromium fixture를 **Node 원본 테스트나 실제 앱 UI 승인으로 대체하지 않는다**.

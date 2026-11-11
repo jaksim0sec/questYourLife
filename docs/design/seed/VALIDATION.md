@@ -298,3 +298,15 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 - **문서:** P-HIERARCHY(표현 선택·버튼·가변 높이), C-SURFACE(부모/프레임 경계·border), C-IMAGE(비율·padding), INDEX(라우팅)에 같은 권고 반영.
 - **웹:** 기존 `web/preview/seed-standard.css`에 표면 역할을 재정의하지 않는 `.seed-item-display` 조합 스타일 추가. SEED Lab은 기존 PNG/코인 이미지로 두 형식을 비교, 미리보기 버튼은 구매 없이 안내만 표시. 기존 Preview/Navigation/Android는 수정하지 않음.
 - **정적 검사:** 변경 문서·CSS·Lab의 연결/핵심 선택자/이미지 경로·사용자 정의 요구를 점검하며 회귀 단언을 `web/seed-lab/lab.test.mjs`에 추가. 실제 Node 원본 테스트/Chromium 320·360·390·430 및 200% 확대·터치/스크린리더/실기기 렌더는 **미실행·미검증**. 정적 통과를 픽셀 또는 UX 승인으로 표기하지 않음.
+
+## 2026-11-11 · S06 아이템 정보 그룹·높이 회귀 교정
+
+**증상/원인 구분:** 사용자 시연에서 오픈 진열형의 이름·가격이 분산되고, 대표 아이템 카드의 가격과 버튼 사이가 과도하게 벌어짐. 이전 `.seed-item-display { height:100% }` + 정보 `flex:1` + CTA `margin-block-start:auto` 및 Lab Grid의 `align-items:stretch`가 아이템 높이를 다른 열/형제 콘텐츠에 종속시킨 것이 직접적인 구현 결함. 원래의 S06 문서도 한 행 하단 정렬을 일반화하여 권고 간 충돌이 있었음.
+
+**수정/소유권:** P-HIERARCHY는 이미지 아래 Identity+Value를 한 정보 묶음으로, CTA는 값 뒤의 자연 흐름으로 정의. C-SURFACE는 통합형 부모 외곽선 하나·오픈형 이미지 전용 표면을 유지하면서 콘텐츠 기반 높이를 명시. P-LAYOUT은 비대칭 열 무조건 stretch 비권장. 공통 `web/preview/seed-standard.css`는 높이 강제/정보 flex 확장/CTA auto push를 제거하고 간격을 절반으로 축소. Lab 지역 CSS는 두 표현의 행·그룹을 start 정렬. 기존 C-IMAGE 1:1 contain + 8% padding, Surface 10종, C-CREDIT, C-ACTION의 표준 및 사용자가 요청한 버튼 있는 상품의 통합 컨테이너 우선 권장은 그대로 유지.
+
+**검증 분리:**
+- 교정 전 독립 시연: Chromium 로컬 렌더에서 5폭 × Light/Dark의 버튼/가격 이격 등 30개 기준 미충족. 폭에 따라 대표 카드 가격→버튼 간격 약 34~76px로 확인.
+- 교정된 **독립 HTML 시연**: Chromium 320/390/450/780/1280px × Light/Dark × 5개 기하/위계 검사 **50/50 통과**. 추가 320/360/390/430/768px × 100/200% 글자 기준 × Light/Dark **20/20** 가로 오버플로/테마 제어 검사 통과. HTML 내부 JS `node --check` 통과.
+- GitHub `new` 정본 CSS·Lab·정책·회귀 테스트를 원격에서 다시 읽고 요구 15개 **정적 대조 통과**. 기존 `web/seed-lab/lab.test.mjs`에 잘못된 높이 규칙이 재도입되지 않도록 단언 반영.
+- **미검증:** 원격 `new`의 원본 Node 테스트 전체 실행, Pages 최신 배포 반영, 실제 SEED Lab 렌더 픽셀 및 Android/실기기 200%·TalkBack 검증. 독립 시연의 통과를 원본 Lab의 시각 승인으로 승격하지 않는다. 원본 래스터/제품 가격·경제 정책 변경 없음.

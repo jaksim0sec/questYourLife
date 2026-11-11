@@ -87,3 +87,27 @@ test('composition gate binds source identity to credit, filters, and restrained 
   assert.match(selection,/seed-filter-chip/);
   assert.match(selection,/aria-pressed/);
 });
+
+test('U10 Filter Chip keeps a 48px target but gives its visible pill tighter optical space',()=>{
+  const rule=standard.match(/\.seed-filter-chip\s*\{([^}]*)\}/)?.[1]||'';
+  const face=standard.match(/\.seed-filter-chip::before\s*\{([^}]*)\}/)?.[1]||'';
+  assert.match(rule,/min-height:3rem/);
+  assert.match(rule,/gap:\.375rem/);
+  assert.match(rule,/padding:\.375rem \.625rem/);
+  assert.match(rule,/border:0/);
+  assert.match(rule,/isolation:isolate/);
+  assert.match(face,/inset:\.25rem 0/);
+  assert.match(face,/border:1px solid/);
+  assert.match(standard,/\.seed-filter-chip\[aria-pressed="true"\]::before\s*\{/);
+  assert.doesNotMatch(standard,/\.seed-segment button \{[^}]*padding:\.375rem \.625rem/);
+});
+
+test('U10 page composition avoids repeated hero/overline immediately under the filter for one result group',()=>{
+  const composition=read('../../docs/design/seed/patterns/page-composition.md');
+  const selection=read('../../docs/design/seed/components/selection-controls.md');
+  assert.match(composition,/필터 바로 아래/);
+  assert.match(composition,/같은 결과/);
+  assert.match(composition,/독립 섹션/);
+  assert.match(selection,/필터 바로 아래/);
+  assert.match(selection,/필터 → 결과/);
+});

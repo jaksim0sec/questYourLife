@@ -265,7 +265,7 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 | **G03 · 높음** | U04·U05·U07의 **실제 상점 아이템 B / 완성 배너 A / Dialog S08** 소비 예시가 없거나 구현됨을 확인할 근거가 없음 | 각 패턴 소유자. 격리 fixture를 SEED Lab 실제 통합으로 잘못 승격하지 않음 | **시연·브라우저 미검증** |
 | **G04 · 중간** | U08→U09 기본 `.seed-icon`은 상대 단위로 교정했지만, 다른 명시적 24px/17px Glyph·각 레거시 Page는 역할별 예외 | F-GEOMETRY/C-SVG·해당 소유 CSS. OS 200%와 브라우저 zoom에서도 타깃·광학 비교 필요 | **부분 구현** |
 | **G05 · 사용자 보류** | U10 Pill Navigation 원본의 정확한 대상 selector 및 수치 식별 불가 | 원본 화면 대조 전 CSS 수정 금지 | **보류 유지** |
-| **G06 · 중간** | U09 이전부터 존재한 `shared-style-contract.md` Footer 표의 `paired|stacked|single` 내부 파이프가 Markdown 테이블 열을 잘못 나누던 문제 | U11에서 **표시 문법만** 세 값을 분리하는 문구로 교정. 의미·스타일/값 불변 | **서식 수정** |
+| **G06 · 중간** | U09 이전부터 존재한 `shared-style-contract.md` Footer 표의 `paired` / `stacked` / `single` 내부 파이프가 Markdown 테이블 열을 잘못 나누던 문제 | U11에서 **표시 문법만** 세 값을 분리하는 문구로 교정. 의미·스타일/값 불변 | **서식 수정** |
 | **G07 · 환경 제약** | 로컬 GitHub DNS 실패로 **전체 원본 checkout·원본 Node Suite 실행 불가**. source fetch/원격 Compare와 격리 Chromium은 실행됨 | GitHub Pages 배포 성공은 Node·브라우저 UI 시각 검수와 무관. Chromium native WebView/Android 접근성은 별도 | **Node/원본 Preview·Lab/Native 미검증** |
 
 ### 재검증 로그의 증거 수준

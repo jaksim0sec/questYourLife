@@ -248,3 +248,35 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 **이번 누락 해결:** C-AVATAR 문서는 있었으나 웹 공통 합성 클래스/실행 함수가 없어 개별 화면에서 마스코트 레이어를 반복할 위험이 확인됐다. `.seed-mascot-avatar[data-scale][data-presentation]`, `__layer`, `__fallback`의 **외형만 공통 CSS가 소유**한다. 좌표·아이템 ID·개별 우선순위는 `seed-mascot-avatar.mjs`, 페이지가 소유하는 것은 배치 폭·실제 사용자 장착 데이터와 접근성 라벨뿐이다. Lab의 `seed-visual.css`는 시연 간격·배열만 담당하며 개별 장비 레이어 스타일을 재정의하지 않는다.
 
 **웹 vs Android:** 기존 Android `AvatarComposer`는 한 번에 장비 1개를 합성한다. 이번 웹 컴포넌트는 같은 원본 좌표/아이템 ID를 재사용하면서 *서로 다른 슬롯* 동시 착용과 zIndex를 추가 지원하지만 Android 구현 완료를 의미하지 않는다. Android는 `@Composable DressedAvatar`가 별도 코드 소유자다.
+
+
+## U09 · S02a 공통 스타일 연결과 상대 단위 실현 범위 (2026-11-11)
+
+**판정:** SEED의 디자인 관계 → 웹의 `seed-standard.css` 정본 클래스·기존 Variant → 각 화면의 실제 호출은 **이미 구현돼 있는 연결**이다. 이 유닛에서 CSS 엔진/새 클래스/새 토큰/새 Font Scale을 만들지 않는다. 단, S01의 일반 아이콘+텍스트 결합에는 **고정 20px 기본값이 루트 상대 텍스트와 함께 확대되지 않는 실제 CSS 계약 불일치**가 있어 해당 공통 기본값과 메뉴의 중복 로컬 선언만 교정했다.
+
+### 현재 소유권과 소비 관계
+
+| 층 | 현행 정본/역할 | U09 처리 |
+|---|---|---|
+| SEED 의미·규격 | C-SVG/F-GEOMETRY의 일반 아이콘 **기준 20**, C-TEXT/F-TYPE 글자 5역할, C-ACTION의 버튼 내부 아이콘·Target, NAV-TOP의 승인 헤더 | **숫자·Variant·공식 56 SVG 원본 변경 없음**. 스케일 관계만 보존 |
+| 웹 기준 글자 크기 | `web/preview/seed-standard.css`의 **html `:root { font-size:100%; text-size-adjust:100%; }`** 및 **기존 모바일 `clamp(...vw...)`** (480~767의 복귀 구간 포함) | **변경 없음**. `rem`은 **body가 아니라 html root**를 참조. 기기별 JS/DPR 분기나 새 vw 계산식 금지 |
+| 공통 스타일/컴포넌트 | `seed-standard.css`의 `.seed-text`, `.seed-action`, `.seed-media`, `.seed-surface`, `.seed-icon`, `.seed-mascot-avatar`와 실제 C-AVATAR 모듈 | **공통 일반 아이콘 기본 크기만** `--seed-icon-size`가 없을 때 `20px` → **`1.25rem`**. 16px root에서는 **20px 동일** |
+| 페이지 소비 | Lab과 웹 Preview가 공통 CSS를 먼저 로드하고 `seed-*` 클래스를 사용. `web/preview/style.css`의 `.menu-theme-icon { width:20px; height:20px; }`는 `.seed-icon`과 같은 속성 중복 | 해당 **로컬 중복 선언만 제거**. `app.js`의 기존 `seed-icon menu-theme-icon` 마크업/행동은 유지하며 공유 기본값 상속 |
+| 페이지 전용 배치 | `style.css`, `clan.css`, Lab CSS의 섹션 배치/비율/고유 레거시 표현 | 변경 없음. 이전 페이지의 `.gallery-button`과 `.clan-svg` 등을 새 컴포넌트로 강제 이관하지 않음 |
+
+### 단위 선택과 예외
+
+- **일반 UI SVG/텍스트:** 기준 글자에 비례해야 하는 공통 `.seed-icon`의 **fallback만 `1.25rem`**. 예를 들어 html root 16 → SVG 20, root 32 → SVG 40. C-SVG의 크기 의도는 16 기준 20이고 확대 시 같은 *비율*을 유지한다. 글자/색/길이·아이콘의 원본 stroke는 변경하지 않는다.
+- **이미 명시된 다른 역할은 유지:** `.seed-action__icon`의 **17px** 및 Small **16px**, 기본 `.seed-icon-action .seed-icon`의 **24px** 명시적 슬롯, D-015 상단 `--seed-top-glyph:1.59rem`/target `3rem`, 하단 `1.56938rem` 및 선택된 5개 SVG 파일의 경로/Fill, `.rank-change .seed-icon`의 기존 `.9rem` 등은 그대로다. **일반 SVG fallback을 바꿨다고 모든 버튼/헤더/하단 아이콘의 크기가 일괄 바뀌는 것은 아님.**
+- **남겨둔 px 예외:** 1px border, 이미지 원본 픽셀/물리 품질, C-ACTION face 높이 **34/43/48px**와 실제 터치 최소 48px, 레거시 페이지 내부의 시연 전용 고정값은 별도 소유. 이들을 전역 `px→rem` 치환하면 승인 수치·터치·아이콘 광학 검증을 깨므로 이번 범위에서 건드리지 않는다. 실제 Browser Zoom/접근성 글자 확대는 Root Font 실험만으로 자동 보장되지 않는다.
+- **`em`과 `rem`:** `em`은 해당 요소에 적용되는 font-size를 기준으로 하므로 **한 요소 안의 텍스트에 종속되는 간격**이 필요할 때 검토할 수 있다. `rem`은 root 기준이라 여러 컴포넌트 사이의 **일관된 비율**을 위한 기본 후보. 새 단위 정책은 전체 플랫폼의 필수 규칙으로 승인한 것이 아니며 기존 F-GEOMETRY·웹 토큰이 우선이다.
+- **디자인 규격과 코드의 연결 한계:** 이 변경은 `.seed-icon`과 이를 쓰는 소비자만 자동으로 반영한다. 문서 링크를 읽는 것만으로 새 페이지가 변경되는 것은 아니고, 레거시 `.clan-svg`/Android Compose는 자동 이식되지 않는다. 열 수·콘텐츠 비중·섹션 순서 등의 **가변 배치**는 여전히 페이지에 둔다.
+
+### 검증 근거와 보류 사항
+
+- **실제 브랜치 기준선 RED:** `seed-standard.css`에는 기본 `20px`, `style.css`에는 메뉴 `20px` 중복이 있었다. `html` root 반응형 설정, D-015 및 P-BTN-ICON의 개별 치수 오버라이드는 이미 존재했다.
+- **격리 Chromium 비교 (실제 페이지 아님):** 검수 fixture는 위 **기존 CSS 셀렉터·루트 계산식·대표 아이콘/버튼/헤더/하단 역할**을 반영했다. 390px에서 root 약 `16.997` / `33.994`로 확대하면 기존 `20px` 아이콘/Root Font 비율은 약 **1.177 → 0.588**, 변경 후에는 **1.25 → 1.25**다. 320/360/390/430/768/1440 폭의 대표 100/200%·Light/Dark 조합에서 **162/162 계측 통과**(앞의 2개는 RED 재현 판정 포함). 직접 소비 웹 페이지의 렌더 결과는 아니다.
+- **코드 회귀 게이트:** 기존 `web/preview/seed-standard.test.mjs`에 일반 SVG 기본값·메뉴 상속·기존 Root Font·버튼/헤더 예외의 계약 검사를 추가했다. 리포지토리 전체 Node Suite 및 Preview/Lab 실제 CSS 연동 Chromium **실행은 별도 증거가 필요**하다. 정적 검사가 통과해도 실제 픽셀/접근성 완료는 아님.
+- **U08 반례 경계:** 일반 아이콘 fallback의 루트 비례는 개선했지만, 메뉴 전체 버튼/행 높이·기본 `.seed-icon-action`의 명시적 px 값·모든 기존 `.clan-svg`/Android·200% 실기기/OS font scale 문제가 전부 해결됐다고 말하지 않는다.
+- **기존 미검증 추적:** U04 S06 단일 부모/200% 실제 소비, U05 S09 완성 배너 원본/시연, U06 S07 긴 헤더 제목·재화 충돌, U07 S08 실제 Dialog/Android Back/초점, U08 S01 실제 페이지 광학 정렬과 rem 관계 및 U00 `clan.css` Global Inner 하단바 충돌 후보는 **아직 미검증/미해결**이다. U10은 Pill Navigation의 **국소** 타이포/패딩 조정, U11은 실제 화면·통합 회귀/인수 확인이다.
+

@@ -46,6 +46,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 .head h1 { font-size:1.30rem; line-height:1.35; letter-spacing:-.025em; font-weight:650; overflow-wrap:anywhere; }
 
 .head.standard h1 { font-size:1.08rem; font-weight:620; letter-spacing:-.018em; text-align:center; }
+/* Standard only: explicit opt-in title placement, never alter the centered default. */
+.head.standard[data-title-align="start"] { grid-template-columns:var(--seed-top-target) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
+.head.standard[data-title-align="start"] h1 { text-align:start; justify-self:start; }
+.head.standard[data-title-align="start"] .tools { min-width:0; max-width:min(44vw,14rem); flex-wrap:wrap; justify-content:flex-end; }
+.head.standard[data-title-align="start"] .tools[data-slot-kind="info"] { margin-inline-end:0; }
+
 
 .tools { display:flex; justify-self:end; align-items:center; margin-inline-end:calc(-1 * var(--seed-top-optical-inset)); }
 
@@ -353,6 +359,15 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__title { grid-column:2; grid-row:1; font-size:1.08rem; font-weight:620; letter-spacing:-.018em; text-align:center; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__leading { grid-column:1; grid-row:1; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__trailing { grid-column:3; grid-row:1; }
+/* Standard Center remains the existing three-column Grid. Start is a per-page opt-in.
+ * Back keeps its 3rem target and optical gutter; title and trailing never overlap.
+ */
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] { grid-template-columns:var(--seed-top-target) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__title { text-align:start; justify-self:start; }
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__trailing { min-width:0; max-width:min(44vw,14rem); justify-content:flex-end; flex-wrap:wrap; }
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__trailing[data-slot-kind="info"] { margin-inline-end:0; }
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__trailing[data-slot-kind="info"] .seed-surface { min-width:0; padding:.375rem .625rem; }
+
 .seed-top-nav .seed-icon-action { width:var(--seed-top-target); min-height:var(--seed-top-target); }
 .seed-top-nav .seed-icon-action .seed-icon { --seed-icon-size:var(--seed-top-glyph); }
 .seed-page-shell__bottom[data-bottom-role="navigation"] { position:sticky; bottom:0; z-index:20; border:0; padding:0 0 env(safe-area-inset-bottom,0px); background:var(--nav-surface); }

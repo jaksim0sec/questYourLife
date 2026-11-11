@@ -74,6 +74,13 @@ REF-006은 제안, REF-007은 실앱 한 화면 관찰 medium. REF-005는 명시
 Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 suffix, 고정 하단 CTA에 영향을 준다. 이름이 다른 기능별 버튼을 별도 컴포넌트로 만들지 않는다.
 
 
+## 2026-11-12 · Neutral Outline 외형 안정화
+
+- 이미지의 `초대하기`처럼 **동작을 실행하는 단일 버튼은 C-ACTION Neutral Outline**이다. 보기/기간 변경 C-SEGMENT와 섞지 않는다.
+- 기존 Neutral Outline의 **바깥 target**은 최소 48px, 내부 face는 34/43/48px, 내부 radius는 **16px control**이다. 이미지 속 버튼 형태를 그대로 따라 모든 Action을 `radius:999px` 알약으로 바꾸는 것 금지. 공간 배열과 Action 강조도가 손상되기 때문이다.
+- Outline의 선은 단 하나의 `stroke.control`; 내부 면은 transparent, 전경은 **중립 전경을 부드럽게 조정한 별도의 처리**. 지나치게 검은 글자와 희미한 라이트 전용 border를 섞거나 Light/Dark에서 색 역할을 바꾸지 않는다. 레거시 `--line` 대신 `--seed-stroke-control`을 전역적으로 정의해 Lab 없이도 실제 화면에서 경계가 살아 있어야 한다.
+- Hover/pressed/focus에서도 선 두께·높이·label 기준선을 보존하며, 라벨과 SVG의 광학 중심을 하나로 정렬한다. 단일 Action을 필요 없이 Fill로 늘리지 않는다.
+
 ## v0.15 Outline / Reward CTA 우선 규칙 (D-012)
 
 - `Outline` 기본은 **Neutral Foreground + Neutral Border**. Brand Red를 자동 상속하지 않는다. `Brand Weak`는 명시적 보조색 액션이고 `Brand Outline`은 별도 이름을 사용할 때만 허용; 기본 Outline과 혼동하지 않는다.

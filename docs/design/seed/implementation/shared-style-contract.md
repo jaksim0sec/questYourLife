@@ -208,7 +208,7 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 | 영역 | 실제 웹 인터페이스 | 금지/경계 |
 |---|---|---|
 | Shell 공간 기본형 | `.seed-page-shell`, `__header`, `__inner`, `__content`, `__section`, `__bottom` | Header 아이콘·라우트·네이게이션 목적지는 구현하지 않음 |
-| Bottom Sheet Footer | `.seed-sheet__footer[data-layout="paired|stacked|single"]` 및 `hidden` | Action 버튼 타입이 아닌 기존 버튼의 조합·배치 |
+| Bottom Sheet Footer | `.seed-sheet__footer[data-layout]`의 `paired` / `stacked` / `single` 및 `hidden` | Action 버튼 타입이 아닌 기존 버튼의 조합·배치 |
 | 조작 경계 | `--seed-stroke-control` / C-ACTION Outline, C-FIELD, C-CHECK, C-RADIO | 장식용 `--line`을 조작 경계에 재사용하지 않음 |
 | 이미지 상태 배지 | `.seed-media .seed-media__badge[data-tone="neutral"]` | 기존 7개 Status Badge 의미색 외 새 임의 variant 없음 |
 | Lab 지역 배치 | `web/seed-lab/lab.css` | 공통 Action 내부 padding/font/색 오버라이드 금지 |

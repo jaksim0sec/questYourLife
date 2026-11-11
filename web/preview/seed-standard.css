@@ -246,10 +246,10 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media .seed-media__fallback { display:none; place-items:center; height:100%; color:var(--sub); }
 .seed-media__badge { position:absolute; left:8px; top:8px; z-index:1; }
 /* S06 item B composition: two presentations, not a new Surface role or Image Frame. */
-.seed-item-display { display:flex; flex-direction:column; gap:var(--seed-space-item); min-width:0; height:100%; }
+.seed-item-display { display:flex; flex-direction:column; gap:var(--seed-space-item); min-width:0; height:auto; align-self:start; }
 .seed-item-display > .seed-media { width:100%; min-width:0; flex:0 0 auto; }
-.seed-item-display__info { display:flex; flex:1 1 auto; flex-direction:column; gap:var(--seed-space-inline); min-width:0; overflow-wrap:anywhere; }
-.seed-item-display__action { display:flex; flex-wrap:wrap; gap:var(--seed-space-inline); align-items:flex-end; margin-block-start:auto; padding-block-start:var(--seed-space-inline); }
+.seed-item-display__info { display:flex; flex:0 1 auto; flex-direction:column; gap:calc(var(--seed-space-inline) / 2); min-width:0; overflow-wrap:anywhere; }
+.seed-item-display__action { display:flex; flex-wrap:wrap; gap:var(--seed-space-inline); align-items:flex-end; margin-block-start:var(--seed-space-inline); padding-block-start:0; }
 .seed-item-display__action > .seed-action { flex:1 1 auto; min-width:0; }
 .seed-item-display__action > .seed-action > .seed-action__face { width:100%; }
 .seed-item-display[data-item-presentation="integrated"] { gap:0; padding:0; overflow:hidden; }

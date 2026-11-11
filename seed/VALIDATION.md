@@ -310,3 +310,13 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 - 교정된 **독립 HTML 시연**: Chromium 320/390/450/780/1280px × Light/Dark × 5개 기하/위계 검사 **50/50 통과**. 추가 320/360/390/430/768px × 100/200% 글자 기준 × Light/Dark **20/20** 가로 오버플로/테마 제어 검사 통과. HTML 내부 JS `node --check` 통과.
 - GitHub `new` 정본 CSS·Lab·정책·회귀 테스트를 원격에서 다시 읽고 요구 15개 **정적 대조 통과**. 기존 `web/seed-lab/lab.test.mjs`에 잘못된 높이 규칙이 재도입되지 않도록 단언 반영.
 - **미검증:** 원격 `new`의 원본 Node 테스트 전체 실행, Pages 최신 배포 반영, 실제 SEED Lab 렌더 픽셀 및 Android/실기기 200%·TalkBack 검증. 독립 시연의 통과를 원본 Lab의 시각 승인으로 승격하지 않는다. 원본 래스터/제품 가격·경제 정책 변경 없음.
+
+## 2026-11-12 · S06·C-ACTION·NAV-TOP·S09 시각 교정 (Superpowers)
+
+**요구/원인:** ① 상품 가로형 프레임 1:1의 아트 배경이 정보 영역보다 짧아 카드 하단에 흰 빈 공간 발생. 이는 이전 독립 `seed_item_showcase_corrected.html`의 `.item.row-item .media{aspect-ratio:1/1}` 등 별도 CSS에서 재현됐으며, `seed-standard.css`에는 가로 표현 계약 자체가 없었음. ② Neutral Outline 경계/반경/부가 면 토큰이 `:root[data-seed-lab]`에서만 정의되어 비-Lab 실제 Preview에서 `var()` 무효 또는 희미한 `--line` fallback 위험. ③ Root 650/Standard 620이 사용자 참고 헤더보다 미세하게 가벼움. ④ 기간 토글이 개별 Outline/Pill Action으로 반복되는 잘못된 시연 선택. ⑤ 이벤트 배너의 광원/입체 효과를 SVG로 흉내 내는 금지 기준 누락.
+
+**근본 수정:** `seed/styles/seed-standard.css`가 일반 페이지에 `--soft`, space/radius/control-stroke Light/Dark 토큰을 보장. Base family Pretendard Variable 지정, Root 타이틀 680/Standard 650 동기화, neutral-outline 단일 중립 stroke와 soften foreground, 기본 control radius=16 사용. 통합 가로형에서만 `data-item-layout="horizontal"`로 이미지 **배경 패널**을 정보 높이에 맞춰 채우며 이미지 객체 자체는 `contain`+8%로 보호. 세로 상품 1:1과 B 정보 순서/그룹 밀도 그대로 유지. P-HIERARCHY S09, C-SURFACE에 이벤트 배너 이펙트 SVG 모사 금지. C-SEGMENT는 기간 값 2~4개와 단일 Track/Thumb, C-ACTION 독립 Outline 두 개 사용 비권장. 기존 페이지 타입/공식 56 SVG/경제 데이터/Android 변경 없음. Preview 빈 상태 및 Lab 코드 보존.
+
+**검증 증거:** 변경 전 원본 소스 계약 검사 7항목 중 7항목 미충족(RED). GitHub `new` 소스 재조회 후 17/17 정적 조건 GREEN(전역 토큰·Light/Dark·CTA 대비 처리·media natural height·contain·NAV 수치·문서 금지). 추가된 `seed/styles/seed-quality.test.mjs`은 차후 원본 checkout Node 실행을 위한 회귀 게이트. 기존 독립 HTML의 실제 가로 카드 CSS 결함을 교정한 검수용 `seed_item_showcase_v3.html`에서 Chromium 320/360/390/430/780/1080px × Light/Dark **12/12** 가로 넘침/미디어 배경 높이/버튼 이탈 검사 통과(네트워크 이미지 차단 상태). 이는 **SEED 공통 CSS를 실제 소비한 페이지의 시각 인증이 아니라 독립 아티팩트 회귀 재현**이다.
+
+**미검증:** 저장소 전체 Node `--test`, 전역 SEED CSS를 사용한 실제 통합 Preview 렌더(Preview는 의도적으로 비어 있음), 최신 GitHub Pages, 네이티브 및 TalkBack/OS 200% 확대, CDN 네트워크에서 Pretendard 실사용. 저장소 내부 font asset이 없으므로 CDN CSS 경로와 font-family를 명시해도 로딩 실패·오프라인에서 Pretendard를 100% 보장할 수 없다. 최초 D-015 650/620은 과거 합의 이력, 최신 사용자의 미세 보정이 680/650이다.

@@ -32,6 +32,10 @@ if(shell){
       '<button type="button" class="seed-icon-action" id="shell-search" aria-label="검색 시연">'+icon("search")+'</button>'+
       '<button type="button" class="seed-icon-action" id="shell-bell" aria-label="알림 시연">'+icon("bell")+'</button>'+
       '<button type="button" class="seed-icon-action" id="shell-more" aria-label="메뉴 시연">'+icon("menu")+'</button>'+
+      '<span class="seed-surface" data-surface="subtle" id="shell-credit" hidden>'+
+        '<span class="seed-credit" data-size="small" data-state="available" role="img" aria-label="예시 보유 캐시 3,240">'+
+          '<img class="seed-credit__coin" src="../../assets/art/rewards/cash-coin-single.png" alt="">'+
+          '<span class="seed-credit__value">3,240</span></span></span>'+
     '</div>';
   const kicker=content.querySelector(".lab-overline");if(kicker)kicker.id="page-shell-header-meta";
   const common=content.querySelector(".seed-page-shell__section:last-child");
@@ -76,6 +80,10 @@ if(shell){
   const feedback=document.createElement("p");feedback.id="shell-nav-feedback";
   feedback.className="lab-rationale";feedback.setAttribute("role","status");
   contracts.after(feedback);
+  const titleAlignButtons=$$("[data-title-align-choice]");
+  const trailingChoiceButtons=$$("[data-header-trailing-choice]");
+  const headerTrailing=header.querySelector(".seed-top-nav__trailing");
+  let titleAlign="center",trailingChoice="action";
   let activeNav="home",currentRoute="global",currentShell="root";
   const modes={
     root:{title:"홈",meta:"전역 목적지",heading:"오늘의 활동",desc:"Root 헤더와 전역 네비게이션을 같은 Shell 안에서 유지합니다.",note:"Root: 좌측 페이지명 + 우측 Outline. 콘텐츠 배치는 화면 목적이 결정."},
@@ -87,6 +95,20 @@ if(shell){
   const defaultPageType={root:"global",detail:"global-inner",utility:"non-global",immersive:"non-global",overlay:"global"};
   function setPressed(items,key,field){
     for(const item of items)item.setAttribute("aria-pressed",String(item.dataset[field]===key));
+  }
+  function syncHeaderChoices(){
+    // Opt-in only: Root and Center retain their original CSS/geometry.
+    header.dataset.titleAlign=titleAlign;
+    const standard=header.dataset.navRole==="standard";
+    if(standard&&trailingChoice==="credit")headerTrailing.dataset.slotKind="info";
+    else headerTrailing.dataset.slotKind="action";
+    $("#shell-credit").hidden=!(standard&&trailingChoice==="credit");
+    $("#shell-more").hidden=currentShell==="immersive"||(standard&&trailingChoice!=="action");
+    setPressed(titleAlignButtons,titleAlign,"titleAlignChoice");
+    setPressed(trailingChoiceButtons,trailingChoice,"headerTrailingChoice");
+    if(standard)$("#shell-head-contract").textContent=
+      "Standard · Back/Close + "+(titleAlign==="start"?"좌측 제목":"중앙 제목")+
+      (trailingChoice==="credit"?" + 보유 캐시":trailingChoice==="empty"?" + 우측 비움":" + 보조 아이콘");
   }
   function changeType(type){
     if(getPageType(type).overlay){
@@ -136,6 +158,7 @@ if(shell){
     }[currentRoute];
     setPressed(shellButtons,kind,"shellChoice");
     setPressed(typeButtons,currentRoute,"pageTypeChoice");
+    syncHeaderChoices();
   }
   function setDestination(key){
     const item=selectWebNav(nav,key);
@@ -143,6 +166,14 @@ if(shell){
     feedback.textContent="웹 전역 탐색 기준: "+item.label+" 선택. 실제 앱 라우트/딥링크 구성은 O-003 별도.";
     if(currentRoute==="global")render("root","global");
   }
+  for(const button of titleAlignButtons)button.addEventListener("click",()=>{
+    titleAlign=button.dataset.titleAlignChoice;
+    syncHeaderChoices();
+  });
+  for(const button of trailingChoiceButtons)button.addEventListener("click",()=>{
+    trailingChoice=button.dataset.headerTrailingChoice;
+    syncHeaderChoices();
+  });
   for(const b of shellButtons)b.addEventListener("click",()=>render(b.dataset.shellChoice));
   for(const b of typeButtons)b.addEventListener("click",()=>changeType(b.dataset.pageTypeChoice));
   for(const b of nav.querySelectorAll(".seed-bottom-nav__link"))b.addEventListener("click",()=>setDestination(b.dataset.navKey));

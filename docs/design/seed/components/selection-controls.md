@@ -53,6 +53,12 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 
 **U10 · Filter Chip 밀도와 결과 연결 (대상 정정):** 이전 'Pill Navigation'은 사용자 설명을 잘못 해석한 명칭이었다. 실제 대상은 기존 **C-SELECTION Filter Chip**이다. 텍스트 14px(기본 16px root 기준)는 유지하고, 좌우 여백은 `14px → 10px`, 상하 내부 padding은 `8px → 6px`, 아이콘–글자 간격은 `8px → 6px`로 줄인다. **실제 버튼 hit target은 최소 48px 그대로**, 보이는 pill face만 위아래 4px씩 안으로 둬 기준 40px 높이로 보이게 한다. 새로운 Size/Token/컴포넌트 없이 기존 `.seed-filter-chip`에만 적용하며, Segmented·Tabs·CTA·Bottom Navigation을 변경하지 않는다. 확대·줄바꿈 때 face와 타깃은 콘텐츠를 따라 늘어나야 한다.
 
+**2026-11-11 · Filter Chip 시각 권장형:** 페이지 내부 필터의 기본 표현은 **개별 채움형(Filled) Pill**이다. 비선택은 중립색으로 면을 채우고 낮은 강조의 글자를, 선택은 반전된 고대비 중립색 면과 글자를 사용한다. 다크에서는 선택 칩이 밝은 면/어두운 글자, 비선택 칩이 어두운 중립 면/밝은 보조 글자가 된다. 라이트에서는 선택 칩이 어두운 면/밝은 글자로 반전된다. 선택을 알리는 테두리와 브랜드 빨강 배경은 기본값이 아니다.
+
+- **비권장 기본형:** '전체 / 모자 / 오디오'의 각 칩을 회색 Outline으로 둘러싸고 선택 칩만 브랜드색 테두리로 강조하는 형태. 별도 맥락이 있는 예외가 아닌 한 상점·보관함 등 일반 필터에서 재사용하지 않는다.
+- **기존 계약 보존:** .seed-filter-chip과 aria-pressed, 결과 연동, 콘텐츠에 따른 줄바꿈, 14px 글자, 40px 보이는 face/48px 이상 hit target을 유지한다. 새 컴포넌트·Variant·토큰을 만들지 않는다. **이 표현 권장은 C-SELECTION의 Filter Chip에만 적용**하며 C-TABS의 목적지/패널 전환, C-SEGMENT의 트랙/Thumb, 다른 액션 버튼을 변경하지 않는다.
+- **선택 상태와 포커스는 별개:** 칩의 채움/텍스트 대비는 선택 상태를, 기존 focus-visible 외곽선은 키보드 포커스를 표현한다. 테두리 제거가 포커스 표시 제거를 뜻하지 않는다.
+
 **필터 바로 아래의 표현:** 같은 결과 집합을 거르는 필터라면 **필터 → 결과 콘텐츠**가 기본 흐름이다. 필터 바로 아래에 다시 `영문 overline → 큰 제목 → 부제` 같은 강조 타이포를 반복해 *같은 결과*를 별도 도입 섹션처럼 포장하는 건 비권장이다. 결과 건수·짧은 정렬·보조 안내가 필요하면 작게 표시할 수 있다. 필터가 적용되지 않는 **실제로 독립된 목적의 섹션**이라면 별도 제목을 가질 수 있으나, 필터 결과와 섞이지 않도록 정보 경계를 명확히 한다.
 
 실제 선택·결과 변경 시연은 `web/seed-lab/index.html` / `families.js`에서 확인한다. 이번 U10은 **Filter Chip 한정 수정**이며 이전에 대상이 불명확해 보류한 범위를 사용자 정정에 따라 해소한다.
@@ -68,7 +74,7 @@ Checkbox mixed는 일부 선택에만 사용한다. Switch는 저장 버튼이 �
 상위 Tabs → 관련 필터 → 콘텐츠를 구분한다. **다른 목적지/독립 화면으로 전환**하면 Tabs 또는 실제 링크 등 기존 Navigation을 사용하고, `보관함`이 단순 소유 상태 조건이면 Filter Chip, 별도 소유품 관리 화면이면 Navigation으로 구별한다. 보기 방식·기간 전환은 C-SEGMENT 등 해당 의미를 우선한다. 필터는 실제 결과와 선택 상태를 연결하고 결과 바로 아래 중복 타이포를 만들지 않는다. 정렬을 선택 컨트롤 Track에 끼워 넣지 않는다. 여러 Segmented를 겹쳐 어느 영역을 바꾸는지 모호하게 만들지 않는다. Tabs와 Segmented를 모양이 비슷하다는 이유로 교환하지 않는다.
 
 ## Accessibility
-짧은 라벨, 현재 값, disabled, Checkbox group의 이름을 읽을 수 있어야 한다. 최소 target·포커스 ring 적용. 조작 표시 경계는 stroke.control을 사용한다. 상태 변화 후 포커스 유실·불필요한 스크롤 점프를 막는다.
+짧은 라벨, 현재 값, disabled, Checkbox group의 이름을 읽을 수 있어야 한다. 최소 target·포커스 ring 적용. Outline이 필요한 다른 조작의 경계는 stroke.control을 사용하고, 채움형 Filter Chip에는 기존 focus-visible 윤곽을 유지한다. 상태 변화 후 포커스 유실·불필요한 스크롤 점프를 막는다.
 
 ## Evidence & Confidence / Impact
 Tabs·기간 선택은 REF-001/002/004 관찰 high, 동일 화면의 선택 요소 밀집 문제는 REF-005 교정. Checkbox/Radio/Switch 및 keyboard·pending 상태는 이미지 미노출의 proposed 보완이다. 구체적 필터·탭 명칭·개수는 화면 데이터이며 시드가 확정하지 않는다.

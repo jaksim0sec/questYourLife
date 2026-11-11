@@ -32,6 +32,12 @@ S2-04 반례 09. Period switch는 개별 버튼의 high/low 강조 차이가 아
 
 > 숫자 및 신규 상태는 사용자 미승인 후보. 제품 데이터·탭 목적지·도메인 기능을 이 문서에서 발명하지 않는다.
 
+## 2026-11-12 · 기간 선택 오용 방지
+
+- `이번 주 / 지난주`는 별도의 Action Button 2개가 아니라 **C-SEGMENT의 단일 기간 값 선택**이다. 2개의 독립 Outline 버튼, 빨간 border만 두른 활성 버튼, 100% 너비로 늘어난 두 개의 알약 버튼을 기본형으로 노출하는 것은 **비권장**.
+- 이 시안이 반복 출현한 이유는 명시적 기간 선택을 범용 `C-ACTION Neutral/Brand Outline` 버튼 조합으로 취급한 **시연 제작 판단의 오류**다. 현행 SEED는 Track 1개 + 선택 Thumb 1개 + Label 2개 구조를 이미 정의한다. 기간 선택 필요 없는 페이지에는 이 컴포넌트 자체를 삽입하지 않는다. 페이지나 독립 범주를 이동시키려는 경우에는 C-TABS/Navigation을 선택한다.
+- 한 페이지에서 가독성과 결과 전환 상태를 검증하지 않은 시각용 버튼을 관성적으로 복붙하지 않는다.
+
 ## v0.15 단일 알약 세그먼트 · 확정 표현
 
 **하나의 트랙 → 하나의 선택 알약(thumb) → 2–4개 Label.** 트랙을 다시 큰 컨테이너/카드로 감싸지 않으며 버튼별 추가 테두리/칩을 겹치지 않는다. 선택 컨트롤의 폭은 기본 `hug-content`, 같은 비중의 콘텐츠 보기 전환에서만 `fill`. 시연 visible height ≈43px; native touch는 48dp의 비중첩 target 보장. selected만 thumb/foreground 차이, unselected는 중립; 선택 상태를 `aria-pressed` 또는 radio semantics 한 체계로만 노출.

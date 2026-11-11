@@ -83,7 +83,15 @@ test('S06 item B uses one parent with two actual presentations and responsive sh
   assert.match(surface,/바깥 카드·border·그림자 없음/);
   assert.match(frame,/프레임 border는 기본 없음/);
   assert.match(css,/\.seed-item-display\s*\{[^}]*flex-direction:column/);
-  assert.match(css,/\.seed-item-display__action\s*\{[^}]*margin-block-start:auto/);
+  const itemRoot=css.match(/\\.seed-item-display\\s*\\{([^}]*)\\}/)?.[1]||'';
+  const itemInfo=css.match(/\\.seed-item-display__info\\s*\\{([^}]*)\\}/)?.[1]||'';
+  const itemAction=css.match(/\\.seed-item-display__action\\s*\\{([^}]*)\\}/)?.[1]||'';
+  assert.doesNotMatch(itemRoot,/\\bheight:100%/,'item cards should default to content height');
+  assert.doesNotMatch(itemInfo,/flex:1\\s+1\\s+auto/,'information must not absorb unrelated column height');
+  assert.doesNotMatch(itemAction,/margin-block-start:auto/,'buttons must remain adjacent to prices');
+  assert.match(itemAction,/margin-block-start:var\\(--seed-space-inline\\)/);
+  assert.match(labCss,/\\.lab-item-presentation-items\\s*\\{[^}]*align-items:start/);
+  assert.match(labCss,/\\.lab-item-presentation-grid\\s*\\{[^}]*align-items:start/);
   assert.match(css,/\.seed-item-display\[data-item-presentation="integrated"\]\s*\{[^}]*padding:0/);
   assert.match(css,/\.seed-item-display\[data-item-presentation="open"\]/);
   assert.match(css,/\.seed-media\[data-media-kind\][^{]*\{[^}]*aspect-ratio:var\(--media-ratio,1 \/ 1\)/);

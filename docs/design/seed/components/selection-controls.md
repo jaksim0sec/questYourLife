@@ -63,7 +63,9 @@ Unselected / Selected에 Enabled·Pressed·Focus·Disabled가 조합될 수 있�
 Checkbox mixed는 일부 선택에만 사용한다. Switch는 저장 버튼이 별도 필요한 임시 선택에 쓰지 않는다. 데이터 조회 실패가 selected를 임의로 초기화하지 않도록 실패 피드백을 둔다.
 
 ## Guidelines
-상위 Tabs → 관련 필터 → 콘텐츠를 구분한다. 정렬을 선택 컨트롤 Track에 끼워 넣지 않는다. 여러 Segmented를 겹쳐 어느 영역을 바꾸는지 모호하게 만들지 않는다. Tabs와 Segmented를 모양이 비슷하다는 이유로 교환하지 않는다.
+**페이지 내부에서 같은 콘텐츠 집합의 조건(종류·속성·상태·추천 등)을 바꾸는 필터링 UI는 Filter Chip을 우선 권장**한다. 상점의 `전체 / 모자 / 소품 / 소모품` 같은 카테고리 필터가 대표적인 용례다. 이는 **기본 선택 우선순위**이지 모든 페이지에 Chip을 강제하거나, 페이지 전환용 Tabs와 조회 방식 변경용 Segmented를 폐기하는 규칙이 아니다. 조건이 하나뿐이거나 필터가 필요 없는 화면에는 불필요한 칩을 만들지 않는다.
+
+상위 Tabs → 관련 필터 → 콘텐츠를 구분한다. **다른 목적지/독립 화면으로 전환**하면 Tabs 또는 실제 링크 등 기존 Navigation을 사용하고, `보관함`이 단순 소유 상태 조건이면 Filter Chip, 별도 소유품 관리 화면이면 Navigation으로 구별한다. 보기 방식·기간 전환은 C-SEGMENT 등 해당 의미를 우선한다. 필터는 실제 결과와 선택 상태를 연결하고 결과 바로 아래 중복 타이포를 만들지 않는다. 정렬을 선택 컨트롤 Track에 끼워 넣지 않는다. 여러 Segmented를 겹쳐 어느 영역을 바꾸는지 모호하게 만들지 않는다. Tabs와 Segmented를 모양이 비슷하다는 이유로 교환하지 않는다.
 
 ## Accessibility
 짧은 라벨, 현재 값, disabled, Checkbox group의 이름을 읽을 수 있어야 한다. 최소 target·포커스 ring 적용. 조작 표시 경계는 stroke.control을 사용한다. 상태 변화 후 포커스 유실·불필요한 스크롤 점프를 막는다.

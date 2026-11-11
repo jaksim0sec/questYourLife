@@ -34,6 +34,25 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 ## Tokens / Size
 공통 type.body/support, radius.control/pill, 공간·터치는 Foundation 정본 사용. Tabs는 배경 상자 대신 선택 밑줄을 기본 제안한다. Segmented는 bg.muted Track과 bg.surface Thumb, fg.primary 라벨을 사용한다. 좌우 padding은 segment.paddingX이며 불필요하게 늘리지 않는다. 내용이 짧으면 hug, fill은 실제 동일 폭 선택 구조일 때만 쓴다. 긴 라벨은 눌러 넣거나 작은 글자로 바꾸지 않는다. Track 높이와 target은 F-GEOMETRY를 따른다.
 
+## Filter Chip · 현재 웹 공통 구현/사용 경계
+
+**기존 `C-SELECTION`의 Filter Chip 역할만 구현한다.** 새로운 Pill Navigation, Chip 가족이나 Page Type을 추가하지 않는다. 공통 CSS 소유자는 `web/preview/seed-standard.css`의 `.seed-filter-chip`이다. 적용 조건을 바꾸는 요소로서 현재 선택은 `aria-pressed`, 비활성은 `disabled`로 표시하며, 실제 결과 모음과 동기화한다. 키보드 접근과 48px 이상의 비중첩 클릭 영역을 유지한다.
+
+- `전체 / 모자 / 오디오`처럼 **동일한 아이템 모음에 대한 조건**은 하나의 `role="group"` 안에 Filter Chip으로 표시한다. 단일 분류를 택하는 경우 한 번에 하나의 `aria-pressed=true`를 갖는다. 복수 선택을 허용하는 화면은 결과 로직·접근성·명확한 해제를 별도로 구현한다.
+- `보상 모아보기`처럼 **다른 목적지로 이동하는 행동**은 **같은 필터 집합에 끼우지 않는다.** 실재하는 링크 목적지에 대한 `C-ACTION text/ghost` 또는 맥락상 Navigation을 사용한다. 현재 Filter를 바꿀 때 연결된 결과가 실제로 달라지지 않는 가짜 selected 시연은 구현 완료가 아니다.
+- `C-STATUS`의 Status Badge는 읽기 전용 상태 표시이므로 필터 대용으로 쓰지 않는다. `C-SEGMENT`는 같은 데이터의 보기 방식/기간을 전환하므로 카테고리 필터와 바꿔 쓰지 않는다. UI가 알약형이라는 사실만으로 `C-SEGMENT`를 채택하지 않는다.
+- 새로운 화면에서는 `[C-SELECTION Filter Chip] → [C-LIST/C-IMAGE 결과]`의 영향 범위를 명시한다. UI 소유자와 실제 마크업의 셀렉터가 다르면 기존 정본을 우선 재사용하고 별도 임의 디자인을 만들지 않는다.
+
+```html
+<div role="group" aria-label="아이템 종류 필터">
+  <button class="seed-filter-chip" type="button" aria-pressed="true">전체</button>
+  <button class="seed-filter-chip" type="button" aria-pressed="false">모자</button>
+  <button class="seed-filter-chip" type="button" aria-pressed="false">오디오</button>
+</div>
+```
+
+실제 선택·결과 변경 시연은 `web/seed-lab/index.html` / `families.js`에서 확인한다. 원래 보류한 **U10 Pill Navigation의 글씨/패딩 시각값은 이 변경으로 확정하지 않는다.**
+
 ## States / Behavior
 Unselected / Selected에 Enabled·Pressed·Focus·Disabled가 조합될 수 있다. 선택은 형태+상태 의미를 제공하고 색만 바꾸지 않는다. Disabled-selected도 선택 정보를 유지한다. Tabs는 한 영역의 단일 선택과 연결 패널을 노출한다. Focus 이동과 값 확정을 플랫폼 관례대로 분리한다. 필터 적용이 지연되면 pending을 표시하며 성공 전 활성 결과처럼 단정하지 않는다.
 

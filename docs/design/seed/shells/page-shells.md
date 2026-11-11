@@ -115,6 +115,29 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 
 **웹 계약의 공통 진입점:** `web/preview/seed-page-contract.mjs`에서 네 가지 상태를 정의하고 `applyPageType`이 표준 `.seed-page-shell[data-page-type]`을 갱신한다. `bottom-sheet`는 부모 타입으로 직접 대입할 수 없으며 기존 C-SHEET를 연다. `web/preview/seed-standard.css`가 nav 가시성과 공통 외형을 소유한다. Lab은 이 코드를 그대로 소비한다.
 
+## S07 · NonGlobal Standard 헤더의 우측 맥락 슬롯 (기존 구조 보완)
+
+**범위는 Non-Global의 기존 Standard Top Navigation 안쪽 trailing 슬롯**이다. 별도의 Navigation Set, Page Type, Head Profile 또는 제3의 헤더 종류를 만들지 않는다. `Global Inner`와 같은 Standard 외형을 사용하되 **Non-Global의 전역 Bottom Navigation은 숨김**을 유지한다. 왼쪽 Back/Close의 실제 복귀/닫기 의미, 중앙 페이지 제목, 상단 safe inset, 고정 CTA와 하단 safe inset 계산은 기존 K10/D-015 소유권 그대로다.
+
+```text
+동작형: [Back/Close]       [페이지 제목]        [더보기 SVG 버튼]
+정보형: [Back/Close]           [상점]            [보유 코인 · 1,240]
+                                                   (읽기 전용)
+```
+
+| 우측 슬롯 목적 | 기존 부품 사용 | 동작·의미의 구분 |
+|---|---|---|
+| **보조 동작** | 기존 Outline SVG + C-ICON의 48px 이상 실제 버튼 타깃, 접근 가능한 행동명 | 더보기·공유 등 실제 행동만 버튼. 장식/가짜 클릭 금지 |
+| **짧은 맥락 정보** | 필요한 C-TEXT + 실제 재화라면 [C-CREDIT](../components/credit-value.md)의 코인 이미지와 수치. 예: 상점의 **보유 캐시 1,240**(화면 구성 예시, 실제 잔액 아님) | `span` 등 **비조작 요소**. `button`/`a`/pointer cursor/hover·pressed/chevron 없음. 정보이므로 48px 버튼 target 규칙을 억지로 부여하지 않음 |
+| **없음** | trailing 슬롯 빈 상태 가능 | 임의 보조 정보·더보기 버튼을 채워 넣지 않음 |
+
+- **이름과 데이터:** 표시 값은 해당 페이지와 직접 관련된 **짧은 현재 맥락**일 때만 고른다. 가격·보유·주간 획득·확정 수령을 같은 숫자로 뭉개지 않는다. 미확인 잔액을 `0`으로 치환하거나 표시만으로 구매 가능·지급 완료를 주장하지 않는다. 실제 코인은 C-CREDIT의 래스터 사용 계약을 따른다. 이 문서의 `🪙` 손그림은 **구조 기호일 뿐 구현용 이모지/신규 아이콘 명세가 아니다**.
+- **길이·제목 충돌 우선순위:** 중앙 제목은 Header 의미의 주체다. trailing 값은 페이지/계정에 따라 자릿수가 늘어날 수 있으므로 고정 자릿수·강제 말줄임으로 처리하지 않는다. 기존 좌우 균형 그리드에서 320/360/390/430 CSS px와 **200% 글자 확대** 조건에 제목·Back/Close·trailing이 모두 겹침 없이 들어갈 때만 헤더에 표시한다. 공간이 부족하거나 값이 장문이면 **본문의 해당 정보 영역으로 이동**해 전체 값과 단위·라벨을 보존하고, Header trailing은 비우거나 실제 필요한 기존 단일 액션만 남긴다. **Back 타깃·D-015 폰트·glyph를 줄이거나 중앙 제목을 밀어내는 우회 금지**.
+- **배치 검수의 실제 제약:** 현재 공통 CSS의 Standard grid는 `minmax(3rem,1fr) minmax(0,auto) minmax(3rem,1fr)`과 `seed-top-nav__trailing`을 사용한다. 이는 *기존 슬롯이 이미 있다*는 증거이지 긴 화폐 값의 자동 충돌 해소를 보장하지 않는다. **제목·우측 실제 바운딩 박스 간 교집합 0, 화면 가로 overflow 0, 48px 동작 타깃, 정확한 중앙 정렬, focus/Back 기능**을 검증한 후에만 '시각적으로 안전'이라고 기록한다. 200%에서 실패하면 실제 소비자 레이아웃에 근거한 최소 보정이 따로 필요하며 헤더 승인 수치 자체는 변경하지 않는다.
+- **U03 Middle과 구분:** Non-Global DM 채팅방 헤더에서 **상대 아바타·이름·선택적 상태**를 보일 수 있다는 것은 [P-HIERARCHY의 Middle 정보 역할](../patterns/content-hierarchy.md)이다. 이는 **제목/신원 표시 영역의 콘텐츠**를 판단하는 일이며 trailing에 Cash/더보기 중 무엇을 넣는가와 **독립**이다. '채팅방이면 프로필 카드로 헤더 전체 교체'나 'Middle을 우측 정보 슬롯에 욱여넣기'로 해석하지 않는다. 실제 중앙 정렬·긴 상대 이름은 별도 실화면 검증 전까지 시연 승인되지 않았다.
+- **동작과 접근성:** 정보는 읽기 가능한 라벨+값을 제공하고 장식 코인 alt는 중복 읽기를 피한다. 실제 Action은 48px hit area와 구체적인 accessible name, 키보드 Focus/Enter·Space를 제공한다. 뒤로가기는 이전 맥락 또는 직접 진입 시 정의된 부모로 돌아가야 한다. 기존 Header 액션 수 기본 2개, 목적 명확 시 최대 3개와 우선순위 규칙(K10)을 그대로 따른다. Action 개수 제한을 정보 배지 여러 개 나열할 면허로 사용하지 않는다.
+- **선행/후행 검증:** 현재 `seed-page-contract.mjs`의 `non-global={header:"standard",bottomNav:false}` 및 `global-inner={header:"standard",bottomNav:true}`는 **변경하지 않는다**. 우측 정적 값은 기존 슬롯 조합의 제안일 뿐 앱에 실제 보유량 연동·새 코드 구현이 완료된 것이 아니다. `web/seed-lab/page-type.test.mjs`의 네 타입·네비 가시성 회귀 및 실제 Chromium의 제목/값/타깃/가로 넘침을 분리해 검증한다. U00에서 기록한 **레거시 `clan.css`의 Global Inner 하단바 숨김 충돌 후보**는 이번 NonGlobal 슬롯 설명만으로 해결되지 않으며 U11 통합 검수에 남긴다.
+
 ## 2026-11-10 · D-015 웹 헤더·네비 시각 동기화
 
 위 K10에서 `Glyph24`라고 쓴 값은 원본 SVG viewBox/당시 기본 출력 기준이다. 사용자가 승인한 **현재 웹 헤더 렌더 크기**는 `1.59rem`, target `3rem`, 최소 높이 `3.5rem`, gutter `360 미만 16px / 이상 20px`이다. 실제 제목/글꼴 값과 surface 연결은 [NAV-TOP](../../TOP_NAVIGATION.md)과 `v015-tokens.json`이 소유한다. 과거 `24`나 `60` 후보를 별도 새 웹 CSS 값으로 재적용하지 않는다.

@@ -278,3 +278,16 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 - **Android/OS:** Compose·TalkBack·IME·Back·네이티브 200%·상자/경제/실제 구매·클랜 기능은 범위 밖.
 
 **인수 결정:** **S01~S09 문서 소유권 및 소실 방지 장부는 인수 가능**, 실제 UI 컴포지션/동작 통합은 **G01·G02 회귀 실패와 G03 등 미검증으로 통합 승인 보류**. U10은 사용자가 보류한 상태 그대로다. `status: proposed`를 유지하고, 승인/수정은 검증된 소유자에게 돌아가야 한다. 이번 U11에서 신규 Page Type·Layout Engine·미승인 SVG/아트·앱 데이터/API·Android 변경은 없다.
+
+## 2026-11-11 · U10 후속 정정 · Filter Chip 및 필터-결과 위계
+
+**최신 사용자 확정:** U11 당시의 `U10 Pill Navigation 대상 불명확·보류`는 *당시 기록*이다. 이후 사용자가 실제 대상은 **C-SELECTION Filter Chip의 과한 Padding**이며, **필터 바로 아래에 중복 타이포(영문 라벨+대형 제목 등)가 다시 뜨는 구성을 비권장**한다고 명시했다. 기존 C-SEGMENT·Tabs·Bottom Navigation은 수정 대상이 아니다. U11 표/장부의 과거 상태를 현재 지시로 해석하지 않는다.
+
+| ID | 실제 적용 | 검증 상태 |
+|---|---|---|
+| **U10-1** | `web/preview/seed-standard.css`의 기존 `.seed-filter-chip`: gap 8→6px, 가로 패딩 14→10px, 세로 패딩 8→6px. `min-height:3rem`의 48px 조작 타깃 유지. 보이는 경계/배경은 `::before`가 위아래 4px씩 인셋하여 기준 40px 표시. 14px 본문 글꼴·상태·선택 색 보존 | **공통 CSS 반영**, 사용자 실화면 시각 승인 전 |
+| **U10-2** | `components/selection-controls.md`에 C-SELECTION의 크기·기존 역할·실제 결과 변경과 필터 → 결과 콘텐츠 우선 관계 기록. `patterns/page-composition.md`에는 같은 목록 대상의 필터 직후 overline/Hero/부제 반복 비권장, 실제 독립 섹션의 제목 예외 명시 | **규격/제작 기준 반영**, 새 컴포넌트·Page Type·토큰 없음 |
+| **U10-3** | 기존 `web/seed-lab/families.test.mjs`에 밀도·48px target·타이포 중복 제한 회귀 검사 추가 | **테스트 코드 반영**. 원본 `node --test` 전수 실행 및 실제 Lab 전체 렌더는 별도 |
+| **U10-4** | 별도 Chromium fixture에서 320/360/390/430/768폭 × 100/200% × Light/Dark의 **20/20** 조건에서 48px 이상 타깃, face inset, 선택 상태 변경, 오버플로 확인 | **격리 fixture 검증**. 원본 페이지의 픽셀/네이티브 승인 근거가 아님 |
+
+**최신 상태:** 대상 식별·규격 및 공통 CSS 적용은 진행됨. 이전의 `U10 보류`를 현재 미착수로 간주하지 않는다. 다만 기존 상점 스크린샷/실제 앱을 수정한 것은 아니며, 정확한 최종 시각 간격은 실제 페이지에서 검수해야 한다. 과거 G01 레거시 Preview 판단은 이번 U10 범위에서 손대지 않았다.

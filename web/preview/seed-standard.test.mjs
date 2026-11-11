@@ -88,3 +88,17 @@ test('existing List, Field and Icon contract slots are shared, not page override
     assert.ok(shared.includes('.'+part),part);
   assert.doesNotMatch(local,/\.seed-list__item\s*\{/);
 });
+
+test('general icon default follows root font and legacy menu inherits it',()=>{
+  // S02a: original F-GEOMETRY 20 at 16px root, but scale with existing html root.
+  assert.match(shared,/\.seed-icon\s*\{\s*width:var\(--seed-icon-size,1\.25rem\);\s*height:var\(--seed-icon-size,1\.25rem\);/);
+  assert.doesNotMatch(local,/\.menu-theme-icon\s*\{[^}]*\b(?:width|height)\s*:/);
+  assert.match(read('app.js'),/seed-icon menu-theme-icon/);
+  assert.match(shared,/:root\s*\{\s*font-size:\s*100%;/);
+  assert.match(shared,/@media \(max-width: 479px\)\s*\{\s*:root\s*\{\s*font-size:\s*clamp\(/);
+  // D-015 and P-BTN-ICON own explicit visual/touch sizing. No broad px migration.
+  assert.match(shared,/\.seed-top-nav \.seed-icon-action \.seed-icon\s*\{\s*--seed-icon-size:var\(--seed-top-glyph\);/);
+  assert.match(shared,/\.seed-action__icon \.seed-icon\s*\{\s*width:100%;\s*height:100%;/);
+  assert.match(shared,/--seed-top-target:3rem;/);
+  assert.match(shared,/--seed-top-glyph:1\.59rem;/);
+});

@@ -73,3 +73,29 @@ test('page controls have a single shared owner and sheet footer still initialize
   assert.match(js,/footerButtons=\$\$\("button\[data-footer-choice\]"\)/);
   assert.match(js,/\$\("#sheet-open"\)\.addEventListener\("click"/);
 });
+
+test('S06 item B uses one parent with two actual presentations and responsive shared geometry',()=>{
+  const contract=text('../../docs/design/seed/patterns/content-hierarchy.md');
+  const surface=text('../../docs/design/seed/components/surface-media.md');
+  const frame=text('../../docs/design/seed/components/image-frame.md');
+  assert.match(contract,/버튼이 들어가면 통합 카드형 외부 컨테이너 사용을 권장/);
+  assert.match(contract,/1:1 비율과 contain/);
+  assert.match(surface,/바깥 카드·border·그림자 없음/);
+  assert.match(frame,/프레임 border는 기본 없음/);
+  assert.match(css,/\.seed-item-display\s*\{[^}]*flex-direction:column/);
+  assert.match(css,/\.seed-item-display__action\s*\{[^}]*margin-block-start:auto/);
+  assert.match(css,/\.seed-item-display\[data-item-presentation="integrated"\]\s*\{[^}]*padding:0/);
+  assert.match(css,/\.seed-item-display\[data-item-presentation="open"\]/);
+  assert.match(css,/\.seed-media\[data-media-kind\][^{]*\{[^}]*aspect-ratio:var\(--media-ratio,1 \/ 1\)/);
+  assert.match(css,/\.seed-media\[data-media-fit="contain"\][^{]*\{[^}]*padding:8%/);
+  assert.match(html,/data-item-presentation="integrated"/);
+  assert.match(html,/data-item-presentation="open"/);
+  assert.equal((html.match(/data-item-preview=/g)||[]).length,2);
+  assert.match(js,/\$\$\("\[data-item-preview\]"\)/);
+  assert.doesNotMatch(labCss,/\.seed-item-display__info\s*\{/);
+  assert.match(labCss,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+  for(const image of ['cosmetic_cream_headphones.png','cosmetic_blue_cap.png','cosmetic_charcoal_cap.png','cosmetic_black_headphones.png']){
+    assert.ok(html.includes(image),image);
+    assert.ok(existsSync(new URL('../../assets/art/cosmetics/'+image,import.meta.url)),image);
+  }
+});

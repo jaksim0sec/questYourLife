@@ -62,7 +62,7 @@ Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 �
 |---|---|---|
 | 글꼴 | Pretendard Variable 우선, 한글 시스템 폴백 | 동일 |
 | 크기 | `1.30rem` | `1.08rem` |
-| 굵기 | `650` | `620` |
+| 굵기 | `680` | `650` |
 | 자간 | `-0.025em` | `-0.018em` |
 | 제목 배치 | 좌측 정렬 | 좌측 Back/Close + 중앙 제목 |
 | 아이콘·터치 | `1.59rem` Glyph, `3rem` target | 동일 |
@@ -78,7 +78,7 @@ Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 �
 
 ## S07 · Standard 우측 슬롯의 정보/동작 구별 (Non-Global 사례)
 
-**D-015 승인 시각 규격 불변:** Root `1.30rem/650/-0.025em`, Standard `1.08rem/620/-0.018em`, Glyph `1.59rem`, 동작 target `3rem`(48px 기준), 헤더 최소 높이 `3.5rem`, gutter `<360px 16px / 그 이상 20px`. Back/Close와 Standard 중앙 타이틀 및 기존 SVG 경로·색·광학 중심·하단 Navigation은 바꾸지 않는다.
+**D-015의 기하/네비 승인 범위 유지, 2026-11-12 타이포 미세 보정 반영:** Root `1.30rem/680/-0.025em`, Standard `1.08rem/650/-0.018em`, Glyph `1.59rem`, 동작 target `3rem`(48px 기준), 헤더 최소 높이 `3.5rem`, gutter `<360px 16px / 그 이상 20px`. Back/Close와 Standard 중앙 타이틀 및 기존 SVG 경로·색·광학 중심·하단 Navigation은 바꾸지 않는다.
 
 기존 `Standard = Back 또는 Close + 중앙 제목 + 맥락별 우측 슬롯`을 유지하되 **Non-Global에서도 우측 슬롯의 내용이 반드시 버튼일 필요는 없다.** 실제 목적에 따라 다음을 선택한다.
 
@@ -123,3 +123,9 @@ Start  : [<] 페이지 이름                         [ ]  (빈 우측도 허용
 ### 알림 Bell 하단 연결 보정 (2026-11-10)
 
 웹 Root/Standard 알림 버튼의 도형은 `assets/icons/preview/bell-connected.svg`를 사용한다. 하단 추의 양 끝을 종 본체 밑선(`y=17.5`)에 이어 열린 모양으로 보이지 않게 교정한 별도 Outline SVG다. 기존 공식 `assets/icons/soft/v0.14/bell.svg`는 D-012의 56종 정본이므로 변경하지 않는다. 두 SVG 모두 `24×24` viewBox, `stroke-width=1.8`, `currentColor`이며 헤더 타깃·크기·기타 아이콘은 D-015 그대로다.
+
+## 2026-11-12 · 사용자가 요청한 헤더 무게 미세 보정
+
+- 기존 D-015의 최초 시연 선택값은 **Root 650 / Standard 620**이었다. 최근 실제 서비스 헤더 참고 이미지와 현재 `클랜` 헤더 비교 후 **Root 680 / Standard 650**으로만 보정한다. Root 크기 1.30rem·Standard 1.08rem, 자간, 높이, 헤더/아이콘 좌표, Center/Start 선택, Nav Surface는 변경하지 않는다.
+- 웹 정본은 `seed/styles/seed-standard.css`의 `.head h1` 및 `.seed-top-nav__title` 두 계열을 동기화한다. 참조 이미지보다 무작정 크게/검게 만드는 것이 아니라 글자의 **밀도만 소폭 보강**한다.
+- **Pretendard는 CDN에서 불러오지만 로딩을 보장하지 않는다.** `@import` URL 한 개와 CSS font-family 선언은 네트워크 차단·CDN 장애·폰트 로딩 실패 시 폴백을 사용한다. 현재 저장소에 로컬 WOFF/WOFF2/TTF가 없으므로 **오프라인 완전 보장 X**. 브라우저의 `document.fonts.check('680 20px "Pretendard Variable"')`와 Network에서 실제 사용 폰트를 확인해야 한다. 폰트 파일 없이 `font-weight`만 올려 타 글꼴의 렌더 차이를 해결했다고 주장하지 않는다.

@@ -35,6 +35,15 @@
 .family-progress-list { display:grid; gap:22px; max-width:680px; }
 .family-progress-row { display:grid; gap:8px; }
 .family-input-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+
+/* SEED Lab-only arrangement: C-CREDIT, C-SELECTION and C-IMAGE visuals remain in shared CSS. */
+.family-credit-demo,.family-filter-demo { display:grid; gap:12px; min-width:0; }
+.family-credit-demo { max-width:680px; }
+.family-credit-panel { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; min-width:0; }
+.family-filter-bar { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.family-filter-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:680px; min-width:0; }
+.family-filter-item { display:grid; align-content:start; gap:10px; min-width:0; }
+
 .family-input-cell { display:grid; align-content:start; gap:14px; min-width:0; }
 .family-content-grid { display:grid; gap:16px; }
 .family-media-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; max-width:750px; }

@@ -223,3 +223,58 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 | A4: 후속 1개 페이지 실험 | 제품 비전·퀘스트·소셜·보상·아바타 원칙을 검토. **실험은 본 작업 후 별도 실행**하며 레퍼런스 없이 화면 목적·콘텐츠만 제공. 새 SEED 템플릿을 먼저 생성하지 않음 |
 
 검증의 완료 선언은 위에서 실제 실행한 범위에만 적용한다. 브라우저 실화면 이미지 로드/투명 픽셀 적합성·포커스 및 Android Compose 등은 후속 검수 영역이다.
+
+## 2026-11-11 · U11 최종 통합 QA 및 인수 판단 (S01~S09)
+
+> **판정: 부분 인수 · 실제 통합 시각/동작 승인 보류.** 기준 브랜치 `feat/seed-layout-composition-20261110`, U09 최종 기준선 `4ae9fcbd6d9592514c6eb93ed217fb501546a061`. U10은 사용자의 **명시적 보류**에 따라 CSS 미수정·미완료. 이 절은 U00~U10의 이력에 대한 **새로운 근거/검수 범위 표**이며 기존 `status: proposed`를 일괄 승인하거나 main·앱 기능을 변경하는 결정이 아니다.
+
+### R01~R04 / 원 제안 9개 범위 추적
+
+- **R01 사실과 규격 분리:** `D-011~016` / `C-*`·`P-*` 계약 / 공통 웹 CSS와 실제 Preview·SEED Lab / 아직 문서에만 있는 조합 예시를 구별했다.
+- **R02 최근 개선의 본질:** 새 컴포넌트를 늘리는 것이 아니라 Page Type·콘텐츠 경향·정보 객체·배치·Surface/이미지/Action의 **독립 소유권으로 구성 자유도를 확보**했다. 시각 품질 합격과 별도다.
+- **R03 재사용·회귀:** 기존 `P-PAGE-COMPOSE → P-LAYOUT → P-HIERARCHY → C-SURFACE/C-* → S-PAGE`의 역할과 네 Page Type/D-015 규격은 소스에 남아 있다. **다만 레거시 클랜 페이지의 하단 내비 충돌이 확인돼 실제 소비자 회귀는 실패**했다.
+- **R04 제안 누락 방지:** 아래 S01~S09의 **하위 요구·소유자·문서와 코드·실화면 상태**를 분리해 기록. 모든 요구가 코드로 구현됐다는 뜻은 아니다.
+
+| 제안 | 실제 정본·소유자 / 변화 성격 | 소스에서 확인한 항목 | 실제 소비·검증·승인 상태 |
+|---|---|---|---|
+| **S01 · U08** | C-SVG + C-TEXT / 일반 SVG·타이포 조합 설명 | 다크 모드/계정 정보, 버튼 바깥 20·8, Body/Item/Support·선택 행/정보 행, 여러 줄 첫 행 정렬. 버튼 내부는 P-BTN-ICON 우선 | **문서 반영**. 격리 Chromium 134/134 재실행. 실제 메뉴/긴 한글·OS 확대와 56종 광학 실화면 미검증 |
+| **S02a · U09** | Shared Style + 기존 CSS / 구현 연결·중복 최소 교정 | 기존 HTML root font 100%+vw clamp, 일반 SVG fallback 20px→1.25rem, 메뉴 중복 선언 제거. D-015/Nav/버튼 34·43·48 유지 | **공통 코드 일부 반영**. 격리 Chromium 162/162 재실행, GitHub Pages 해당 SHA 배포 성공. 원본 Node 전수·실제 Preview/Lab 렌더·Android 미검증 |
+| **S02b · U10** | C-SEGMENT/C-TABS/기타 Pill **대상 식별 선행** / 국소 시각 교정 | 원문은 '작은 글씨에 비해 큰 padding'이나 구체 selector/화면/수치를 확정하지 않음. C-SEGMENT와 레거시 Gallery Segment 모두 후보 | **사용자 승인으로 보류.** CSS 변경 없음. `seed-segment`를 근거 없이 일괄 수정 금지 |
+| **S03 · U01** | P-PAGE-COMPOSE / 선택 기준 보강 | 발견·탐색/정보 열람/혼합 경향, Global/페이지 종류와 독립, 섹션별 이질적 가로·세로 배치 | **문서 반영**. 다른 목적의 조합 격리 fixture 확인. 실제 화면 시각 승인 별도 |
+| **S04 · U02** | P-PAGE-COMPOSE + P-LAYOUT / 섹션·배치 보강 | Borderless/Container, 제목 1줄/큰/트렌디, 선택적 부제/Action, 가로·세로·책장·액자, 도식선≠CSS border | **문서 반영**. 기존 Layout 엔진·Page Type 추가 없음. 실제 다양화 화면 품질 미검증 |
+| **S05 · U03** | P-HIERARCHY + C-AVATAR / 정보 역할 보강 | Big/Middle/Small은 프로필의 정보·행동·위계 역할이며 이미지 크기 `row/profile/hero/fluid`와 독립 | **문서 반영**. 기존 웹 마스코트 합성은 별도 코드. NonGlobal DM 헤더의 Middle 실제 결합·확대 미검증 |
+| **S06 · U04** | P-HIERARCHY + C-SURFACE / 아이템 표현 | A 이미지 중심/선택 Badge, B 단일 바깥 부모 안 Media+유동 높이 정보, 선택 가격·상태·Action, 별도 `12/9/123` 넘버 박스 | **문서 반영**. U11 격리 Item+Insight 예시의 DOM/폭 검사. 실제 상점 원본 소비·320/200% 실화면 미검증 |
+| **S07 · U06** | S-PAGE + NAV-TOP / 기존 NonGlobal 헤더 우측 슬롯 | Standard Back/중앙 Title, 우측 실제 액션 **또는 읽기 전용 짧은 캐시**, Middle과 구분. 긴 값은 본문으로 이동 | **문서 반영**. 격리 Chromium에서 긴 값·200% 겹침 재현, 앱의 유효 fallback/실 화면 미검증 |
+| **S08 · U07** | C-OVERLAY / 기존 Dialog 선택 슬롯 | Title/Body/X/Actions 독립, 좌측·중앙 각각 선택, 본문 스크롤·focus·dismiss·Busy/Error·Android Back 구분, Sheet 별도 | **문서 반영**. 격리 Chromium 95/95 재실행. 실제 Dialog 소비와 실기기/스크린리더 미검증. 기존 `C-SHEET` 소비를 Dialog 구현으로 오인 금지 |
+| **S09 · U05** | P-HIERARCHY + C-SURFACE / 이벤트 목적별 표현 | 단일 이미지 링크 A **독립 UI 오버레이 0**, 박스 B의 이미지/수치/진행/버튼 **선택적**, 요약은 정보량 전략. 기존 일반 Banner 계약 유지 | **문서 반영**. 격리 Chromium 18/18 재실행. 실제 문구 포함 완성 가로형 배너 아트·동적 이벤트 데이터·실화면 미검증 |
+
+### U11의 세 가지 서로 다른 페이지 사례
+
+1. **발견+열람 혼합:** Borderless 소개, 가로 콘텐츠 rail, 구분선 기반 기록 목록을 다른 위계로 조합. 세 표현을 한 Card 템플릿으로 만들지 않는다.
+2. **아이템+인사이트:** 한 아이템 부모에 Media·정보가 귀속되고 `12/9/123` 숫자 요약은 별도 정보 역할. 200% 확대 시 2열을 강제하면 긴 한국어가 세로로 눌리는 **시각 결함**을 확인했다. 격리 fixture는 가변 열로 수정해 구조 검수 재통과했지만 실제 SEED 소비자는 미검증.
+3. **이벤트 A/B:** A는 **검수용 생성 SVG 한 장**을 링크로 감싼 구조(Overlay 0). **해당 SVG는 승인된 실 이벤트 에셋이 아니다.** B는 이미지·버튼 없이 실제 DOM Progress+설명만 있는 선택 조합. 요약형은 별도 컨테이너가 아니다. 실제 콘텐츠/데이터 결합 미검증.
+
+독립 HTML/Chromium fixture: **6폭(320·360·390·430·768·1440) × 100/200% × Light/Dark = 24조건**, 각 8가지 구조 체크로 **192/192 통과**. **처음 192개 정적/기하 체크가 모두 통과했는데도 200%에서 긴 이름의 글자 세로 압축과 Dark 카드 대비 부족이 실제 스크린샷에 발견**되었다. 검수용 fixture 안에서만 수정. 따라서 'QA 통과 수'는 디자인 시각 합격증이 아니다.
+
+### 실제로 확인한 실패·미검증 및 우선순위
+
+| ID / 우선도 | 확인된 사실과 증거 | 영향·처리 소유자 | 현 상태 |
+|---|---|---|---|
+| **G01 · 높음** | `seed-page-contract.mjs`에서 `global-inner.bottomNav=true`지만 `web/preview/clan.css`의 `body[data-layer="global-inner"]:has(.clan-layout) #nav{display:none}`와 `app.js`의 `clan-my` 등 global-inner 라우트가 동시에 존재 | **레거시 Preview/S-PAGE Navigation 소비**. 실제 CSS 선택자 격리 Chromium **12/12 재현**(6폭×2테마). 이 규칙 제거만으로 모든 상세 화면의 고정 하단 안전 여백이 해결된다고 추정 금지 | **미해결 · 회귀 실패** |
+| **G02 · 높음** | U06의 긴 제목·큰 캐시/200%에서 중앙 제목과 trailing 겹침 또는 overflow가 격리 Chromium에서 재현 | S-PAGE/NAV-TOP 실제 소비자와 fallback 설계. 현재는 '본문으로 이동' 문서 정책뿐 | **미해결** |
+| **G03 · 높음** | U04·U05·U07의 **실제 상점 아이템 B / 완성 배너 A / Dialog S08** 소비 예시가 없거나 구현됨을 확인할 근거가 없음 | 각 패턴 소유자. 격리 fixture를 SEED Lab 실제 통합으로 잘못 승격하지 않음 | **시연·브라우저 미검증** |
+| **G04 · 중간** | U08→U09 기본 `.seed-icon`은 상대 단위로 교정했지만, 다른 명시적 24px/17px Glyph·각 레거시 Page는 역할별 예외 | F-GEOMETRY/C-SVG·해당 소유 CSS. OS 200%와 브라우저 zoom에서도 타깃·광학 비교 필요 | **부분 구현** |
+| **G05 · 사용자 보류** | U10 Pill Navigation 원본의 정확한 대상 selector 및 수치 식별 불가 | 원본 화면 대조 전 CSS 수정 금지 | **보류 유지** |
+| **G06 · 중간** | U09 이전부터 존재한 `shared-style-contract.md` Footer 표의 `paired|stacked|single` 내부 파이프가 Markdown 테이블 열을 잘못 나누던 문제 | U11에서 **표시 문법만** 세 값을 분리하는 문구로 교정. 의미·스타일/값 불변 | **서식 수정** |
+| **G07 · 환경 제약** | 로컬 GitHub DNS 실패로 **전체 원본 checkout·원본 Node Suite 실행 불가**. source fetch/원격 Compare와 격리 Chromium은 실행됨 | GitHub Pages 배포 성공은 Node·브라우저 UI 시각 검수와 무관. Chromium native WebView/Android 접근성은 별도 | **Node/원본 Preview·Lab/Native 미검증** |
+
+### 재검증 로그의 증거 수준
+
+- **원격 정적:** 각 S 정본과 코드 소유자, Page Types 4개, D-015 Root/Standard 숫자, 기존 SVG/아트 원본 경로 및 GitHub compare/HEAD; 시행 결과는 커밋 별 비교로 기록.
+- **재실행한 격리 Chromium:** U05 **18/18**, U07 **95/95**, U08 **134/134**, U09 **162/162**. U06 격리 겹침 재현. U11 통합 구성 **192/192**, nav 충돌은 36조건 중 **12조건 실패**로 정상적으로 결함 탐지. 다른 유닛의 자체 숫자를 이 전체 검수 건수에 섞어 '원본 앱 E2E'라고 말하지 않는다.
+- **배포:** GitHub Pages workflow run `42941822362`은 `4ae9fcbd` 기준 `success`. 성공은 **정적 배포** 근거만.
+- **실제 original-repo Node:** **미실행**. 로컬 checkout/모든 실제 파일이 없으므로 임시 fixture 실행과 구분.
+- **실제 Preview/Lab 시각:** **미검증**. HTML·CSS·PNG·SVG 전체 원본 파일을 모두 연결한 브라우저가 아니며, 시각적 품질/정보 밀도/조합 승인 상태를 올리지 않는다.
+- **Android/OS:** Compose·TalkBack·IME·Back·네이티브 200%·상자/경제/실제 구매·클랜 기능은 범위 밖.
+
+**인수 결정:** **S01~S09 문서 소유권 및 소실 방지 장부는 인수 가능**, 실제 UI 컴포지션/동작 통합은 **G01·G02 회귀 실패와 G03 등 미검증으로 통합 승인 보류**. U10은 사용자가 보류한 상태 그대로다. `status: proposed`를 유지하고, 승인/수정은 검증된 소유자에게 돌아가야 한다. 이번 U11에서 신규 Page Type·Layout Engine·미승인 SVG/아트·앱 데이터/API·Android 변경은 없다.

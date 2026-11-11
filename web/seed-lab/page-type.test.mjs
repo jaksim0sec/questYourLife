@@ -156,6 +156,9 @@ test('Standard title start alignment is opt-in while Center and page roles remai
  assert.match(css,/\.head\.standard\[data-title-align="start"\]\s*\{/);
  assert.match(css,/\.head\.standard\[data-title-align="start"\] h1\s*\{[^}]*text-align:start/);
  assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\] \.seed-top-nav__trailing\[data-slot-kind="info"\]/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\] \.seed-top-nav__leading\s*\{[^}]*min\(/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\] \.seed-top-nav__trailing\[data-slot-kind="empty"\]\s*\{[^}]*display:none/);
+ assert.match(js,/headerTrailing\.dataset\.slotKind="empty"/);
  assert.match(css,/--seed-top-target:3rem/);
  assert.match(css,/--seed-top-glyph:1\.59rem/);
 });

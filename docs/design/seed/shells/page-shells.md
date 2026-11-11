@@ -95,8 +95,8 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 | 페이지 역할 `data-page-type` | 대상 화면의 성격 / 예시 | 상단 Navigation Set | 하단 전역 Navigation Set | 고정 CTA / Overlay | Shell |
 |---|---|---|---|---|---|
 | **Global** (`global`) | 다섯 전역 목적지의 최상위 화면(홈·퀘스트·디엠·클랜·마이) | **Root 표시**: 좌측 굵은 페이지명, 우측 맥락별 Outline 액션 | **표시**, 활성 목적지 1개 | 기본 inline, 고정 CTA는 예외 | Root |
-| **Global Inner** (`global-inner`) | 전역 목적지에서 들어가는 내부 화면(예: 퀘스트 상세·랭킹·상점) | **Standard 표시**: Back, 중앙 제목, 필요한 우측 액션 | **표시**, 현재 소속 전역 목적지 유지 | 필요할 때만 fixed CTA | Detail/Utility 등 맥락 |
-| **Non-Global** (`non-global`) | 전역 바를 벗어나는 집중·작업 화면(예: 꾸미기·출석·프로필·대화방) | **Standard 표시 기본**: Back과 Close 중 실제 의미에 맞게 선택 | **숨김** | 독립 CTA 또는 집중 콘텐츠 가능 | Detail/Utility/Immersive 등 맥락 |
+| **Global Inner** (`global-inner`) | 전역 목적지에서 들어가는 내부 화면(예: 퀘스트 상세·랭킹·상점) | **Standard 표시**: Back/Close + **중앙형 기본 / 좌측형 선택**, 필요한 우측 액션·정보 | **표시**, 현재 소속 전역 목적지 유지 | 필요할 때만 fixed CTA | Detail/Utility 등 맥락 |
+| **Non-Global** (`non-global`) | 전역 바를 벗어나는 집중·작업 화면(예: 꾸미기·출석·프로필·대화방) | **Standard 표시**: Back/Close 중 실제 의미, **중앙형 기본 / 좌측형 선택** | **숨김** | 독립 CTA 또는 집중 콘텐츠 가능 | Detail/Utility/Immersive 등 맥락 |
 | **Bottom Sheet** (`bottom-sheet`) | 현재 페이지 위에 표시되는 보조 흐름(예: 알림·필터) | **부모 상단 대체 금지**. Sheet 내부 Handle/Header/Close | **Sheet 내부 없음**. 부모 네비는 DOM/선택 상태를 유지하고 모달에 의해 가림 | C-SHEET/P-SHEET Snap/Focus/고정 Footer | Overlay |
 
 이 표는 **페이지의 형태·탐색 구조를 결정**하며, 안에 어떤 정보·섹션·A1/A2 이미지를 어떻게 배치할지는 P-PAGE-COMPOSE와 P-LAYOUT이 별도로 결정한다. Global Inner와 Non-Global 모두 Detail Shell을 사용할 수 있지만 **하단 바 가시성은 서로 다르다**.
@@ -117,7 +117,7 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 
 ## S07 · NonGlobal Standard 헤더의 우측 맥락 슬롯 (기존 구조 보완)
 
-**범위는 Non-Global의 기존 Standard Top Navigation 안쪽 trailing 슬롯**이다. 별도의 Navigation Set, Page Type, Head Profile 또는 제3의 헤더 종류를 만들지 않는다. `Global Inner`와 같은 Standard 외형을 사용하되 **Non-Global의 전역 Bottom Navigation은 숨김**을 유지한다. 왼쪽 Back/Close의 실제 복귀/닫기 의미, 중앙 페이지 제목, 상단 safe inset, 고정 CTA와 하단 safe inset 계산은 기존 K10/D-015 소유권 그대로다.
+**범위는 Non-Global의 기존 Standard Top Navigation 안쪽 trailing 슬롯**이다. 별도의 Navigation Set, Page Type, Head Profile 또는 제3의 헤더 종류를 만들지 않는다. `Global Inner`와 같은 Standard 외형을 사용하되 **Non-Global의 전역 Bottom Navigation은 숨김**을 유지한다. 왼쪽 Back/Close의 실제 복귀/닫기 의미, **기본 중앙 제목 및 후속 선택형 좌측 제목 배치**, 상단 safe inset, 고정 CTA와 하단 safe inset 계산은 기존 K10/D-015 소유권 그대로다.
 
 ```text
 동작형: [Back/Close]       [페이지 제목]        [더보기 SVG 버튼]
@@ -137,6 +137,24 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 - **U03 Middle과 구분:** Non-Global DM 채팅방 헤더에서 **상대 아바타·이름·선택적 상태**를 보일 수 있다는 것은 [P-HIERARCHY의 Middle 정보 역할](../patterns/content-hierarchy.md)이다. 이는 **제목/신원 표시 영역의 콘텐츠**를 판단하는 일이며 trailing에 Cash/더보기 중 무엇을 넣는가와 **독립**이다. '채팅방이면 프로필 카드로 헤더 전체 교체'나 'Middle을 우측 정보 슬롯에 욱여넣기'로 해석하지 않는다. 실제 중앙 정렬·긴 상대 이름은 별도 실화면 검증 전까지 시연 승인되지 않았다.
 - **동작과 접근성:** 정보는 읽기 가능한 라벨+값을 제공하고 장식 코인 alt는 중복 읽기를 피한다. 실제 Action은 48px hit area와 구체적인 accessible name, 키보드 Focus/Enter·Space를 제공한다. 뒤로가기는 이전 맥락 또는 직접 진입 시 정의된 부모로 돌아가야 한다. 기존 Header 액션 수 기본 2개, 목적 명확 시 최대 3개와 우선순위 규칙(K10)을 그대로 따른다. Action 개수 제한을 정보 배지 여러 개 나열할 면허로 사용하지 않는다.
 - **선행/후행 검증:** 현재 `seed-page-contract.mjs`의 `non-global={header:"standard",bottomNav:false}` 및 `global-inner={header:"standard",bottomNav:true}`는 **변경하지 않는다**. 우측 정적 값은 기존 슬롯 조합의 제안일 뿐 앱에 실제 보유량 연동·새 코드 구현이 완료된 것이 아니다. `web/seed-lab/page-type.test.mjs`의 네 타입·네비 가시성 회귀 및 실제 Chromium의 제목/값/타깃/가로 넘침을 분리해 검증한다. U00에서 기록한 **레거시 `clan.css`의 Global Inner 하단바 숨김 충돌 후보**는 이번 NonGlobal 슬롯 설명만으로 해결되지 않으며 U11 통합 검수에 남긴다.
+
+## 2026-11-11 · Standard 내부 제목 배치 선택 (Global Inner / Non-Global 공통)
+
+[Top Navigation 최신 정본](../../TOP_NAVIGATION.md)의 **Center (기본) / Start (선택)** 를 기존 `S-PAGE` 사용 계약에 연결한다. 이는 기존 페이지 역할과 별개인 **Standard 내부의 제목 정렬 속성**으로서 **새 Shell/새 Page Type/별도 헤더 컴포넌트가 아니다**.
+
+| 속성 | Center / 기본 | Start / 선택 |
+|---|---|---|
+| 쓰임 | 가벼운 조회·일반 상세·기존 페이지 | 상단 정보 패널 공간이 필요하거나 화면 설계자가 좌측 제목을 원할 때 |
+| 제목 | Back/Close와 우측 액션에서 균형 잡힌 **중앙 정렬** | Back/Close 다음의 **좌측 제목**, 우측 남는 공간은 trailing 슬롯이 사용 |
+| 선언 | `data-title-align` 생략 또는 `center` | Standard 안쪽 `.seed-top-nav__inner[data-title-align="start"]` |
+| 우측 | 선택적 Icon Action 또는 비움. 매우 짧은 맥락 정보는 S07 조건을 만족할 때만 | 선택적 실제 Icon Action / 짧은 정보 / `C-CREDIT` / 비움. 우측이 비어도 Start를 임의 선택 가능 |
+| 하단/뒤로 | `global-inner` 하단 Nav 표시, `non-global` 숨김, 실제 Back/Close 수행 | **완전히 동일** |
+
+- 제목 정렬은 페이지 제작자의 선택이며 오른쪽 정보 유무에 의해 자동으로 변하지 않는다. `applyPageType`은 기존 `PAGE_TYPES`의 `header=standard` 및 하단 가시성만 설정하고 **`data-title-align`을 지우거나 자동 생성하지 않는다**.
+- 두 정렬에서 **동일한 D-015 서체·크기·굵기/아이콘/터치/기본 gutter**를 유지한다. `start`는 CSS의 Opt-in 규칙만 사용해 기존 `center` 화면을 전혀 재배치하지 않는다. Root 및 Sheet는 대상이 아니다.
+- 좁은 공간·긴 제목/수치/200% 확대에서는 제목과 trailing이 겹치거나 값이 사라지면 실패다. **자연스러운 높이 확대/줄바꿈 또는 정보를 본문 패널로 내리는 방식**으로 복구하며 금액 숫자·접근 가능한 이름·Back을 축소/은폐하지 않는다. 정보는 `C-CREDIT`의 원본 PNG·실제 값/상태, Action은 `C-ICON`의 실제 동작을 각각 따른다.
+- Preview의 기존 `.head.standard`에는 같은 `data-title-align="start"` 선택을 지원할 수 있지만 해당 속성이 없는 기존 Preview/CSS 및 Bottom Navigation을 변경하는 것은 허용하지 않는다.
+- 시연/QA에서 `Global Inner`와 `Non-Global` 각각의 Center·Start, 뒤로/닫기, 오른쪽 아이콘·캐시·비움, 320/360/390/430 CSSpx 및 100/200% 확대를 구분한다. 시연 DOM만으로 실제 기능·네이티브까지 합격으로 기록하지 않는다.
 
 ## 2026-11-10 · D-015 웹 헤더·네비 시각 동기화
 

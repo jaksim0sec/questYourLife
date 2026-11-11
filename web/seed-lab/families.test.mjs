@@ -50,3 +50,40 @@ test('component gallery is the first tab of the canonical Lab and the previous U
   assert.match(legacy,/url=\.\/\?panel=components/);
   for(const name of ['layout','state','assets'])assert.ok(html.includes('id="panel-'+name+'"'));
 });
+
+test('C-CREDIT is rendered from the original raster inside an existing Surface panel',()=>{
+  assert.match(standard,/\.seed-credit\s*\{/);
+  assert.match(standard,/\.seed-credit__coin\s*\{/);
+  assert.match(standard,/\.seed-credit\[data-size="small"\]/);
+  assert.match(standard,/\.seed-credit\[data-size="large"\]/);
+  assert.match(html,/id="family-credit-panel" class="seed-surface" data-surface="subtle"/);
+  assert.match(html,/class="seed-credit" data-size="medium" data-state="available"/);
+  assert.match(html,/class="seed-credit__coin" src="\.\.\/\.\.\/assets\/art\/rewards\/cash-coin-single\.png" alt=""/);
+  assert.match(html,/class="seed-credit__value">3,240<\/span>/);
+  assert.ok(existsSync(new URL('../../assets/art/rewards/cash-coin-single.png',import.meta.url)));
+  assert.doesNotMatch(html,/class="seed-credit__coin"[^>]*(?:coins\.svg|ⓒ|🪙)/);
+});
+
+test('Filter Chip uses C-SELECTION, one real selection group and no navigation shortcut disguised as a filter',()=>{
+  assert.match(standard,/\.seed-filter-chip\s*\{/);
+  assert.match(standard,/\.seed-filter-chip\[aria-pressed="true"\]/);
+  assert.match(html,/id="family-filter-group"[^>]*role="group" aria-label="아이템 종류 필터"/);
+  for(const name of ["all","hats","audio"])assert.match(html,new RegExp('data-family-filter="'+name+'"'));
+  assert.doesNotMatch(html,/id="family-filter-group"[^>]*[\s\S]*?data-family-filter="rewards"/);
+  assert.match(js,/\$\$\("\[data-family-filter\]"\)/);
+  assert.match(js,/setChoice\(filterButtons,"familyFilter",button\.dataset\.familyFilter\)/);
+  assert.match(html,/id="family-filter-feedback"[^>]*aria-live="polite"/);
+});
+
+test('composition gate binds source identity to credit, filters, and restrained typography',()=>{
+  const compose=read('../..\/docs/design/seed/patterns/page-composition.md');
+  const credit=read('../..\/docs/design/seed/components/credit-value.md');
+  const selection=read('../..\/docs/design/seed/components/selection-controls.md');
+  assert.match(compose,/컴포넌트 출처/);
+  assert.match(compose,/C-CREDIT/);
+  assert.match(compose,/주목 그룹/);
+  assert.match(credit,/data-surface="subtle"/);
+  assert.match(credit,/seed-credit/);
+  assert.match(selection,/seed-filter-chip/);
+  assert.match(selection,/aria-pressed/);
+});

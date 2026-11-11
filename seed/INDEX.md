@@ -147,6 +147,13 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../docs/DECISIONS.md)�
 - **SEED 규격을 실제 코드에 연결할 때:** [표준 스타일 적용 체계](implementation/shared-style-contract.md). 웹의 기존 공통 클래스·CSS 변수와 Android Compose의 Theme·재사용 UI 함수를 대응시키고, 전역 규격/컴포넌트 Variant/페이지 배치를 구분한다.
 - 이는 **새 디자인 계층이나 스타일 런타임이 아님.** 승인된 v0.15와 현행 구현의 차이를 확인하고, 기존 클래스/컴포넌트를 재사용하는 운영 계약이다. 스타일시트 코드·Native 이관은 이번 문서 반영에 포함되지 않는다.
 
+## 2026-11-12 · 컴포넌트 시각 품질 교정 경로
+
+- **가로 상품 카드 실패:** P-HIERARCHY S06 → C-IMAGE/C-SURFACE → `styles/seed-standard.css`의 `data-item-layout="horizontal"`. 이미지의 실제 실루엣은 contain 유지하고 미디어 배경을 카드 전체 높이에 맞춘다. 독립 HTML의 임의 CSS를 SEED로 착각하지 않는다.
+- **버튼 색/형태:** C-ACTION의 Neutral Outline과 `stroke.control`을 사용. 버튼 자체의 기본 radius는 16, 기간 선택은 C-SEGMENT의 단일 Track/Thumb. 화면에서 불필요한 `이번 주/지난주` 가짜 Action 두 개를 생성하지 않는다.
+- **배너:** P-HIERARCHY S09/C-SURFACE에서 이벤트 내부 SVG 이펙트 모사를 금지. 원본 아트 또는 기존 일반 Banner를 사용.
+- **헤더:** NAV-TOP의 최신 미세 보정 Root 680 / Standard 650. Pretendard CDN 의존을 실제 font loading 보장으로 오인하지 않는다. 공통 CSS와 `implementation/v015-tokens.json`을 확인한다.
+
 ## 2026-11-11 · 상품 컨테이너 시각 표현 정교화
 
 - **상품 목록/카드 작업:** [P-HIERARCHY S06](patterns/content-hierarchy.md)에서 통합 카드·오픈 진열 우선순위를 선택 → [C-SURFACE S06](components/surface-media.md)의 외곽선/배경/버튼 컨테이너 → [C-IMAGE](components/image-frame.md)의 비율·contain·경계 → 기존 C-TEXT/C-CREDIT/C-ACTION 및 P-LAYOUT을 사용한다. **신규 Component/Surface 종류는 없음.**

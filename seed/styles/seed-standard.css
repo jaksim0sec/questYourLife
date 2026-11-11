@@ -2,10 +2,19 @@
 /* D-015 approved web typography for Root/Standard navigation and sheet headers. */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 /* Original preview foundation and action aliases; Top Navigation now follows D-015. */
-:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); --seed-page-gutter:20px; font-family: system-ui, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif; color: var(--text); background: var(--canvas); }
+:root { --canvas: #fcfbfa; --surface: #fff; --shell-surface: #f8f7f9; --nav-surface: #fff; --nav-active: #db3040; --line: #eee9e8; --text: #242126; --sub: #777079; --brand: #f04e5b; --reward: #ffcc4d; --on-reward: #352713; --handle: #c8bfc3; --scrim: #211b2266; --safe: env(safe-area-inset-bottom, 0px); --seed-page-gutter:20px; font-family:"Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif; color: var(--text); background: var(--canvas); }
 
 :root[data-theme="dark"] { color-scheme: dark; --canvas: #101115; --surface: #242329; --shell-surface: #16171b; --nav-surface: #242329; --nav-active: var(--brand); --line: #302e34; --text: #f6f3f3; --sub: #bab0b5; --brand: #f45c68; --reward: #957027; --on-reward: #fff; --handle: #777079; --scrim: #0008; }
 
+/* Shared token defaults are available on every page, not only the old SEED Lab.
+ * The Lab may opt into its historical palette but never owns component geometry. */
+:root {
+  --soft:#FFF7F2; --brand-weak:#FFF0F1;
+  --seed-space-inline:.5rem; --seed-space-item:.75rem; --seed-space-group:1rem; --seed-space-section:1.5rem;
+  --seed-radius-control:1rem; --seed-radius-image:.875rem; --seed-radius-surface:1rem;
+  --seed-radius-overlay:1.5rem; --seed-stroke-control:#827A87;
+}
+:root[data-theme="dark"] { --soft:#2D292C; --brand-weak:#3E272A; --seed-stroke-control:#938B9C; }
 /* Browser/OS font preference remains the initial rem baseline. Avoid device-model sniffing. */
 :root { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (max-width: 479px) {
@@ -43,9 +52,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .head.standard > .icon-btn { margin-inline-start:calc(-1 * var(--seed-top-optical-inset)); }
 
-.head h1 { font-size:1.30rem; line-height:1.35; letter-spacing:-.025em; font-weight:650; overflow-wrap:anywhere; }
+.head h1 { font-size:1.30rem; line-height:1.35; letter-spacing:-.025em; font-weight:680; overflow-wrap:anywhere; }
 
-.head.standard h1 { font-size:1.08rem; font-weight:620; letter-spacing:-.018em; text-align:center; }
+.head.standard h1 { font-size:1.08rem; font-weight:650; letter-spacing:-.018em; text-align:center; }
 /* Standard only: explicit opt-in title placement, never alter the centered default. */
 .head.standard[data-title-align="start"] { grid-template-columns:var(--seed-top-target) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
 .head.standard[data-title-align="start"] h1 { text-align:start; justify-self:start; }
@@ -196,7 +205,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-surface[data-surface="media"] { background:var(--soft); }
 .seed-surface[data-surface="reward"] { background:var(--soft); border:1px solid var(--line); }
 .seed-surface[data-surface="overlay"] { background:var(--surface); box-shadow:0 12px 30px #00000020; }
-.seed-action { min-height:3rem; display:inline-flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:1rem; background:transparent; color:var(--text); text-decoration:none; cursor:pointer; font-family:inherit; font-size:.875rem; line-height:1.4286; font-weight:600; }
+.seed-action { min-height:3rem; display:inline-flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:1rem; background:transparent; color:var(--text); text-decoration:none; cursor:pointer; font-family:inherit; font-size:.875rem; line-height:1.4286; font-weight:650; }
 .seed-action__face { display:inline-flex; gap:7px; align-items:center; justify-content:center; min-height:43px; padding:9px 16px; border:1px solid transparent; border-radius:var(--seed-radius-control); background:var(--surface); color:var(--text); text-align:center; line-height:1.35; }
 .seed-action[data-size="small"] { font-size:.75rem; }
 .seed-action[data-size="small"] .seed-action__face { min-height:34px; padding:7px 12px; }
@@ -206,7 +215,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-action[data-variant="brand-solid"] .seed-action__face { background:var(--brand); color:#fff; }
 .seed-action[data-variant="neutral-solid"] .seed-action__face { background:var(--text); color:var(--surface); }
 .seed-action[data-variant="neutral-weak"] .seed-action__face { background:var(--soft); color:var(--text); }
-.seed-action[data-variant="neutral-outline"] .seed-action__face { background:transparent; border-color:var(--seed-stroke-control,var(--line)); color:var(--text); }
+.seed-action[data-variant="neutral-outline"] .seed-action__face { background:transparent; border-color:var(--seed-stroke-control,var(--line)); color:color-mix(in srgb,var(--text) 72%,var(--sub)); }
 .seed-action[data-variant="ghost"] .seed-action__face { background:transparent; color:var(--sub); }
 .seed-action[data-variant="reward-secondary"] .seed-action__face { background:var(--reward); color:var(--on-reward); }
 /* Candidates from existing C-ACTION, not K07-approved: only the explicit family experiment opts in. */
@@ -256,6 +265,22 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-item-display[data-item-presentation="integrated"] > .seed-media { border-radius:0; }
 .seed-item-display[data-item-presentation="integrated"] > .seed-item-display__info { padding:var(--seed-space-group); background:var(--surface); }
 .seed-item-display[data-item-presentation="open"] { background:transparent; }
+/* Opt-in S06 horizontal integrated presentation. The media BACKGROUND fills the card's
+ * natural height; only the artwork retains its intrinsic ratio via object-fit:contain.
+ * Do not give the image frame a square aspect ratio inside a taller horizontal card. */
+.seed-item-display[data-item-presentation="integrated"][data-item-layout="horizontal"] {
+  display:grid; grid-template-columns:minmax(0,var(--seed-item-media-share,40%)) minmax(0,1fr);
+  align-items:stretch; gap:0;
+}
+.seed-item-display[data-item-presentation="integrated"][data-item-layout="horizontal"] > .seed-media[data-media-kind="item"] {
+  aspect-ratio:auto; height:100%; min-height:0; width:100%; align-self:stretch;
+}
+.seed-item-display[data-item-presentation="integrated"][data-item-layout="horizontal"] > .seed-item-display__info {
+  min-width:0; align-self:center; padding:var(--seed-space-group); background:var(--surface);
+}
+@media (max-width:350px) {
+  .seed-item-display[data-item-presentation="integrated"][data-item-layout="horizontal"] { grid-template-columns:minmax(0,36%) minmax(0,1fr); }
+}
 /* C-CREDIT existing Value component. A Surface around it is an optional parent, not a new currency variant. */
 .seed-credit { display:inline-flex; align-items:center; gap:5px; min-width:0; max-width:100%; vertical-align:middle; white-space:normal; font-variant-numeric:tabular-nums; }
 .seed-credit__coin { display:block; flex:0 0 auto; width:1.3125rem; height:1.3125rem; object-fit:contain; }
@@ -365,11 +390,11 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-top-nav__leading { display:flex; justify-self:start; align-items:center; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__leading { margin-inline-start:calc(-1 * var(--seed-top-optical-inset)); }
 .seed-top-nav__trailing { display:flex; justify-self:end; align-items:center; margin-inline-end:calc(-1 * var(--seed-top-optical-inset)); }
-.seed-top-nav__title { margin:0; min-width:0; overflow-wrap:anywhere; font-size:1.30rem; line-height:1.35; font-weight:650; letter-spacing:-.025em; text-align:left; }
+.seed-top-nav__title { margin:0; min-width:0; overflow-wrap:anywhere; font-size:1.30rem; line-height:1.35; font-weight:680; letter-spacing:-.025em; text-align:left; }
 .seed-top-nav__inner[data-nav-role="root"] .seed-top-nav__leading { display:none; }
 .seed-top-nav__inner[data-nav-role="root"] .seed-top-nav__title { grid-column:1; grid-row:1; }
 .seed-top-nav__inner[data-nav-role="root"] .seed-top-nav__trailing { grid-column:2; grid-row:1; }
-.seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__title { grid-column:2; grid-row:1; font-size:1.08rem; font-weight:620; letter-spacing:-.018em; text-align:center; }
+.seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__title { grid-column:2; grid-row:1; font-size:1.08rem; font-weight:650; letter-spacing:-.018em; text-align:center; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__leading { grid-column:1; grid-row:1; }
 .seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__trailing { grid-column:3; grid-row:1; }
 /* Standard Center remains the existing three-column Grid. Start is a per-page opt-in.

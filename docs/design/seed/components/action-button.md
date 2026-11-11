@@ -93,10 +93,12 @@ Foundation만 토큰을 소유한다. 강조 규칙 변경은 P-ACTIONS, 목록 
 | neutral-solid | High | 중립적 확정 |
 | neutral-weak | Medium | 일반·보조 실행 |
 | neutral-outline | Low | 낮은 강조의 보조 행동 |
-| ghost | Low | 상세/전체 보기 등 관련 이동 |
+| ghost | Low | 상세/전체 보기 등 관련 이동. 섹션 제목 옆 보조 액션의 기본 무테·무배경 표현 |
 | reward-secondary | Medium | 보상 맥락의 실제 행동. 대표 수령 과업이면 High로 사용할 근거를 기록 |
 
 이는 이번 구현에 필요한 허용 조합이며 기존 Brand Weak/Critical 등 다른 계약을 삭제하지 않는다. 필요 없는 조합을 선제 구현하지 않는다. 화면 대표 High는 기본 최대 1개이고 조회 화면은 0개도 정상이다. 가로 3개 이상의 행동은 재배치·메뉴를 우선 검토하며, 48 타깃을 유지할 수 없으면 병렬 배치를 중단한다. 단순 초대·미리보기·일반 확인을 모두 브랜드색으로 채우지 않는다.
+
+**섹션 제목 우측의 `더보기`·`전체보기`는 CTA Button과 다른 보조 이동 역할이다.** [P-PAGE-COMPOSE S04](../patterns/page-composition.md)의 무테 텍스트/선택적 Chevron 표현을 우선하며, 이 위치를 이유로 `neutral-outline`·`brand-solid`·`reward-secondary` 등 눈에 보이는 테두리·배경 버튼을 자동 배치하지 않는다. 이동은 실제 링크, 그 외 보조 동작은 `textAction` / `ghost`를 재사용한다. 기존 조작 타깃 48·포커스 표시·의미 있는 이름은 그대로이며, 주행동은 본문/후행 Footer 등에서 별도로 판단한다. 이 원칙은 다른 문맥에서 승인된 Outline/CTA의 사용을 금지하지 않는다.
 
 실제 target은 최소 48 CSS px와 3rem 중 큰 값으로 비중첩 확보한다. face의 표시 높이 34/43/48, radius16, 버튼 아이콘 기본17·허용16–18, gap7을 보존한다. 48 미만 face는 같은 링크/버튼 요소가 타깃을 소유하고 내부 face를 중앙 정렬한다. 외부 투명 의사요소로 이웃을 덮지 않는다. 글자 확대 때 face 높이를 고정 상한으로 쓰지 않는다.
 

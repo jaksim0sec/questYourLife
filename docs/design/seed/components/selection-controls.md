@@ -51,7 +51,11 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 </div>
 ```
 
-실제 선택·결과 변경 시연은 `web/seed-lab/index.html` / `families.js`에서 확인한다. 원래 보류한 **U10 Pill Navigation의 글씨/패딩 시각값은 이 변경으로 확정하지 않는다.**
+**U10 · Filter Chip 밀도와 결과 연결 (대상 정정):** 이전 'Pill Navigation'은 사용자 설명을 잘못 해석한 명칭이었다. 실제 대상은 기존 **C-SELECTION Filter Chip**이다. 텍스트 14px(기본 16px root 기준)는 유지하고, 좌우 여백은 `14px → 10px`, 상하 내부 padding은 `8px → 6px`, 아이콘–글자 간격은 `8px → 6px`로 줄인다. **실제 버튼 hit target은 최소 48px 그대로**, 보이는 pill face만 위아래 4px씩 안으로 둬 기준 40px 높이로 보이게 한다. 새로운 Size/Token/컴포넌트 없이 기존 `.seed-filter-chip`에만 적용하며, Segmented·Tabs·CTA·Bottom Navigation을 변경하지 않는다. 확대·줄바꿈 때 face와 타깃은 콘텐츠를 따라 늘어나야 한다.
+
+**필터 바로 아래의 표현:** 같은 결과 집합을 거르는 필터라면 **필터 → 결과 콘텐츠**가 기본 흐름이다. 필터 바로 아래에 다시 `영문 overline → 큰 제목 → 부제` 같은 강조 타이포를 반복해 *같은 결과*를 별도 도입 섹션처럼 포장하는 건 비권장이다. 결과 건수·짧은 정렬·보조 안내가 필요하면 작게 표시할 수 있다. 필터가 적용되지 않는 **실제로 독립된 목적의 섹션**이라면 별도 제목을 가질 수 있으나, 필터 결과와 섞이지 않도록 정보 경계를 명확히 한다.
+
+실제 선택·결과 변경 시연은 `web/seed-lab/index.html` / `families.js`에서 확인한다. 이번 U10은 **Filter Chip 한정 수정**이며 이전에 대상이 불명확해 보류한 범위를 사용자 정정에 따라 해소한다.
 
 ## States / Behavior
 Unselected / Selected에 Enabled·Pressed·Focus·Disabled가 조합될 수 있다. 선택은 형태+상태 의미를 제공하고 색만 바꾸지 않는다. Disabled-selected도 선택 정보를 유지한다. Tabs는 한 영역의 단일 선택과 연결 패널을 노출한다. Focus 이동과 값 확정을 플랫폼 관례대로 분리한다. 필터 적용이 지연되면 pending을 표시하며 성공 전 활성 결과처럼 단정하지 않는다.

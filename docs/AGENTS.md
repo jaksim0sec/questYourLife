@@ -22,10 +22,10 @@
 | [docs/OPEN.md](./OPEN.md) | 제품·UX 결정, 새로운 화면·동작 설계, 기존 규칙과 충돌할 때 | **미결/가설**. 임의로 확정하거나 구현 지시로 쓰지 않음 |
 | [docs/product/README.md](./product/README.md) | 제품 이해, 대규모 UI 작업, 기획 온보딩, 누락 확인 | 제품 문서 색인·원 발언 대응표 |
 | [docs/product/VISION.md](./product/VISION.md) | 제품 정의, 새 기능 평가, 전체 홈·정보구조·디자인 시드 | **현실이 게임이고 퀘스트는 수단이자 본질**이라는 제품 철학 |
-| [docs/product/QUESTS.md](./product/QUESTS.md) | AI 계획·퀘스트 생성·완료·진행 흐름 | 현실 목표와 실제 행동의 의미·검증 한계 |
-| [docs/product/QUESTBOOKS.md](./product/QUESTBOOKS.md) | 퀘스트북 생성·공유·리믹스·참여·발견·랭킹 | 사용자 제작 콘텐츠·트렌드의 목적. 동작 명세는 미확정 |
-| [docs/product/SOCIAL.md](./product/SOCIAL.md) | 친구·클랜·DM·경쟁·피드·공개 범위 | 관계의 목적과 공유·감시의 경계 |
-| [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
+| [docs/product/QUESTS.md](./product/QUESTS.md) | 습관·루틴·베타 목표, AI 콘텐츠 제공·완료·진행 흐름 | 현실 수행·사용자 통제·검증 한계 |
+| [docs/product/QUESTBOOKS.md](./product/QUESTBOOKS.md) | 퀘스트북 진행·성취·표지 재사용, 선택적 공유·참여 | **2026-11-12 최신 방향:** 트렌드 형성은 제품 목표가 아님. 세부 명세는 미확정 |
+| [docs/product/SOCIAL.md](./product/SOCIAL.md) | 친구 퀘스트 활동·클랜·서버 보너스·공개 범위 | 관계를 통한 퀘스트 확장, 소셜이 메인은 아님 |
+| [docs/product/REWARDS.md](./product/REWARDS.md) | XP/Cash·상자·보너스·꾸미기·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
 | [docs/assets/README.md](./assets/README.md) | **SVG·이미지 등록, 원본 이동, preview/Android 참조 이관** | 현재 구조와 장래 공통 `assets/` 정본, 중복·호환성·검증 계약. 이관 실행 전에는 기존 경로 유지 |
 | [docs/design/SEED_AUTHORING_GUIDE.md](./design/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |

@@ -1,6 +1,6 @@
 # 갓생패치 · 확정된 제품·디자인 합의
 
-> 2026-11-05 기준. 제품 철학·상단 내비 정본과 **D-012가 명시한 디자인 시드 표현 규칙만** 확정. 앱 기능·제품 IA·경제·Android 구현 완료를 뜻하지 않음.
+> 2026-11-12 갱신. 초기 제품 철학과 D-011~D-016 디자인·에셋 합의에 더해 **D-017·D-018 제품 범위·보너스 역할**을 최신 방향으로 기록. 이는 앱 기능·IA·경제 산식·Android 구현 완료를 뜻하지 않음.
 > 1~2페이지를 넘기지 않고 상세 내용은 [product/](./product/README.md)로 분리.
 > 현행 Android의 기술·기능 규칙은 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md) / [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)가 담당. 새로운 제품 철학과 충돌하는 항목은 **구현 전에 별도 조정**.
 

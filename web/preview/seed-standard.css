@@ -237,6 +237,20 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media[data-media-state="error"] .seed-media__fallback { display:grid; }
 .seed-media .seed-media__fallback { display:none; place-items:center; height:100%; color:var(--sub); }
 .seed-media__badge { position:absolute; left:8px; top:8px; z-index:1; }
+/* C-CREDIT existing Value component. A Surface around it is an optional parent, not a new currency variant. */
+.seed-credit { display:inline-flex; align-items:center; gap:5px; min-width:0; max-width:100%; vertical-align:middle; white-space:normal; font-variant-numeric:tabular-nums; }
+.seed-credit__coin { display:block; flex:0 0 auto; width:1.3125rem; height:1.3125rem; object-fit:contain; }
+.seed-credit__value { color:var(--text); font-size:.875rem; line-height:1.428571; font-weight:800; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.seed-credit[data-size="small"] .seed-credit__coin { width:1.0625rem; height:1.0625rem; }
+.seed-credit[data-size="small"] .seed-credit__value { font-size:.75rem; line-height:1.5; }
+.seed-credit[data-size="large"] .seed-credit__coin { width:1.625rem; height:1.625rem; }
+.seed-credit[data-size="large"] .seed-credit__value { font-size:1.125rem; line-height:1.333333; }
+.seed-credit[data-state="pending"] { opacity:.65; }
+.seed-credit[data-state="unavailable"] .seed-credit__coin { display:none; }
+/* C-SELECTION existing Filter Chip role. Never use a filter to represent unrelated navigation. */
+.seed-filter-chip { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:3rem; max-width:100%; padding:.5rem .875rem; border:1px solid var(--seed-stroke-control,var(--line)); border-radius:999px; background:var(--surface); color:var(--text); font:inherit; font-size:.875rem; line-height:1.428571; font-weight:600; white-space:normal; text-align:center; cursor:pointer; }
+.seed-filter-chip[aria-pressed="true"] { border-color:var(--brand); background:var(--brand-weak,var(--soft)); color:var(--text); }
+.seed-filter-chip:disabled { cursor:not-allowed; opacity:.45; }
 /* U09: default general UI icon follows html root font scale; button/nav slots retain overrides. */
 .seed-icon { width:var(--seed-icon-size,1.25rem); height:var(--seed-icon-size,1.25rem); }
 .seed-segment { display:inline-grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); min-height:43px; padding:3px; border-radius:999px; background:var(--soft); max-width:100%; }

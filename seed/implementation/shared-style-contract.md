@@ -280,3 +280,10 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 - **U08 반례 경계:** 일반 아이콘 fallback의 루트 비례는 개선했지만, 메뉴 전체 버튼/행 높이·기본 `.seed-icon-action`의 명시적 px 값·모든 기존 `.clan-svg`/Android·200% 실기기/OS font scale 문제가 전부 해결됐다고 말하지 않는다.
 - **기존 미검증 추적:** U04 S06 단일 부모/200% 실제 소비, U05 S09 완성 배너 원본/시연, U06 S07 긴 헤더 제목·재화 충돌, U07 S08 실제 Dialog/Android Back/초점, U08 S01 실제 페이지 광학 정렬과 rem 관계 및 U00 `clan.css` Global Inner 하단바 충돌 후보는 **아직 미검증/미해결**이다. U10은 Pill Navigation의 **국소** 타이포/패딩 조정, U11은 실제 화면·통합 회귀/인수 확인이다.
 
+## 2026-11-12 · 활성 정본 이전·상품/버튼/헤더 교정
+
+- 이전 `web/preview/` 구현·클랜 CSS/기존 테스트는 `archive/preview-legacy-2026-11-11/`에 원본 보존, 현재 `web/preview/`는 빈 디렉터리다. 상단의 Preview·Lab 기반 이력 설명을 현재 동작 화면이라고 해석하지 않는다. **현행 공통 CSS 정본은 `seed/styles/seed-standard.css` 하나**이며 Preview 재구축 시 이 파일을 직접 참조한다.
+- **누락된 비-Lab 토큰:** 기존 `--soft`, `--seed-radius-*`, `--seed-space-*`, `--seed-stroke-control` 등이 `[data-seed-lab]`에만 있어서 새로운 Preview에서 `var()` 기본값을 찾지 못하는 문제가 있었다. 모든 페이지에 Light/Dark 공통 토큰을 정의하고 Lab의 기존 한정 색상 override는 보존한다.
+- **C-ACTION:** Neutral Outline은 전역 `stroke.control` 한 겹 + 약화한 중립 글자, 기본 radius.control=16. 외부 target 48px, 내부 face 34/43/48. 개별 Action을 이유 없이 pill로 승격하지 않는다.
+- **P-HIERARCHY S06:** 가로 통합형에서는 미디어 배경이 카드 실제 높이를 채우되 상품 PNG는 contain/8%로 비율 보존. 카드 내 빈 하단 흰 영역과 무조건 stretch/CTA auto push 금지.
+- **NAV-TOP:** Root 680 / Standard 650로 한정 미세 보정. 과거 650/620은 D-015 최초 시연값. Pretendard 로딩은 CDN 의존이며 번들 폰트 없음. `web/seed-lab/`은 유지했으나 이번 변경의 검수 대상으로 삼지 않는다.

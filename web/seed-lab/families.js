@@ -53,6 +53,16 @@ function renderProgress(key){
   progressButtons.forEach(button=>button.checked=button.dataset.value===key);
 }
 progressButtons.forEach(button=>button.addEventListener("change",()=>renderProgress(button.dataset.value)));
+const filterButtons=$$("[data-family-filter]");
+const filterItems=$$("#family-filter-results [data-family-kind]");
+filterButtons.forEach(button=>button.addEventListener("click",()=>{
+  setChoice(filterButtons,"familyFilter",button.dataset.familyFilter);
+  const kind=button.dataset.familyFilter;
+  let visible=0;
+  for(const item of filterItems){item.hidden=kind!=="all"&&item.dataset.familyKind!==kind;if(!item.hidden)visible++;}
+  const label=button.textContent.trim();
+  $("#family-filter-feedback").textContent=label+" "+visible+"개 표시 · 시연 자료";
+}));
 const views=$$("[data-view]");
 views.forEach(button=>button.addEventListener("click",()=>{setChoice(views,"view",button.dataset.view);showSelection();}));
 function showSelection(){

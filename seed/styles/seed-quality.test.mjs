@@ -15,11 +15,14 @@ function declaration(selector){
   return css.slice(a+1,css.indexOf('}',a));
 }
 test('Shared CSS supplies core Surface/Action tokens outside Lab',()=>{
-  const root=declaration(':root');
+  // :root is deliberately split between historic palette and shared geometry declarations.
+  // Collect declarations with the exact selector; never count :root[data-seed-lab].
+  const root=[...css.matchAll(/(?:^|\n):root\s*\{([^}]*)\}/g)].map(x=>x[1]).join(';');
+  const dark=[...css.matchAll(/(?:^|\n):root\[data-theme="dark"\]\s*\{([^}]*)\}/g)].map(x=>x[1]).join(';');
   for(const token of ['--soft','--seed-radius-control','--seed-radius-image','--seed-radius-surface','--seed-stroke-control','--seed-space-inline']){
     assert.ok(root.includes(token+':'),'missing global '+token);
   }
-  assert.match(declaration(':root[data-theme="dark"]'),/--seed-stroke-control:/);
+  assert.match(dark,/--seed-stroke-control:/);
   assert.match(root,/font-family:"Pretendard Variable"/);
 });
 test('Outline action stays neutral and not implicitly pill shaped',()=>{

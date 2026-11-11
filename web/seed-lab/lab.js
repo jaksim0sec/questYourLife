@@ -50,6 +50,10 @@ layoutButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#layout-rationale").textContent=descriptions[value];
 }));
 
+$("[data-item-preview]").forEach(button=>button.addEventListener("click",()=>{
+  $("#seed-item-demo-feedback").textContent=button.dataset.itemPreview+" UI 미리보기 선택됨 · 구매는 실행하지 않음";
+}));
+
 const progressExamples={
   "0":{value:0,max:1000},"620":{value:620,max:1000},
   "1000":{value:1000,max:1000},"1200":{value:1200,max:1000},

@@ -101,6 +101,7 @@ if(shell){
     header.dataset.titleAlign=titleAlign;
     const standard=header.dataset.navRole==="standard";
     if(standard&&trailingChoice==="credit")headerTrailing.dataset.slotKind="info";
+    else if(standard&&trailingChoice==="empty")headerTrailing.dataset.slotKind="empty";
     else headerTrailing.dataset.slotKind="action";
     $("#shell-credit").hidden=!(standard&&trailingChoice==="credit");
     $("#shell-more").hidden=currentShell==="immersive"||(standard&&trailingChoice!=="action");

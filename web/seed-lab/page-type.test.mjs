@@ -143,3 +143,35 @@ test('header bell is visually closed at its bottom and preview/Lab reuse the sam
  assert.match(js,/assets\/icons\/preview\/bell-connected\.svg/);
  assert.match(js,/icon\("bell"\)/);
 });
+
+
+test('Standard title start alignment is opt-in while Center and page roles remain unchanged',()=>{
+ assert.equal(PAGE_TYPES['global-inner'].header,'standard');
+ assert.equal(PAGE_TYPES['global-inner'].bottomNav,true);
+ assert.equal(PAGE_TYPES['non-global'].header,'standard');
+ assert.equal(PAGE_TYPES['non-global'].bottomNav,false);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\]\s*\{/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\] \.seed-top-nav__title\s*\{[^}]*text-align:center/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\] \.seed-top-nav__title\s*\{[^}]*text-align:start/);
+ assert.match(css,/\.head\.standard\[data-title-align="start"\]\s*\{/);
+ assert.match(css,/\.head\.standard\[data-title-align="start"\] h1\s*\{[^}]*text-align:start/);
+ assert.match(css,/\.seed-top-nav__inner\[data-nav-role="standard"\]\[data-title-align="start"\] \.seed-top-nav__trailing\[data-slot-kind="info"\]/);
+ assert.match(css,/--seed-top-target:3rem/);
+ assert.match(css,/--seed-top-glyph:1\.59rem/);
+});
+
+test('Lab can independently select centered/left title and info/action/empty trailing',()=>{
+ assert.match(html,/data-title-align-choice="center" aria-pressed="true"/);
+ assert.match(html,/data-title-align-choice="start" aria-pressed="false"/);
+ for(const name of ['action','credit','empty'])assert.match(html,new RegExp('data-header-trailing-choice="'+name+'"'));
+ assert.match(js,/header\.dataset\.titleAlign=titleAlign/);
+ assert.match(js,/headerTrailing\.dataset\.slotKind="info"/);
+ assert.match(js,/data-title-align-choice/);
+ assert.match(js,/data-header-trailing-choice/);
+ assert.match(js,/cash-coin-single\.png/);
+ assert.match(js,/seed-credit__coin/);
+ assert.match(js,/aria-label="예시 보유 캐시 3,240"/);
+ assert.match(js,/\.seed-top-nav__trailing/);
+ assert.match(js,/setPressed\(titleAlignButtons,titleAlign,"titleAlignChoice"\)/);
+ assert.match(js,/setPressed\(trailingChoiceButtons,trailingChoice,"headerTrailingChoice"\)/);
+});

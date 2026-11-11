@@ -147,6 +147,11 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - **SEED 규격을 실제 코드에 연결할 때:** [표준 스타일 적용 체계](implementation/shared-style-contract.md). 웹의 기존 공통 클래스·CSS 변수와 Android Compose의 Theme·재사용 UI 함수를 대응시키고, 전역 규격/컴포넌트 Variant/페이지 배치를 구분한다.
 - 이는 **새 디자인 계층이나 스타일 런타임이 아님.** 승인된 v0.15와 현행 구현의 차이를 확인하고, 기존 클래스/컴포넌트를 재사용하는 운영 계약이다. 스타일시트 코드·Native 이관은 이번 문서 반영에 포함되지 않는다.
 
+## 2026-11-11 · 상품 컨테이너 시각 표현 정교화
+
+- **상품 목록/카드 작업:** [P-HIERARCHY S06](patterns/content-hierarchy.md)에서 통합 카드·오픈 진열 우선순위를 선택 → [C-SURFACE S06](components/surface-media.md)의 외곽선/배경/버튼 컨테이너 → [C-IMAGE](components/image-frame.md)의 비율·contain·경계 → 기존 C-TEXT/C-CREDIT/C-ACTION 및 P-LAYOUT을 사용한다. **신규 Component/Surface 종류는 없음.**
+- 공통 스타일 `web/preview/seed-standard.css`의 `.seed-item-display`은 조합 배치만 재사용한다. 같은 이미지와 가격을 `web/seed-lab/?panel=components`에서 비교 가능. 버튼이 있는 상품은 통합 카드 우선 권장하며 실제 시각/동작 승인은 별도 검증한다.
+
 ## 2026-11-10 · 범용 공간 배치와 페이지 구성 (제안 규격, 웹/Native 미적용)
 
 - **페이지를 새로 설계할 때:** [페이지 구성](patterns/page-composition.md) → [공간 배치](patterns/layout-composition.md) → [정보 위계](patterns/content-hierarchy.md) → 해당 기존 Component/Surface/Shell 순서로 참조. 이는 제작 순서이며 문서의 실제 계층을 추가한 것이 아니다.

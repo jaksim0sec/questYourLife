@@ -237,7 +237,8 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media[data-media-state="error"] .seed-media__fallback { display:grid; }
 .seed-media .seed-media__fallback { display:none; place-items:center; height:100%; color:var(--sub); }
 .seed-media__badge { position:absolute; left:8px; top:8px; z-index:1; }
-.seed-icon { width:var(--seed-icon-size,20px); height:var(--seed-icon-size,20px); }
+/* U09: default general UI icon follows html root font scale; button/nav slots retain overrides. */
+.seed-icon { width:var(--seed-icon-size,1.25rem); height:var(--seed-icon-size,1.25rem); }
 .seed-segment { display:inline-grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); min-height:43px; padding:3px; border-radius:999px; background:var(--soft); max-width:100%; }
 .seed-segment button { min-height:37px; padding:6px 12px; border:0; border-radius:999px; background:transparent; color:var(--sub); font:inherit; font-size:.8rem; font-weight:700; white-space:normal; cursor:pointer; }
 .seed-segment button[aria-pressed="true"] { background:var(--surface); color:var(--text); box-shadow:0 1px 3px #00000016; }

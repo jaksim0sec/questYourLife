@@ -247,9 +247,11 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-credit[data-size="large"] .seed-credit__value { font-size:1.125rem; line-height:1.333333; }
 .seed-credit[data-state="pending"] { opacity:.65; }
 .seed-credit[data-state="unavailable"] .seed-credit__coin { display:none; }
-/* C-SELECTION existing Filter Chip role. Never use a filter to represent unrelated navigation. */
-.seed-filter-chip { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:3rem; max-width:100%; padding:.5rem .875rem; border:1px solid var(--seed-stroke-control,var(--line)); border-radius:999px; background:var(--surface); color:var(--text); font:inherit; font-size:.875rem; line-height:1.428571; font-weight:600; white-space:normal; text-align:center; cursor:pointer; }
-.seed-filter-chip[aria-pressed="true"] { border-color:var(--brand); background:var(--brand-weak,var(--soft)); color:var(--text); }
+/* U10 / C-SELECTION: denser visual pill without sacrificing the existing >=48px hit target. */
+.seed-filter-chip { display:inline-flex; align-items:center; justify-content:center; gap:.375rem; min-height:3rem; max-width:100%; padding:.375rem .625rem; border:0; border-radius:999px; background:transparent; color:var(--text); font:inherit; font-size:.875rem; line-height:1.428571; font-weight:600; white-space:normal; text-align:center; cursor:pointer; position:relative; isolation:isolate; }
+.seed-filter-chip::before { content:""; position:absolute; inset:.25rem 0; border:1px solid var(--seed-stroke-control,var(--line)); border-radius:inherit; background:var(--surface); z-index:-1; pointer-events:none; }
+.seed-filter-chip[aria-pressed="true"] { color:var(--text); }
+.seed-filter-chip[aria-pressed="true"]::before { border-color:var(--brand); background:var(--brand-weak,var(--soft)); }
 .seed-filter-chip:disabled { cursor:not-allowed; opacity:.45; }
 /* U09: default general UI icon follows html root font scale; button/nav slots retain overrides. */
 .seed-icon { width:var(--seed-icon-size,1.25rem); height:var(--seed-icon-size,1.25rem); }

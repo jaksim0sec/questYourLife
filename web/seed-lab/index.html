@@ -223,6 +223,19 @@
       <div class="family-progress-row"><p class="seed-text" data-text-role="caption" data-text-style="support">Featured · 12px</p><div class="progress-track" role="progressbar" aria-label="Featured 예제" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="620" data-thickness="featured" data-progress-state="ready" style="--progress:62%"><span class="progress-fill"></span></div></div>
     </div>
     <p id="family-progress-note" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">초과 기여는 숫자로 남고, 막대는 100%까지만 채웁니다.</p>
+    <div class="family-credit-demo" aria-label="C-CREDIT 공통 재화 표시">
+      <p class="seed-text" data-text-role="body" data-text-style="item">C-CREDIT · 보유 캐시 패널 조합</p>
+      <div id="family-credit-panel" class="seed-surface" data-surface="subtle">
+        <div class="family-credit-panel">
+          <span class="seed-text" data-text-role="caption" data-text-style="support">내 보유 캐시 · 시연값</span>
+          <span class="seed-credit" data-size="medium" data-state="available" role="img" aria-label="예시 보유 캐시 3,240">
+            <img class="seed-credit__coin" src="../../assets/art/rewards/cash-coin-single.png" alt="">
+            <span class="seed-credit__value">3,240</span>
+          </span>
+        </div>
+      </div>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">C-SURFACE Subtle 안에 C-CREDIT. 실제 가격/잔액이 아닌 예제이며 Surface는 선택적입니다. 임의 코인 SVG나 이모지를 쓰지 않습니다.</p>
+    </div>
   </section>
   <section class="family-section" id="inputs" aria-labelledby="title-inputs">
     <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">04 · C-FIELD / C-CHECK / C-RADIO / C-SEGMENT</p><h2 id="title-inputs" class="seed-text" data-text-role="section" data-text-style="section">입력과 선택</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">컴포넌트 모양보다 동작의 의미를 먼저 구분합니다.</p></div></div>
@@ -232,6 +245,31 @@
       <div class="seed-surface family-input-cell" data-surface="solid"><p class="seed-text" data-text-role="body" data-text-style="item">같은 데이터의 보기 전환</p><div class="seed-segment" role="group" aria-label="보기 전환"><button type="button" data-view="day" aria-pressed="true">오늘</button><button type="button" data-view="week" aria-pressed="false">이번 주</button><button type="button" data-view="month" aria-pressed="false">이번 달</button></div><p class="seed-text" id="family-selection-feedback" data-text-role="caption" data-text-style="support" data-text-tone="secondary" aria-live="polite">오늘 · 기본 정보</p></div>
     </div>
   </section>
+
+    <div class="family-filter-demo" aria-label="C-SELECTION Filter Chip 구분">
+      <p class="seed-text" data-text-role="body" data-text-style="item">Filter Chip · 항목 조건만 변경</p>
+      <div id="family-filter-group" class="family-filter-bar" role="group" aria-label="아이템 종류 필터">
+        <button class="seed-filter-chip" type="button" data-family-filter="all" aria-pressed="true">전체</button>
+        <button class="seed-filter-chip" type="button" data-family-filter="hats" aria-pressed="false">모자</button>
+        <button class="seed-filter-chip" type="button" data-family-filter="audio" aria-pressed="false">오디오</button>
+      </div>
+      <div id="family-filter-results" class="family-filter-grid">
+        <article class="seed-surface family-filter-item" data-surface="solid" data-family-kind="hats">
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loaded">
+            <img class="seed-media__image" src="../../assets/art/cosmetics/cosmetic_beanie.png" alt="">
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">비니</p>
+        </article>
+        <article class="seed-surface family-filter-item" data-surface="solid" data-family-kind="audio">
+          <div class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loaded">
+            <img class="seed-media__image" src="../../assets/art/cosmetics/cosmetic_black_headphones.png" alt="">
+          </div>
+          <p class="seed-text" data-text-role="body" data-text-style="item">헤드셋</p>
+        </article>
+      </div>
+      <p id="family-filter-feedback" class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary" aria-live="polite">전체 2개 표시 · 시연 자료</p>
+      <p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">보상 모아보기처럼 다른 화면으로 이동하는 행동은 Filter Chip이 아니라 별도 탐색 링크입니다.</p>
+    </div>
   <section class="family-section" id="lists" aria-labelledby="title-list">
     <div class="family-section-head"><div><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">05 · C-LIST + C-IMAGE</p><h2 id="title-list" class="seed-text" data-text-role="section" data-text-style="section">List & Media</h2><p class="seed-text" data-text-role="caption" data-text-style="support" data-text-tone="secondary">같은 정보 축, 다른 콘텐츠. 미디어는 상태와 비율을 보존합니다.</p></div></div>
     <div class="family-content-grid">

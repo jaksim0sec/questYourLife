@@ -67,12 +67,13 @@ references: [D-011, D-012, D-013, K03, K07, K08, K09]
 
 - **Badge:** `tone=neutral|brand|success|info|warning|danger|reward` 7개. 기본26, XS21, Pill, label 필수, icon/dot 선택. 필터·토글이 되면 Badge가 아니라 C-SELECTION. 객체당 일반 1~2개.
 - **Progress:** 하나의 `progress-track` + `progress-fill`, `thickness=micro(6)|default(10)|featured(12)`. 0/620/1000/1200·loading·unavailable를 단일 입력에서 처리하고 실제 원본 초과값을 보존한다. 완료 게이지가 지급 완료를 뜻하지 않는다.
-- **Credit Value:** C-CREDIT의 실제 래스터 재화+수치. 일반 Badge 또는 `coins.svg`로 대체하지 않는다.
+- **Credit Value:** 기존 C-CREDIT의 공통 웹 구현은 `.seed-credit` + `__coin`(공통 `assets/art/rewards/cash-coin-single.png`) + `__value`. 보유 캐시 패널이 필요하면 **기존 `.seed-surface[data-surface="subtle"]` 안에 C-TEXT 라벨과 이 단위를 조합**한다. 잔액을 그냥 글자로 쓰거나 일반 Badge·`coins.svg`로 대체하지 않는다. 패널 외형을 새 C-CREDIT Variant로 만들지 않는다.
 
 ## 4. Input/Choice family · C-FIELD / C-CHECK / C-RADIO / C-SEGMENT / C-TABS
 
 - Field는 **Label → Control → Help/Error**. 기본/포커스/읽기전용/비활성/오류의 의미는 분리. Placeholder를 Label로 쓰지 않는다. 공통 `.seed-field-group`은 간격만, `.seed-field`는 48px 최소 Control + 단일 border focus.
 - Checkbox는 독립 선택·수동 완료, Radio는 단일 그룹 배타, Segmented는 같은 데이터의 2~4개 보기, Tabs는 관련 영역 탐색. **생김새가 비슷해도 바꿔 쓰지 않는다.**
+- **Filter Chip:** 기존 C-SELECTION의 `.seed-filter-chip[aria-pressed]`가 실제 결과 그룹의 조건을 바꾼다. `보상 모아보기`처럼 다른 페이지로 이동하는 링크는 이 필터 그룹에 포함하지 않는다. 새 Pill/Segmented 타입 추가 없음. 실제 클릭/결과 변경 예시는 SEED Lab `families.js`가 소유한다.
 - Native input/label과 실제 disabled/checked/validation 상태는 보존한다. 액션처럼 보이는 Badge로 입력 상태를 흉내 내지 않는다.
 
 ## 5. Content family · C-LIST / C-IMAGE / C-SURFACE / C-ICON

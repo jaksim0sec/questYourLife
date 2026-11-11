@@ -50,7 +50,7 @@ layoutButtons.forEach(button=>button.addEventListener("click",()=>{
   $("#layout-rationale").textContent=descriptions[value];
 }));
 
-$("[data-item-preview]").forEach(button=>button.addEventListener("click",()=>{
+$$("[data-item-preview]").forEach(button=>button.addEventListener("click",()=>{
   $("#seed-item-demo-feedback").textContent=button.dataset.itemPreview+" UI 미리보기 선택됨 · 구매는 실행하지 않음";
 }));
 

@@ -75,3 +75,7 @@ Loading에서도 제목 역할과 예상 콘텐츠 폭을 유지한다. 오류 �
 
 일반 텍스트 위계(`type.root`, `type.detail`, `C-TEXT`)의 2026-11-08 시작 스케일은 **헤더의 최종 시각값이 아니다**. 사용자는 Root/Standard 헤더의 *얇은 비교안*을 채택했다. 상단만 Pretendard Variable 우선(시스템 폴백), Root `1.30rem / 650 / -0.025em / line-height 1.35`, Standard `1.08rem / 620 / -0.018em`으로 확정했다. 헤더 전용 표현의 단일 기준은 [NAV-TOP](../TOP_NAVIGATION.md)이다.
 동일 의미 Title 역할은 유지하지만, 공통 `.seed-text[data-text-style=root|standard]`를 모든 페이지에서 변경하지 않는다. 실제 Top Navigation은 `.seed-top-nav__title`과 기존 preview `.head h1`이 이 값을 소유한다. Android/일반 본문 Typography 전체로 자동 전파하지 않는다.
+
+## 2026-11-12 · Root/Standard 무게 후속 보정
+
+사용자 참고 이미지 비교로 **Top Navigation 전용 Root 680 / Standard 650**으로 보정. 앞선 D-015 기록의 Root 650 / Standard 620은 최초 확정 당시의 이력으로 보존한다. 일반 C-TEXT의 type.root/standard, 섹션·본문·버튼을 함께 굵게 만들지 않는다. Pretendard Variable은 현재 웹 CSS 외부 CDN 로딩이므로 요청하는 것과 실제 다운로드·적용 여부를 구분한다.

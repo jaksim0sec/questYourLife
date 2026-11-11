@@ -76,6 +76,24 @@ Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 �
 
 **공통 웹 구현:** `web/preview/seed-standard.css`의 `.head`(기존 preview), `.seed-top-nav`(Lab 및 새로운 화면), 페이지 타입 `seed-page-contract.mjs`. 헤더 A/B 전용 override를 제거하고 위 값을 기본으로 채택한다. Compose 이식은 별도.
 
+## S07 · Standard 우측 슬롯의 정보/동작 구별 (Non-Global 사례)
+
+**D-015 승인 시각 규격 불변:** Root `1.30rem/650/-0.025em`, Standard `1.08rem/620/-0.018em`, Glyph `1.59rem`, 동작 target `3rem`(48px 기준), 헤더 최소 높이 `3.5rem`, gutter `<360px 16px / 그 이상 20px`. Back/Close와 Standard 중앙 타이틀 및 기존 SVG 경로·색·광학 중심·하단 Navigation은 바꾸지 않는다.
+
+기존 `Standard = Back 또는 Close + 중앙 제목 + 맥락별 우측 슬롯`을 유지하되 **Non-Global에서도 우측 슬롯의 내용이 반드시 버튼일 필요는 없다.** 실제 목적에 따라 다음을 선택한다.
+
+| 우측 슬롯 | 의도·표현 | 접근성/동작 |
+|---|---|---|
+| **액션** | 실제 화면 기능이 있는 더보기/공유 등의 기존 Outline SVG 버튼 | C-ICON 타깃 최소48px, 키보드 동작, 이름, Focus; 실제 행동 없는 버튼 금지 |
+| **읽기 전용 맥락 정보** | 예: 상점의 `보유 캐시 · 1,240` (가상 예시). C-CREDIT의 기존 코인 래스터+금액 또는 뜻이 명확한 짧은 텍스트 | `span` 같은 비조작 요소, 읽을 수 있는 값/단위/의미. 버튼 스타일·hover·chevron·독립 클릭 target 금지 |
+| **비움** | 보조 행동이나 짧은 핵심 정보가 필요 없는 경우 | 임의 아이콘/상태 Badge를 추가하지 않음 |
+
+**가용 공간:** 우측 값 때문에 중앙 제목과 Back/Close를 희생시키지 않는다. 긴 한글 제목·동적으로 커지는 값·200% 확대에서 겹치거나 헤더를 과도하게 늘리면 **값을 본문 정보 영역으로 내려** 전체 금액을 보존한다. 제목 위치/폰트를 임의 축소·이동하지 않는다. 기존 CSS의 좌우 균형 Grid에서 제목·값 바운딩 박스 간 교집합, 가로 overflow, 48px 동작 타깃을 검증한다. 슬롯이 있다는 사실은 모든 자릿수를 안전하게 수용한다는 뜻이 아니다.
+
+**Middle 프로필과 역할 분리:** DM에서 Non-Global 채팅방에 진입했을 때 상대 아바타·이름·선택 상태 정보는 [P-HIERARCHY의 Middle](seed/patterns/content-hierarchy.md) **신원 표현**이다. 우측에 붙이는 짧은 코인/액션과 혼동하거나 **헤더 전체를 프로필 카드로 재정의하지 않는다**. 이름과 아바타를 표현해도 Back/Close·Standard 제목·D-015 수치를 보호한다. 이 슬롯이 새 Header Variant가 된다는 뜻도 아니다.
+
+**소유권·미검증:** 화면 맥락과 NonGlobal 하단바 숨김/Global Inner 하단바 유지는 [S-PAGE S07](seed/shells/page-shells.md)과 `seed-page-contract.mjs`, 재화의 의미/원본 이미지/상태는 [C-CREDIT](seed/components/credit-value.md), 액션은 기존 C-ICON/P-ACTIONS가 소유한다. 기존 `seed-top-nav__trailing`의 **사용 의미만 보완**하며 새 DOM 슬롯·SVG·Header Type·CSS Override를 만들지 않는다. 실제 소비 페이지에 정적 잔액 슬롯이 연결된 것은 아니므로 320~430px·200% 앱 실화면 검증은 **미완료**다.
+
 ### 알림 Bell 하단 연결 보정 (2026-11-10)
 
 웹 Root/Standard 알림 버튼의 도형은 `assets/icons/preview/bell-connected.svg`를 사용한다. 하단 추의 양 끝을 종 본체 밑선(`y=17.5`)에 이어 열린 모양으로 보이지 않게 교정한 별도 Outline SVG다. 기존 공식 `assets/icons/soft/v0.14/bell.svg`는 D-012의 56종 정본이므로 변경하지 않는다. 두 SVG 모두 `24×24` viewBox, `stroke-width=1.8`, `currentColor`이며 헤더 타깃·크기·기타 아이콘은 D-015 그대로다.

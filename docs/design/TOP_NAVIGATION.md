@@ -94,6 +94,30 @@ Root/Standard의 승인 구조는 그대로 유지한다. 이번 웹 개편의 �
 
 **소유권·미검증:** 화면 맥락과 NonGlobal 하단바 숨김/Global Inner 하단바 유지는 [S-PAGE S07](seed/shells/page-shells.md)과 `seed-page-contract.mjs`, 재화의 의미/원본 이미지/상태는 [C-CREDIT](seed/components/credit-value.md), 액션은 기존 C-ICON/P-ACTIONS가 소유한다. 기존 `seed-top-nav__trailing`의 **사용 의미만 보완**하며 새 DOM 슬롯·SVG·Header Type·CSS Override를 만들지 않는다. 실제 소비 페이지에 정적 잔액 슬롯이 연결된 것은 아니므로 320~430px·200% 앱 실화면 검증은 **미완료**다.
 
+## 2026-11-11 · Standard 헤더 제목 정렬 선택 (사용자 최신 합의)
+
+**Standard는 그대로 하나의 Top Navigation**이다. `Global Inner`와 `Non-Global`에서 페이지 목적·오른쪽 정보의 양에 따라 다음 두 배치 중 하나를 **화면 작성자가 선택**한다. Page Type·Shell·새 Header Variant를 만들지 않는다.
+
+| 선택 | 구성 | 적용 판단 |
+|---|---|---|
+| **Center (기본)** | `[Back/Close] [중앙 페이지 이름] [선택적 SVG Action / 빈 슬롯]` | 가벼운 상세·일반 조회, 타이틀 자체를 안정적인 중앙 기준으로 보여줄 화면. 기존 레이아웃/스타일/아이콘을 변경하지 않음 |
+| **Start (선택)** | `[Back/Close] [좌측 페이지 이름] [남는 우측 공간: 실제 정보 / Action / 빈 슬롯]` | 보유 캐시처럼 화면 맥락 정보를 헤더에 표시하고 싶거나, 페이지 구성상 좌측 제목이 더 적합할 때. **정보 슬롯이 없어도 자율 선택 가능** |
+
+**웹 선언:** 기존 `.seed-top-nav__inner[data-nav-role="standard"]`에 `data-title-align="start"`를 명시하면 좌측 제목형, 속성 생략 또는 `data-title-align="center"`면 기존 중앙형. `.head.standard[data-title-align="start"]`도 같은 **선택적 시각 계약**만 적용할 수 있다. `data-page-type`은 `global-inner`/`non-global` 그대로이며, Root나 Bottom Sheet 위치 규격은 변경하지 않는다. 배치 선택은 **페이지 작성자의 디자인 의도**이며 우측 슬롯 유무에 따라 런타임에서 자동 전환하지 않는다.
+
+```text
+Center : [<]           페이지 이름           [검색]
+Start  : [<] 페이지 이름          [보유 캐시 · 금액]
+Start  : [<] 페이지 이름                         [ ]  (빈 우측도 허용)
+```
+
+- **Back/Close, 타이포·아이콘 보존:** D-015 Standard `1.08rem/620/-0.018em`, Glyph `1.59rem`, 터치 타깃 `3rem`, 헤더 최소 `3.5rem`, 기존 좌우 gutter와 광학 보정을 그대로 사용. 제목만 한정된 Standard 내부 공간에서 좌측 정렬. Root 타이틀, Center형 중앙 기준, Bottom Navigation 가시성/상태는 **그대로 보존**한다.
+- **기존 trailing 재사용:** 실제 `C-ICON` Action / 원본 코인 PNG와 수치인 `C-CREDIT` / 짧은 비조작 정보 / 없음 중 필요한 것을 선택한다. **재화를 새 아이콘·이모지로 대체하거나 정보에 가짜 버튼 효과를 주지 않는다.** 읽기 전용은 이름·값을 함께 전달하고, 액션은 기존 48 타깃을 유지한다. 필요할 때만 C-SURFACE 패널로 묶으며 과도한 Card 강제 금지.
+- **남는 공간의 소유권:** Start는 제목 옆 남는 공간을 우측에 확보하되 Back·제목·trailing을 겹치게 만들거나 화면 밖으로 밀지 않는다. 긴 제목·큰 캐시·320폭·200% 글자에서 한 행이 불가능하면 **줄바꿈/헤더 행 높이 증가** 또는 **본문으로 정보 이동**을 선택한다. 값 숨김·숫자 임의 생략·글꼴/버튼 크기 축소 금지.
+- **옵트인/회귀:** CSS 변경은 `[data-title-align="start"]`에만 국한한다. 속성이 없는 Standard 및 Root는 기존 Grid, 제목 위치·서체·아이콘 좌표를 유지한다. 라이트/다크, 320·360·390·430 CSSpx, 100/200% 글자, 아이콘·코인·빈 trailing, 선택 전환·Back/하단바 검수.
+
+**우선순위:** 이 섹션은 과거의 'Standard는 항상 중앙' 표현을 **중앙은 기본, 좌측은 선택 가능**으로 보완한 최신 계약이다. 승인된 D-015 수치와 Page Type 의미는 불변이다.
+
 ### 알림 Bell 하단 연결 보정 (2026-11-10)
 
 웹 Root/Standard 알림 버튼의 도형은 `assets/icons/preview/bell-connected.svg`를 사용한다. 하단 추의 양 끝을 종 본체 밑선(`y=17.5`)에 이어 열린 모양으로 보이지 않게 교정한 별도 Outline SVG다. 기존 공식 `assets/icons/soft/v0.14/bell.svg`는 D-012의 56종 정본이므로 변경하지 않는다. 두 SVG 모두 `24×24` viewBox, `stroke-width=1.8`, `currentColor`이며 헤더 타깃·크기·기타 아이콘은 D-015 그대로다.

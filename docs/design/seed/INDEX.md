@@ -174,3 +174,10 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../../DECISIONS.md)에
 - **구성 의도부터 판단할 때:** [P-PAGE-COMPOSE](patterns/page-composition.md) → [P-LAYOUT](patterns/layout-composition.md) → [P-HIERARCHY](patterns/content-hierarchy.md) → 필요한 C-SURFACE/C-IMAGE/C-AVATAR/C-OVERLAY/C-SVG·C-TEXT. 기존 4 Page Type과 일반 Banner/이벤트 A의 구별을 유지한다.
 - **실제 웹 공통 클래스와 확대 문제:** [Shared Style](implementation/shared-style-contract.md), `web/preview/seed-standard.css`, 루트 font·SVG fallback 및 기존 Button/Nav 예외. **새 런타임/새 token 없음**.
 - **현재 통합 인수 보류:** 레거시 `Global Inner` 클랜의 하단 Navigation 숨김(실제 CSS 충돌), NonGlobal 긴 헤더 값 겹침, U04·U05·U07 실화면·실데이터 검증 누락. U10 Pill 대상은 사용자 지시로 **보류**. GitHub Pages 배포/분리된 Chromium fixture를 **Node 원본 테스트나 실제 앱 UI 승인으로 대체하지 않는다**.
+
+
+## 2026-11-11 · U10 사용자 정정 반영
+
+- U11 인수 시점의 "Pill Navigation 불확실·보류" 기록은 **이후 사용자 정정으로 대체**되었다. 정확한 대상은 **[C-SELECTION Filter Chip](components/selection-controls.md)**의 내부 패딩/시각 밀도와 **[P-PAGE-COMPOSE](patterns/page-composition.md)**의 필터 → 결과 위계다.
+- 공통 CSS `web/preview/seed-standard.css`의 `.seed-filter-chip`이 기존 48px hit target을 유지하면서 보이는 face·글씨 주변 여백만 줄인다. 필터 바로 아래 같은 결과를 소개하는 영문 소제목+큰 제목의 반복은 비권장, 독립 섹션은 예외 가능. `C-SEGMENT`·Tabs·하단 Navigation은 변경하지 않는다.
+- 검증 및 이전 기록과의 시간 순서: [V-CHECKS · U10 후속 정정](VALIDATION.md#2026-11-11--u10-후속-정정--filter-chip-및-필터-결과-위계). 실제 서비스 페이지 반영과 전체 원본 Node/브라우저 시각 검증은 별도다.

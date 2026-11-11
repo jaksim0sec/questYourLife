@@ -245,6 +245,17 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-media[data-media-state="error"] .seed-media__fallback { display:grid; }
 .seed-media .seed-media__fallback { display:none; place-items:center; height:100%; color:var(--sub); }
 .seed-media__badge { position:absolute; left:8px; top:8px; z-index:1; }
+/* S06 item B composition: two presentations, not a new Surface role or Image Frame. */
+.seed-item-display { display:flex; flex-direction:column; gap:var(--seed-space-item); min-width:0; height:100%; }
+.seed-item-display > .seed-media { width:100%; min-width:0; flex:0 0 auto; }
+.seed-item-display__info { display:flex; flex:1 1 auto; flex-direction:column; gap:var(--seed-space-inline); min-width:0; overflow-wrap:anywhere; }
+.seed-item-display__action { display:flex; flex-wrap:wrap; gap:var(--seed-space-inline); align-items:flex-end; margin-block-start:auto; padding-block-start:var(--seed-space-inline); }
+.seed-item-display__action > .seed-action { flex:1 1 auto; min-width:0; }
+.seed-item-display__action > .seed-action > .seed-action__face { width:100%; }
+.seed-item-display[data-item-presentation="integrated"] { gap:0; padding:0; overflow:hidden; }
+.seed-item-display[data-item-presentation="integrated"] > .seed-media { border-radius:0; }
+.seed-item-display[data-item-presentation="integrated"] > .seed-item-display__info { padding:var(--seed-space-group); background:var(--surface); }
+.seed-item-display[data-item-presentation="open"] { background:transparent; }
 /* C-CREDIT existing Value component. A Surface around it is an optional parent, not a new currency variant. */
 .seed-credit { display:inline-flex; align-items:center; gap:5px; min-width:0; max-width:100%; vertical-align:middle; white-space:normal; font-variant-numeric:tabular-nums; }
 .seed-credit__coin { display:block; flex:0 0 auto; width:1.3125rem; height:1.3125rem; object-fit:contain; }

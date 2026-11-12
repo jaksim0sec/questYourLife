@@ -1,5 +1,5 @@
 import {WEB_NAV_ITEMS} from '../../seed/runtime/seed-page-contract.mjs';
-import {threads} from './mock-data.mjs?v=home-nav';
+import {threads} from './mock-data.mjs?v=quests-tab';
 
 const definitions={
   home:{type:'global',title:'홈',tab:'home'},
@@ -9,10 +9,10 @@ const definitions={
   me:{type:'global',title:'마이',tab:'me'},
   quest:{type:'global-inner',title:'퀘스트 상세',tab:'quests',parentTabs:['home','quests','dm'],hasId:true},
   book:{type:'global-inner',title:'퀘스트북',tab:'quests',parentTabs:['quests','home'],hasId:true},
-  search:{type:'non-global',title:'검색',tab:'home'},
+  search:{type:'non-global',title:'검색',tab:'home',parentTabs:['home','quests']},
   ranking:{type:'global-inner',title:'주간 기여',tab:'clan'},
   shop:{type:'global-inner',title:'상점',tab:'me',align:'start'},
-  chat:{type:'non-global',title:'대화방',tab:'dm',parentTabs:['dm','clan','home'],hasId:true},
+  chat:{type:'non-global',title:'대화방',tab:'dm',parentTabs:['dm','clan','home','quests'],hasId:true},
   item:{type:'non-global',title:'상품 상세',tab:'me',hasId:true,fallback:'shop'},
   decorate:{type:'non-global',title:'꾸미기',tab:'me'},
   rewards:{type:'non-global',title:'보상함',tab:'me',parentTabs:['me','clan','home']},

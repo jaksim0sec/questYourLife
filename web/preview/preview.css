@@ -10,7 +10,7 @@
 .preview-content:focus { outline: none; }
 .preview-shell .seed-top-nav__trailing[data-slot-kind="info"] { margin-inline-end: 0; }
 .preview-shell[data-screen="shop"] .shop-balance { display: none; }
-.section-heading, .hero-meta, .hero-bottom, .detail-reward, .clan-heading, .book-title {
+.section-heading, .hero-meta, .hero-bottom, .detail-reward, .clan-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,7 +68,7 @@
 .rank { color: var(--sub); font-size: .84rem; font-weight: 750; }
 .rank-xp { font-size: .82rem; font-variant-numeric: tabular-nums; }
 .filter-row, .page-actions { display: flex; flex-wrap: wrap; gap: .35rem .55rem; }
-.quest-browser, .shop-list { gap: .38rem; }
+.shop-list { gap: .38rem; }
 .empty { padding-block: 1rem; }
 .book-card { display: grid; gap: .7rem; }
 .quest-condition, .detail-reward { border-top: 1px solid var(--line); padding-top: .7rem; }
@@ -241,3 +241,52 @@
 .home-alerts .seed-sheet__head { padding-block: .45rem; }
 .home-alerts .seed-sheet__body { padding-bottom: max(1rem,env(safe-area-inset-bottom,0px)); }
 .home-alerts .preview-list > .seed-list__item { padding-inline: 0; }
+
+/* The questbook is a destination with its own chapter and progress. The list remains an open section. */
+.preview-shell[data-screen="quests"] .preview-content { padding-block-start: 1rem; }
+.preview-shell[data-screen="quests"] .seed-page-shell__section { gap: .65rem; }
+.questbook-shelf { display: grid; gap: .7rem; }
+.questbook-cover[data-surface="solid"] {
+  --line: #6f5463;
+  --brand: #f1a5b4;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 1rem .7rem;
+  padding: 1.1rem 1rem 1rem 1.15rem;
+  border-color: #59404f;
+  border-inline-start: .25rem solid #b46b83;
+  background: linear-gradient(125deg,#33252f,#4c3141);
+}
+.questbook-cover .seed-text { color: #fff6fa; word-break: keep-all; overflow-wrap: anywhere; }
+.questbook-cover .seed-text[data-text-tone="secondary"] { color: #e7c9d4; }
+.questbook-cover__copy p { margin-top: .3rem; }
+.questbook-cover__symbol {
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  aspect-ratio: 1;
+  border: 1px solid #987084;
+  border-radius: .9rem;
+  background: #634557;
+  color: #ffe1eb;
+}
+.questbook-cover__symbol > .seed-icon { --seed-icon-size: 1.7rem; }
+.questbook-cover__progress { display: grid; gap: .36rem; }
+.questbook-cover__value { color: #e7c9d4; font-size: .78rem; font-variant-numeric: tabular-nums; }
+.questbook-cover__value > strong { color: #fff6fa; font-size: 1rem; }
+.questbook-cover__link { display: inline-flex; align-items: center; gap: .18rem; align-self: end; color: #fff6fa; font-size: .81rem; font-weight: 680; }
+.questbook-cover__link > .seed-icon { --seed-icon-size: .9rem; flex: none; }
+.quest-result-count { color: var(--sub); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.quest-browser { display: grid; gap: .45rem; }
+.quest-browser .filter-row { gap: .2rem .4rem; }
+.preview-shell .preview-list > .quest-index-row { gap: .55rem; min-height: 4.2rem; }
+.quest-index-copy > .seed-text { word-break: keep-all; overflow-wrap: anywhere; }
+.quest-index-meta { display: flex; align-items: center; flex-wrap: wrap; gap: .26rem .4rem; }
+.quest-index-meta .seed-text { overflow-wrap: anywhere; }
+.quest-index-icon[data-status="done"] { color: var(--success-fg); }
+@media (max-width: 21rem) {
+  .questbook-cover__symbol { width: 2.6rem; }
+  .quest-index-icon { width: 1.9rem; height: 1.9rem; }
+  .quest-index-row > .seed-icon { display: none; }
+}

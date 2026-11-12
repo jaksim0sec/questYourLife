@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=home-nav';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=home-nav';
-import {homeAlerts} from './mock-data.mjs?v=home-nav';
-import {readRoute,navMarkup} from './routes.mjs?v=home-nav';
+import {createStore} from './store.mjs?v=quests-tab';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=quests-tab';
+import {homeAlerts} from './mock-data.mjs?v=quests-tab';
+import {readRoute,navMarkup} from './routes.mjs?v=quests-tab';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -15,7 +15,7 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'all',shop:'전체',period:'current',search:''};
+const ui={quest:'active',shop:'전체',period:'current',search:''};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -59,6 +59,8 @@ function render() {
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
     trailing.innerHTML=homeActions(state);
+  } else if(route.name==='quests') {
+    trailing.innerHTML=iconAction('검색','search','search')+iconAction('퀘스트 만들기','plus','new-quest');
   } else if(route.name==='me'||route.name==='shop') {
     trailing.innerHTML=cash(state.cash);
   } else trailing.replaceChildren();
@@ -122,8 +124,10 @@ document.addEventListener('click',event=>{
     if(currentEntry.depth>0)history.back();
     else navigate('#/'+(route.fallback||route.tab));
   } else if(shellAction==='search') {
-    navigate('#/search');
+    navigate('#/search?tab='+route.tab);
     get('#home-search')?.focus();
+  } else if(shellAction==='new-quest') {
+    navigate('#/chat/ai?tab=quests');
   } else if(shellAction==='alerts') {
     get('#home-alert-list').innerHTML=renderHomeAlerts(store.read());
     alertSheet.showModal();
@@ -144,7 +148,7 @@ document.addEventListener('click',event=>{
 document.addEventListener('input',event=>{
   if(event.target.id!=='home-search')return;
   ui.search=event.target.value;
-  get('#home-search-results').innerHTML=searchResults(store.read(),ui.search);
+  get('#home-search-results').innerHTML=searchResults(store.read(),ui.search,route.tab);
 });
 document.addEventListener('keydown',event=>{
   if(event.key!=='Escape')return;

@@ -264,3 +264,26 @@ test('home search finds quest books and unread notifications survive a reload',(
   assert.equal(store.dispatch('read-alert','unknown'),false);
   assert.equal((renderHomeAlerts(createStore(storage).read()).match(/읽지 않음/g)||[]).length,2);
 });
+
+test('quest index filters real statuses and updates its book cover progress',()=>{
+  const store=createStore();
+  const active=page(store,'#/quests',{...ui,quest:'active'});
+  assert.match(active,/questbook-cover[^>]*href="#\/book\/math\?tab=quests"/);
+  assert.match(active,/aria-valuenow="1"/);
+  assert.match(active,/data-value="active" aria-pressed="true"/);
+  assert.match(active,/수학 오답 3문제 다시 풀기/);
+  assert.doesNotMatch(active,/달리기 기록 0.5초 줄이기/);
+  const offered=page(store,'#/quests',{...ui,quest:'offered'});
+  assert.match(offered,/달리기 기록 0.5초 줄이기/);
+  assert.match(offered,/동네에서 주황색 거울 찾기/);
+  assert.equal(store.dispatch('defer','math-today'),true);
+  assert.match(page(store,'#/quests',{...ui,quest:'deferred'}),/수학 오답 3문제 다시 풀기/);
+  assert.equal(store.dispatch('resume','math-today'),true);
+  assert.equal(store.dispatch('complete','math-today'),true);
+  const done=page(store,'#/quests',{...ui,quest:'done'});
+  assert.match(done,/aria-valuenow="2"/);
+  assert.match(done,/수학 오답 3문제 다시 풀기/);
+  assert.equal(readRoute('#/search?tab=quests').tab,'quests');
+  assert.equal(readRoute('#/chat/ai?tab=quests').tab,'quests');
+  assert.match(searchResults(store.read(),'수학','quests'),/#\/book\/math\?tab=quests/);
+});

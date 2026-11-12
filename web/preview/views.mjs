@@ -1,11 +1,11 @@
-import {books,catalog,chestLoot,clan,homeAlerts,rewards,threads} from './mock-data.mjs?v=home-nav';
-import {clanRows,clanTotal} from './store.mjs?v=home-nav';
+import {books,catalog,chestLoot,clan,homeAlerts,rewards,threads} from './mock-data.mjs?v=quests-tab';
+import {clanRows,clanTotal} from './store.mjs?v=quests-tab';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=value=>new Intl.NumberFormat('ko-KR').format(value);
 const statuses={offered:'제안됨',active:'진행 중',deferred:'미룸',done:'완료',rejected:'거절함'};
-const filterNames={all:'전체',active:'진행 중',offered:'제안',done:'완료'};
+const filterNames={all:'전체',active:'진행 중',offered:'제안',deferred:'미룸',done:'완료'};
 const types=['전체','모자','오디오'];
 
 export const icon=(name,preview=false)=>`<span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/${preview?'preview':'soft/v0.14'}/${name}.svg')"></span>`;
@@ -74,16 +74,50 @@ function home(state) {
     trailing:badge('열기','reward'),
   }):'';
   return section('오늘의 도전',mission,dailyProgress)
-    +section('진행 중',queueRows,more('모든 퀘스트','quests'))
+    +section('진행 중',queueRows,more('퀘스트 목록','quests'))
     +(bonusCard?section('보너스 퀘스트',bonusCard):'')
     +(inbox?section('받을 보상',list(inbox,'받을 보상'),more('보상함','rewards','home')):'');
 }
+function questbookCover(book,state) {
+  const total=book.quests.length;
+  const done=state.quests.filter(q=>book.quests.includes(q.id)&&q.status==='done').length;
+  return `<a class="seed-surface questbook-cover" data-surface="solid" href="${path('book/'+book.id,'quests')}">
+    <div class="questbook-cover__copy">
+      ${title(book.title,'hero','h3')}
+      ${support(book.chapter)}
+    </div>
+    <span class="questbook-cover__symbol">${icon('book')}</span>
+    <div class="questbook-cover__progress">
+      <div class="questbook-cover__value"><strong>${done}</strong><span> / ${total} 완료</span></div>
+      ${progress(done,total,'퀘스트북 진행')}
+    </div>
+    <span class="questbook-cover__link">${done===total?'기록 보기':'이어보기'} ${icon('chevron')}</span>
+  </a>`;
+}
+
+function questIndexRow(q,filter) {
+  const glyph=q.status==='done'?'check-circle':{일일:'target',메인:'flag',보너스:'sparkle'}[q.kind]||'target';
+  const tone={일일:'neutral',메인:'brand',보너스:'warning'}[q.kind]||'neutral';
+  const time=q.status==='done'?(q.baseline?q.due:'완료 기록'):(q.status==='deferred'?'다시 시작할 수 있어요':q.due);
+  return `<a class="seed-list__item quest-index-row" data-interaction="navigate" href="${path('quest/'+q.id,'quests')}">
+    <span class="seed-list__prefix row-icon quest-index-icon" data-status="${q.status}">${icon(glyph)}</span>
+    <div class="seed-list__content quest-index-copy">
+      ${title(q.title,'item','span')}
+      <div class="quest-index-meta">${badge(q.kind,tone)}<span class="seed-text" data-text-role="caption" data-text-style="caption" data-text-tone="secondary">${escape(filter==='all'&&q.status!=='done'?statuses[q.status]+' · '+time:time)}</span></div>
+    </div>
+    <span class="seed-list__suffix">${rewardLine(q)}</span>
+    ${icon('chevron')}
+  </a>`;
+}
+
 function quests(state,ui) {
-  const items=state.quests.filter(q=>ui.quest==='all'?q.status!=='rejected':q.status===ui.quest);
-  const book=books[0];
-  const done=state.quests.filter(q=>q.book===book.id&&q.status==='done').length;
-  return `<section class="seed-page-shell__section quest-browser">${chips(Object.entries(filterNames),ui.quest,'quest')}${items.length?list(items.map(q=>questRow(q,'quests')).join(''),'퀘스트 목록'):empty('이 상태의 퀘스트가 없어요.')}</section>`
-  +section('퀘스트북',`<a class="seed-surface book-card" data-surface="outlined" href="${path('book/'+book.id,'quests')}"><div class="book-title"><span class="row-icon">${icon('book')}</span><div class="row-copy">${title(book.title,'item')}${support('1장 · '+done+' / '+book.quests.length+' 완료')}</div>${icon('chevron')}</div>${progress(done,book.quests.length,'퀘스트북 진행')}</a>`);
+  const filter=Object.hasOwn(filterNames,ui.quest)?ui.quest:'active';
+  const items=state.quests.filter(q=>filter==='all'?q.status!=='rejected':q.status===filter);
+  const noItems={all:'아직 퀘스트가 없어요.',active:'진행 중인 퀘스트가 없어요.',offered:'새로 받은 제안이 없어요.',deferred:'미뤄 둔 퀘스트가 없어요.',done:'완료한 퀘스트가 없어요.'};
+  const body=items.length?list(items.map(q=>questIndexRow(q,filter)).join(''),'퀘스트 목록'):empty(noItems[filter]);
+  return section('퀘스트북',`<div class="questbook-shelf">${books.map(book=>questbookCover(book,state)).join('')}</div>`)
+    +section('내 퀘스트',`<div class="quest-browser">${chips(Object.entries(filterNames),filter,'quest')}${body}</div>`,
+      `<span class="quest-result-count" role="status">${items.length}개</span>`);
 }
 function detail(state,route) {
   const q=state.quests.find(item=>item.id===route.id);
@@ -184,14 +218,14 @@ export function renderHomeAlerts(state) {
   })).join(''),'홈 알림');
 }
 
-export function searchResults(state,query) {
+export function searchResults(state,query,tab='home') {
   const term=query.trim().toLocaleLowerCase('ko');
   if(!term)return '';
   const matches=text=>text.toLocaleLowerCase('ko').includes(term);
   const quests=state.quests.filter(q=>q.status!=='rejected'&&matches(q.title));
   const foundBooks=books.filter(book=>matches(book.title));
-  const rows=quests.map(q=>questRow(q,'home')).join('')+foundBooks.map(book=>row({
-    label:book.title,sub:'퀘스트북',url:'book/'+book.id,tab:'home',leading:`<span class="row-icon">${icon('book')}</span>`,
+  const rows=quests.map(q=>questRow(q,tab)).join('')+foundBooks.map(book=>row({
+    label:book.title,sub:'퀘스트북',url:'book/'+book.id,tab,leading:`<span class="row-icon">${icon('book')}</span>`,
   })).join('');
   return rows?list(rows,'검색 결과'):empty('일치하는 퀘스트나 퀘스트북이 없어요.');
 }
@@ -199,7 +233,7 @@ export function searchResults(state,query) {
 export function renderPage(state,route,ui) {
   switch(route.name) {
     case 'home':return home(state);
-    case 'search':return `<section class="seed-page-shell__section"><label class="visually-hidden" for="home-search">퀘스트나 퀘스트북 검색</label><input class="seed-field" id="home-search" type="search" placeholder="퀘스트나 퀘스트북 검색" autocomplete="off" maxlength="80" value="${escape(ui.search??'')}"><div id="home-search-results" aria-live="polite">${searchResults(state,ui.search??'')}</div></section>`;
+    case 'search':return `<section class="seed-page-shell__section"><label class="visually-hidden" for="home-search">퀘스트나 퀘스트북 검색</label><input class="seed-field" id="home-search" type="search" placeholder="퀘스트나 퀘스트북 검색" autocomplete="off" maxlength="80" value="${escape(ui.search??'')}"><div id="home-search-results" aria-live="polite">${searchResults(state,ui.search??'',route.tab)}</div></section>`;
     case 'quests':return quests(state,ui);
     case 'dm':return dm(state);
     case 'clan':return clanHome(state,ui);

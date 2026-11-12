@@ -56,7 +56,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 .head.standard h1 { font-size:1.08rem; font-weight:650; letter-spacing:-.018em; text-align:center; }
 /* Standard only: explicit opt-in title placement, never alter the centered default. */
-.head.standard[data-title-align="start"] { grid-template-columns:var(--seed-top-target) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
+.head.standard[data-title-align="start"] { grid-template-columns:var(--seed-top-start-column) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
 .head.standard[data-title-align="start"] h1 { text-align:start; justify-self:start; }
 .head.standard[data-title-align="start"] > .icon-btn { margin-inline-start:calc(-1 * min(var(--seed-top-optical-inset), var(--seed-page-gutter,20px))); }
 .head.standard[data-title-align="start"] .tools { min-width:0; max-width:min(44vw,14rem); flex-wrap:wrap; justify-content:flex-end; margin-inline-end:calc(-1 * min(var(--seed-top-optical-inset), var(--seed-page-gutter,20px))); }
@@ -373,6 +373,8 @@ body { display: grid; grid-template-rows: auto 1fr; }
   --seed-top-target:3rem;
   --seed-top-glyph:1.59rem;
   --seed-top-optical-inset:calc((var(--seed-top-target) - var(--seed-top-glyph))/2);
+  /* Apply the leading optical inset to the grid and leave .125rem after the hit target. */
+  --seed-top-start-column:calc(var(--seed-top-target) - min(var(--seed-top-optical-inset), var(--seed-page-gutter,20px)) - .375rem);
   font-family:"Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
 }
 .sheet-head, .seed-sheet__head { font-family:"Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif; }
@@ -400,7 +402,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 /* Standard Center remains the existing three-column Grid. Start is a per-page opt-in.
  * Back keeps its 3rem target and optical gutter; title and trailing never overlap.
  */
-.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] { grid-template-columns:var(--seed-top-target) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
+.seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] { grid-template-columns:var(--seed-top-start-column) minmax(0,1fr) minmax(0,auto); column-gap:.5rem; }
 .seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__title { text-align:start; justify-self:start; }
 .seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__leading { margin-inline-start:calc(-1 * min(var(--seed-top-optical-inset), var(--seed-page-gutter,20px))); }
 .seed-top-nav__inner[data-nav-role="standard"][data-title-align="start"] .seed-top-nav__trailing { min-width:0; max-width:min(44vw,14rem); justify-content:flex-end; flex-wrap:wrap; margin-inline-end:calc(-1 * min(var(--seed-top-optical-inset), var(--seed-page-gutter,20px))); }

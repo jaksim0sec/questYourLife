@@ -51,6 +51,16 @@ test('Header tuning is local to navigation and matches tokens',()=>{
   assert.equal(tokens.topNavigation.standard.fontWeight,650);
   assert.match(top,/Pretendard.*CDN.*보장/);
 });
+test('Start title clears the back target with a compact gap in both headers',()=>{
+  const geometry=declaration('.head, .seed-top-nav__inner');
+  assert.match(geometry,/--seed-top-target:3rem/);
+  assert.match(geometry,/--seed-top-start-column:calc\(var\(--seed-top-target\) - min\(var\(--seed-top-optical-inset\), var\(--seed-page-gutter,20px\)\) - \.375rem\)/);
+  for (const selector of ['.head.standard', '.seed-top-nav__inner[data-nav-role="standard"]']) {
+    const start=declaration(selector+'[data-title-align="start"]');
+    assert.match(start,/grid-template-columns:var\(--seed-top-start-column\) minmax\(0,1fr\) minmax\(0,auto\); column-gap:\.5rem/);
+    assert.doesNotMatch(declaration(selector),/--seed-top-start-column/);
+  }
+});
 test('Do not redraw banner effects in SVG or turn periods into independent action buttons',()=>{
   assert.match(item,/SVG로.*이펙트.*금지/);
   assert.match(surface,/SVG로.*이펙트.*금지/);

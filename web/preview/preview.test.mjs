@@ -705,3 +705,48 @@ test('Delete confirmation belongs to the shared chat sheet, not the browser aler
  assert.doesNotMatch(script,/window\.confirm\('이 메시지를 삭제할까요/);
  assert.match(page(createStore(),'#/chat/friend3?tab=dm'),/메시지 옵션/);
 });
+
+
+test('Shop catalog filters, media and acquired chests use existing data',()=>{
+ const store=createStore();
+ const all=page(store,'#/shop');
+ assert.match(all,/shop-feature/);
+ assert.match(all,/data-item-layout="horizontal"/);
+ assert.equal((all.match(/class="seed-item-display shop-product"/g)||[]).length,7);
+ assert.equal((all.match(/class="shop-box"/g)||[]).length,2);
+ assert.match(all,/#\/item\/1\?tab=me/);
+ assert.match(all,/#\/rewards\?tab=me/);
+ assert.match(all,/href="#\/clan"/);
+ assert.doesNotMatch(all,/상자 구매|할인율|신규 재화/);
+ const hats=page(store,'#/shop',{...ui,shop:'모자'});
+ const audio=page(store,'#/shop',{...ui,shop:'오디오'});
+ assert.equal((hats.match(/class="seed-item-display shop-product"/g)||[]).length,4);
+ assert.equal((audio.match(/class="seed-item-display shop-product"/g)||[]).length,3);
+ assert.match(audio,/data-value="오디오" aria-pressed="true"/);
+});
+test('Shop refreshes owned and reward states after real local actions',()=>{
+ const store=createStore();
+ assert.equal(store.dispatch('purchase','1'),true);
+ assert.equal(store.dispatch('purchase','1'),false);
+ let html=page(store,'#/shop');
+ assert.match(html,/이미 가지고 있어요/);
+ assert.match(html,/aria-label="160 캐시"/);
+ assert.match(html,/크림 캡, 보유 중, 상품 상세/);
+ assert.equal(store.dispatch('open','starter'),true);
+ html=page(store,'#/shop');
+ assert.match(html,/열어본 상자/);
+ assert.match(html,/획득 전/);
+ assert.equal(store.dispatch('complete','math-main'),true);
+ assert.equal(store.dispatch('claim','clan'),true);
+ html=page(store,'#/shop');
+ assert.match(html,/열 수 있어요/);
+ assert.doesNotMatch(html,/data-action="purchase"/);
+});
+test('Shop follows S06 responsive frame and scroll contracts',()=>{
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(css,/\.shop-products\s*\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+ assert.match(css,/\.shop-box-rail\s*\{[^}]*overflow-x:auto/);
+ assert.match(css,/\.shop-product > \.seed-media \.seed-media__image\s*\{[^}]*object-fit:contain/);
+ assert.match(css,/\.preview-shell\[data-screen="shop"\] \.shop-balance\s*\{\s*display: flex/);
+ assert.doesNotMatch(css,/\.featured-item/);
+});

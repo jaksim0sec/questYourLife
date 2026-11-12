@@ -52,7 +52,7 @@ function homeActions(state) {
 }
 function chatHeaderActions(state,id) {
   const muted=Boolean(state.mutedThreads?.[id]);
-  return `<button type="button" class="seed-icon-action chat-header-mute" data-muted="${muted}" aria-pressed="${muted}" aria-label="${muted?'대화 알림 켜기':'대화 알림 끄기'}" data-chat-ui="mute">${icon('bell')}</button><details class="chat-header-menu"><summary class="seed-icon-action" aria-label="대화방 메뉴">${icon('more')}</summary><div class="chat-header-menu__panel"><button type="button" data-chat-ui="room-info">${icon('info')}대화방 정보</button>${id==='ai'?'':`<button type="button" data-chat-ui="clear">${icon('close')}대화 내용 비우기</button>`}</div></details>`;
+  return `<button type="button" class="seed-icon-action chat-header-mute" data-muted="${muted}" aria-pressed="${muted}" aria-label="${muted?'대화 알림 켜기':'대화 알림 끄기'}" data-chat-ui="mute">${icon('bell')}</button><details class="chat-header-menu"><summary class="seed-icon-action" aria-label="대화방 메뉴">${icon('menu')}</summary><div class="chat-header-menu__panel"><button type="button" data-chat-ui="room-info">${icon('info')}대화방 정보</button>${id==='ai'?'':`<button type="button" data-chat-ui="clear">${icon('close')}대화 내용 비우기</button>`}</div></details>`;
 }
 function render() {
   const state=store.read();

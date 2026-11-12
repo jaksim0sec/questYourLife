@@ -310,3 +310,16 @@ test('clan leaderboard period is independent of the current reward and own contr
   assert.equal(store.dispatch('claim','clan'),true);
   assert.match(page(store,'#/clan',{...ui,period:'current'}),/보상함 보기/);
 });
+
+test('home compact rail shows real status and linked destinations',()=>{
+  const store=createStore();
+  const html=page(store,'#/home');
+  assert.match(html,/class="home-glance-rail"/);
+  assert.equal((html.match(/class="home-glance-card"/g)||[]).length,3);
+  assert.match(html,/#\/rewards\?tab=home/);
+  assert.match(html,/#\/me/);
+  assert.doesNotMatch(html,/home-activity__mascot|MY ACTIVITY|DISCOVER|EVENT & REWARD/);
+  const stylesheet=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(stylesheet,/\.home-glance-rail\s*\{[^}]*overflow-x:auto/);
+  assert.doesNotMatch(stylesheet,/\.home-section-eyebrow\s*\{/);
+});

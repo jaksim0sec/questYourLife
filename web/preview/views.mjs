@@ -1,5 +1,5 @@
-import {art,books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=home-expressive-2';
-import {clanRows,clanTotal} from './store.mjs?v=home-expressive-2';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=home-rail-v3';
+import {clanRows,clanTotal} from './store.mjs?v=home-rail-v3';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -34,6 +34,41 @@ const chips=(entries,selected,name)=>`<div class="filter-row" role="group" aria-
 const segment=period=>`<div class="seed-segment" role="group" aria-label="기여 기간">${[['current','이번 주'],['previous','지난주']].map(([key,label])=>`<button type="button" data-period="${key}" aria-pressed="${key===period}">${label}</button>`).join('')}</div>`;
 const avatar=(scale='hero')=>`<div data-avatar="${scale}"></div>`;
 
+function homeActivity(state,today,completed,active,ready,next,heading){
+  return `<section class="home-overview" aria-label="내 활동 요약">
+    ${heading('내 활동','오늘 한눈에',more('퀘스트 보기','quests'))}
+    <div class="seed-surface home-today-summary" data-surface="solid">
+      <span class="home-today-summary__symbol">${icon('check-circle')}</span>
+      <div class="home-today-summary__info">
+        <strong>오늘의 일일 퀘스트</strong>
+        <small>${today.length&&completed===today.length?'오늘의 도전을 마쳤어요':'하루의 성취를 쌓아가는 중'}</small>
+      </div>
+      <span class="home-today-summary__score"><strong>${completed}</strong> / ${today.length}</span>
+      <div class="home-today-summary__meter">${today.length?progress(completed,today.length,'오늘의 일일 퀘스트','micro'):support('오늘 등록된 일일 퀘스트가 없어요')}</div>
+    </div>
+    <div class="home-glance-rail" role="group" aria-label="내 활동 더 살펴보기">
+      <a class="home-glance-card" data-tone="blue" href="${path('quests')}">
+        <span class="home-glance-card__label">진행 중 ${icon('chevron')}</span>
+        <span class="home-glance-card__value"><strong>${active.length}</strong><small>개 퀘스트</small></span>
+        <span class="home-glance-card__sub">나의 도전 이어가기</span>
+        <span class="home-glance-card__glyph">${icon('target')}</span>
+      </a>
+      <a class="home-glance-card" data-tone="gold" href="${path('rewards','home')}">
+        <span class="home-glance-card__label">보상함 ${icon('chevron')}</span>
+        <span class="home-glance-card__value"><strong>${ready.length}</strong><small>개 열 수 있어요</small></span>
+        <span class="home-glance-card__sub">${ready.length?'기다리는 보상 확인':'다음 보상 기대하기'}</span>
+        <img class="home-glance-card__art" src="${rewards+(ready[0]?.[1].image||chestLoot.starter.image)}" alt="" loading="lazy">
+      </a>
+      <a class="home-glance-card" data-tone="violet" href="${path('me')}">
+        <span class="home-glance-card__label">내 XP ${icon('chevron')}</span>
+        <span class="home-glance-card__value"><strong>${fmt(state.xp)}</strong><small>XP</small></span>
+        <span class="home-glance-card__sub">지금까지 쌓은 경험치</span>
+        <img class="home-glance-card__art" src="${rewards}xp-gem-single.png" alt="" loading="lazy">
+      </a>
+    </div>
+    ${next?`<a class="home-next" href="${path('quest/'+next.id,'home')}"><span class="home-next__icon">${icon(next.status==='offered'?'sparkle':'target')}</span><span><small>${next.status==='offered'?'새 제안':'이어서 하기'}</small><strong>${escape(next.title)}</strong></span>${icon('chevron')}</a>`:`<a class="home-next" href="${path('chat/ai','home')}"><span class="home-next__icon">${icon('sparkle')}</span><span><small>다음 도전</small><strong>퀘스트 만들기</strong></span>${icon('chevron')}</a>`}
+  </section>`;
+}
 function home(state) {
   const today=state.quests.filter(q=>q.kind==='일일'&&q.due.startsWith('오늘')&&['active','offered','done'].includes(q.status));
   const completed=today.filter(q=>q.status==='done').length;
@@ -45,26 +80,8 @@ function home(state) {
   const clanState=state.boxes.clan;
   const clanHint=clanState==='opened'?'수령 완료':clanState==='ready'?'보상함에 도착':remaining===0?'상자 수령 가능':fmt(remaining)+' XP 남음';
   const friendMessage=state.messages.friend?.at(-1)?.text||'최근 대화가 없어요';
-  const heading=(eyebrow,label,right='')=>`<div class="home-section-head"><div><span class="home-section-eyebrow">${eyebrow}</span><h2 class="seed-text" data-text-role="section" data-text-style="section">${label}</h2></div>${right}</div>`;
-  const activity=`<section class="home-overview" aria-label="내 활동 요약">
-    ${heading('MY ACTIVITY','오늘 한눈에',more('퀘스트 보기','quests'))}
-    <div class="seed-surface home-activity" data-surface="solid">
-      <div class="home-activity__main">
-        <div class="home-activity__copy">
-          <span class="home-activity__label">오늘의 일일 퀘스트</span>
-          <div class="home-activity__score"><strong>${completed}</strong><span> / ${today.length} 완료</span></div>
-          ${today.length?progress(completed,today.length,'오늘의 일일 퀘스트','micro'):support('오늘 등록된 일일 퀘스트가 없어요')}
-          <p>${today.length&&completed===today.length?'오늘의 도전을 마쳤어요':'하루의 성취를 쌓아가는 중'}</p>
-        </div>
-        <div class="home-activity__mascot"><img src="${art}mascot/mascot_face_stamp.png" alt="" loading="eager"></div>
-      </div>
-      <div class="home-activity__stats">
-        <a href="${path('quests')}"><span>진행 중</span><strong>${active.length} <small>개</small></strong>${icon('chevron')}</a>
-        <a href="${path('rewards','home')}"><span>열 수 있는 상자</span><strong>${ready.length} <small>개</small></strong>${icon('chevron')}</a>
-      </div>
-    </div>
-    ${next?`<a class="home-next" href="${path('quest/'+next.id,'home')}"><span class="home-next__icon">${icon(next.status==='offered'?'sparkle':'target')}</span><span><small>${next.status==='offered'?'새 제안':'이어서 하기'}</small><strong>${escape(next.title)}</strong></span>${icon('chevron')}</a>`:`<a class="home-next" href="${path('chat/ai','home')}"><span class="home-next__icon">${icon('sparkle')}</span><span><small>다음 도전</small><strong>퀘스트 만들기</strong></span>${icon('chevron')}</a>`}
-  </section>`;
+  const heading=(context,label,right='')=>`<div class="home-section-head"><div><h2 class="seed-text" data-text-role="section" data-text-style="section">${label}</h2></div>${right}</div>`;
+  const activity=homeActivity(state,today,completed,active,ready,next,heading);
   const trends=homeTrends.map((trend,i)=>{
     const href=path(trend.url,'home');
     if(i===0)return `<a class="seed-surface home-trend-lead" data-surface="media" href="${href}">
@@ -86,9 +103,9 @@ function home(state) {
       <span class="home-trend-item__signal">${escape(trend.signal)}</span>${icon('chevron')}
     </a>`;
   }).join('');
-  const discovery=`<section class="home-discovery">${heading('DISCOVER','지금 뜨는 도전','<span class="home-section-aside">시연 참여 지표</span>')}<div class="home-discovery__items">${trends}</div></section>`;
+  const discovery=`<section class="home-discovery">${heading('트렌드','지금 뜨는 도전','<span class="home-section-aside">시연 참여 지표</span>')}<div class="home-discovery__items">${trends}</div></section>`;
   const social=`<section class="home-together">
-    ${heading('TOGETHER','함께하는 기록',more('클랜 보기','clan'))}
+    ${heading('소셜','함께하는 기록',more('클랜 보기','clan'))}
     <a class="seed-surface home-clan-feature" data-surface="solid" href="${path('clan')}">
       <div class="home-clan-feature__info">
         <span class="home-clan-feature__identity"><span class="home-clan-feature__mark">${icon('clan-bookmark-fill',true)}</span><strong>${escape(clan.name)}</strong></span>
@@ -116,7 +133,7 @@ function home(state) {
     <img src="${rewards+ready[0][1].image}" alt="" loading="lazy">
     <span><strong>${ready.length===1?escape(ready[0][1].name):'열 수 있는 상자 '+ready.length+'개'}</strong><small>보상함에서 확인하기</small></span>${icon('chevron')}
   </a>`:'';
-  const events=event||rewardsReady?`<section class="home-events">${heading('EVENT & REWARD','놓치면 아쉬운 소식')}${event}${rewardsReady}</section>`:'';
+  const events=event||rewardsReady?`<section class="home-events">${heading('이벤트와 보상','놓치면 아쉬운 소식')}${event}${rewardsReady}</section>`:'';
   return activity+discovery+social+events;
 }
 

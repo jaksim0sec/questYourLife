@@ -1,4 +1,4 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=home-insights-1';
+import {art,books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=home-insights-1';
 import {clanRows,clanTotal} from './store.mjs?v=home-insights-1';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
@@ -43,77 +43,83 @@ function home(state) {
   const clanScore=clanTotal(state);
   const remaining=Math.max(clan.goal-clanScore,0);
   const clanState=state.boxes.clan;
-  const clanHint=clanState==='opened'?'보상 수령 완료':clanState==='ready'?'보상함에 도착':remaining===0?'상자 수령 가능':fmt(remaining)+' XP 남음';
+  const clanHint=clanState==='opened'?'수령 완료':clanState==='ready'?'보상함에 도착':remaining===0?'상자 수령 가능':fmt(remaining)+' XP 남음';
   const friendMessage=state.messages.friend?.at(-1)?.text||'최근 대화가 없어요';
-  const overview=`<section class="home-overview" aria-label="내 활동 요약">
-    <div class="home-overview-head">
-      <div>${support('내 활동 · 실시간 요약')}${title('오늘 한눈에','section','h2')}</div>
-      ${more('퀘스트 보기','quests')}
-    </div>
-    <div class="home-overview-grid">
-      <div class="seed-surface home-daily" data-surface="solid">
-        <span class="home-metric-label">일일 퀘스트</span>
-        <div class="home-daily-number"><strong>${completed}</strong><span> / ${today.length} 완료</span></div>
-        ${today.length?progress(completed,today.length,'오늘의 일일 퀘스트','micro'):support('오늘 등록된 일일 퀘스트가 없어요')}
-        <span class="home-daily-caption">${today.length&&completed===today.length?'오늘의 도전을 마쳤어요':'나의 오늘 진행 상태'}</span>
+  const heading=(eyebrow,label,right='')=>`<div class="home-section-head"><div><span class="home-section-eyebrow">${eyebrow}</span><h2 class="seed-text" data-text-role="section" data-text-style="section">${label}</h2></div>${right}</div>`;
+  const activity=`<section class="home-overview" aria-label="내 활동 요약">
+    ${heading('MY ACTIVITY','오늘 한눈에',more('퀘스트 보기','quests'))}
+    <div class="seed-surface home-activity" data-surface="solid">
+      <div class="home-activity__main">
+        <div class="home-activity__copy">
+          <span class="home-activity__label">오늘의 일일 퀘스트</span>
+          <div class="home-activity__score"><strong>${completed}</strong><span> / ${today.length} 완료</span></div>
+          ${today.length?progress(completed,today.length,'오늘의 일일 퀘스트','micro'):support('오늘 등록된 일일 퀘스트가 없어요')}
+          <p>${today.length&&completed===today.length?'오늘의 도전을 마쳤어요':'하루의 성취를 쌓아가는 중'}</p>
+        </div>
+        <div class="home-activity__mascot"><img src="${art}mascot/mascot_face_stamp.png" alt="" loading="eager"></div>
       </div>
-      <div class="home-brief-stats">
-        <a class="seed-surface home-brief-stat" data-surface="subtle" href="${path('quests','home')}">
-          <span>진행 중</span><strong>${active.length}<small>개</small></strong>
-        </a>
-        <a class="seed-surface home-brief-stat" data-surface="subtle" href="${path('rewards','home')}">
-          <span>열 수 있는 상자</span><strong>${ready.length}<small>개</small></strong>
-        </a>
+      <div class="home-activity__stats">
+        <a href="${path('quests')}"><span>진행 중</span><strong>${active.length} <small>개</small></strong>${icon('chevron')}</a>
+        <a href="${path('rewards','home')}"><span>열 수 있는 상자</span><strong>${ready.length} <small>개</small></strong>${icon('chevron')}</a>
       </div>
     </div>
-    ${next?`<a class="home-next" href="${path('quest/'+next.id,'home')}">
-      <span class="home-next-marker">${icon(next.status==='offered'?'sparkle':'target')}</span>
-      <span class="home-next-copy"><small>${next.status==='offered'?'새 제안':'이어서 하기'}</small><strong>${escape(next.title)}</strong></span>
-      ${icon('chevron')}
-    </a>`:`<a class="home-next" href="${path('chat/ai','home')}"><span class="home-next-marker">${icon('sparkle')}</span><span class="home-next-copy"><small>다음 도전</small><strong>새 퀘스트 만들기</strong></span>${icon('chevron')}</a>`}
+    ${next?`<a class="home-next" href="${path('quest/'+next.id,'home')}"><span class="home-next__icon">${icon(next.status==='offered'?'sparkle':'target')}</span><span><small>${next.status==='offered'?'새 제안':'이어서 하기'}</small><strong>${escape(next.title)}</strong></span>${icon('chevron')}</a>`:`<a class="home-next" href="${path('chat/ai','home')}"><span class="home-next__icon">${icon('sparkle')}</span><span><small>다음 도전</small><strong>퀘스트 만들기</strong></span>${icon('chevron')}</a>`}
   </section>`;
   const trends=homeTrends.map((trend,i)=>{
     const href=path(trend.url,'home');
-    const number=String(i+1).padStart(2,'0');
-    if(i===0)return `<a class="seed-surface home-trend-feature" data-surface="subtle" href="${href}">
-      <span class="home-trend-rank">${number}</span>
-      <span class="home-trend-main"><small>${escape(trend.kind)} · ${escape(trend.signal)}</small><strong>${escape(trend.title)}</strong><span class="home-trend-desc">${escape(trend.description)}</span><span class="home-trend-metric">${escape(trend.metric)}</span></span>
-      <span class="home-trend-icon">${icon(trend.icon)}</span>
+    if(i===0)return `<a class="seed-surface home-trend-lead" data-surface="media" href="${href}">
+      <div class="home-trend-lead__copy">
+        <span class="home-trend-lead__kicker">01 · ${escape(trend.kind)}</span>
+        <h3>${escape(trend.title)}</h3>
+        <p>${escape(trend.description)}</p>
+        <span class="home-trend-lead__metric">${escape(trend.metric)} ${icon('chevron')}</span>
+      </div>
+      <div class="home-trend-lead__visual" aria-hidden="true">
+        <span class="home-trend-lead__num">20</span>
+        <img src="${rewards}xp-gems-cluster.png" alt="" loading="lazy">
+        <span class="home-trend-lead__sub">MIN / ROUTINE</span>
+      </div>
     </a>`;
-    return `<a class="home-trend-row" href="${href}">
-      <span class="home-trend-rank">${number}</span>
-      <span class="home-trend-row-copy"><strong>${escape(trend.title)}</strong><small>${escape(trend.kind)} · ${escape(trend.metric)}</small></span>
-      <span class="home-trend-signal">${escape(trend.signal)}</span>${icon('chevron')}
+    return `<a class="home-trend-item" href="${href}">
+      <span class="home-trend-item__icon" data-index="${i}">${icon(trend.icon)}</span>
+      <span class="home-trend-item__text"><strong>${escape(trend.title)}</strong><small>${escape(trend.kind)} · ${escape(trend.metric)}</small></span>
+      <span class="home-trend-item__signal">${escape(trend.signal)}</span>${icon('chevron')}
     </a>`;
   }).join('');
-  const trendSection=section('지금 뜨는 도전',`<div class="home-trend-group">${trends}</div>`,`<span class="home-section-aside">시연 참여 지표</span>`);
-  const social=section('함께하는 기록',`<div class="home-social-stack">
-    <a class="seed-surface home-clan-preview" data-surface="solid" href="${path('clan','home')}">
-      <div class="home-clan-head"><span class="home-clan-symbol">${icon('flag')}</span><span class="home-clan-name"><strong>${escape(clan.name)}</strong><small>우리 클랜의 이번 주</small></span><span class="home-clan-hint">${escape(clanHint)}</span></div>
-      <div class="home-clan-progress"><span><strong>${fmt(clanScore)}</strong> / ${fmt(clan.goal)} XP</span>${progress(clanScore,clan.goal,'클랜 이번 주 공동 목표','micro')}</div>
+  const discovery=`<section class="home-discovery">${heading('DISCOVER','지금 뜨는 도전','<span class="home-section-aside">시연 참여 지표</span>')}<div class="home-discovery__items">${trends}</div></section>`;
+  const social=`<section class="home-together">
+    ${heading('TOGETHER','함께하는 기록',more('클랜 보기','clan'))}
+    <a class="seed-surface home-clan-feature" data-surface="solid" href="${path('clan')}">
+      <div class="home-clan-feature__info">
+        <span class="home-clan-feature__identity"><span class="home-clan-feature__mark">${icon('clan-bookmark-fill',true)}</span><strong>${escape(clan.name)}</strong></span>
+        <span class="home-clan-feature__hint">이번 주 공동 도전 · ${escape(clanHint)}</span>
+        <div class="home-clan-feature__progress">${progress(clanScore,clan.goal,'클랜 이번 주 공동 목표','micro')}<span><strong>${fmt(clanScore)}</strong> / ${fmt(clan.goal)} XP</span></div>
+      </div>
+      <img class="home-clan-feature__art" src="${rewards+chestLoot.clan.image}" alt="" loading="lazy">
     </a>
-    <a class="home-friend-preview" href="${path('chat/friend','home')}">
+    <a class="home-friend" href="${path('chat/friend','home')}">
       <span class="row-avatar" aria-hidden="true">다</span>
-      <span class="home-friend-copy"><strong>다온과의 대화</strong><small>${escape(friendMessage)}</small></span>
-      ${icon('chevron')}
+      <span><strong>다온과의 대화</strong><small>${escape(friendMessage)}</small></span>${icon('chevron')}
     </a>
-  </div>`);
+  </section>`;
   const bonus=state.quests.find(q=>q.id==='bonus'&&q.status!=='rejected');
-  const event=bonus?`<a class="seed-surface home-event" data-surface="subtle" href="${path('quest/bonus','home')}">
-    <div class="home-event-copy">${badge(bonus.status==='done'?'참여 완료':'기간 한정','warning')}
-      ${title(bonus.title,'item','h3')}
-      <span class="home-event-meta">${escape(bonus.due)} · ${bonus.status==='done'?'완료 기록 보기':'참여해 보기'}</span>
-      <div class="home-event-cash">${cash(bonus.cash)}</div>
+  const event=bonus?`<a class="seed-surface home-event-feature" data-surface="media" href="${path('quest/bonus','home')}">
+    <div class="home-event-feature__copy">
+      <span class="home-event-feature__tag">${bonus.status==='done'?'참여 완료':'기간 한정 이벤트'}</span>
+      <strong>${escape(bonus.title)}</strong>
+      <small>${escape(bonus.due)} · ${bonus.status==='done'?'기록 보기':'참여하기'}</small>
+      ${cash(bonus.cash)}
     </div>
-    <img class="home-event-art" src="${rewards}cash-coins-pouch.png" alt="">
+    <img src="${rewards}cash-coins-pouch.png" alt="" loading="lazy">
   </a>`:'';
   const rewardsReady=ready.length?`<a class="home-ready-reward" href="${path('rewards','home')}">
-    <img src="${rewards+ready[0][1].image}" alt="">
-    <span><strong>${ready.length===1?escape(ready[0][1].name):'열 수 있는 상자 '+ready.length+'개'}</strong><small>보상함에서 확인하기</small></span>
-    ${icon('chevron')}
+    <img src="${rewards+ready[0][1].image}" alt="" loading="lazy">
+    <span><strong>${ready.length===1?escape(ready[0][1].name):'열 수 있는 상자 '+ready.length+'개'}</strong><small>보상함에서 확인하기</small></span>${icon('chevron')}
   </a>`:'';
-  return overview+trendSection+social+(event||rewardsReady?section('이벤트와 보상',event+rewardsReady):'');
+  const events=event||rewardsReady?`<section class="home-events">${heading('EVENT & REWARD','놓치면 아쉬운 소식')}${event}${rewardsReady}</section>`:'';
+  return activity+discovery+social+events;
 }
+
 function questbookCover(book,state) {
   const total=book.quests.length;
   const done=state.quests.filter(q=>book.quests.includes(q.id)&&q.status==='done').length;

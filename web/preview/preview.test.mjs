@@ -594,3 +594,32 @@ test('Longer example conversations remain actionable and all other pages keep wo
  assert.match(page(store,'#/me'),/내 스타일/);
  assert.match(page(store,'#/home'),/오늘 한눈에/);
 });
+
+test('Chat controls use real actions, keep incoming protected, and display saved photos',()=>{
+  const store=createStore();
+  assert.equal(store.dispatch('toggle-chat-notifications','clan'),true);
+  assert.equal(store.read().mutedThreads.clan,true);
+  assert.equal(store.dispatch('delete-message','clan',{index:0}),false);
+  const count=store.read().messages.clan.length;
+  assert.equal(store.dispatch('message','clan','안녕하세요'),true);
+  assert.equal(store.dispatch('edit-message','clan',{index:count,text:'수정했어요'}),true);
+  assert.match(page(store,'#/chat/clan?tab=dm'),/수정했어요/);
+  assert.equal(store.dispatch('delete-message','clan',{index:count}),true);
+  assert.equal(store.read().messages.clan.length,count);
+  const img='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jje0AAAAASUVORK5CYII=';
+  assert.equal(store.dispatch('send-photo','friend3',{src:img}),true);
+  assert.match(page(store,'#/chat/friend3?tab=dm'),/class="chat-photo"/);
+  assert.match(page(store,'#/dm'),/사진을 보냈어요/);
+  assert.equal(store.dispatch('send-photo','friend3',{src:'javascript:1'}),false);
+  assert.equal(store.dispatch('clear-chat','friend3'),true);
+  assert.match(page(store,'#/chat/friend3?tab=dm'),/아직 대화가 없어요/);
+  const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+  assert.match(script,/trailing\.innerHTML=chatHeaderActions\(state,route\.id\)/);
+  assert.match(script,/compressChatPhoto\(file\)/);
+});
+test('Existing preview messages migrate without deleting personal writes or settings',()=>{
+  const old=createStore().read();delete old.mutedThreads;
+  const saved=createStore({getItem:()=>JSON.stringify(old),setItem:()=>{}}).read();
+  assert.deepEqual(saved.mutedThreads,{});
+  assert.equal(saved.messages.clan.length,10);
+});

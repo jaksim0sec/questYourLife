@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-social-v7';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-social-v7';
-import {homeAlerts,threads,clan} from './mock-data.mjs?v=dm-social-v7';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-social-v7';
+import {createStore} from './store.mjs?v=dm-actions-v8';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-actions-v8';
+import {homeAlerts,threads,clan} from './mock-data.mjs?v=dm-actions-v8';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-actions-v8';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -142,11 +142,11 @@ function apply(action,id,value,focusTarget) {
     showFeedback('지금은 이 동작을 할 수 없어요.');
     return;
   }
+  if(['edit-message','delete-message','clear-chat'].includes(action))ui.editMessage=null;
   render();
   const sameControl=[...main.querySelectorAll('[data-action]')].find(button=>button.dataset.action===action&&button.dataset.id===id);
   if(focusTarget) get(focusTarget)?.focus({preventScroll:true});
   else (sameControl||main).focus({preventScroll:true});
-  if(['edit-message','delete-message','clear-chat'].includes(action))ui.editMessage=null;
   if(action==='message'||action==='send-photo') {
     const history=main.querySelector?.('.chat-history');
     if(history)history.scrollTop=history.scrollHeight;

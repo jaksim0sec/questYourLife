@@ -546,3 +546,51 @@ test('Chat header identity has real subtitle and composer is borderless',()=>{
  assert.equal(store.dispatch('message','friend3','지금 확인했어'),true);
  assert.match(page(store,'#/chat/friend3?tab=dm'),/지금 확인했어/);
 });
+
+test('Clan message authors use member avatars and sender names, never the clan flag',()=>{
+ const store=createStore();
+ const html=page(store,'#/chat/clan?tab=dm');
+ const body=html.slice(html.indexOf('class="chat-history"'));
+ assert.equal((body.match(/class="chat-row"/g)||[]).length,10);
+ assert.match(body,/chat-row__sender">다온/);
+ assert.match(body,/chat-row__sender">별이/);
+ assert.match(body,/data-avatar-items="0,1004"/);
+ assert.match(body,/data-avatar-items="5"/);
+ assert.doesNotMatch(body,/clan-bookmark-fill\.svg|chat-avatar__clan/);
+ assert.match(body,/data-continued="true"/);
+ assert.equal((body.match(/chat-row__sender">별이/g)||[]).length,3);
+ assert.match(body,/data-from="me"/);
+ assert.match(page(store,'#/dm'),/다시 모이자/);
+});
+test('Preview sample migration upgrades only pristine seed messages and preserves user writes',()=>{
+ const initial=createStore().read();
+ const old=JSON.parse(JSON.stringify(initial));
+ for(const id of ['clan','friend','friend2','friend3'])old.messages[id]=[old.messages[id][0]];
+ if(Object.hasOwn(old.messages.clan[0],'senderId'))delete old.messages.clan[0].senderId;
+ const storage={getItem:()=>JSON.stringify(old),setItem:()=>{}};
+ const upgraded=createStore(storage).read();
+ assert.equal(upgraded.messages.clan.length,10);
+ assert.equal(upgraded.messages.friend3.length,9);
+ const customized=JSON.parse(JSON.stringify(old));
+ customized.messages.clan.push({from:'me',text:'내가 작성한 메시지'});
+ customized.messages.friend3=[{from:'them',text:'직접 수정한 대화'}];
+ const preserved=createStore({getItem:()=>JSON.stringify(customized),setItem:()=>{}}).read();
+ assert.equal(preserved.messages.clan.length,2);
+ assert.equal(preserved.messages.clan[1].text,'내가 작성한 메시지');
+ assert.equal(preserved.messages.friend3[0].text,'직접 수정한 대화');
+ const unknown=JSON.parse(JSON.stringify(preserved));
+ const safe=createStore({getItem:()=>JSON.stringify(unknown),setItem:()=>{}}).read();
+ assert.match(renderPage(safe,readRoute('#/chat/clan?tab=dm'),ui),/클랜 멤버/);
+ assert.match(readFileSync(new URL('./app.mjs',import.meta.url),'utf8'),/clan\.current\.length/);
+});
+test('Longer example conversations remain actionable and all other pages keep working',()=>{
+ const store=createStore();
+ assert.equal(store.read().messages.friend.length,6);
+ assert.equal(store.read().messages.friend2.length,7);
+ assert.equal(store.read().messages.friend3.length,9);
+ assert.equal(store.dispatch('message','clan','새로 보낸 메시지'),true);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/새로 보낸 메시지/);
+ assert.match(page(store,'#/dm'),/새로 보낸 메시지/);
+ assert.match(page(store,'#/me'),/내 스타일/);
+ assert.match(page(store,'#/home'),/오늘 한눈에/);
+});

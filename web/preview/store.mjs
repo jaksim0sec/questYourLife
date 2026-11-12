@@ -1,4 +1,4 @@
-import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=dm-chat-polish-v6';
+import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=dm-social-v7';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const key='hyunsaengpatch-preview-v1';
@@ -14,12 +14,23 @@ export function clanTotal(state, period) {
 }
 
 export function createStore(storage) {
-  let state=initialData();
+  const seed=initialData();
+  let state=seed;
   try {
     const saved=storage?.getItem(key);
     if(saved) {
       const parsed=JSON.parse(saved);
-      if(Array.isArray(parsed.quests)&&Array.isArray(parsed.equipped)&&parsed.messages?.ai&&parsed.boxes&&Array.isArray(parsed.bonusPosts)&&Number.isFinite(parsed.cash)) state={...parsed,messages:{...state.messages,...parsed.messages}};
+      if(Array.isArray(parsed.quests)&&Array.isArray(parsed.equipped)&&parsed.messages?.ai&&parsed.boxes&&Array.isArray(parsed.bonusPosts)&&Number.isFinite(parsed.cash)) {
+        state={...parsed,messages:{...seed.messages,...parsed.messages}};
+        // Upgrade only untouched, single-message preview seeds. Never replace a user's conversation.
+        for(const id of ['friend','friend2','friend3','clan']) {
+          const previous=parsed.messages[id];
+          const original=seed.messages[id]?.[0];
+          if(Array.isArray(previous)&&previous.length===1&&previous[0]?.from==='them'&&previous[0]?.text===original?.text&&!previous[0]?.quest) {
+            state.messages[id]=structuredClone(seed.messages[id]);
+          }
+        }
+      }
     }
   } catch {}
   function commit(next) {

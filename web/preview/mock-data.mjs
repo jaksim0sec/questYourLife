@@ -85,10 +85,10 @@ export function initialData() {
     ],
     messages:{
       ai:[{from:'them',text:'어떤 목표를 이루고 싶어? 지금 할 수 있는 것부터 퀘스트로 만들어 줄게.'}],
-      friend:[{from:'them',text:'오늘 오답 정리 같이 할래? 나도 세 문제만 먼저 풀어보려고.'}],
-      clan:[{from:'them',text:'주간 상자까지 이제 얼마 안 남았어. 오늘 각자 도전 하나씩 해보자!'}],
-      friend2:[{from:'them',text:'오늘 보너스 도전 봤어? 산책하면서 찾아봤어!'}],
-      friend3:[{from:'them',text:'블루 캡 어디서 얻었어? 나도 꾸며 보고 싶네.'}],
+      friend:[{"from":"them","text":"오늘 오답 정리 같이 할래? 나도 세 문제만 먼저 풀어보려고."},{"from":"me","text":"좋아 나도 세 문제만 풀어볼게"},{"from":"them","text":"지금 몇 번부터 하는 중?"},{"from":"me","text":"어제 틀렸던 문제부터 다시 보려고"},{"from":"them","text":"그럼 각자 풀고 어려운 것만 얘기하자"},{"from":"me","text":"오케이 시작!"}],
+      clan:[{"from":"them","senderId":"friend","text":"주간 상자까지 이제 얼마 안 남았어. 오늘 각자 도전 하나씩 해보자!"},{"from":"them","senderId":"friend2","text":"ㅇㅇ 나 산책 보너스 도전 보고 왔어"},{"from":"them","senderId":"friend2","text":"주황색 거울 찾는 거 생각보다 어렵더라"},{"from":"me","text":"난 먼저 수학 오답 정리부터 할게"},{"from":"them","senderId":"friend","text":"좋네 나도 방과 후에 수학 루틴 체크할 예정"},{"from":"them","senderId":"friend2","text":"끝나면 우리 여기서 결과 공유하자"},{"from":"me","text":"ㅇㅋ 다 풀고 올게"},{"from":"them","senderId":"friend","text":"세 문제만 해도 오늘 목표는 성공이지"},{"from":"them","senderId":"friend2","text":"상자 열면 뭐 나왔는지도 알려줘 ㅋㅋ"},{"from":"them","senderId":"friend","text":"좋아 각자 할 거 하고 다시 모이자"}],
+      friend2:[{"from":"them","text":"오늘 보너스 도전 봤어? 산책하면서 찾아봤어!"},{"from":"me","text":"주황색 거울 찾는 거 맞지?"},{"from":"them","text":"응 문구점 쪽에서 봤는데 생각보다 어렵더라"},{"from":"me","text":"나도 나갈 때 한번 찾아볼게"},{"from":"them","text":"찾으면 알려줘"},{"from":"them","text":"끝나고 클랜에도 이야기하자"},{"from":"me","text":"ㅇㅋ"}],
+      friend3:[{"from":"them","text":"블루 캡 어디서 얻었어? 나도 꾸며 보고 싶네."},{"from":"me","text":"상점에서 봤어 ㅋㅋ 색 괜찮지"},{"from":"them","text":"ㅇㅇ 마스코트랑 잘 어울리더라"},{"from":"them","text":"나는 블랙 헤드폰인데 모자를 뭘 써야 할지 모르겠음"},{"from":"me","text":"일단 꾸미기에서 이것저것 씌워봐"},{"from":"them","text":"그거 괜찮다"},{"from":"me","text":"난 다음엔 비니도 한번 해볼까 생각 중"},{"from":"them","text":"비니도 잘 어울릴 듯"},{"from":"them","text":"나도 꾸미기 화면부터 다시 봐야겠다"}],
     },
     bonusPosts:[{name:'별이', text:'산책하다가 문구점 옆에서 찾았어!', count:3, cheered:false}],
   };

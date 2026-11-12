@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-chat-polish-v6';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-polish-v6';
-import {homeAlerts,threads} from './mock-data.mjs?v=dm-chat-polish-v6';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-polish-v6';
+import {createStore} from './store.mjs?v=dm-social-v7';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-social-v7';
+import {homeAlerts,threads,clan} from './mock-data.mjs?v=dm-social-v7';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-social-v7';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -80,7 +80,7 @@ function render() {
     name.textContent=route.title;
     const description=document.createElement('small');
     description.className='chat-header__meta';
-    description.textContent=route.id==='clan'?'클랜 대화':route.id==='ai'?'AI 퀘스트 도우미':'개인 대화';
+    description.textContent=route.id==='clan'?'멤버 '+clan.current.length+'명':route.id==='ai'?'AI 퀘스트 도우미':'개인 대화';
     info.append(name,description);
     titleElement.replaceChildren(image,info);
   }

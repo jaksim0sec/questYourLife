@@ -287,3 +287,23 @@ test('quest index filters real statuses and updates its book cover progress',()=
   assert.equal(readRoute('#/chat/ai?tab=quests').tab,'quests');
   assert.match(searchResults(store.read(),'수학','quests'),/#\/book\/math\?tab=quests/);
 });
+
+test('clan leaderboard period is independent of the current reward and own contribution',()=>{
+  const store=createStore();
+  const current=page(store,'#/clan',{...ui,period:'current'});
+  assert.match(current,/80 XP 남음/);
+  assert.match(current,/260 캐시/);
+  assert.match(current,/버킷 햇/);
+  assert.equal((current.match(/class="seed-list__item clan-member"/g)||[]).length,4);
+  const previous=page(store,'#/clan',{...ui,period:'previous'});
+  assert.match(previous,/합계 1,230 XP/);
+  assert.match(previous,/aria-label="주간 클랜 상자"[^>]*aria-valuenow="1120"/);
+  assert.doesNotMatch(previous,/상자 받기/);
+  assert.equal(store.dispatch('complete','math-main'),true);
+  const unlocked=page(store,'#/clan',{...ui,period:'previous'});
+  assert.match(unlocked,/330 XP/);
+  assert.match(unlocked,/상자 받기/);
+  assert.match(unlocked,/합계 1,230 XP/);
+  assert.equal(store.dispatch('claim','clan'),true);
+  assert.match(page(store,'#/clan',{...ui,period:'current'}),/보상함 보기/);
+});

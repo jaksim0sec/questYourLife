@@ -10,7 +10,7 @@
 .preview-content:focus { outline: none; }
 .preview-shell .seed-top-nav__trailing[data-slot-kind="info"] { margin-inline-end: 0; }
 .preview-shell[data-screen="shop"] .shop-balance { display: none; }
-.section-heading, .hero-meta, .hero-bottom, .detail-reward, .clan-heading {
+.section-heading, .hero-meta, .hero-bottom, .detail-reward {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,7 +45,7 @@
   background: var(--soft);
 }
 .row-avatar { border-radius: 50%; }
-.detail-panel, .clan-panel { display: grid; gap: .7rem; }
+.detail-panel { display: grid; gap: .7rem; }
 .hero-meta > span:last-child:not(.seed-badge), .detail-reward > span:first-child { color: var(--sub); font-size: .82rem; }
 .reward-line { display: inline-flex; align-items: center; gap: .4rem .6rem; flex-wrap: wrap; min-width: 0; }
 .preview-list .reward-line { flex-direction: column; align-items: flex-end; gap: .16rem; }
@@ -57,20 +57,16 @@
   align-items: center;
   gap: .7rem;
 }
-.clan-reward img { width: 5.2rem; max-width: 25vw; height: 4.6rem; object-fit: contain; }
 .reward-box .row-copy, .profile-panel > div:first-child { display: grid; justify-items: start; gap: .35rem; }
 .profile-panel .progress-track { width: min(100%,9rem); margin-block: .18rem; }
-.clan-reward { display: flex; align-items: center; justify-content: space-between; gap: .7rem; }
 .clan-score { color: var(--sub); font-variant-numeric: tabular-nums; }
 .clan-score strong { font-size: 1.65rem; color: var(--text); }
-.clan-panel .seed-segment { justify-self: start; }
-.clan-panel .seed-action, .preview-content > .seed-segment { justify-self: start; }
+.preview-content > .seed-segment { justify-self: start; }
 .rank { color: var(--sub); font-size: .84rem; font-weight: 750; }
 .rank-xp { font-size: .82rem; font-variant-numeric: tabular-nums; }
 .filter-row, .page-actions { display: flex; flex-wrap: wrap; gap: .35rem .55rem; }
 .shop-list { gap: .38rem; }
 .empty { padding-block: 1rem; }
-.book-card { display: grid; gap: .7rem; }
 .quest-condition, .detail-reward { border-top: 1px solid var(--line); padding-top: .7rem; }
 .quest-condition p { margin: .32rem 0 0; line-height: 1.55; overflow-wrap: anywhere; }
 .detail-panel > .seed-media { width: min(100%,12rem); justify-self: center; }
@@ -290,3 +286,39 @@
   .quest-index-icon { width: 1.9rem; height: 1.9rem; }
   .quest-index-row > .seed-icon { display: none; }
 }
+
+/* Clan identity, weekly reward and member comparison use distinct densities. */
+.preview-shell[data-screen="clan"] .preview-content { padding-block-start: .8rem; gap: 1.35rem; }
+.preview-shell[data-screen="clan"] .seed-page-shell__section { gap: .55rem; }
+.clan-identity { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; min-width: 0; }
+.clan-identity .row-copy { flex: 1 1 8rem; }
+.clan-emblem {
+  width: 3rem;
+  height: 3rem;
+  background: color-mix(in srgb,var(--reward) 42%,var(--surface));
+}
+.clan-emblem .seed-icon { --seed-icon-size: 1.55rem; }
+.clan-own-summary { display: grid; gap: .12rem; text-align: end; }
+.clan-week[data-surface="reward"] {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(5.2rem,43%);
+  gap: .6rem .6rem;
+  align-items: center;
+  padding: .9rem 1rem .8rem;
+  background: radial-gradient(ellipse at 78% 28%,color-mix(in srgb,var(--reward) 44%,var(--surface)),transparent 66%),var(--surface);
+}
+.clan-week__copy { display: grid; gap: .4rem; min-width: 0; }
+.clan-week__copy > .seed-text { word-break: keep-all; }
+.clan-week__hint { color: var(--text); font-size: .84rem; font-weight: 650; }
+.clan-week__loot { display: flex; align-items: center; flex-wrap: wrap; gap: .32rem .5rem; font-size: .8rem; }
+.clan-week__art { width: 100%; max-height: 10rem; aspect-ratio: 1; object-fit: contain; }
+.clan-week__meter { grid-column: 1 / -1; display: grid; gap: .35rem; }
+.clan-week__action { grid-column: 1 / -1; justify-self: end; }
+.clan-board-period { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .25rem .6rem; }
+.preview-shell .preview-list > .clan-member { gap: .55rem; padding-inline: .4rem; }
+.clan-member[data-own="true"] { background: var(--soft); }
+.clan-member-name { display: flex; align-items: center; flex: 1 1 0; gap: .3rem; min-width: 0; flex-wrap: wrap; }
+.clan-member-name .seed-text { overflow-wrap: anywhere; }
+.clan-member .rank { min-width: 1rem; text-align: center; }
+.clan-member .row-avatar { width: 2rem; height: 2rem; }
+.clan-member .rank-xp { text-align: end; }

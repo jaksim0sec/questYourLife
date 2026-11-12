@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=quests-tab';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=quests-tab';
-import {homeAlerts} from './mock-data.mjs?v=quests-tab';
-import {readRoute,navMarkup} from './routes.mjs?v=quests-tab';
+import {createStore} from './store.mjs?v=clan-tab';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=clan-tab';
+import {homeAlerts} from './mock-data.mjs?v=clan-tab';
+import {readRoute,navMarkup} from './routes.mjs?v=clan-tab';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -61,6 +61,8 @@ function render() {
     trailing.innerHTML=homeActions(state);
   } else if(route.name==='quests') {
     trailing.innerHTML=iconAction('검색','search','search')+iconAction('퀘스트 만들기','plus','new-quest');
+  } else if(route.name==='clan') {
+    trailing.innerHTML=iconAction('클랜 대화','chat','clan-chat');
   } else if(route.name==='me'||route.name==='shop') {
     trailing.innerHTML=cash(state.cash);
   } else trailing.replaceChildren();
@@ -128,6 +130,8 @@ document.addEventListener('click',event=>{
     get('#home-search')?.focus();
   } else if(shellAction==='new-quest') {
     navigate('#/chat/ai?tab=quests');
+  } else if(shellAction==='clan-chat') {
+    navigate('#/chat/clan?tab=clan');
   } else if(shellAction==='alerts') {
     get('#home-alert-list').innerHTML=renderHomeAlerts(store.read());
     alertSheet.showModal();

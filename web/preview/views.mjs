@@ -1,4 +1,4 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-chat-v4';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-header-v5';
 import {clanRows,clanTotal} from './store.mjs?v=dm-chat-v4';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
@@ -233,12 +233,6 @@ function chat(state,route) {
  const isAI=route.id==='ai',isClan=route.id==='clan';
  const incomingAvatar=isClan?`<span class="chat-avatar__clan">${icon('clan-bookmark-fill',true)}</span>`:
    `<span data-avatar="fluid" data-avatar-items="${(thread.avatarEquipment||[]).join(',')}"></span>`;
- const kind=isAI?'AI 퀘스트 대화':isClan?'클랜 대화':'개인 대화';
- const intro=`<div class="chat-intro">
-   <span class="chat-intro__avatar" aria-hidden="true">${incomingAvatar}</span>
-   <strong>${escape(thread.title)}</strong>
-   <span>${kind}</span>
- </div>`;
  const messagesMarkup=messages.map((msg,index)=>{
    const mine=msg.from==='me';
    const showAvatar=!mine&&(index===0||messages[index-1].from==='me');
@@ -252,7 +246,7 @@ function chat(state,route) {
     </div>`;
  }).join('');
  return `<div class="chat-view" aria-label="${escape(thread.title)} 대화방">
-   <section class="chat-history" id="chat-history" role="log" aria-label="대화 기록" aria-live="polite" aria-relevant="additions text">${intro}${messagesMarkup}</section>
+   <section class="chat-history" id="chat-history" role="log" aria-label="대화 기록" aria-live="polite" aria-relevant="additions text">${messagesMarkup}</section>
    <form class="chat-composer" data-form="message" data-id="${escape(route.id)}">
      <label class="visually-hidden" for="message">${isAI?'목표나 수정 요청 입력':'메시지 입력'}</label>
      <div class="chat-composer__field">

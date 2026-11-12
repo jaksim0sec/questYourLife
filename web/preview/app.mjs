@@ -1,8 +1,8 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-chat-v4';
+import {createStore} from './store.mjs?v=dm-header-v5';
 import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-v4';
-import {homeAlerts} from './mock-data.mjs?v=dm-chat-v4';
+import {homeAlerts,threads} from './mock-data.mjs?v=dm-chat-v4';
 import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-v4';
 
 const get=selector=>document.querySelector(selector);
@@ -57,7 +57,27 @@ function render() {
   header.dataset.navRole=type.header;
   header.dataset.titleAlign=route.align||'center';
   shell.dataset.screen=route.name;
-  get('.seed-top-nav__title').textContent=route.title;
+  const titleElement=get('.seed-top-nav__title');
+  titleElement.textContent=route.title;
+  if(route.name==='chat'&&threads[route.id]) {
+    // Standard Start + P-HIERARCHY Middle, using the existing avatar composer.
+    const contact=threads[route.id];
+    const image=document.createElement('span');
+    image.className='chat-header__avatar';
+    image.setAttribute('aria-hidden','true');
+    if(route.id==='clan') {
+      image.innerHTML=icon('clan-bookmark-fill',true);
+    } else {
+      const face=document.createElement('span');
+      face.dataset.avatar='fluid';
+      face.dataset.avatarItems=(contact.avatarEquipment||[]).join(',');
+      image.append(face);
+    }
+    const name=document.createElement('span');
+    name.className='chat-header__name';
+    name.textContent=route.title;
+    titleElement.replaceChildren(image,name);
+  }
   document.title=route.title+' · 갓생패치';
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
@@ -74,11 +94,11 @@ function render() {
   trailing.dataset.slotKind=route.name==='me'||route.name==='shop'?'info':trailing.childElementCount?'action':'empty';
   if(type.bottomNav)selectWebNav(nav,route.tab);
   main.innerHTML=renderPage(state,route,ui);
-  main.querySelectorAll('[data-avatar]').forEach(element=>{
+  shell.querySelectorAll('[data-avatar]').forEach(element=>{
     const itemIds=element.dataset.avatarItems;
     const equipmentIds=itemIds===undefined?state.equipped:itemIds.split(',').filter(Boolean).map(Number);
-    const decorative=Boolean(element.closest('.dm-conversation__avatar'));
-    mountMascotAvatar(element,{equipmentIds,scale:element.dataset.avatar,label:'루원의 마스코트',decorative});
+    const decorative=Boolean(element.closest('.dm-conversation__avatar, .chat-header__avatar, .chat-row__avatar'));
+    mountMascotAvatar(element,{equipmentIds,scale:element.dataset.avatar,label:route.name==='chat'?route.title+' 마스코트':'루원의 마스코트',decorative});
   });
   if(route.name==='chat') {
     const history=main.querySelector?.('.chat-history');

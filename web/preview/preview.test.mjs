@@ -369,7 +369,7 @@ test('My integrated collection and real completed record remain connected',()=>{
   assert.match(initial,/#\/quest\/math-review\?tab=me/);
   assert.equal((initial.match(/data-item-presentation="integrated"/g)||[]).length,2);
   assert.match(initial,/seed-item-display__info/);
-  assert.match(initial,/data-equipped="true"/);
+  assert.doesNotMatch(initial,/data-equipped=|착용 중|보유 중/);
   const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
   assert.match(css,/\.me-collection\s*\{[^}]*overflow-x:auto/);
   assert.doesNotMatch(css,/\.me-profile__outfit\s*\{/);
@@ -380,4 +380,28 @@ test('My integrated collection and real completed record remain connected',()=>{
   assert.equal(store.dispatch('open','starter'),true);
   assert.equal((page(store,'#/me').match(/data-item-presentation="integrated"/g)||[]).length,3);
   assert.match(page(store,'#/me'),/화이트 이어버드/);
+});
+
+test('My compact item rail and owned box shelf reflect real state',()=>{
+  const store=createStore();
+  let html=page(store,'#/me');
+  assert.equal((html.match(/class="seed-item-display seed-surface me-collection__item"/g)||[]).length,2);
+  assert.doesNotMatch(html,/data-equipped=|착용 중|보유 중/);
+  assert.match(html,/data-count="1"/);
+  assert.match(html,/첫 도전 상자/);
+  assert.doesNotMatch(html,/주간 클랜 상자/);
+  assert.match(html,/상점 둘러보기/);
+  assert.equal(store.dispatch('open','starter'),true);
+  html=page(store,'#/me');
+  assert.match(html,/열어본 상자/);
+  assert.equal((html.match(/class="seed-item-display seed-surface me-collection__item"/g)||[]).length,3);
+  assert.equal(store.dispatch('complete','math-today'),true);
+  assert.equal(store.dispatch('complete','math-main'),true);
+  assert.equal(store.dispatch('claim','clan'),true);
+  html=page(store,'#/me');
+  assert.match(html,/주간 클랜 상자/);
+  assert.match(html,/data-count="2"/);
+  const style=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(style,/grid-auto-columns:clamp\(7\.75rem,38%,9\.25rem\)/);
+  assert.match(style,/\.me-box-rail\s*\{[^}]*overflow-x:auto/);
 });

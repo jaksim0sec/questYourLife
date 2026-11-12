@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-integrated-v3';
-import {clanRows,clanTotal} from './store.mjs?v=me-integrated-v3';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-rhythm-v4';
+import {clanRows,clanTotal} from './store.mjs?v=me-rhythm-v4';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -263,21 +263,19 @@ function clanHome(state,ui) {
   const board=`<div class="clan-board-period">${segment(ui.period)}${support('합계 '+fmt(selectedTotal)+' XP')}</div>${rankings(state,ui.period)}`;
   return identity+reward+section('멤버 기여도',board,more('순위 보기','ranking','clan'));
 }
-function me(state){
+function me(state) {
   const level=1+Math.floor(state.xp/250);
   const completed=state.quests.filter(q=>q.status==='done').length;
   const available=Object.values(state.boxes).filter(v=>v==='ready').length;
   const items=state.owned.map(id=>MASCOT_EQUIPMENT[id]).filter(Boolean);
-  // No completion timestamp in the mock contract: show one completed record, not a fictional "latest".
+  // The mock has no completion timestamp, so don't label this as the latest.
   const completedRecord=state.quests.find(q=>q.status==='done');
-
   const profile=`<section class="seed-page-shell__section me-section" aria-label="내 프로필">
     <div class="me-profile">
       <div class="me-profile__figure">${avatar('fluid')}</div>
       <div class="me-profile__identity">
         ${title('루원','hero')}
         <span class="me-profile__level">Lv. ${level} <span aria-hidden="true">·</span> ${fmt(state.xp)} XP</span>
-
         ${cta('꾸미기','decorate','me','neutral-outline')}
       </div>
     </div>
@@ -286,30 +284,33 @@ function me(state){
   const activity=completedRecord?`<a class="me-record" href="${path('quest/'+completedRecord.id,'me')}" aria-label="완료 기록, ${escape(completedRecord.title)}">
     <span class="me-record__icon">${icon('check-circle')}</span>
     <span class="me-record__text"><small>완료 기록</small><strong>${escape(completedRecord.title)}</strong></span>
-    <span class="me-record__xp">${completedRecord.xp?'+ '+fmt(completedRecord.xp)+' XP':'완료'}</span>
-    ${icon('chevron')}
-  </a>`:`<a class="me-record" href="${path('quests','me')}">
-    <span class="me-record__icon">${icon('target')}</span>
-    <span class="me-record__text"><small>나의 기록</small><strong>첫 퀘스트를 시작해 보세요</strong></span>
-    ${icon('chevron')}
-  </a>`;
-  const owned=items.length?`<div class="me-collection">${items.slice(0,4).map(item=>{
-    const on=state.equipped.includes(item.id);
-    return `<a class="seed-item-display seed-surface me-collection__item" data-surface="solid" data-item-presentation="integrated" href="${path('decorate','me')}" aria-label="${escape(item.name)}${on?' 착용 중':' 보유 중'}, 꾸미기로 이동">
+    <span class="me-record__xp">${completedRecord.xp?'+ '+fmt(completedRecord.xp)+' XP':'완료'}</span>${icon('chevron')}
+  </a>`:`<a class="me-record" href="${path('quests','me')}"><span class="me-record__icon">${icon('target')}</span><span class="me-record__text"><small>나의 기록</small><strong>첫 퀘스트를 시작해 보세요</strong></span>${icon('chevron')}</a>`;
+  const owned=items.length?`<div class="me-collection" role="group" aria-label="내 장식 살펴보기">${items.slice(0,6).map(item=>`
+    <a class="seed-item-display seed-surface me-collection__item" data-surface="solid" data-item-presentation="integrated" href="${path('decorate','me')}" aria-label="${escape(item.name)}, 꾸미기로 이동">
       ${frame(item.src,'')}
-      <span class="seed-item-display__info">
-        <strong class="me-collection__name">${escape(item.name)}</strong>
-        <span class="me-collection__state" data-equipped="${on}">${on?'착용 중':'보유 중'}</span>
-      </span>
-    </a>`;
-  }).join('')}</div>`:`<div class="me-collection-empty">${support('아직 보유한 장식이 없어요.')}${cta('상점 둘러보기','shop','me','neutral-outline')}</div>`;
-  const destinations=list([
-    row({label:'보상함',sub:available?`${available}개 열 수 있어요`:'획득한 상자와 보상 확인',url:'rewards',tab:'me',leading:`<span class="me-destination-art">${frame(rewards+chestLoot.starter.image,'')}</span>`}),
-    row({label:'상점',sub:'마스코트를 위한 새로운 스타일',url:'shop',tab:'me',leading:`<span class="me-destination-art">${frame(MASCOT_EQUIPMENT[1001].src,'')}</span>`})
-  ].join(''),'보상과 상점');
-  return profile+stats+activity+section('내 스타일',owned,items.length>2?'<span class="me-collection-hint">옆으로 넘겨보기</span>':'')+section('보상과 상점',destinations);
+      <span class="seed-item-display__info"><strong class="me-collection__name">${escape(item.name)}</strong></span>
+    </a>`).join('')}</div>`:`<div class="me-collection-empty">${support('아직 보유한 장식이 없어요.')}${cta('상점 둘러보기','shop','me','neutral-outline')}</div>`;
+  // A locked reward is not owned. Opened boxes remain visible as history.
+  const myBoxes=Object.entries(state.boxes)
+    .filter(([id,status])=>chestLoot[id]&&(status==='ready'||status==='opened'))
+    .sort((a,b)=>Number(b[1]==='ready')-Number(a[1]==='ready'));
+  const boxPreview=myBoxes.length?`<div class="me-box-rail" role="group" aria-label="내 상자 목록" data-count="${myBoxes.length}">
+    ${myBoxes.map(([id,status])=>{
+      const box=chestLoot[id];
+      const stateLabel=status==='ready'?'열 수 있어요':'열어본 상자';
+      return `<a class="me-box" href="${path('rewards','me')}" aria-label="${escape(box.name)}, ${stateLabel}, 보상함으로 이동">
+        <span class="me-box__art">${frame(rewards+box.image,'')}</span>
+        <span class="me-box__copy"><strong>${escape(box.name)}</strong><small>${stateLabel}</small></span>
+        ${icon('chevron')}
+      </a>`;
+    }).join('')}
+  </div>`:`<a class="me-box-empty" href="${path('rewards','me')}">아직 받은 상자가 없어요 ${icon('chevron')}</a>`;
+  const shopLink=row({label:'상점 둘러보기',sub:'새로운 장식을 찾아보세요',url:'shop',tab:'me',leading:`<span class="row-icon">${icon('shopping-bag')}</span>`});
+  return profile+stats+activity+
+    section('내 스타일',owned,items.length>2?'<span class="me-collection-hint">옆으로 넘겨보기</span>':'')+
+    section('보상과 상점',boxPreview+`<div class="me-shop-link">${shopLink}</div>`,more('보상함 보기','rewards','me'));
 }
-
 function shop(state,ui) {
   const feature=catalog.find(item=>item.id===1001);
   const featured=ui.shop==='전체'?`<article class="seed-item-display seed-surface featured-item" data-surface="solid" data-item-presentation="integrated" data-item-layout="horizontal">

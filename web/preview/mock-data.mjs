@@ -1,0 +1,66 @@
+export const art = '../../assets/art/';
+export const rewards = art + 'rewards/';
+
+export const catalog = [
+  { id:1, name:'크림 캡', type:'모자', price:480, description:'차분한 크림색의 데일리 볼캡.' },
+  { id:3, name:'차콜 캡', type:'모자', price:360 },
+  { id:4, name:'백워드 캡', type:'모자', price:420 },
+  { id:5, name:'버킷 햇', type:'모자', price:520 },
+  { id:1001, name:'크림 헤드폰', type:'오디오', price:680 },
+  { id:1003, name:'블랙 헤드폰', type:'오디오', price:620 },
+  { id:1004, name:'화이트 이어버드', type:'오디오', price:320 },
+];
+
+export const books = [{
+  id:'math', title:'수학 루틴 만들기', goal:'방과 후에 스스로 20분씩 문제를 풀 수 있는 습관 만들기.',
+  chapter:'1장 · 매일 같은 시간에 시작하기', quests:['math-main','math-today','math-review'],
+}];
+
+export const threads = {
+  ai:{ title:'퀘스트 만들기', icon:'sparkle' },
+  friend:{ title:'다온', initials:'다', icon:'user' },
+  clan:{ title:'방과후 원정대', initials:'방', icon:'flag' },
+};
+
+export const clan = {
+  name:'방과후 원정대', goal:1200,
+  current:[{name:'다온',xp:410},{name:'별이',xp:280},{name:'루원',xp:230},{name:'이모리',xp:200}],
+  previous:[{name:'이모리',xp:410},{name:'루원',xp:320},{name:'다온',xp:280},{name:'별이',xp:220}],
+};
+
+export const chestLoot = {
+  starter:{ name:'첫 도전 상자', image:'06_wooden_chest.png', cash:120, item:1004 },
+  clan:{ name:'주간 클랜 상자', image:'08_premium_glowing_chest.png', cash:260, item:5 },
+};
+
+export function initialData() {
+  return {
+    xp:730, cash:640, owned:[0,2], equipped:[2],
+    boxes:{ starter:'ready', clan:'locked' },
+    quests:[
+      {id:'run', kind:'일일', title:'달리기 기록 0.5초 줄이기', condition:'어제와 같은 구간을 달리고, 기록을 어제보다 0.5초 이상 줄이기.', due:'오늘 23:59', xp:80, cash:40, status:'offered'},
+      {id:'math-today', kind:'일일', title:'수학 오답 3문제 다시 풀기', condition:'어제 틀린 문제 중 3개를 해설 없이 풀고, 틀린 이유를 한 줄씩 적기.', due:'오늘 23:59', xp:60, cash:30, status:'active', book:'math'},
+      {id:'math-main', kind:'메인', title:'방과 후 수학 20분 루틴 시작', condition:'내가 지속할 수 있는 시간과 장소를 정하고, 그 자리에서 첫 20분 공부를 마치기.', due:'이번 주 일요일', xp:100, cash:50, status:'active', book:'math'},
+      {id:'math-review', kind:'일일', title:'어제 배운 개념 한 줄 정리', condition:'노트를 덮고 기억나는 개념을 한 문장으로 적기.', due:'어제 완료', xp:30, cash:15, status:'done', book:'math', baseline:true},
+      {id:'bonus', kind:'보너스', title:'동네에서 주황색 거울 찾기', condition:'안전하게 다닐 수 있는 곳에서 주황색 거울을 찾고, 어디에서 봤는지 짧게 기록하기.', due:'오늘 21:00', xp:0, cash:80, status:'offered'},
+    ],
+    messages:{
+      ai:[{from:'them',text:'어떤 목표를 이루고 싶어? 지금 할 수 있는 것부터 퀘스트로 만들어 줄게.'}],
+      friend:[{from:'them',text:'오늘 오답 정리 같이 할래? 나도 세 문제만 먼저 풀어보려고.'}],
+      clan:[{from:'them',text:'주간 상자까지 이제 얼마 안 남았어. 오늘 각자 도전 하나씩 해보자!'}],
+    },
+    bonusPosts:[{name:'별이', text:'산책하다가 문구점 옆에서 찾았어!', count:3, cheered:false}],
+  };
+}
+
+export function proposeQuest(text, id, previousTitle='') {
+  const running=/달리|러닝|기록/.test(text)||(!/수학|오답|공부/.test(text)&&/유지|그대로/.test(text)&&/달리|러닝/.test(previousTitle));
+  const study=/수학|오답|공부/.test(text);
+  const maintain=/유지|그대로/.test(text);
+  const task=running
+    ? {title:maintain?'어제 달리기 기록 유지하기':'같은 구간 달리고 기록 남기기', condition:maintain?'어제와 같은 구간을 달리고, 어제 기록을 유지했는지 적기.':'평소 뛰는 구간을 한 번 달리고 기록을 적기.'}
+    : study
+      ? {title:'수학 20분 집중하고 오답 1개 정리',condition:'20분 동안 문제를 풀고, 막힌 문제 1개의 이유를 적기.'}
+      : {title:'오늘 할 수 있는 첫 행동 10분 해보기',condition:'목표 「'+text.slice(0,90)+'」에 가까워지는 행동 하나를 정해 10분 동안 하고, 무엇을 했는지 적기.'};
+  return {...task,id,kind:'일일',due:'오늘 23:59',xp:50,cash:25,status:'offered'};
+}

@@ -1,0 +1,141 @@
+/* Page composition. Shared SEED owns the header, controls, images and text variants. */
+.preview-shell {
+  --seed-page-max: 33rem;
+  position: relative;
+  min-height: 100dvh;
+  max-width: 33rem;
+  margin-inline: auto;
+}
+.preview-content { min-width: 0; }
+.preview-content:focus { outline: none; }
+.preview-shell .seed-top-nav__trailing[data-slot-kind="info"] { margin-inline-end: 0; }
+.preview-shell[data-screen="shop"] .shop-balance { display: none; }
+.section-heading, .hero-meta, .hero-bottom, .detail-reward, .clan-heading, .book-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .22rem;
+  min-height: 48px;
+  color: var(--sub);
+  font-size: .82rem;
+  font-weight: 650;
+}
+.quiet-link .seed-icon { --seed-icon-size: .9rem; }
+.preview-shell .preview-list > .seed-list__item { padding-inline: 0; min-height: 3.65rem; }
+.preview-list > .seed-list__item > .seed-icon { flex: none; --seed-icon-size: .95rem; color: var(--sub); }
+.row-copy { min-width: 0; flex: 1 1 0; overflow-wrap: anywhere; }
+.row-copy > .seed-text:first-child { display: block; }
+.row-copy > .seed-text + .seed-text { margin-top: .12rem; }
+.row-icon, .row-avatar {
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  font-size: .82rem;
+  font-weight: 750;
+  border-radius: .8rem;
+  background: var(--soft);
+}
+.row-avatar { border-radius: 50%; }
+.quest-hero, .detail-panel, .clan-panel, .home-summary { display: grid; gap: .7rem; }
+.quest-hero {
+  padding: 1.15rem;
+  border-color: var(--brand-weak);
+  background: linear-gradient(152deg,var(--brand-weak),var(--surface) 80%);
+}
+.hero-meta > span:last-child:not(.seed-badge), .detail-reward > span:first-child { color: var(--sub); font-size: .82rem; }
+.hero-bottom { padding-top: .25rem; }
+.home-summary .seed-action { justify-self: start; }
+.reward-line { display: inline-flex; align-items: center; gap: .4rem .6rem; flex-wrap: wrap; min-width: 0; }
+.preview-list .reward-line { flex-direction: column; align-items: flex-end; gap: .16rem; }
+.xp { display: inline-flex; align-items: center; gap: .23rem; font-size: .75rem; font-weight: 750; }
+.xp img { width: 1.05rem; height: 1.05rem; object-fit: contain; }
+.bonus-banner, .profile-panel, .dm-start, .reward-box {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: .7rem;
+}
+.bonus-banner img, .clan-reward img { width: 5.2rem; max-width: 25vw; height: 4.6rem; object-fit: contain; }
+.bonus-banner .row-copy, .reward-box .row-copy, .profile-panel > div:first-child { display: grid; justify-items: start; gap: .35rem; }
+.profile-panel .progress-track { width: min(100%,9rem); margin-block: .18rem; }
+.clan-reward { display: flex; align-items: center; justify-content: space-between; gap: .7rem; }
+.clan-score { color: var(--sub); font-variant-numeric: tabular-nums; }
+.clan-score strong { font-size: 1.65rem; color: var(--text); }
+.clan-panel .seed-segment { justify-self: start; }
+.clan-panel .seed-action, .preview-content > .seed-segment { justify-self: start; }
+.rank { color: var(--sub); font-size: .84rem; font-weight: 750; }
+.rank-xp { font-size: .82rem; font-variant-numeric: tabular-nums; }
+.filter-row, .page-actions { display: flex; flex-wrap: wrap; gap: .35rem .55rem; }
+.quest-browser, .shop-list { gap: .38rem; }
+.empty { padding-block: 1rem; }
+.book-card { display: grid; gap: .7rem; }
+.quest-condition, .detail-reward { border-top: 1px solid var(--line); padding-top: .7rem; }
+.quest-condition p { margin: .32rem 0 0; line-height: 1.55; overflow-wrap: anywhere; }
+.detail-panel > .seed-media { width: min(100%,12rem); justify-self: center; }
+.dm-start { grid-template-columns: auto minmax(0,1fr) auto; }
+.entry-form, .thread, .chat-quest { display: grid; gap: .6rem; }
+.entry-form { width: 100%; }
+.entry-form textarea { resize: vertical; }
+.thread { align-content: start; }
+.bubble-row { display: flex; }
+.bubble-row[data-from="me"] { justify-content: flex-end; }
+.bubble { max-width: 87%; }
+.bubble p { margin: 0; overflow-wrap: anywhere; line-height: 1.5; }
+.chat-quest { margin-top: .6rem; padding-top: .6rem; border-top: 1px solid var(--line); }
+.chat-quest .seed-action { justify-self: start; }
+.preview-shell[data-screen="chat"] .preview-content { grid-template-rows: 1fr auto; align-content: stretch; min-height: calc(100dvh - 3.5rem); padding-bottom: 0; }
+.composer {
+  position: sticky;
+  bottom: 0;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  padding: .45rem 0 max(.65rem,env(safe-area-inset-bottom,0px));
+  background: var(--canvas);
+}
+.shop-balance { align-items: center; justify-content: space-between; gap: .5rem; font-size: .85rem; }
+.featured-item .seed-media { min-height: 100%; }
+.featured-item .seed-item-display__action { margin-top: 0; }
+.featured-item .seed-item-display__action > .seed-action { flex: 0 1 auto; }
+.item-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .95rem .6rem; }
+.item-grid .seed-text { overflow-wrap: anywhere; font-size: .88rem; }
+.dress-stage { display: grid; justify-items: center; }
+.dress-stage [data-avatar] { width: min(100%,13rem); }
+.dress-item { min-width: 0; display: grid; gap: .3rem; align-content: start; }
+.dress-item .seed-action { justify-self: stretch; }
+.dress-item .seed-action__face { width: 100%; padding-inline: .45rem; }
+.reward-box { grid-template-columns: minmax(0,5rem) minmax(0,1fr); }
+.loot { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.preview-notice:not(:empty) {
+  position: fixed;
+  z-index: 30;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  bottom: calc(4.75rem + env(safe-area-inset-bottom,0px));
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: .65rem .9rem;
+  border-radius: var(--seed-radius-control);
+  background: var(--text);
+  color: var(--surface);
+  font-size: .84rem;
+  pointer-events: none;
+}
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 359px), (max-width: 22.5em) {
+  .preview-shell[data-screen="shop"] .seed-top-nav__trailing { display: none; }
+  .preview-shell[data-screen="shop"] .shop-balance { display: flex; }
+  .item-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (min-width: 42rem) {
+  html[data-seed-lab] body { background: var(--soft); }
+  .preview-shell { border-inline: 1px solid var(--line); }
+}

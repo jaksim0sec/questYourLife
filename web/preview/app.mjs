@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-actions-v8';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-actions-v8';
-import {homeAlerts,threads,clan} from './mock-data.mjs?v=dm-actions-v8';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-actions-v8';
+import {createStore} from './store.mjs?v=dm-chat-redesign-v10';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-redesign-v10';
+import {homeAlerts,threads,clan} from './mock-data.mjs?v=dm-chat-redesign-v10';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-redesign-v10';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -57,7 +57,7 @@ function chatHeaderActions(state,id) {
 function render() {
   const state=store.read();
   if(route.name!=='home'&&alertSheet?.open)alertSheet.close();
-  if(route.name!=='chat'){get('#chat-room-info')?.close?.();get('#chat-photo-viewer')?.close?.();}
+  if(route.name!=='chat'){get('#chat-room-info')?.close?.();get('#chat-photo-viewer')?.close?.();get('#chat-message-sheet')?.close?.();}
   const type=applyPageType(shell,route.type);
   header.dataset.navRole=type.header;
   header.dataset.titleAlign=route.align||'center';
@@ -143,6 +143,7 @@ function apply(action,id,value,focusTarget) {
     return;
   }
   if(['edit-message','delete-message','clear-chat'].includes(action))ui.editMessage=null;
+  if(['edit-message','delete-message','clear-chat'].includes(action))get('#chat-message-sheet')?.close?.();
   render();
   const sameControl=[...main.querySelectorAll('[data-action]')].find(button=>button.dataset.action===action&&button.dataset.id===id);
   if(focusTarget) get(focusTarget)?.focus({preventScroll:true});
@@ -157,10 +158,12 @@ document.addEventListener('click',event=>{
   if(!event.target.closest('.home-nav-menu'))get('.home-nav-menu[open]')?.removeAttribute('open');
   // Only the interacted-with chat menu may remain open. Previous logic left
   // every message menu open when another message menu was tapped.
-  const activeChatMenu=event.target.closest('.chat-header-menu, .chat-message-tools');
-  document.querySelectorAll('.chat-header-menu[open], .chat-message-tools[open]').forEach(menu=>{
-    if(menu!==activeChatMenu)menu.open=false;
-  });
+  if(!event.target.closest('.chat-header-menu'))get('.chat-header-menu[open]')?.removeAttribute('open');
+  if(event.target===get('#chat-message-sheet')) {
+    const box=event.target.getBoundingClientRect();
+    if(event.clientY<box.top||event.clientX<box.left||event.clientX>box.right)event.target.close();
+    return;
+  }
   if(event.target===alertSheet) {
     const bounds=alertSheet.getBoundingClientRect();
     if(event.clientY<bounds.top||event.clientX<bounds.left||event.clientX>bounds.right) alertSheet.close();
@@ -181,7 +184,16 @@ document.addEventListener('click',event=>{
   if(route.name==='chat'&&control.dataset.chatUi) {
     const action=control.dataset.chatUi,index=Number(control.dataset.index);
     const history=store.read().messages[route.id]||[];
-    if(action==='mute')apply('toggle-chat-notifications',route.id);
+    if(action==='message-options') {
+      if(route.id==='ai'||!Number.isInteger(index)||history[index]?.from!=='me')return;
+      const own=history[index],sheet=get('#chat-message-sheet');
+      const options=[];
+      if(own.image) options.push(`<button type="button" data-chat-ui="view-photo" data-index="${index}">${icon('info')}사진 보기</button>`);
+      else options.push(`<button type="button" data-chat-ui="edit" data-index="${index}">${icon('edit')}수정</button>`);
+      options.push(`<button type="button" data-chat-ui="delete" data-index="${index}">${icon('close')}삭제</button>`);
+      get('#chat-message-sheet-actions').innerHTML=options.join('');
+      sheet.showModal();
+    } else if(action==='mute')apply('toggle-chat-notifications',route.id);
     else if(action==='room-info') {
       get('#chat-room-info-body').textContent=route.id==='clan'?'시연 멤버: '+clan.current.map(member=>member.name).join(' · '):route.id==='ai'?'목표를 퀘스트로 제안하는 AI 대화입니다.':threads[route.id].title+'님과의 개인 대화입니다.';
       get('#chat-room-info').showModal();
@@ -189,14 +201,19 @@ document.addEventListener('click',event=>{
       if(window.confirm('이 기기에 저장된 대화 내용을 모두 지울까요?'))apply('clear-chat',route.id);
     } else if(action==='attach')get('#chat-photo-file')?.click();
     else if(action==='edit'&&route.id!=='ai'&&history[index]?.from==='me'&&!history[index]?.image) {
+      get('#chat-message-sheet')?.close?.();
       ui.editMessage=route.id+':'+index;
       render();get('#chat-edit-'+index)?.focus();
     } else if(action==='cancel-edit') {
       ui.editMessage=null;render();get('#message')?.focus();
-    } else if(action==='delete'&&route.id!=='ai')apply('delete-message',route.id,{index});
+    } else if(action==='delete'&&route.id!=='ai'&&history[index]?.from==='me') {
+      get('#chat-message-sheet')?.close?.();
+      if(window.confirm('이 메시지를 삭제할까요?'))apply('delete-message',route.id,{index});
+    }
     else if(action==='view-photo') {
       const source=history[index]?.image?.src;
       if(typeof source==='string'&&/^data:image\/(?:jpeg|png|webp);base64,/.test(source)){
+        get('#chat-message-sheet')?.close?.();
         get('#chat-photo-viewer-image').src=source;get('#chat-photo-viewer').showModal();
       }
     }
@@ -204,6 +221,7 @@ document.addEventListener('click',event=>{
   }
   if(control.dataset.shellAction==='close-chat-room-info'){get('#chat-room-info')?.close();return;}
   if(control.dataset.shellAction==='close-chat-photo'){get('#chat-photo-viewer')?.close();return;}
+  if(control.dataset.shellAction==='close-chat-message-sheet'){get('#chat-message-sheet')?.close();return;}
   const {shellAction,filter,value,period,action,id}=control.dataset;
   if(shellAction==='back') {
     if(currentEntry.depth>0)history.back();
@@ -235,10 +253,7 @@ document.addEventListener('click',event=>{
 document.addEventListener('toggle',event=>{
   // details also opens via keyboard and programmatic interaction.
   const target=event.target;
-  if(!target.matches?.('.chat-header-menu, .chat-message-tools')||!target.open)return;
-  document.querySelectorAll('.chat-header-menu[open], .chat-message-tools[open]').forEach(menu=>{
-    if(menu!==target)menu.open=false;
-  });
+  if(!target.matches?.('.chat-header-menu')||!target.open)return;
 },true);
 document.addEventListener('input',event=>{
   if(event.target.id==='message'&&route.name==='chat') {
@@ -278,7 +293,7 @@ document.addEventListener('keydown',event=>{
   }
   if(event.key==='Escape'&&ui.editMessage&&route.name==='chat'){ui.editMessage=null;render();get('#message')?.focus();return;}
   if(event.key!=='Escape')return;
-  const menu=get('.home-nav-menu[open]')||get('.chat-header-menu[open]')||get('.chat-message-tools[open]');
+  const menu=get('.home-nav-menu[open]')||get('.chat-header-menu[open]');
   if(!menu)return;
   menu.open=false;
   menu.querySelector('summary').focus();

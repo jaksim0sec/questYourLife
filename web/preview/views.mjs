@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-actions-v8';
-import {clanRows,clanTotal} from './store.mjs?v=dm-actions-v8';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-chat-redesign-v10';
+import {clanRows,clanTotal} from './store.mjs?v=dm-chat-redesign-v10';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -235,25 +235,36 @@ function chat(state,route,ui={}) {
     const mine=msg.from==='me',prev=messages[index-1];
     const author=isClan?(msg.senderId&&msg.senderId!=='clan'&&msg.senderId!=='ai'?threads[msg.senderId]:null):thread;
     const authorName=isClan?(author?.title||'클랜 멤버'):thread.title;
-    const continued=!mine&&prev?.from==='them'&&(!isClan||prev.senderId===msg.senderId);
-    const avatar=mine?'':`<span class="chat-row__avatar" aria-hidden="true">${continued?'':`<span data-avatar="fluid" data-avatar-items="${(author?.avatarEquipment||[]).join(',')}"></span>`}</span>`;
-    const sender=isClan&&!mine&&!continued?`<span class="chat-row__sender">${escape(authorName)}</span>`:'';
+    const sameAuthor=prev&&prev.from===msg.from&&(!isClan||mine||prev.senderId===msg.senderId);
+    const avatar=mine?'':`<span class="chat-row__avatar" aria-hidden="true">${sameAuthor?'':`<span data-avatar="fluid" data-avatar-items="${(author?.avatarEquipment||[]).join(',')}"></span>`}</span>`;
+    const sender=isClan&&!mine&&!sameAuthor?`<span class="chat-row__sender">${escape(authorName)}</span>`:'';
     const quest=msg.quest?state.quests.find(q=>q.id===msg.quest):null;
     const proposal=quest?`<a class="chat-quest-link" href="${path('quest/'+quest.id,route.tab)}"><span class="chat-quest-link__caption">퀘스트 제안</span><strong>${escape(quest.title)}</strong><span class="chat-quest-link__bottom"><span>${quest.status==='offered'?'확인하고 수락하기':'퀘스트 보기'}</span>${icon('chevron')}</span></a>`:'';
+    const imageSource=typeof msg.image?.src==='string'&&/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(msg.image.src)?msg.image.src:null;
+    const image=imageSource?`<img class="chat-bubble__image" src="${escape(imageSource)}" alt="${mine?'내가 보낸 사진':'전송된 사진'}" loading="lazy">`:'';
     const editing=mine&&!isAI&&!msg.image&&ui.editMessage===route.id+':'+index;
-    const safeImage=typeof msg.image?.src==='string'&&/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(msg.image.src);
-    const image=safeImage?`<button type="button" class="chat-photo" data-chat-ui="view-photo" data-index="${index}" aria-label="사진 크게 보기"><img src="${escape(msg.image.src)}" alt="전송한 사진" loading="lazy"></button>`:'';
-    const editForm=`<form class="chat-edit-form" data-form="edit-message" data-id="${escape(route.id)}" data-index="${index}"><label class="visually-hidden" for="chat-edit-${index}">메시지 수정</label><textarea id="chat-edit-${index}" name="value" rows="2" maxlength="300" required>${escape(msg.text||'')}</textarea><div class="chat-edit-form__actions"><button type="button" data-chat-ui="cancel-edit">취소</button><button type="submit">저장</button></div></form>`;
-    const bubble=editing?editForm:`<div class="chat-bubble" data-from="${mine?'me':'them'}">${msg.text?`<p>${escape(msg.text)}</p>`:''}${image}${proposal}</div>`;
-    const tools=mine&&!isAI&&!editing?`<details class="chat-message-tools"><summary class="seed-icon-action" aria-label="메시지 옵션">${icon('more')}</summary><div class="chat-message-tools__menu">${msg.image?'':`<button type="button" data-chat-ui="edit" data-index="${index}">${icon('edit')}수정</button>`}<button type="button" data-chat-ui="delete" data-index="${index}">${icon('close')}삭제</button></div></details>`:'';
-    return `<div class="chat-row" data-from="${mine?'me':'them'}" data-group="${isClan}" data-continued="${continued}" ${mine?'':`aria-label="${escape(authorName)}의 메시지"`}>${avatar}<div class="chat-row__content">${sender}<div class="chat-row__message-wrap">${tools}${bubble}</div></div></div>`;
+    let bubble;
+    if(editing) bubble=`<form class="chat-edit-form" data-form="edit-message" data-id="${escape(route.id)}" data-index="${index}">
+        <label class="visually-hidden" for="chat-edit-${index}">메시지 수정</label>
+        <textarea id="chat-edit-${index}" name="value" rows="2" maxlength="300" required>${escape(msg.text)}</textarea>
+        <div class="chat-edit-form__actions"><button type="button" data-chat-ui="cancel-edit">취소</button><button type="submit">저장</button></div>
+      </form>`;
+    else if(mine&&!isAI) bubble=`<button type="button" class="chat-bubble chat-bubble--own" data-chat-ui="message-options" data-index="${index}" aria-haspopup="dialog" aria-controls="chat-message-sheet" aria-label="${imageSource?'내가 보낸 사진':'내 메시지'} 관리 메뉴">
+        ${msg.text?`<span class="chat-bubble__text">${escape(msg.text)}</span>`:''}${image}
+      </button>`;
+    else if(imageSource) bubble=`<button type="button" class="chat-bubble chat-bubble--photo" data-chat-ui="view-photo" data-index="${index}" aria-label="사진 크게 보기">${image}</button>`;
+    else bubble=`<div class="chat-bubble chat-bubble--incoming">${msg.text?`<p>${escape(msg.text)}</p>`:''}${proposal}</div>`;
+    return `<div class="chat-row" data-from="${mine?'me':'them'}" data-group="${isClan}" data-continued="${Boolean(sameAuthor)}" ${mine?'':`aria-label="${escape(authorName)}의 메시지"`}>
+      ${avatar}<div class="chat-row__content">${sender}${bubble}</div>
+    </div>`;
   }).join('');
-  const content=rows||'<div class="chat-empty"><strong>아직 대화가 없어요</strong><span>첫 메시지를 보내 보세요</span></div>';
-  const attach=isAI?'':`<button type="button" class="seed-icon-action chat-attach" data-chat-ui="attach" aria-label="사진 보내기">${icon('plus')}</button><input id="chat-photo-file" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" aria-label="사진 선택" tabindex="-1">`;
+  const content=rows||'<div class="chat-empty"><strong>아직 대화가 없어요</strong><span>첫 메시지를 보내 대화를 시작해 보세요</span></div>';
+  const attachment=isAI?'':`<button type="button" class="seed-icon-action chat-attach" data-chat-ui="attach" aria-label="사진 보내기">${icon('plus')}</button>
+    <input id="chat-photo-file" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" aria-label="사진 선택" tabindex="-1">`;
   return `<div class="chat-view" aria-label="${escape(thread.title)} 대화방">
     <section class="chat-history" id="chat-history" role="log" aria-label="대화 기록" aria-live="polite" aria-relevant="additions text">${content}</section>
     <form class="chat-composer" data-form="message" data-id="${escape(route.id)}">
-      <div class="chat-composer__layout">${attach}
+      <div class="chat-composer__layout">${attachment}
         <label class="visually-hidden" for="message">${isAI?'목표나 수정 요청 입력':'메시지 입력'}</label>
         <div class="chat-composer__field">
           <textarea id="message" name="value" rows="1" maxlength="300" required placeholder="${isAI?'어떤 목표를 이루고 싶어?':'메시지 입력'}" enterkeyhint="send" aria-label="${isAI?'목표나 요청 입력':'메시지 입력'}"></textarea>

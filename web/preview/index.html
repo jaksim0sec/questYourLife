@@ -6,8 +6,8 @@
   <meta name="description" content="갓생패치 퀘스트, 클랜과 마스코트의 웹 시연">
   <title>갓생패치</title>
   <link rel="stylesheet" href="../../seed/styles/seed-standard.css">
-  <link rel="stylesheet" href="./preview.css?v=dm-menu-fix-v9">
-  <script type="module" src="./app.mjs?v=dm-menu-fix-v9"></script>
+  <link rel="stylesheet" href="./preview.css?v=dm-chat-redesign-v10">
+  <script type="module" src="./app.mjs?v=dm-chat-redesign-v10"></script>
 </head>
 <body>
   <div class="seed-page-shell preview-shell">
@@ -34,6 +34,13 @@
   <dialog id="chat-room-info" class="chat-modal" aria-labelledby="chat-room-info-title">
     <div class="chat-modal__head"><h2 id="chat-room-info-title">대화방 정보</h2><button type="button" class="seed-icon-action" data-shell-action="close-chat-room-info" aria-label="닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button></div>
     <p id="chat-room-info-body"></p>
+  </dialog>
+  <dialog id="chat-message-sheet" class="chat-message-sheet" aria-labelledby="chat-message-sheet-title">
+    <span class="chat-message-sheet__grabber" aria-hidden="true"></span>
+    <div class="chat-message-sheet__head"><strong id="chat-message-sheet-title">메시지</strong>
+      <button type="button" class="seed-icon-action" data-shell-action="close-chat-message-sheet" aria-label="메뉴 닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button>
+    </div>
+    <div id="chat-message-sheet-actions" class="chat-message-sheet__actions"></div>
   </dialog>
   <dialog id="chat-photo-viewer" class="chat-modal chat-photo-modal" aria-label="사진 보기">
     <div class="chat-modal__head"><strong>사진</strong><button type="button" class="seed-icon-action" data-shell-action="close-chat-photo" aria-label="닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button></div>

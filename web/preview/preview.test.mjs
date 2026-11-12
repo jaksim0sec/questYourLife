@@ -147,7 +147,7 @@ test('every page emits real links and available assets, and uses the shared SEED
   assert.doesNotMatch(markup,/<dialog/);
   assert.match(page(store,'#/shop'),/data-item-layout="horizontal"/);
   assert.doesNotMatch(page(store,'#/shop',{...ui,shop:'모자'}),/크림 헤드폰/);
-  assert.match(page(store,'#/clan',{...ui,period:'previous'}),/1,230/);
+  assert.match(page(store,'#/clan',{...ui,clanView:'insights',period:'previous'}),/1,230/);
 });
 
 test('app event wiring changes screens, preserves parent nav and updates balances',async()=>{
@@ -291,26 +291,58 @@ test('quest index filters real statuses and updates its book cover progress',()=
   assert.match(searchResults(store.read(),'수학','quests'),/#\/book\/math\?tab=quests/);
 });
 
-test('clan leaderboard period is independent of the current reward and own contribution',()=>{
-  const store=createStore();
-  const current=page(store,'#/clan',{...ui,period:'current'});
-  assert.match(current,/80 XP 남음/);
-  assert.match(current,/260 캐시/);
-  assert.match(current,/버킷 햇/);
-  assert.equal((current.match(/class="seed-list__item clan-member"/g)||[]).length,4);
-  const previous=page(store,'#/clan',{...ui,period:'previous'});
-  assert.match(previous,/합계 1,230 XP/);
-  assert.match(previous,/aria-label="주간 클랜 상자"[^>]*aria-valuenow="1120"/);
-  assert.doesNotMatch(previous,/상자 받기/);
-  assert.equal(store.dispatch('complete','math-main'),true);
-  const unlocked=page(store,'#/clan',{...ui,period:'previous'});
-  assert.match(unlocked,/330 XP/);
-  assert.match(unlocked,/상자 받기/);
-  assert.match(unlocked,/합계 1,230 XP/);
-  assert.equal(store.dispatch('claim','clan'),true);
-  assert.match(page(store,'#/clan',{...ui,period:'current'}),/보상함 보기/);
+test('clan tab content separates shared reward, insight periods and catalog purchase',()=>{
+ const store=createStore();
+ const current=page(store,'#/clan',{...ui,clanView:'mine'});
+ assert.match(current,/80 XP 남았어요/);
+ assert.match(current,/260 캐시/);
+ assert.match(current,/버킷 햇/);
+ assert.match(current,/role="tablist"/);
+ assert.match(current,/clan-intro__name/);
+ assert.doesNotMatch(current,/class="seed-list__item clan-member"/);
+ const past=page(store,'#/clan',{...ui,clanView:'insights',period:'previous'});
+ assert.match(past,/합계 1,230 XP/);
+ assert.equal((past.match(/class="seed-list__item clan-member"/g)||[]).length,4);
+ assert.match(past,/aria-label="주간 공동 목표 달성률"[^>]*aria-valuenow="1120"/);
+ const market=page(store,'#/clan',{...ui,clanView:'shop'});
+ assert.match(market,/클랜 상점/);
+ assert.match(market,/data-action="purchase"/);
+ assert.equal((market.match(/class="clan-market__product"/g)||[]).length,3);
+ assert.equal(store.dispatch('complete','math-main'),true);
+ assert.match(page(store,'#/clan',{...ui,clanView:'mine'}),/상자 받기/);
+ assert.equal(store.dispatch('claim','clan'),true);
+ assert.match(page(store,'#/clan',{...ui,clanView:'mine'}),/보상함 보기/);
+ assert.match(page(store,'#/clan',{...ui,clanView:'insights',period:'previous'}),/합계 1,230 XP/);
 });
-
+test('clan join and leave only change preview membership, keeping chat history and rewards',()=>{
+ const s=createStore();
+ const messages=s.read().messages.clan.length;
+ assert.equal(s.read().clanJoined,true);
+ assert.equal(s.dispatch('clan-leave','clan'),true);
+ assert.equal(s.read().clanJoined,false);
+ assert.match(page(s,'#/clan'),/참가하기/);
+ assert.doesNotMatch(page(s,'#/dm'),/data-dm-kind="clan"/);
+ assert.match(page(s,'#/home'),/클랜에 참여해 보세요/);
+ assert.match(page(s,'#/chat/clan?tab=clan'),/클랜에 참여하면/);
+ assert.equal(s.dispatch('message','clan','떠난 사람'),false);
+ assert.equal(s.dispatch('claim','clan'),false);
+ assert.equal(s.dispatch('clan-join','clan'),true);
+ assert.equal(s.dispatch('clan-join','clan'),false);
+ assert.equal(s.read().messages.clan.length,messages);
+ assert.match(page(s,'#/clan'),/방과후 원정대/);
+});
+test('clan tab controls are scoped to one panel, and chat header uses a hamburger',()=>{
+ const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(app,/control\.dataset\.clanView/);
+ assert.match(app,/\['mine','insights','shop'\]/);
+ assert.match(app,/event\.key==='ArrowRight'/);
+ assert.match(app,/aria-label="대화방 메뉴">\$\{icon\('menu'\)\}/);
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(css,/\.clan-tabs button\[aria-selected="true"\]::after/);
+ const panel=page(createStore(),'#/clan',{...ui,clanView:'insights'});
+ assert.equal((panel.match(/role="tabpanel"/g)||[]).length,1);
+ assert.doesNotMatch(panel,/class="clan-reward"/);
+});
 test('home compact rail shows real status and linked destinations',()=>{
   const store=createStore();
   const html=page(store,'#/home');

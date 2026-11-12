@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-chat-redesign-v10';
-import {clanRows,clanTotal} from './store.mjs?v=dm-chat-redesign-v10';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=clan-global-v11';
+import {clanRows,clanTotal} from './store.mjs?v=clan-global-v11';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

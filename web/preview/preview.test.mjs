@@ -527,3 +527,22 @@ test('Chat uses Standard Start top navigation with Middle identity and no repeat
  assert.equal(store.dispatch('message','friend','답장'),true);
  assert.match(page(store,'#/chat/friend?tab=dm'),/답장/);
 });
+
+test('Chat header identity has real subtitle and composer is borderless',()=>{
+ const store=createStore();
+ const chat=page(store,'#/chat/friend3?tab=dm');
+ assert.match(chat,/class="chat-history"/);
+ assert.doesNotMatch(chat,/chat-intro/);
+ const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(app,/info\.append\(name,description\)/);
+ assert.match(app,/titleElement\.replaceChildren\(image,info\)/);
+ assert.match(app,/description\.textContent=route\.id==='clan'/);
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(css,/\.chat-header__meta\s*\{/);
+ assert.match(css,/\.chat-composer\s*\{[^}]*border:0/);
+ assert.match(css,/\.chat-composer__field\s*\{[^}]*border:0/);
+ assert.doesNotMatch(css,/\.chat-composer\s*\{[^}]*border-top:/);
+ assert.match(css,/\.chat-history\s*\{[^}]*justify-content:flex-start/);
+ assert.equal(store.dispatch('message','friend3','지금 확인했어'),true);
+ assert.match(page(store,'#/chat/friend3?tab=dm'),/지금 확인했어/);
+});

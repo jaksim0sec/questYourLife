@@ -1,4 +1,4 @@
-import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=dm-header-v5';
+import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=dm-chat-polish-v6';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const key='hyunsaengpatch-preview-v1';

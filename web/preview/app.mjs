@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-header-v5';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-v4';
-import {homeAlerts,threads} from './mock-data.mjs?v=dm-chat-v4';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-v4';
+import {createStore} from './store.mjs?v=dm-chat-polish-v6';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-polish-v6';
+import {homeAlerts,threads} from './mock-data.mjs?v=dm-chat-polish-v6';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-polish-v6';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -73,10 +73,16 @@ function render() {
       face.dataset.avatarItems=(contact.avatarEquipment||[]).join(',');
       image.append(face);
     }
+    const info=document.createElement('span');
+    info.className='chat-header__info';
     const name=document.createElement('span');
     name.className='chat-header__name';
     name.textContent=route.title;
-    titleElement.replaceChildren(image,name);
+    const description=document.createElement('small');
+    description.className='chat-header__meta';
+    description.textContent=route.id==='clan'?'클랜 대화':route.id==='ai'?'AI 퀘스트 도우미':'개인 대화';
+    info.append(name,description);
+    titleElement.replaceChildren(image,info);
   }
   document.title=route.title+' · 갓생패치';
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';

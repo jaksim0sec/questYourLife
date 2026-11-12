@@ -16,6 +16,37 @@ export const books = [{
   chapter:'1장 · 매일 같은 시간에 시작하기', quests:['math-main','math-today','math-review'],
 }];
 
+// Curated prototype discovery metrics, not measured service analytics.
+export const homeTrends = [
+  {
+    "kind": "퀘스트북",
+    "title": "수학 루틴 만들기",
+    "description": "매일 같은 시간에 시작하는 20분 습관",
+    "metric": "1,284명 참여",
+    "signal": "주간 인기",
+    "icon": "book",
+    "url": "book/math"
+  },
+  {
+    "kind": "일일 도전",
+    "title": "달리기 기록 갱신",
+    "description": "어제의 기록에 도전하기",
+    "metric": "428명 도전",
+    "signal": "상승 중",
+    "icon": "target",
+    "url": "quest/run"
+  },
+  {
+    "kind": "보너스",
+    "title": "주황색 거울 찾기",
+    "description": "지금 열려 있는 한정 도전",
+    "metric": "316명 참여",
+    "signal": "기간 한정",
+    "icon": "sparkle",
+    "url": "quest/bonus"
+  }
+];
+
 export const threads = {
   ai:{ title:'퀘스트 만들기', icon:'sparkle' },
   friend:{ title:'다온', initials:'다', icon:'user' },

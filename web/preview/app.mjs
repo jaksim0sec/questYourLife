@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=clan-tab';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=clan-tab';
-import {homeAlerts} from './mock-data.mjs?v=clan-tab';
-import {readRoute,navMarkup} from './routes.mjs?v=clan-tab';
+import {createStore} from './store.mjs?v=home-insights-1';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=home-insights-1';
+import {homeAlerts} from './mock-data.mjs?v=home-insights-1';
+import {readRoute,navMarkup} from './routes.mjs?v=home-insights-1';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -55,7 +55,7 @@ function render() {
   header.dataset.titleAlign=route.align||'center';
   shell.dataset.screen=route.name;
   get('.seed-top-nav__title').textContent=route.title;
-  document.title=route.title+' · 현생패치';
+  document.title=route.title+' · 갓생패치';
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
     trailing.innerHTML=homeActions(state);

@@ -479,7 +479,7 @@ test('DM global inbox uses real mascot avatars and SEED Filter Chips',()=>{
  const search=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'personal',dmSearch:'별이'});
  assert.equal((search.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,4);
  const empty=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'clan',dmSearch:'별이'});
- assert.match(empty,/class="dm-inbox__empty" aria-live="polite">검색 결과가 없어요/);
+ assert.match(empty,/class="dm-inbox__empty" aria-live="polite"\s*>검색 결과가 없어요/);
  assert.equal(store.dispatch('message','friend3','내일 같이 구경하자'),true);
  assert.match(page(store,'#/dm'),/내일 같이 구경하자/);
  const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
@@ -510,7 +510,8 @@ test('Chat renders a single growing composer and keeps message state and quest p
  assert.match(html,/<textarea id="message" name="value" rows="1" maxlength="300" required/);
  assert.match(html,/aria-label="메시지 전송" disabled/);
  assert.doesNotMatch(html,/class="entry-form composer"|class="seed-field" name="value"/);
- assert.match(page(store,'#/chat/clan?tab=dm'),/clan-bookmark-fill\.svg/);
+ assert.doesNotMatch(page(store,'#/chat/clan?tab=dm'),/clan-bookmark-fill\.svg/);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/chat-row__sender/);
  assert.equal(store.dispatch('message','friend','  첫 줄\n둘째 줄  '),true);
  assert.match(page(store,'#/chat/friend?tab=dm'),/data-from="me"/);
  assert.match(page(store,'#/chat/friend?tab=dm'),/첫 줄\n둘째 줄/);
@@ -546,7 +547,8 @@ test('Chat uses Standard Start top navigation with Middle identity and no repeat
  assert.equal(readRoute('#/chat/friend?tab=dm').title,'다온');
  const code=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
  assert.ok(code.includes("header.dataset.titleAlign=route.align||'center'"));
- assert.ok(code.includes("titleElement.replaceChildren(image,name)"));
+ assert.ok(code.includes("titleElement.replaceChildren(image,info)"));
+ assert.ok(code.includes("description.className='chat-header__meta'"));
  assert.ok(code.includes('name.textContent=route.title'));
  assert.ok(code.includes("image.className='chat-header__avatar'"));
  assert.ok(code.includes("shell.querySelectorAll('[data-avatar]')"));
@@ -646,7 +648,8 @@ test('Chat controls use real actions, keep incoming protected, and display saved
   assert.equal(store.dispatch('clear-chat','friend3'),true);
   assert.match(page(store,'#/chat/friend3?tab=dm'),/아직 대화가 없어요/);
   const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
-  assert.match(script,/trailing\.innerHTML=chatHeaderActions\(state,route\.id\)/);
+  assert.match(script,/chatHeaderActions\(state,route\.id\)/);
+  assert.match(script,/route\.id==='clan'&&state\.clanJoined===false/);
   assert.match(script,/compressChatPhoto\(file\)/);
 });
 test('Existing preview messages migrate without deleting personal writes or settings',()=>{

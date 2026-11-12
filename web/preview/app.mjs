@@ -15,7 +15,7 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all',editMessage:null};
+const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all',editMessage:null,clanView:'mine'};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -100,7 +100,7 @@ function render() {
   } else if(route.name==='quests') {
     trailing.innerHTML=iconAction('검색','search','search')+iconAction('퀘스트 만들기','plus','new-quest');
   } else if(route.name==='clan') {
-    trailing.innerHTML=iconAction('클랜 대화','chat','clan-chat');
+    trailing.innerHTML=state.clanJoined===false?'':iconAction('클랜 대화','chat','clan-chat');
   } else if(route.name==='me'||route.name==='shop') {
     trailing.innerHTML=cash(state.cash);
   } else trailing.replaceChildren();
@@ -230,6 +230,11 @@ document.addEventListener('click',event=>{
   if(control.dataset.shellAction==='close-chat-room-info'){get('#chat-room-info')?.close();return;}
   if(control.dataset.shellAction==='close-chat-photo'){get('#chat-photo-viewer')?.close();return;}
   if(control.dataset.shellAction==='close-chat-message-sheet'){get('#chat-message-sheet')?.close();return;}
+  if(route.name==='clan'&&control.dataset.clanView) {
+    const next=control.dataset.clanView;
+    if(['mine','insights','shop'].includes(next)){ui.clanView=next;render();get('#clan-tab-'+next)?.focus({preventScroll:true});}
+    return;
+  }
   const {shellAction,filter,value,period,action,id}=control.dataset;
   if(shellAction==='back') {
     if(currentEntry.depth>0)history.back();
@@ -256,6 +261,10 @@ document.addEventListener('click',event=>{
     else ui.period=period;
     render();
     [...main.querySelectorAll('button')].find(button=>filter?button.dataset.filter===filter&&button.dataset.value===value:button.dataset.period===period)?.focus({preventScroll:true});
+  } else if(action==='clan-leave'&&route.name==='clan') {
+    if(window.confirm('시연 클랜에서 나갈까요? 기록은 유지돼요.')){ui.clanView='mine';apply(action,id);}
+  } else if(action==='clan-join'&&route.name==='clan') {
+    ui.clanView='mine';apply(action,id);
   } else if(action) apply(action,id);
 });
 document.addEventListener('toggle',event=>{
@@ -294,6 +303,11 @@ document.addEventListener('input',event=>{
   get('#home-search-results').innerHTML=searchResults(store.read(),ui.search,route.tab);
 });
 document.addEventListener('keydown',event=>{
+  if(route.name==='clan'&&event.target?.matches?.('[role="tab"][data-clan-view]')&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) {
+    const order=['mine','insights','shop'],idx=order.indexOf(event.target.dataset.clanView);
+    const chosen=event.key==='Home'?0:event.key==='End'?2:(idx+(event.key==='ArrowRight'?1:2))%3;
+    event.preventDefault();ui.clanView=order[chosen];render();get('#clan-tab-'+ui.clanView)?.focus({preventScroll:true});return;
+  }
   if(event.key==='Enter'&&route.name==='chat'&&event.target?.id==='message'&&!event.shiftKey&&!event.isComposing&&event.keyCode!==229) {
     event.preventDefault();
     if(event.target.value.trim())event.target.form?.requestSubmit?.();

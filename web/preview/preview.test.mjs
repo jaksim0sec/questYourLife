@@ -664,3 +664,12 @@ test('Redesigned chat keeps edit delete photo and only one contextual sheet',()=
  assert.match(script,/action==='message-options'/);
  assert.match(script,/get\('#chat-message-sheet'\)\?\.close/);
 });
+
+test('Delete confirmation belongs to the shared chat sheet, not the browser alert',()=>{
+ const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(script,/action==='confirm-delete'/);
+ assert.match(script,/data-chat-ui="confirm-delete"/);
+ assert.match(script,/data-chat-ui="close-message-sheet"/);
+ assert.doesNotMatch(script,/window\.confirm\('이 메시지를 삭제할까요/);
+ assert.match(page(createStore(),'#/chat/friend3?tab=dm'),/메시지 옵션/);
+});

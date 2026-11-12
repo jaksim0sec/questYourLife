@@ -249,7 +249,7 @@ function chat(state,route,ui={}) {
         <textarea id="chat-edit-${index}" name="value" rows="2" maxlength="300" required>${escape(msg.text)}</textarea>
         <div class="chat-edit-form__actions"><button type="button" data-chat-ui="cancel-edit">취소</button><button type="submit">저장</button></div>
       </form>`;
-    else if(mine&&!isAI) bubble=`<button type="button" class="chat-bubble chat-bubble--own" data-chat-ui="message-options" data-index="${index}" aria-haspopup="dialog" aria-controls="chat-message-sheet" aria-label="${imageSource?'내가 보낸 사진':'내 메시지'} 관리 메뉴">
+    else if(mine&&!isAI) bubble=`<button type="button" class="chat-bubble chat-bubble--own" data-chat-ui="message-options" data-index="${index}" aria-haspopup="dialog" aria-controls="chat-message-sheet" aria-label="${escape((msg.text||'내가 보낸 사진').slice(0,80))} · 메시지 옵션">
         ${msg.text?`<span class="chat-bubble__text">${escape(msg.text)}</span>`:''}${image}
       </button>`;
     else if(imageSource) bubble=`<button type="button" class="chat-bubble chat-bubble--photo" data-chat-ui="view-photo" data-index="${index}" aria-label="사진 크게 보기">${image}</button>`;

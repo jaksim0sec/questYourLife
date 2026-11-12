@@ -187,6 +187,7 @@ document.addEventListener('click',event=>{
     if(action==='message-options') {
       if(route.id==='ai'||!Number.isInteger(index)||history[index]?.from!=='me')return;
       const own=history[index],sheet=get('#chat-message-sheet');
+      get('#chat-message-sheet-title').textContent='메시지';
       const options=[];
       if(own.image) options.push(`<button type="button" data-chat-ui="view-photo" data-index="${index}">${icon('info')}사진 보기</button>`);
       else options.push(`<button type="button" data-chat-ui="edit" data-index="${index}">${icon('edit')}수정</button>`);
@@ -207,8 +208,15 @@ document.addEventListener('click',event=>{
     } else if(action==='cancel-edit') {
       ui.editMessage=null;render();get('#message')?.focus();
     } else if(action==='delete'&&route.id!=='ai'&&history[index]?.from==='me') {
+      get('#chat-message-sheet-title').textContent='메시지를 삭제할까요?';
+      get('#chat-message-sheet-actions').innerHTML=
+        `<button type="button" data-chat-ui="confirm-delete" data-index="${index}">${icon('close')}삭제</button>`+
+        `<button type="button" data-chat-ui="close-message-sheet">취소</button>`;
+    } else if(action==='confirm-delete'&&route.id!=='ai'&&history[index]?.from==='me') {
       get('#chat-message-sheet')?.close?.();
-      if(window.confirm('이 메시지를 삭제할까요?'))apply('delete-message',route.id,{index});
+      apply('delete-message',route.id,{index});
+    } else if(action==='close-message-sheet') {
+      get('#chat-message-sheet')?.close?.();
     }
     else if(action==='view-photo') {
       const source=history[index]?.image?.src;

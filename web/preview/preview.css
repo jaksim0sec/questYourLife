@@ -45,27 +45,20 @@
   background: var(--soft);
 }
 .row-avatar { border-radius: 50%; }
-.quest-hero, .detail-panel, .clan-panel, .home-summary { display: grid; gap: .7rem; }
-.quest-hero {
-  padding: 1.15rem;
-  border-color: var(--brand-weak);
-  background: linear-gradient(152deg,var(--brand-weak),var(--surface) 80%);
-}
+.detail-panel, .clan-panel { display: grid; gap: .7rem; }
 .hero-meta > span:last-child:not(.seed-badge), .detail-reward > span:first-child { color: var(--sub); font-size: .82rem; }
-.hero-bottom { padding-top: .25rem; }
-.home-summary .seed-action { justify-self: start; }
 .reward-line { display: inline-flex; align-items: center; gap: .4rem .6rem; flex-wrap: wrap; min-width: 0; }
 .preview-list .reward-line { flex-direction: column; align-items: flex-end; gap: .16rem; }
 .xp { display: inline-flex; align-items: center; gap: .23rem; font-size: .75rem; font-weight: 750; }
 .xp img { width: 1.05rem; height: 1.05rem; object-fit: contain; }
-.bonus-banner, .profile-panel, .dm-start, .reward-box {
+.profile-panel, .dm-start, .reward-box {
   display: grid;
   grid-template-columns: minmax(0,1fr) auto;
   align-items: center;
   gap: .7rem;
 }
-.bonus-banner img, .clan-reward img { width: 5.2rem; max-width: 25vw; height: 4.6rem; object-fit: contain; }
-.bonus-banner .row-copy, .reward-box .row-copy, .profile-panel > div:first-child { display: grid; justify-items: start; gap: .35rem; }
+.clan-reward img { width: 5.2rem; max-width: 25vw; height: 4.6rem; object-fit: contain; }
+.reward-box .row-copy, .profile-panel > div:first-child { display: grid; justify-items: start; gap: .35rem; }
 .profile-panel .progress-track { width: min(100%,9rem); margin-block: .18rem; }
 .clan-reward { display: flex; align-items: center; justify-content: space-between; gap: .7rem; }
 .clan-score { color: var(--sub); font-variant-numeric: tabular-nums; }
@@ -130,6 +123,86 @@
   pointer-events: none;
 }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+
+/* Home composition. The lead surface, open queue and reward object carry different emphasis. */
+.preview-shell[data-screen="home"] .preview-content { padding-block-start: 1rem; gap: 1.45rem; }
+.preview-shell[data-screen="home"] .seed-page-shell__section { gap: .55rem; }
+.home-daily-progress {
+  display: grid;
+  grid-template-columns: auto minmax(2.6rem,3.5rem);
+  align-items: center;
+  gap: .45rem;
+  color: var(--sub);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+}
+.home-daily-progress strong { color: var(--text); }
+.home-mission[data-surface="solid"] {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) clamp(3.5rem,21vw,7.3rem);
+  gap: .95rem .45rem;
+  padding: clamp(.85rem,3.8vw,1.3rem);
+  background: linear-gradient(135deg,var(--brand-weak),var(--surface) 90%);
+  border-color: color-mix(in srgb,var(--brand) 16%,var(--line));
+}
+.home-mission-meta, .home-mission-footer, .home-bonus-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .45rem .65rem;
+}
+.home-mission-meta .seed-badge {
+  background: var(--surface);
+  color: var(--text);
+}
+.home-deadline {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  color: var(--sub);
+  font-size: .76rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.home-deadline .seed-icon { --seed-icon-size: .9rem; flex: none; }
+.home-mission-meta, .home-mission-footer { grid-column: 1 / -1; }
+.home-mission-copy { grid-column: 1; grid-row: 2; min-width: 0; }
+.home-mission-copy > .seed-text:first-child { letter-spacing: -.038em; }
+.home-mission-copy > p.seed-text { margin-top: .38rem; line-height: 1.55; color: color-mix(in srgb,var(--text) 68%,var(--sub)); }
+.home-mission .home-deadline { color: color-mix(in srgb,var(--text) 68%,var(--sub)); }
+.home-mission-art {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  pointer-events: none;
+}
+.home-mission-footer { border-top: 1px solid color-mix(in srgb,var(--brand) 15%,var(--line)); padding-top: .6rem; }
+.home-payout { display: grid; gap: .18rem; }
+.home-payout .reward-line { column-gap: .75rem; }
+.home-payout .xp, .home-payout .seed-credit__value { font-size: .9rem; }
+.home-payout .xp img, .home-payout .seed-credit__coin { width: 1.25rem; height: 1.25rem; }
+.home-finish { display: grid; gap: .5rem; justify-items: start; }
+.home-bonus[data-surface="reward"] {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) min(21vw,5.6rem) auto;
+  align-items: center;
+  gap: .45rem;
+  padding-block: .7rem;
+}
+.home-bonus-copy { min-width: 0; display: grid; gap: .32rem; justify-items: start; }
+.home-bonus-meta { justify-content: flex-start; }
+.home-bonus-art, .home-chest { display: block; object-fit: contain; }
+.home-bonus-art { width: 100%; aspect-ratio: 1; }
+.home-chest { width: 2.7rem; height: 2.7rem; flex: none; }
+.home-bonus > .seed-icon { --seed-icon-size: .95rem; color: var(--sub); }
+@media (max-width: 320px), (max-width: 22em) {
+  .home-mission[data-surface="solid"] { grid-template-columns: minmax(0,1fr); }
+  .home-mission-art { display: none; }
+}
 @media (max-width: 359px), (max-width: 22.5em) {
   .preview-shell[data-screen="shop"] .seed-top-nav__trailing { display: none; }
   .preview-shell[data-screen="shop"] .shop-balance { display: flex; }

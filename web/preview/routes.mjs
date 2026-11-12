@@ -11,10 +11,10 @@ const definitions={
   book:{type:'global-inner',title:'퀘스트북',tab:'quests',hasId:true},
   ranking:{type:'global-inner',title:'주간 기여',tab:'clan'},
   shop:{type:'global-inner',title:'상점',tab:'me',align:'start'},
-  chat:{type:'non-global',title:'대화방',tab:'dm',parentTabs:['dm','clan'],hasId:true},
+  chat:{type:'non-global',title:'대화방',tab:'dm',parentTabs:['dm','clan','home'],hasId:true},
   item:{type:'non-global',title:'상품 상세',tab:'me',hasId:true,fallback:'shop'},
   decorate:{type:'non-global',title:'꾸미기',tab:'me'},
-  rewards:{type:'non-global',title:'보상함',tab:'me',parentTabs:['me','clan']},
+  rewards:{type:'non-global',title:'보상함',tab:'me',parentTabs:['me','clan','home']},
 };
 
 export function readRoute(hash) {

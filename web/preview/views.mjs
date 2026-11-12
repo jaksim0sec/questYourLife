@@ -29,22 +29,54 @@ function row({label,sub,url,tab,leading='',trailing='',chevron=true}) {
 const questRow=(q,tab)=>row({label:q.title,sub:`${q.kind} · ${q.status==='done'?'완료':q.due}`,url:'quest/'+q.id,tab,
   leading:`<span class="row-icon">${icon(q.status==='done'?'check-circle':q.kind==='메인'?'flag':'target')}</span>`,trailing:rewardLine(q)});
 const empty=text=>`<div class="empty">${support(text)}</div>`;
-const progress=(value,max,label)=>`<div class="progress-track" data-thickness="default" role="progressbar" aria-label="${escape(label)}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.min(value,max)}" style="--progress:${Math.min(value/max*100,100)}%"><span class="progress-fill"></span></div>`;
+const progress=(value,max,label,thickness='default')=>`<div class="progress-track" data-thickness="${thickness}" role="progressbar" aria-label="${escape(label)}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.min(value,max)}" style="--progress:${Math.min(value/max*100,100)}%"><span class="progress-fill"></span></div>`;
 const chips=(entries,selected,name)=>`<div class="filter-row" role="group" aria-label="${name==='shop'?'상품 종류':'퀘스트 상태'}">${entries.map(([value,label])=>`<button class="seed-filter-chip" type="button" data-filter="${name}" data-value="${value}" aria-pressed="${value===selected}">${label}</button>`).join('')}</div>`;
 const segment=period=>`<div class="seed-segment" role="group" aria-label="기여 기간">${[['current','이번 주'],['previous','지난주']].map(([key,label])=>`<button type="button" data-period="${key}" aria-pressed="${key===period}">${label}</button>`).join('')}</div>`;
 const avatar=(scale='hero')=>`<div data-avatar="${scale}"></div>`;
 
 function home(state) {
-  const offer=state.quests.find(q=>q.kind!=='보너스'&&q.status==='offered');
+  const today=state.quests.filter(q=>q.kind==='일일'&&q.due==='오늘 23:59'&&q.status!=='rejected');
+  const dailyDone=today.filter(q=>q.status==='done').length;
   const active=state.quests.filter(q=>q.status==='active'&&q.kind!=='보너스');
+  const featured=today.find(q=>q.status==='offered')||active.find(q=>q.kind==='일일')||active[0];
+  const queue=active.filter(q=>q!==featured);
   const bonus=state.quests.find(q=>q.id==='bonus'&&!['done','rejected'].includes(q.status));
-  const completed=state.quests.filter(q=>q.status==='done'&&!q.baseline).length;
-  const hero=offer?`<article class="seed-surface quest-hero" data-surface="solid">
-    <div class="hero-meta">${badge('일일 퀘스트 제안','brand')}<span>${escape(offer.due)}</span></div>
-    ${title(offer.title,'hero')}${support(offer.condition)}<div class="hero-bottom">${rewardLine(offer)}${cta('제안 보기','quest/'+offer.id,'home')}</div></article>`
-    : `<article class="seed-surface home-summary" data-surface="subtle">${title(completed?'오늘 '+completed+'개 퀘스트 완료':'오늘의 도전', 'hero')}${support('지금 진행 중인 도전을 이어갈 수 있어요.')}${cta('퀘스트 보기','quests',null,'neutral-weak')}</article>`;
-  return hero+section('진행 중',active.length?list(active.slice(0,2).map(q=>questRow(q,'home')).join(''),'진행 중'):empty('진행 중인 퀘스트가 없어요.'),more('전체','quests'))
-    +(bonus?`<a class="seed-surface bonus-banner" data-surface="reward" href="${path('quest/bonus','home')}"><div class="row-copy">${badge('기간 한정 보너스','warning')}${title(bonus.title,'item')}${support(bonus.due)}${cash(bonus.cash)}</div><img src="${rewards}02_capsule_gacha.png" alt=""></a>`:'');
+  const ready=Object.entries(chestLoot).filter(([id])=>state.boxes[id]==='ready');
+  const latestDone=state.quests.filter(q=>q.status==='done'&&!q.baseline);
+  const dailyProgress=today.length?`<div class="home-daily-progress">
+    <span><strong>${dailyDone}</strong> / ${today.length} 완료</span>${progress(dailyDone,today.length,'오늘의 일일 퀘스트','micro')}</div>`:'';
+  const mission=featured?`<article class="seed-surface home-mission" data-surface="solid">
+    <div class="home-mission-meta">${badge(featured.status==='offered'?'일일 퀘스트 제안':featured.kind+' 퀘스트 · 진행 중','brand')}
+      <span class="home-deadline">${icon('clock')}${escape(featured.due)}</span></div>
+    <div class="home-mission-copy">${title(featured.title,'hero')}${support(featured.condition)}</div>
+    <div class="home-mission-footer">
+      <div class="home-payout">${support('완료 보상')}${rewardLine(featured)}</div>
+      ${cta(featured.status==='offered'?'제안 보기':'이어서 하기','quest/'+featured.id,'home')}
+    </div>
+    <img class="home-mission-art" src="${rewards}xp-gems-cluster.png" alt="">
+  </article>`:`<article class="seed-surface home-finish" data-surface="subtle">
+    ${title(latestDone.length?'오늘의 도전을 마쳤어요':'오늘 할 도전을 정해볼까요?','hero')}
+    ${latestDone.length?support('완료 '+latestDone.length+'개 · +'+fmt(latestDone.reduce((xp,q)=>xp+q.xp,0))+' XP'):''}
+    ${cta('퀘스트 만들기','chat/ai','home','neutral-outline')}
+  </article>`;
+  const queueRows=queue.length?list(queue.slice(0,3).map(q=>questRow(q,'home')).join(''),'진행 중')
+    :empty(featured?.status==='active'?'이 도전을 마치면 여기에서 다음 도전을 이어갈 수 있어요.':'수락한 퀘스트가 여기에 표시돼요.');
+  const bonusCard=bonus?`<a class="seed-surface home-bonus" data-surface="reward" href="${path('quest/bonus','home')}">
+    <div class="home-bonus-copy"><div class="home-bonus-meta">${badge(bonus.status==='active'?'참여 중':'기간 한정','warning')}
+      <span class="home-deadline">${escape(bonus.due)}</span></div>
+      ${title(bonus.title,'item')}${cash(bonus.cash)}
+    </div><img class="home-bonus-art" src="${rewards}cash-coins-pouch.png" alt="">${icon('chevron')}
+  </a>`:'';
+  const inbox=ready.length?row({
+    label:ready.length===1?ready[0][1].name:'열 수 있는 상자 '+ready.length+'개',
+    sub:'열어서 캐시와 장식 받기',url:'rewards',tab:'home',
+    leading:`<img class="home-chest" src="${rewards+ready[0][1].image}" alt="">`,
+    trailing:badge('열기','reward'),
+  }):'';
+  return section('오늘의 도전',mission,dailyProgress)
+    +section('진행 중',queueRows,more('모든 퀘스트','quests'))
+    +(bonusCard?section('보너스 퀘스트',bonusCard):'')
+    +(inbox?section('받을 보상',list(inbox,'받을 보상'),more('보상함','rewards','home')):'');
 }
 function quests(state,ui) {
   const items=state.quests.filter(q=>ui.quest==='all'?q.status!=='rejected':q.status===ui.quest);

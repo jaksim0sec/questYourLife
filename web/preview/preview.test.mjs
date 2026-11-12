@@ -215,3 +215,23 @@ test('app event wiring changes screens, preserves parent nav and updates balance
     }
   }
 });
+
+test('home promotes the next actionable quest and reflects daily progress and available chests',()=>{
+  const store=createStore();
+  assert.match(page(store,'#/home'),/aria-valuenow="0"/);
+  assert.match(page(store,'#/home'),/첫 도전 상자/);
+  assert.match(page(store,'#/home'),/cash-coins-pouch.png/);
+  store.dispatch('accept','run');
+  const active=page(store,'#/home');
+  assert.match(active,/이어서 하기/);
+  assert.equal((active.match(/달리기 기록 0.5초 줄이기/g)||[]).length,1);
+  store.dispatch('complete','run');
+  assert.match(page(store,'#/home'),/aria-valuenow="1"/);
+  assert.match(page(store,'#/home'),/수학 오답 3문제 다시 풀기/);
+  store.dispatch('open','starter');
+  assert.doesNotMatch(page(store,'#/home'),/받을 보상/);
+  store.dispatch('complete','math-today');
+  store.dispatch('complete','math-main');
+  assert.match(page(store,'#/home'),/오늘의 도전을 마쳤어요/);
+  assert.equal(readRoute('#/rewards?tab=home').tab,'home');
+});

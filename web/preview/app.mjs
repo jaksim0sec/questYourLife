@@ -15,11 +15,11 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all'};
+const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all',editMessage:null};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
-const feedback={accept:'퀘스트를 수락했어요.',reject:'제안을 거절했어요.',defer:'퀘스트를 미뤘어요.',resume:'퀘스트를 다시 시작했어요.',complete:'퀘스트 완료! 보상을 받았어요.',undo:'완료를 취소했어요.',claim:'상자를 보상함에 담았어요.',open:'상자 보상을 받았어요.',purchase:'아이템을 보유함에 담았어요.'};
+const feedback={'edit-message':'메시지를 수정했어요.','delete-message':'메시지를 삭제했어요.','clear-chat':'대화 내용을 비웠어요.','toggle-chat-notifications':'대화 알림 설정을 저장했어요.',accept:'퀘스트를 수락했어요.',reject:'제안을 거절했어요.',defer:'퀘스트를 미뤘어요.',resume:'퀘스트를 다시 시작했어요.',complete:'퀘스트 완료! 보상을 받았어요.',undo:'완료를 취소했어요.',claim:'상자를 보상함에 담았어요.',open:'상자 보상을 받았어요.',purchase:'아이템을 보유함에 담았어요.'};
 let noticeTimer;
 let nextKey=0;
 let route=readRoute(location.hash);
@@ -50,9 +50,14 @@ function homeActions(state) {
     `<span class="home-alert-trigger">${iconAction(unread?'알림 · 읽지 않은 항목 있음':'알림','bell-connected','alerts',true)}${unread?'<span class="home-alert-dot" aria-hidden="true"></span>':''}</span>`+
     globalMenu(state,'home');
 }
+function chatHeaderActions(state,id) {
+  const muted=Boolean(state.mutedThreads?.[id]);
+  return `<button type="button" class="seed-icon-action chat-header-mute" data-muted="${muted}" aria-pressed="${muted}" aria-label="${muted?'대화 알림 켜기':'대화 알림 끄기'}" data-chat-ui="mute">${icon('bell')}</button><details class="chat-header-menu"><summary class="seed-icon-action" aria-label="대화방 메뉴">${icon('more')}</summary><div class="chat-header-menu__panel"><button type="button" data-chat-ui="room-info">${icon('info')}대화방 정보</button>${id==='ai'?'':`<button type="button" data-chat-ui="clear">${icon('close')}대화 내용 비우기</button>`}</div></details>`;
+}
 function render() {
   const state=store.read();
   if(route.name!=='home'&&alertSheet?.open)alertSheet.close();
+  if(route.name!=='chat'){get('#chat-room-info')?.close?.();get('#chat-photo-viewer')?.close?.();}
   const type=applyPageType(shell,route.type);
   header.dataset.navRole=type.header;
   header.dataset.titleAlign=route.align||'center';
@@ -88,6 +93,8 @@ function render() {
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
     trailing.innerHTML=homeActions(state);
+  } else if(route.name==='chat') {
+    trailing.innerHTML=chatHeaderActions(state,route.id);
   } else if(route.name==='dm') {
     trailing.innerHTML=globalMenu(state,'dm');
   } else if(route.name==='quests') {
@@ -139,7 +146,8 @@ function apply(action,id,value,focusTarget) {
   const sameControl=[...main.querySelectorAll('[data-action]')].find(button=>button.dataset.action===action&&button.dataset.id===id);
   if(focusTarget) get(focusTarget)?.focus({preventScroll:true});
   else (sameControl||main).focus({preventScroll:true});
-  if(action==='message') {
+  if(['edit-message','delete-message','clear-chat'].includes(action))ui.editMessage=null;
+  if(action==='message'||action==='send-photo') {
     const history=main.querySelector?.('.chat-history');
     if(history)history.scrollTop=history.scrollHeight;
   }
@@ -147,6 +155,8 @@ function apply(action,id,value,focusTarget) {
 }
 document.addEventListener('click',event=>{
   if(!event.target.closest('.home-nav-menu'))get('.home-nav-menu[open]')?.removeAttribute('open');
+  if(!event.target.closest('.chat-header-menu'))get('.chat-header-menu[open]')?.removeAttribute('open');
+  if(!event.target.closest('.chat-message-tools'))main.querySelectorAll('.chat-message-tools[open]').forEach(item=>item.open=false);
   if(event.target===alertSheet) {
     const bounds=alertSheet.getBoundingClientRect();
     if(event.clientY<bounds.top||event.clientX<bounds.left||event.clientX>bounds.right) alertSheet.close();
@@ -164,6 +174,32 @@ document.addEventListener('click',event=>{
     navigate(href);
     return;
   }
+  if(route.name==='chat'&&control.dataset.chatUi) {
+    const action=control.dataset.chatUi,index=Number(control.dataset.index);
+    const history=store.read().messages[route.id]||[];
+    if(action==='mute')apply('toggle-chat-notifications',route.id);
+    else if(action==='room-info') {
+      get('#chat-room-info-body').textContent=route.id==='clan'?'시연 멤버: '+clan.current.map(member=>member.name).join(' · '):route.id==='ai'?'목표를 퀘스트로 제안하는 AI 대화입니다.':threads[route.id].title+'님과의 개인 대화입니다.';
+      get('#chat-room-info').showModal();
+    } else if(action==='clear') {
+      if(window.confirm('이 기기에 저장된 대화 내용을 모두 지울까요?'))apply('clear-chat',route.id);
+    } else if(action==='attach')get('#chat-photo-file')?.click();
+    else if(action==='edit'&&route.id!=='ai'&&history[index]?.from==='me'&&!history[index]?.image) {
+      ui.editMessage=route.id+':'+index;
+      render();get('#chat-edit-'+index)?.focus();
+    } else if(action==='cancel-edit') {
+      ui.editMessage=null;render();get('#message')?.focus();
+    } else if(action==='delete'&&route.id!=='ai')apply('delete-message',route.id,{index});
+    else if(action==='view-photo') {
+      const source=history[index]?.image?.src;
+      if(typeof source==='string'&&/^data:image\/(?:jpeg|png|webp);base64,/.test(source)){
+        get('#chat-photo-viewer-image').src=source;get('#chat-photo-viewer').showModal();
+      }
+    }
+    return;
+  }
+  if(control.dataset.shellAction==='close-chat-room-info'){get('#chat-room-info')?.close();return;}
+  if(control.dataset.shellAction==='close-chat-photo'){get('#chat-photo-viewer')?.close();return;}
   const {shellAction,filter,value,period,action,id}=control.dataset;
   if(shellAction==='back') {
     if(currentEntry.depth>0)history.back();
@@ -228,8 +264,9 @@ document.addEventListener('keydown',event=>{
     if(event.target.value.trim())event.target.form?.requestSubmit?.();
     return;
   }
+  if(event.key==='Escape'&&ui.editMessage&&route.name==='chat'){ui.editMessage=null;render();get('#message')?.focus();return;}
   if(event.key!=='Escape')return;
-  const menu=get('.home-nav-menu[open]');
+  const menu=get('.home-nav-menu[open]')||get('.chat-header-menu[open]')||get('.chat-message-tools[open]');
   if(!menu)return;
   menu.open=false;
   menu.querySelector('summary').focus();
@@ -238,7 +275,44 @@ document.addEventListener('submit',event=>{
   const form=event.target;
   if(!form.dataset.form)return;
   event.preventDefault();
+  if(form.dataset.form==='edit-message'){
+    apply('edit-message',form.dataset.id,{index:Number(form.dataset.index),text:new FormData(form).get('value')});return;
+  }
   apply(form.dataset.form,form.dataset.id,new FormData(form).get('value'),form.dataset.form==='message'?'#message':undefined);
+});
+// Browser-only image attachment: locally compressed, never uploaded to a remote user.
+async function compressChatPhoto(file) {
+  if(!/^image\/(?:jpeg|png|webp)$/.test(file?.type||'')||file.size>12*1024*1024)throw Error('JPEG·PNG·WebP 사진(12MB 이하)만 선택할 수 있어요.');
+  const url=URL.createObjectURL(file);
+  try {
+    const image=await new Promise((resolve,reject)=>{
+      const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('사진을 읽지 못했어요.'));img.src=url;
+    });
+    const canvas=document.createElement('canvas'),scale=Math.min(1,960/Math.max(image.naturalWidth,image.naturalHeight));
+    canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+    const ctx=canvas.getContext('2d');if(!ctx)throw Error('사진을 처리하지 못했어요.');
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(image,0,0,canvas.width,canvas.height);
+    let data=canvas.toDataURL('image/jpeg',.7);
+    if(data.length>900000){
+      const smaller=document.createElement('canvas'),ratio=Math.min(1,650/Math.max(canvas.width,canvas.height));
+      smaller.width=Math.max(1,Math.round(canvas.width*ratio));smaller.height=Math.max(1,Math.round(canvas.height*ratio));
+      const small=smaller.getContext('2d');small.fillStyle='#fff';small.fillRect(0,0,smaller.width,smaller.height);small.drawImage(canvas,0,0,smaller.width,smaller.height);
+      data=smaller.toDataURL('image/jpeg',.6);
+    }
+    if(data.length>900000)throw Error('사진이 너무 커요. 다른 사진을 선택해 주세요.');
+    return data;
+  } finally{URL.revokeObjectURL(url);}
+}
+document.addEventListener('change',async event=>{
+  if(event.target.id!=='chat-photo-file'||route.name!=='chat')return;
+  const element=event.target,file=element.files?.[0],chatId=route.id;element.value='';
+  if(!file)return;
+  try {
+    const src=await compressChatPhoto(file);
+    if(route.name!=='chat'||route.id!==chatId)return;
+    if(!store.dispatch('send-photo',chatId,{src})){showFeedback('사진을 저장하지 못했어요. 기기 저장 공간을 확인해 주세요.');return;}
+    render();get('#message')?.focus({preventScroll:true});showFeedback('이 기기의 시연 대화에 사진을 저장했어요.');
+  }catch(error){showFeedback(error?.message||'사진을 처리하지 못했어요.');}
 });
 window.addEventListener('popstate',event=>{
   scrollPositions.set(currentEntry.key,window.scrollY);

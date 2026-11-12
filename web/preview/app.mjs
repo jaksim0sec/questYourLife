@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs';
-import {homeAlerts} from './mock-data.mjs';
-import {readRoute,navMarkup} from './routes.mjs';
+import {createStore} from './store.mjs?v=home-nav';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=home-nav';
+import {homeAlerts} from './mock-data.mjs?v=home-nav';
+import {readRoute,navMarkup} from './routes.mjs?v=home-nav';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;

@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,rewards,threads} from './mock-data.mjs';
-import {clanRows,clanTotal} from './store.mjs';
+import {books,catalog,chestLoot,clan,homeAlerts,rewards,threads} from './mock-data.mjs?v=home-nav';
+import {clanRows,clanTotal} from './store.mjs?v=home-nav';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

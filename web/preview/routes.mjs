@@ -1,5 +1,5 @@
 import {WEB_NAV_ITEMS} from '../../seed/runtime/seed-page-contract.mjs';
-import {threads} from './mock-data.mjs';
+import {threads} from './mock-data.mjs?v=home-nav';
 
 const definitions={
   home:{type:'global',title:'홈',tab:'home'},

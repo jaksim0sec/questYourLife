@@ -608,7 +608,7 @@ test('Chat controls use real actions, keep incoming protected, and display saved
   assert.equal(store.read().messages.clan.length,count);
   const img='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jje0AAAAASUVORK5CYII=';
   assert.equal(store.dispatch('send-photo','friend3',{src:img}),true);
-  assert.match(page(store,'#/chat/friend3?tab=dm'),/class="chat-photo"/);
+  assert.match(page(store,'#/chat/friend3?tab=dm'),/class="chat-bubble__image"/);
   assert.match(page(store,'#/dm'),/사진을 보냈어요/);
   assert.equal(store.dispatch('send-photo','friend3',{src:'javascript:1'}),false);
   assert.equal(store.dispatch('clear-chat','friend3'),true);
@@ -643,4 +643,24 @@ test('Messenger only opens one shared message action sheet, never a per-bubble p
  assert.match(css,/\.chat-composer\s*\{[^}]*border:0/);
  assert.doesNotMatch(css,/\.chat-composer\s*\{[^}]*border-top/);
  assert.match(css,/\.chat-history\s*\{[^}]*justify-content:flex-start/);
+});
+
+test('Redesigned chat keeps edit delete photo and only one contextual sheet',()=>{
+ const store=createStore();
+ const html=page(store,'#/chat/clan?tab=dm');
+ assert.match(html,/chat-row__sender/);
+ assert.doesNotMatch(html,/class="chat-message-tools"/);
+ const initial=store.read().messages.clan.length;
+ assert.equal(store.dispatch('message','clan','테스트'),true);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/data-chat-ui="message-options"/);
+ assert.equal(store.dispatch('edit-message','clan',{index:initial,text:'수정'}),true);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/수정/);
+ assert.equal(store.dispatch('delete-message','clan',{index:initial}),true);
+ assert.equal(store.read().messages.clan.length,initial);
+ const photo='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jje0AAAAASUVORK5CYII=';
+ assert.equal(store.dispatch('send-photo','clan',{src:photo}),true);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/class="chat-bubble__image"/);
+ const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(script,/action==='message-options'/);
+ assert.match(script,/get\('#chat-message-sheet'\)\?\.close/);
 });

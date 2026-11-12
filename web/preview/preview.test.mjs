@@ -467,3 +467,38 @@ test('DM thread migration preserves older local-storage messages',()=>{
  assert.equal(updated.messages.friend[0].text,prior.messages.friend[0].text);
  assert.ok(updated.messages.friend2?.length>0&&updated.messages.friend3?.length>0);
 });
+
+test('Chat renders a single growing composer and keeps message state and quest proposals',()=>{
+ const store=createStore();
+ const html=page(store,'#/chat/friend?tab=dm');
+ assert.match(html,/class="chat-view"/);
+ assert.match(html,/role="log" aria-label="대화 기록"/);
+ assert.match(html,/data-avatar-items="0,1004"/);
+ assert.match(html,/class="chat-composer" data-form="message" data-id="friend"/);
+ assert.match(html,/<textarea id="message" name="value" rows="1" maxlength="300" required/);
+ assert.match(html,/aria-label="메시지 전송" disabled/);
+ assert.doesNotMatch(html,/class="entry-form composer"|class="seed-field" name="value"/);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/clan-bookmark-fill\.svg/);
+ assert.equal(store.dispatch('message','friend','  첫 줄\n둘째 줄  '),true);
+ assert.match(page(store,'#/chat/friend?tab=dm'),/data-from="me"/);
+ assert.match(page(store,'#/chat/friend?tab=dm'),/첫 줄\n둘째 줄/);
+ assert.equal(store.dispatch('message','friend','    '),false);
+ assert.equal(store.dispatch('message','ai','수학 10분 계획'),true);
+ const ai=page(store,'#/chat/ai?tab=dm');
+ assert.match(ai,/chat-quest-link/);
+ assert.match(ai,/#\/quest\//);
+ const sheet=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(sheet,/\.chat-history\s*\{[^}]*overflow-y:auto/);
+ assert.match(sheet,/\.chat-composer__send\.seed-icon-action/);
+});
+test('DM header menu is shared and chat keyboard shortcuts are implemented without fake history',()=>{
+ const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(app,/trailing\.innerHTML=globalMenu\(state,'dm'\)/);
+ assert.match(app,/globalMenu\(state,'home'\)/);
+ assert.match(app,/event\.target\.form\?\.requestSubmit/);
+ assert.match(app,/event\.isComposing/);
+ assert.match(app,/event\.shiftKey/);
+ assert.match(app,/history\.scrollTop=history\.scrollHeight/);
+ assert.match(app,/send\.disabled=!field\.value\.trim\(\)/);
+ assert.equal(readRoute('#/chat/friend?tab=dm').type,'non-global');
+});

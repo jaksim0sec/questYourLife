@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-inbox-v2';
-import {clanRows,clanTotal} from './store.mjs?v=dm-inbox-v2';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-chat-v3';
+import {clanRows,clanTotal} from './store.mjs?v=dm-chat-v3';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -228,13 +228,33 @@ function dm(state,ui={}) {
   </section>`;
 }
 function chat(state,route) {
-  if(!Object.hasOwn(threads,route.id))return empty('대화방을 찾을 수 없어요.');
-  const ai=route.id==='ai';
-  return `<section class="thread" aria-label="대화 기록">${state.messages[route.id].map(msg=>{
-    const q=state.quests.find(item=>item.id===msg.quest);
-    return `<div class="bubble-row" data-from="${msg.from}"><div class="seed-surface bubble" data-surface="${msg.from==='me'?'subtle':'solid'}"><p>${escape(msg.text)}</p>
-      ${q?`<div class="chat-quest">${title(q.title,'item','h3')}${support(q.condition)}${rewardLine(q)}${cta(q.status==='offered'?'제안 보기':'퀘스트 보기','quest/'+q.id,route.tab,'neutral-outline')}</div>`:''}</div></div>`;
-  }).join('')}</section><form class="entry-form composer" data-form="message" data-id="${route.id}"><label class="visually-hidden" for="message">${ai?'목표 또는 수정 요청':'메시지'}</label><input id="message" class="seed-field" name="value" required maxlength="300" placeholder="${ai?'목표나 바꾸고 싶은 점 입력':'메시지 입력'}">${submit('보내기')}</form>`;
+ const thread=threads[route.id],messages=state.messages[route.id];
+ if(!thread||!Array.isArray(messages))return empty('대화방을 찾을 수 없어요.');
+ const isAI=route.id==='ai',isClan=route.id==='clan';
+ const incomingAvatar=isClan?`<span class="chat-avatar__clan">${icon('clan-bookmark-fill',true)}</span>`:
+   `<span data-avatar="fluid" data-avatar-items="${(thread.avatarEquipment||[]).join(',')}"></span>`;
+ const messagesMarkup=messages.map((msg,index)=>{
+   const mine=msg.from==='me';
+   const showAvatar=!mine&&(index===0||messages[index-1].from==='me');
+   const identity=mine?'':`<span class="chat-row__avatar" aria-hidden="true">${showAvatar?incomingAvatar:''}</span>`;
+   const q=msg.quest?state.quests.find(item=>item.id===msg.quest):null;
+   const suggestion=q?`<a class="chat-quest-link" href="${path('quest/'+q.id,route.tab)}">
+      <span class="chat-quest-link__caption">퀘스트 제안</span><strong>${escape(q.title)}</strong>
+      <span class="chat-quest-link__bottom"><span>${q.status==='offered'?'확인하고 수락하기':'퀘스트 보기'}</span>${icon('chevron')}</span></a>`:'';
+   return `<div class="chat-row" data-from="${mine?'me':'them'}">${identity}
+      <div class="chat-bubble" data-from="${mine?'me':'them'}"><p>${escape(msg.text)}</p>${suggestion}</div>
+    </div>`;
+ }).join('');
+ return `<div class="chat-view" aria-label="${escape(thread.title)} 대화방">
+   <section class="chat-history" id="chat-history" role="log" aria-label="대화 기록" aria-live="polite" aria-relevant="additions text">${messagesMarkup}</section>
+   <form class="chat-composer" data-form="message" data-id="${escape(route.id)}">
+     <label class="visually-hidden" for="message">${isAI?'목표나 수정 요청 입력':'메시지 입력'}</label>
+     <div class="chat-composer__field">
+       <textarea id="message" name="value" rows="1" maxlength="300" required placeholder="${isAI?'어떤 목표를 이루고 싶어?':'메시지 입력'}" enterkeyhint="send" aria-label="${isAI?'목표나 요청 입력':'메시지 입력'}"></textarea>
+       <button type="submit" class="seed-icon-action chat-composer__send" aria-label="메시지 전송" disabled>${icon('send')}</button>
+     </div>
+   </form>
+ </div>`;
 }
 function rankings(state,period) {
   const members=clanRows(state,period);

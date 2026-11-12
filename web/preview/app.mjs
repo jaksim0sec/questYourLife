@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-inbox-v2';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-inbox-v2';
-import {homeAlerts} from './mock-data.mjs?v=dm-inbox-v2';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-inbox-v2';
+import {createStore} from './store.mjs?v=dm-chat-v3';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-v3';
+import {homeAlerts} from './mock-data.mjs?v=dm-chat-v3';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-v3';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -38,7 +38,7 @@ function globalMenu(state,tab='home') {
   return `<details class="home-nav-menu"><summary class="seed-icon-action" aria-label="메뉴">${icon('menu')}</summary>
     <div class="seed-surface home-menu-panel" data-surface="raised">
       ${shortcut('퀘스트 만들기','sparkle','chat/ai?tab='+tab)}
-      ${shortcut('보상함','gift','rewards?tab='+tab)}
+      ${shortcut('보상함','gift','rewards?tab='+(tab==='dm'?'me':tab))}
       ${shortcut('꾸미기','shirt','decorate')}
       <button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>
     </div>
@@ -80,6 +80,10 @@ function render() {
     const decorative=Boolean(element.closest('.dm-conversation__avatar'));
     mountMascotAvatar(element,{equipmentIds,scale:element.dataset.avatar,label:'루원의 마스코트',decorative});
   });
+  if(route.name==='chat') {
+    const history=main.querySelector?.('.chat-history');
+    if(history)history.scrollTop=history.scrollHeight;
+  }
   main.querySelectorAll('.seed-media__image').forEach(img=>{
     img.addEventListener('error',()=>{img.closest('.seed-media').dataset.mediaState='error';});
     if(img.complete&&!img.naturalWidth)img.closest('.seed-media').dataset.mediaState='error';
@@ -109,7 +113,10 @@ function apply(action,id,value,focusTarget) {
   const sameControl=[...main.querySelectorAll('[data-action]')].find(button=>button.dataset.action===action&&button.dataset.id===id);
   if(focusTarget) get(focusTarget)?.focus({preventScroll:true});
   else (sameControl||main).focus({preventScroll:true});
-  if(action==='message') window.scrollTo(0,document.documentElement.scrollHeight);
+  if(action==='message') {
+    const history=main.querySelector?.('.chat-history');
+    if(history)history.scrollTop=history.scrollHeight;
+  }
   if(feedback[action])showFeedback(feedback[action]);
 }
 document.addEventListener('click',event=>{
@@ -160,6 +167,16 @@ document.addEventListener('click',event=>{
   } else if(action) apply(action,id);
 });
 document.addEventListener('input',event=>{
+  if(event.target.id==='message'&&route.name==='chat') {
+    const field=event.target;
+    if(field.style&&Number.isFinite(field.scrollHeight)) {
+      field.style.height='auto';
+      field.style.height=Math.min(field.scrollHeight,136)+'px';
+    }
+    const send=field.form?.querySelector?.('.chat-composer__send');
+    if(send)send.disabled=!field.value.trim();
+    return;
+  }
   if(event.target.id==='dm-search') {
     ui.dmSearch=event.target.value.slice(0,80);
     const query=ui.dmSearch.trim().toLocaleLowerCase('ko');
@@ -178,6 +195,11 @@ document.addEventListener('input',event=>{
   get('#home-search-results').innerHTML=searchResults(store.read(),ui.search,route.tab);
 });
 document.addEventListener('keydown',event=>{
+  if(event.key==='Enter'&&route.name==='chat'&&event.target?.id==='message'&&!event.shiftKey&&!event.isComposing&&event.keyCode!==229) {
+    event.preventDefault();
+    if(event.target.value.trim())event.target.form?.requestSubmit?.();
+    return;
+  }
   if(event.key!=='Escape')return;
   const menu=get('.home-nav-menu[open]');
   if(!menu)return;

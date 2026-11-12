@@ -387,7 +387,7 @@ test('My compact item rail and owned box shelf reflect real state',()=>{
   let html=page(store,'#/me');
   assert.equal((html.match(/class="seed-item-display seed-surface me-collection__item"/g)||[]).length,2);
   assert.doesNotMatch(html,/data-equipped=|착용 중|보유 중/);
-  assert.match(html,/data-count="1"/);
+  assert.match(html,/class="me-box-list"[^>]*data-count="1"/);
   assert.match(html,/첫 도전 상자/);
   assert.doesNotMatch(html,/주간 클랜 상자/);
   assert.match(html,/상점 둘러보기/);
@@ -400,8 +400,24 @@ test('My compact item rail and owned box shelf reflect real state',()=>{
   assert.equal(store.dispatch('claim','clan'),true);
   html=page(store,'#/me');
   assert.match(html,/주간 클랜 상자/);
-  assert.match(html,/data-count="2"/);
+  assert.match(html,/class="me-box-list"[^>]*data-count="2"/);
   const style=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
-  assert.match(style,/grid-auto-columns:clamp\(7\.75rem,38%,9\.25rem\)/);
-  assert.match(style,/\.me-box-rail\s*\{[^}]*overflow-x:auto/);
+  assert.match(style,/grid-auto-columns:clamp\(6\.35rem,30%,7\.25rem\)/);
+  assert.match(style,/\.me-box-list\s*\{[^}]*display:grid/);
+});
+
+test('My below-profile composition keeps identity and separates shelf from item rail',()=>{
+  const store=createStore();
+  const html=page(store,'#/me');
+  assert.match(html,/class="me-box-list"/);
+  assert.doesNotMatch(html,/class="me-box-rail"/);
+  assert.match(html,/내 상자/);
+  assert.doesNotMatch(html,/옆으로 넘겨보기/);
+  assert.ok(html.indexOf('me-collection')<html.indexOf('me-box-list'));
+  const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(css,/grid-auto-columns:clamp\(6\.35rem,30%,7\.25rem\)/);
+  assert.match(css,/\.me-box-list\s*\{[^}]*display:grid/);
+  assert.doesNotMatch(css,/\.me-box-rail\s*\{/);
+  assert.equal(store.dispatch('open','starter'),true);
+  assert.match(page(store,'#/me'),/열어본 상자/);
 });

@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-rhythm-v4';
-import {clanRows,clanTotal} from './store.mjs?v=me-rhythm-v4';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-lower-v5';
+import {clanRows,clanTotal} from './store.mjs?v=me-lower-v5';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -263,6 +263,20 @@ function clanHome(state,ui) {
   const board=`<div class="clan-board-period">${segment(ui.period)}${support('합계 '+fmt(selectedTotal)+' XP')}</div>${rankings(state,ui.period)}`;
   return identity+reward+section('멤버 기여도',board,more('순위 보기','ranking','clan'));
 }
+function myBoxRows(boxes) {
+  if(!boxes.length)return `<a class="me-box-empty" href="${path('rewards','me')}">아직 받은 상자가 없어요 ${icon('chevron')}</a>`;
+  return `<div class="me-box-list" role="group" aria-label="내 상자 목록" data-count="${boxes.length}">
+    ${boxes.map(([id,status])=>{
+      const box=chestLoot[id];
+      const description=status==='ready'?'열 수 있어요':'열어본 상자';
+      return `<a class="me-box" data-state="${status}" href="${path('rewards','me')}" aria-label="${escape(box.name)}, ${description}, 보상함으로 이동">
+        <span class="me-box__art">${frame(rewards+box.image,'')}</span>
+        <span class="me-box__copy"><strong>${escape(box.name)}</strong><small>${description}</small></span>
+        ${icon('chevron')}
+      </a>`;
+    }).join('')}
+  </div>`;
+}
 function me(state) {
   const level=1+Math.floor(state.xp/250);
   const completed=state.quests.filter(q=>q.status==='done').length;
@@ -295,21 +309,11 @@ function me(state) {
   const myBoxes=Object.entries(state.boxes)
     .filter(([id,status])=>chestLoot[id]&&(status==='ready'||status==='opened'))
     .sort((a,b)=>Number(b[1]==='ready')-Number(a[1]==='ready'));
-  const boxPreview=myBoxes.length?`<div class="me-box-rail" role="group" aria-label="내 상자 목록" data-count="${myBoxes.length}">
-    ${myBoxes.map(([id,status])=>{
-      const box=chestLoot[id];
-      const stateLabel=status==='ready'?'열 수 있어요':'열어본 상자';
-      return `<a class="me-box" href="${path('rewards','me')}" aria-label="${escape(box.name)}, ${stateLabel}, 보상함으로 이동">
-        <span class="me-box__art">${frame(rewards+box.image,'')}</span>
-        <span class="me-box__copy"><strong>${escape(box.name)}</strong><small>${stateLabel}</small></span>
-        ${icon('chevron')}
-      </a>`;
-    }).join('')}
-  </div>`:`<a class="me-box-empty" href="${path('rewards','me')}">아직 받은 상자가 없어요 ${icon('chevron')}</a>`;
+  const boxPreview=myBoxRows(myBoxes);
   const shopLink=row({label:'상점 둘러보기',sub:'새로운 장식을 찾아보세요',url:'shop',tab:'me',leading:`<span class="row-icon">${icon('shopping-bag')}</span>`});
   return profile+stats+activity+
-    section('내 스타일',owned,items.length>2?'<span class="me-collection-hint">옆으로 넘겨보기</span>':'')+
-    section('보상과 상점',boxPreview+`<div class="me-shop-link">${shopLink}</div>`,more('보상함 보기','rewards','me'));
+    section('내 스타일',owned)+
+    section('내 상자',boxPreview+`<div class="me-shop-link">${shopLink}</div>`,more('보상함 보기','rewards','me'));
 }
 function shop(state,ui) {
   const feature=catalog.find(item=>item.id===1001);

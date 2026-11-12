@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-chat-v3';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-v3';
-import {homeAlerts} from './mock-data.mjs?v=dm-chat-v3';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-v3';
+import {createStore} from './store.mjs?v=dm-chat-v4';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-chat-v4';
+import {homeAlerts} from './mock-data.mjs?v=dm-chat-v4';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-chat-v4';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -171,7 +171,9 @@ document.addEventListener('input',event=>{
     const field=event.target;
     if(field.style&&Number.isFinite(field.scrollHeight)) {
       field.style.height='auto';
-      field.style.height=Math.min(field.scrollHeight,136)+'px';
+      const natural=field.scrollHeight;
+      field.style.height=Math.max(38,Math.min(natural,90))+'px';
+      field.style.overflowY=natural>90?'auto':'hidden';
     }
     const send=field.form?.querySelector?.('.chat-composer__send');
     if(send)send.disabled=!field.value.trim();

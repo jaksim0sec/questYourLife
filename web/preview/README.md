@@ -15,7 +15,7 @@
 | 퀘스트북 | 글로벌 이너 · 퀘스트 | 목표 → 챕터 → 메인/일일 퀘스트 | 진행률과 텍스트 위주 목차. 삽화형 표지 대신 수행 항목을 바로 읽게 함 | C-STATUS, C-LIST |
 | 상점 | 글로벌 이너 · 마이 | 잔액 → 가로 대표 상품 → 필터 → 3열 탐색 | 액션이 있는 대표 통합형과 일반 오픈형. 좁은 폭에선 잔액이 본문 첫 줄로 이동 | C-CREDIT, C-IMAGE, C-SELECTION, S06 |
 | 주간 기여 | 글로벌 이너 · 클랜 | 기간 → 순위와 기여 XP | 비교 가능한 숫자와 평면 목록 | C-SEGMENT, C-LIST |
-| 퀘스트 만들기·대화방 | 논글로벌 | 대화 입력과 제안 확인 또는 메시지 작성 | 자체 헤더와 하단 입력. AI 제안은 조건·보상이 있는 링크로 이어짐 | C-FIELD, C-ACTION, NAV-TOP |
+| 퀘스트 만들기·대화방 | 논글로벌 | 상대 신원(Middle) → 상단부터 이어지는 메시지 → 1~3줄 컴포저 | 기존 C-AVATAR·Standard 헤더·AI 제안/메시지 상태 유지. 짧은 대화를 화면 하단으로 미는 ::before auto-margin 제거. 컴포저 field-sizing 제거 후 실제 scrollHeight 90px 제한. 읽음·시각 미표시 | C-AVATAR, P-HIERARCHY S05, C-FIELD, C-ICON, NAV-TOP, S-PAGE |
 | 꾸미기 | 논글로벌 | 실제 착장 확인 → 보유 장식 선택 | 큰 마스코트와 소품 격자. 선택은 실제 장착 상태를 바꿈 | C-AVATAR, C-IMAGE, C-ACTION |
 | 보상함·상품 상세 | 논글로벌 | 획득 내용 확인 후 열기 또는 가격 확인 후 구매 | 상자와 상품 아트는 1:1 오브젝트. 독립 행동 하나 | C-IMAGE, C-CREDIT, C-ACTION |
 

@@ -502,3 +502,25 @@ test('DM header menu is shared and chat keyboard shortcuts are implemented witho
  assert.match(app,/send\.disabled=!field\.value\.trim\(\)/);
  assert.equal(readRoute('#/chat/friend?tab=dm').type,'non-global');
 });
+
+test('Conversation starts at top, with identity context, and compact composer caps three lines',()=>{
+ const store=createStore();
+ const personal=page(store,'#/chat/friend?tab=dm');
+ assert.ok(personal.indexOf('class="chat-intro"')<personal.indexOf('class="chat-row"'));
+ assert.match(personal,/개인 대화/);
+ assert.match(personal,/data-avatar-items="0,1004"/);
+ assert.match(page(store,'#/chat/clan?tab=dm'),/클랜 대화/);
+ assert.match(page(store,'#/chat/ai?tab=dm'),/AI 퀘스트 대화/);
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.doesNotMatch(css,/\.chat-history::before\s*\{/);
+ assert.match(css,/\.chat-history\s*\{[^}]*justify-content:flex-start/);
+ assert.match(css,/\.chat-intro\s*\{/);
+ assert.match(css,/max-height:5\.65rem/);
+ assert.doesNotMatch(css,/field-sizing:content/);
+ assert.match(css,/\.chat-composer__send\.seed-icon-action\s*\{[^}]*width:2\.27rem/);
+ const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(app,/Math\.min\(natural,90\)/);
+ assert.match(app,/field\.style\.overflowY=natural>90/);
+ assert.equal(store.dispatch('message','friend','답장'),true);
+ assert.match(page(store,'#/chat/friend?tab=dm'),/답장/);
+});

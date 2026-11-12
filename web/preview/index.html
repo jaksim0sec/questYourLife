@@ -6,7 +6,7 @@
   <meta name="description" content="현생패치 퀘스트, 클랜과 마스코트의 웹 시연">
   <title>현생패치</title>
   <link rel="stylesheet" href="../../seed/styles/seed-standard.css">
-  <link rel="stylesheet" href="./preview.css">
+  <link rel="stylesheet" href="./preview.css?v=home-nav">
   <script type="module" src="./app.mjs"></script>
 </head>
 <body>
@@ -24,6 +24,13 @@
     </div>
     <div class="preview-notice" role="status" aria-live="polite"></div>
   </div>
+  <dialog id="home-alerts" class="seed-sheet home-alerts" aria-labelledby="home-alerts-title">
+    <div class="seed-sheet__head">
+      <h2 id="home-alerts-title" class="seed-text" data-text-role="section" data-text-style="section">알림</h2>
+      <button type="button" class="seed-icon-action" aria-label="알림 닫기" data-shell-action="close-alerts"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button>
+    </div>
+    <div class="seed-sheet__body" id="home-alert-list"></div>
+  </dialog>
   <noscript>웹 시연을 이용하려면 JavaScript를 켜 주세요.</noscript>
 </body>
 </html>

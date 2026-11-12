@@ -213,3 +213,31 @@
   html[data-seed-lab] body { background: var(--soft); }
   .preview-shell { border-inline: 1px solid var(--line); }
 }
+
+/* Home header destinations reuse SEED Outline icon buttons. */
+.home-nav-menu summary { list-style: none; }
+.home-nav-menu summary::-webkit-details-marker { display: none; }
+.home-menu-panel {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 100%;
+  inset-inline-end: var(--seed-page-gutter);
+  width: min(15rem,calc(100% - 2 * var(--seed-page-gutter)));
+}
+.home-menu-panel[data-surface="raised"] { padding: .3rem; border: 1px solid var(--line); }
+.home-menu-panel .menu-row { width: 100%; background: transparent; }
+.home-menu-panel .menu-row:hover { background: var(--soft); }
+.home-alert-trigger { display: block; position: relative; }
+.home-alert-dot { width: .4rem; height: .4rem; flex: none; border-radius: 50%; background: var(--brand); }
+.home-alert-trigger > .home-alert-dot {
+  position: absolute;
+  inset-block-start: .57rem;
+  inset-inline-end: .57rem;
+  box-shadow: 0 0 0 2px var(--canvas);
+  pointer-events: none;
+}
+.home-alerts { --sheet-height: min(23rem,82dvh); }
+.home-alerts[open] { grid-template-rows: auto minmax(0,1fr); }
+.home-alerts .seed-sheet__head { padding-block: .45rem; }
+.home-alerts .seed-sheet__body { padding-bottom: max(1rem,env(safe-area-inset-bottom,0px)); }
+.home-alerts .preview-list > .seed-list__item { padding-inline: 0; }

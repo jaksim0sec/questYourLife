@@ -1,7 +1,8 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
 import {createStore} from './store.mjs';
-import {renderPage,cash,icon} from './views.mjs';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs';
+import {homeAlerts} from './mock-data.mjs';
 import {readRoute,navMarkup} from './routes.mjs';
 
 const get=selector=>document.querySelector(selector);
@@ -13,7 +14,8 @@ const header=get('.seed-top-nav__inner');
 const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
-const ui={quest:'all',shop:'전체',period:'current'};
+const alertSheet=get('#home-alerts');
+const ui={quest:'all',shop:'전체',period:'current',search:''};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -28,10 +30,26 @@ nav.innerHTML=navMarkup();
 try { root.dataset.theme=storage?.getItem('hyunsaengpatch-preview-theme')==='dark'?'dark':'light'; } catch {}
 
 function iconAction(label,name,action,preview=false) {
-  return `<button type="button" class="seed-icon-action" aria-label="${label}" data-shell-action="${action}">${icon(name,preview)}</button>`;
+  return `<button type="button" class="seed-icon-action" aria-label="${label}" data-shell-action="${action}" ${action==='alerts'?'aria-haspopup="dialog" aria-controls="home-alerts"':''}>${icon(name,preview)}</button>`;
+}
+function homeActions(state) {
+  const unread=homeAlerts.some(alert=>!(state.readAlerts??[]).includes(alert.id));
+  const dark=root.dataset.theme==='dark';
+  const shortcut=(label,glyph,href)=>`<a class="menu-row" href="#/${href}">${icon(glyph)}${label}</a>`;
+  return iconAction('검색','search','search')+
+    `<span class="home-alert-trigger">${iconAction(unread?'알림 · 읽지 않은 항목 있음':'알림','bell-connected','alerts',true)}${unread?'<span class="home-alert-dot" aria-hidden="true"></span>':''}</span>`+
+    `<details class="home-nav-menu"><summary class="seed-icon-action" aria-label="메뉴">${icon('menu')}</summary>
+      <div class="seed-surface home-menu-panel" data-surface="raised">
+        ${shortcut('퀘스트 만들기','sparkle','chat/ai?tab=home')}
+        ${shortcut('보상함','gift','rewards?tab=home')}
+        ${shortcut('꾸미기','shirt','decorate')}
+        <button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>
+      </div>
+    </details>`;
 }
 function render() {
   const state=store.read();
+  if(route.name!=='home'&&alertSheet?.open)alertSheet.close();
   const type=applyPageType(shell,route.type);
   header.dataset.navRole=type.header;
   header.dataset.titleAlign=route.align||'center';
@@ -40,8 +58,7 @@ function render() {
   document.title=route.title+' · 현생패치';
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
-    const dark=root.dataset.theme==='dark';
-    trailing.innerHTML=iconAction(dark?'라이트 모드':'다크 모드',dark?'sun':'moon','theme',true);
+    trailing.innerHTML=homeActions(state);
   } else if(route.name==='me'||route.name==='shop') {
     trailing.innerHTML=cash(state.cash);
   } else trailing.replaceChildren();
@@ -82,11 +99,21 @@ function apply(action,id,value,focusTarget) {
   if(feedback[action])showFeedback(feedback[action]);
 }
 document.addEventListener('click',event=>{
+  if(!event.target.closest('.home-nav-menu'))get('.home-nav-menu[open]')?.removeAttribute('open');
+  if(event.target===alertSheet) {
+    const bounds=alertSheet.getBoundingClientRect();
+    if(event.clientY<bounds.top||event.clientX<bounds.left||event.clientX>bounds.right) alertSheet.close();
+    return;
+  }
   const control=event.target.closest('button,a');
   if(!control)return;
   const href=control.getAttribute('href');
   if(href?.startsWith('#/')&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&!event.button) {
     event.preventDefault();
+    if(control.dataset.alertId) {
+      store.dispatch('read-alert',control.dataset.alertId);
+      alertSheet.close();
+    }
     navigate(href);
     return;
   }
@@ -94,17 +121,37 @@ document.addEventListener('click',event=>{
   if(shellAction==='back') {
     if(currentEntry.depth>0)history.back();
     else navigate('#/'+(route.fallback||route.tab));
+  } else if(shellAction==='search') {
+    navigate('#/search');
+    get('#home-search')?.focus();
+  } else if(shellAction==='alerts') {
+    get('#home-alert-list').innerHTML=renderHomeAlerts(store.read());
+    alertSheet.showModal();
+  } else if(shellAction==='close-alerts') {
+    alertSheet.close();
   } else if(shellAction==='theme') {
     root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
     try { storage?.setItem('hyunsaengpatch-preview-theme',root.dataset.theme); } catch {}
     render();
-    get('[data-shell-action="theme"]').focus();
+    get('.home-nav-menu summary')?.focus();
   } else if(filter||period) {
     if(filter)ui[filter]=value;
     else ui.period=period;
     render();
     [...main.querySelectorAll('button')].find(button=>filter?button.dataset.filter===filter&&button.dataset.value===value:button.dataset.period===period)?.focus({preventScroll:true});
   } else if(action) apply(action,id);
+});
+document.addEventListener('input',event=>{
+  if(event.target.id!=='home-search')return;
+  ui.search=event.target.value;
+  get('#home-search-results').innerHTML=searchResults(store.read(),ui.search);
+});
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape')return;
+  const menu=get('.home-nav-menu[open]');
+  if(!menu)return;
+  menu.open=false;
+  menu.querySelector('summary').focus();
 });
 document.addEventListener('submit',event=>{
   const form=event.target;

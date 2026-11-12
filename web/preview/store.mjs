@@ -1,4 +1,4 @@
-import {catalog, chestLoot, clan, initialData, proposeQuest} from './mock-data.mjs';
+import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const key='hyunsaengpatch-preview-v1';
@@ -96,6 +96,10 @@ export function createStore(storage) {
         if(!wasEquipped) next.equipped.push(item.id);
         break;
       }
+      case 'read-alert':
+        if(!homeAlerts.some(alert=>alert.id===id)||(next.readAlerts??[]).includes(id)) return false;
+        next.readAlerts=[...(next.readAlerts??[]),id];
+        break;
       case 'cheer': {
         const post=next.bonusPosts[Number(id)];
         if(!post||post.name==='루원') return false;

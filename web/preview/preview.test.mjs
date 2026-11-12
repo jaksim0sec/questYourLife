@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
 import {createStore,clanTotal} from './store.mjs';
 import {readRoute,navMarkup} from './routes.mjs';
-import {renderPage} from './views.mjs';
+import {renderPage,renderHomeAlerts,searchResults} from './views.mjs';
 import {applyPageType,WEB_NAV_ITEMS} from '../../seed/runtime/seed-page-contract.mjs';
 import {composeMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
@@ -20,7 +20,7 @@ test('SEED routes keep the originating tab on details and hide navigation in sta
   const modes=new Map([
     ['global',WEB_NAV_ITEMS.map(item=>'#/'+item.key)],
     ['global-inner',['#/quest/run?tab=home','#/book/math','#/shop','#/ranking']],
-    ['non-global',['#/chat/ai','#/chat/clan?tab=clan','#/item/1','#/decorate','#/rewards']],
+    ['non-global',['#/search','#/chat/ai','#/chat/clan?tab=clan','#/item/1','#/decorate','#/rewards']],
   ]);
   for(const [mode,paths] of modes)for(const hash of paths) {
     const route=readRoute(hash);
@@ -162,11 +162,13 @@ test('app event wiring changes screens, preserves parent nav and updates balance
   const nav={...node(),querySelectorAll:()=>navItems};
   const main=node(),head=node(),header=node(),bottom=node(),leading=node(),trailing=node();
   const root={dataset:{},scrollHeight:400};
+  const alertSheet={open:false,showModal(){this.open=true;},close(){this.open=false;}};
   const shell={...node(),querySelector:selector=>({'.seed-top-nav':head,'.seed-bottom-nav':nav,'.seed-page-shell__bottom':bottom}[selector])};
   const elements={
     '.preview-shell':shell,'.seed-bottom-nav':nav,'#main':main,
     '.seed-top-nav__inner':header,'.seed-top-nav__leading':leading,
     '.seed-top-nav__trailing':trailing,'.preview-notice':node(),'.seed-top-nav__title':node(),
+    '#home-alerts':alertSheet,'#home-alert-list':node(),'#home-search':node(),'#home-search-results':node(),
   };
   const location={hash:'#/home'};
   const historyEntries=[];
@@ -189,7 +191,20 @@ test('app event wiring changes screens, preserves parent nav and updates balance
     const active=()=>navItems.find(item=>item.attrs.has('aria-current'))?.dataset.navKey;
     assert.match(main.innerHTML,/일일 퀘스트 제안/);
     assert.equal(active(),'home');
-    click({href:'#/quest/run?tab=home'});
+    assert.match(trailing.innerHTML,/data-shell-action="search"/);
+    assert.match(trailing.innerHTML,/data-shell-action="alerts"/);
+    assert.match(trailing.innerHTML,/<summary[^>]+aria-label="메뉴"/);
+    click({shellAction:'search'});
+    assert.equal(shell.dataset.pageType,'non-global');
+    listeners.input({target:{id:'home-search',value:'수학'}});
+    assert.match(elements['#home-search-results'].innerHTML,/#\/book\/math/);
+    click({shellAction:'back'});
+    click({shellAction:'alerts'});
+    assert.equal(alertSheet.open,true);
+    assert.equal(active(),'home');
+    assert.match(elements['#home-alert-list'].innerHTML,/data-alert-id="daily"/);
+    click({href:'#/quest/run?tab=home',alertId:'daily'});
+    assert.equal(alertSheet.open,false);
     assert.equal(shell.dataset.pageType,'global-inner');
     assert.equal(header.dataset.navRole,'standard');
     assert.equal(active(),'home');
@@ -234,4 +249,18 @@ test('home promotes the next actionable quest and reflects daily progress and av
   store.dispatch('complete','math-main');
   assert.match(page(store,'#/home'),/오늘의 도전을 마쳤어요/);
   assert.equal(readRoute('#/rewards?tab=home').tab,'home');
+});
+
+test('home search finds quest books and unread notifications survive a reload',()=>{
+  const storage=memory();
+  const store=createStore(storage);
+  assert.match(searchResults(store.read(),'수학'),/퀘스트북/);
+  assert.match(searchResults(store.read(),'   달리기  '),/달리기 기록/);
+  assert.match(searchResults(store.read(),'존재하지 않는 목표'),/일치하는/);
+  assert.equal(searchResults(store.read(),' '),'');
+  assert.equal((renderHomeAlerts(store.read()).match(/읽지 않음/g)||[]).length,3);
+  assert.equal(store.dispatch('read-alert','daily'),true);
+  assert.equal(store.dispatch('read-alert','daily'),false);
+  assert.equal(store.dispatch('read-alert','unknown'),false);
+  assert.equal((renderHomeAlerts(createStore(storage).read()).match(/읽지 않음/g)||[]).length,2);
 });

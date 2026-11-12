@@ -22,6 +22,12 @@ export const threads = {
   clan:{ title:'방과후 원정대', initials:'방', icon:'flag' },
 };
 
+export const homeAlerts = [
+  {id:'daily', title:'새로운 일일 제안이 왔어요', sub:'달리기 기록 0.5초 줄이기', url:'quest/run', icon:'target'},
+  {id:'bonus', title:'기간 한정 보너스가 열렸어요', sub:'동네에서 주황색 거울 찾기', url:'quest/bonus', icon:'sparkle'},
+  {id:'starter', title:'첫 도전 상자가 도착했어요', sub:'캐시와 장식을 확인해 보세요', url:'rewards', icon:'gift'},
+];
+
 export const clan = {
   name:'방과후 원정대', goal:1200,
   current:[{name:'다온',xp:410},{name:'별이',xp:280},{name:'루원',xp:230},{name:'이모리',xp:200}],
@@ -35,7 +41,7 @@ export const chestLoot = {
 
 export function initialData() {
   return {
-    xp:730, cash:640, owned:[0,2], equipped:[2],
+    xp:730, cash:640, owned:[0,2], equipped:[2], readAlerts:[],
     boxes:{ starter:'ready', clan:'locked' },
     quests:[
       {id:'run', kind:'일일', title:'달리기 기록 0.5초 줄이기', condition:'어제와 같은 구간을 달리고, 기록을 어제보다 0.5초 이상 줄이기.', due:'오늘 23:59', xp:80, cash:40, status:'offered'},

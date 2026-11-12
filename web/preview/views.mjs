@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=home-rail-v3';
-import {clanRows,clanTotal} from './store.mjs?v=home-rail-v3';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-profile-v1';
+import {clanRows,clanTotal} from './store.mjs?v=me-profile-v1';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -263,15 +263,38 @@ function clanHome(state,ui) {
   const board=`<div class="clan-board-period">${segment(ui.period)}${support('합계 '+fmt(selectedTotal)+' XP')}</div>${rankings(state,ui.period)}`;
   return identity+reward+section('멤버 기여도',board,more('순위 보기','ranking','clan'));
 }
-function me(state) {
-  const level=1+Math.floor(state.xp/250);
-  const boxes=Object.values(state.boxes).filter(x=>x==='ready').length;
-  return `<section class="seed-surface profile-panel" data-surface="subtle"><div>${title('루원','hero')}${support('Lv. '+level+' · '+fmt(state.xp)+' XP')}${progress(state.xp%250,250,'다음 레벨까지')}${cta('꾸미기','decorate','me','neutral-outline')}</div>${avatar()}</section>`+
-    section('내 보상',list([
-      row({label:'보상함',sub:boxes?boxes+'개 열 수 있어요':'획득한 보상 보기',url:'rewards',tab:'me',leading:`<span class="row-icon">${icon('gift')}</span>`}),
-      row({label:'상점',sub:'마스코트에 장착할 아이템',url:'shop',tab:'me',leading:`<span class="row-icon">${icon('shopping-bag')}</span>`}),
-    ].join(''),'보상 목적지'));
+function me(state){
+  const level=1+Math.floor(state.xp/250),nextLevel=250-state.xp%250;
+  const completed=state.quests.filter(q=>q.status==='done').length;
+  const available=Object.values(state.boxes).filter(v=>v==='ready').length;
+  const items=state.owned.map(id=>MASCOT_EQUIPMENT[id]).filter(Boolean);
+  const outfit=state.equipped.map(id=>MASCOT_EQUIPMENT[id]?.name).filter(Boolean).join(' · ')||'기본 마스코트';
+  const profile=`<section class="seed-page-shell__section me-section"><article class="seed-surface me-profile" data-surface="subtle">
+    <div class="me-profile__main">
+      <div class="me-profile__identity">
+        <span class="me-profile__caption">내 프로필</span>
+        ${title('루원','hero')}
+        <span class="me-profile__level">Lv. ${level} <span aria-hidden="true">·</span> ${fmt(state.xp)} XP</span>
+        <div class="me-profile__meter">${progress(state.xp%250,250,'다음 레벨까지','micro')}<span>다음 레벨까지 ${fmt(nextLevel)} XP</span></div>
+      </div>
+      <div class="me-profile__figure">${avatar('fluid')}</div>
+    </div>
+    <div class="me-profile__footer"><div class="me-profile__outfit"><span>지금 내 스타일</span><strong>${escape(outfit)}</strong></div>${cta('꾸미기','decorate','me','neutral-outline')}</div>
+  </article></section>`;
+  const stats=`<section class="me-stats" aria-label="내 활동 기록"><div><strong>${completed}</strong><span>완료한 퀘스트</span></div><div><strong>${items.length}</strong><span>보유 아이템</span></div><div><strong>${available}</strong><span>열 수 있는 상자</span></div></section>`;
+  const owned=items.length?`<div class="me-collection">${items.slice(0,4).map(item=>{
+    const on=state.equipped.includes(item.id);
+    return `<a class="me-collection__item" href="${path('decorate','me')}" aria-label="${escape(item.name)}${on?' 착용 중':''}, 꾸미기로 이동">
+      ${frame(item.src,'')}<span class="me-collection__name">${escape(item.name)}</span><span class="me-collection__state" data-equipped="${on}">${on?'착용 중':'보유 중'}</span>
+    </a>`;
+  }).join('')}</div>`:`<div class="me-collection-empty">${support('아직 보유한 장식이 없어요.')}${cta('상점 둘러보기','shop','me','neutral-outline')}</div>`;
+  const destinations=list([
+    row({label:'보상함',sub:available?`${available}개 열 수 있어요`:'획득한 상자와 보상 확인',url:'rewards',tab:'me',leading:`<span class="me-destination-art">${frame(rewards+chestLoot.starter.image,'')}</span>`}),
+    row({label:'상점',sub:'마스코트를 위한 새로운 스타일',url:'shop',tab:'me',leading:`<span class="me-destination-art">${frame(MASCOT_EQUIPMENT[1001].src,'')}</span>`})
+  ].join(''),'보상과 상점');
+  return profile+stats+section('내 스타일',owned,more('꾸미기','decorate','me'))+section('보상과 상점',destinations);
 }
+
 function shop(state,ui) {
   const feature=catalog.find(item=>item.id===1001);
   const featured=ui.shop==='전체'?`<article class="seed-item-display seed-surface featured-item" data-surface="solid" data-item-presentation="integrated" data-item-layout="horizontal">

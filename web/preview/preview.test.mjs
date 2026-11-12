@@ -323,3 +323,23 @@ test('home compact rail shows real status and linked destinations',()=>{
   assert.match(stylesheet,/\.home-glance-rail\s*\{[^}]*overflow-x:auto/);
   assert.doesNotMatch(stylesheet,/\.home-section-eyebrow\s*\{/);
 });
+
+
+test('My Big profile follows owned and equipped state with actual page destinations',()=>{
+  const store=createStore();
+  const initial=page(store,'#/me');
+  assert.match(initial,/me-profile__figure/);
+  assert.match(initial,/data-avatar="fluid"/);
+  assert.match(initial,/블루 캡/);
+  assert.match(initial,/cosmetic_blue_cap.png/);
+  assert.equal((initial.match(/class="me-collection__item"/g)||[]).length,2);
+  for(const path of ['#/decorate?tab=me','#/shop?tab=me','#/rewards?tab=me'])assert.ok(initial.includes(path));
+  assert.equal(store.dispatch('equip','0'),true);
+  assert.match(page(store,'#/me'),/골지 비니/);
+  assert.equal(store.dispatch('open','starter'),true);
+  assert.equal((page(store,'#/me').match(/class="me-collection__item"/g)||[]).length,3);
+  assert.equal(store.dispatch('purchase','1001'),true);
+  assert.match(page(store,'#/me'),/크림 헤드폰/);
+  assert.equal(store.dispatch('complete','math-today'),true);
+  assert.match(page(store,'#/me'),/790 XP/);
+});

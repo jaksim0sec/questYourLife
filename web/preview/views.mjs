@@ -535,7 +535,7 @@ function decorate(state,ui={}) {
     <section class="decorate-wardrobe" aria-label="보유한 장식 선택">
       <div class="decorate-wardrobe__heading">
         <div><h2>내 아이템</h2><span>보유 ${owned.length}개 · 누르면 바로 적용돼요</span></div>
-        <a class="decorate-wardrobe__shop" href="${path('shop','me')}">상점 ${icon('chevron')}</a>
+
       </div>
       ${chips(types.map(type=>[type,type]),selected,'dressFilter')}
       <div class="decorate-items">${itemMarkup||emptyContent}</div>

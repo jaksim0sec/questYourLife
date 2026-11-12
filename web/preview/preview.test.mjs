@@ -343,3 +343,18 @@ test('My Big profile follows owned and equipped state with actual page destinati
   assert.equal(store.dispatch('complete','math-today'),true);
   assert.match(page(store,'#/me'),/790 XP/);
 });
+
+test('My Big identity is unboxed, avatar first, without level meter or duplicate edit button',()=>{
+  const store=createStore();
+  const html=page(store,'#/me');
+  const profile=html.slice(html.indexOf('<div class="me-profile">'),html.indexOf('<section class="me-stats"'));
+  assert.ok(profile.indexOf('me-profile__figure')<profile.indexOf('me-profile__identity'));
+  assert.match(profile,/data-avatar="fluid"/);
+  assert.doesNotMatch(profile,/seed-surface|progress-track|me-profile__meter/);
+  assert.equal((html.match(/class="seed-action"[^>]*href="#\/decorate\?tab=me"/g)||[]).length,1);
+  assert.match(html,/cosmetic_blue_cap\.png/);
+  assert.match(html,/#\/rewards\?tab=me/);
+  const styles=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(styles,/\.me-profile\s*\{[^}]*background:transparent/);
+  assert.doesNotMatch(styles,/\.me-profile__meter\s*\{/);
+});

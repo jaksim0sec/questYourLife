@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-profile-v1';
-import {clanRows,clanTotal} from './store.mjs?v=me-profile-v1';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-open-v2';
+import {clanRows,clanTotal} from './store.mjs?v=me-open-v2';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -264,23 +264,22 @@ function clanHome(state,ui) {
   return identity+reward+section('멤버 기여도',board,more('순위 보기','ranking','clan'));
 }
 function me(state){
-  const level=1+Math.floor(state.xp/250),nextLevel=250-state.xp%250;
+  const level=1+Math.floor(state.xp/250);
   const completed=state.quests.filter(q=>q.status==='done').length;
   const available=Object.values(state.boxes).filter(v=>v==='ready').length;
   const items=state.owned.map(id=>MASCOT_EQUIPMENT[id]).filter(Boolean);
   const outfit=state.equipped.map(id=>MASCOT_EQUIPMENT[id]?.name).filter(Boolean).join(' · ')||'기본 마스코트';
-  const profile=`<section class="seed-page-shell__section me-section"><article class="seed-surface me-profile" data-surface="subtle">
-    <div class="me-profile__main">
+  const profile=`<section class="seed-page-shell__section me-section" aria-label="내 프로필">
+    <div class="me-profile">
+      <div class="me-profile__figure">${avatar('fluid')}</div>
       <div class="me-profile__identity">
-        <span class="me-profile__caption">내 프로필</span>
         ${title('루원','hero')}
         <span class="me-profile__level">Lv. ${level} <span aria-hidden="true">·</span> ${fmt(state.xp)} XP</span>
-        <div class="me-profile__meter">${progress(state.xp%250,250,'다음 레벨까지','micro')}<span>다음 레벨까지 ${fmt(nextLevel)} XP</span></div>
+        <div class="me-profile__outfit"><span>지금 내 스타일</span><strong>${escape(outfit)}</strong></div>
+        ${cta('꾸미기','decorate','me','neutral-outline')}
       </div>
-      <div class="me-profile__figure">${avatar('fluid')}</div>
     </div>
-    <div class="me-profile__footer"><div class="me-profile__outfit"><span>지금 내 스타일</span><strong>${escape(outfit)}</strong></div>${cta('꾸미기','decorate','me','neutral-outline')}</div>
-  </article></section>`;
+  </section>`;
   const stats=`<section class="me-stats" aria-label="내 활동 기록"><div><strong>${completed}</strong><span>완료한 퀘스트</span></div><div><strong>${items.length}</strong><span>보유 아이템</span></div><div><strong>${available}</strong><span>열 수 있는 상자</span></div></section>`;
   const owned=items.length?`<div class="me-collection">${items.slice(0,4).map(item=>{
     const on=state.equipped.includes(item.id);
@@ -292,7 +291,7 @@ function me(state){
     row({label:'보상함',sub:available?`${available}개 열 수 있어요`:'획득한 상자와 보상 확인',url:'rewards',tab:'me',leading:`<span class="me-destination-art">${frame(rewards+chestLoot.starter.image,'')}</span>`}),
     row({label:'상점',sub:'마스코트를 위한 새로운 스타일',url:'shop',tab:'me',leading:`<span class="me-destination-art">${frame(MASCOT_EQUIPMENT[1001].src,'')}</span>`})
   ].join(''),'보상과 상점');
-  return profile+stats+section('내 스타일',owned,more('꾸미기','decorate','me'))+section('보상과 상점',destinations);
+  return profile+stats+section('내 스타일',owned)+section('보상과 상점',destinations);
 }
 
 function shop(state,ui) {

@@ -435,16 +435,60 @@ function me(state) {
     section('내 스타일',owned)+
     section('내 상자',boxPreview+`<div class="me-shop-link">${shopLink}</div>`,more('보상함 보기','rewards','me'));
 }
-function shop(state,ui) {
-  const feature=catalog.find(item=>item.id===1001);
-  const featured=ui.shop==='전체'?`<article class="seed-item-display seed-surface featured-item" data-surface="solid" data-item-presentation="integrated" data-item-layout="horizontal">
-      ${frame(MASCOT_EQUIPMENT[feature.id].src,feature.name)}<div class="seed-item-display__info">${title(feature.name,'item','h3')}${cash(feature.price)}<div class="seed-item-display__action">${cta('상품 보기','item/'+feature.id,'me','neutral-outline')}</div></div></article>`:'';
-  const items=catalog.filter(x=>ui.shop==='전체'?x!==feature:x.type===ui.shop);
-  return `<div class="shop-balance"><span>보유 캐시</span>${cash(state.cash)}</div>`
-    +(featured?section('추천 상품',featured):'')
-    +`<section class="seed-page-shell__section shop-list">${chips(types.map(x=>[x,x]),ui.shop,'shop')}<div class="item-grid">
-      ${items.map(item=>`<a class="seed-item-display" data-item-presentation="open" href="${path('item/'+item.id,'me')}">${frame(MASCOT_EQUIPMENT[item.id].src,item.name)}
-      <div class="seed-item-display__info">${title(item.name,'item','h3')}${state.owned.includes(item.id)?support('보유 중'):cash(item.price)}</div></a>`).join('')}</div></section>`;
+function shop(state,ui={}) {
+  // A storefront view over the existing catalog, not a new economy.
+  const selected=types.includes(ui.shop)?ui.shop:'전체';
+  const pick=catalog.find(item=>item.id===1);
+  const pickArt=MASCOT_EQUIPMENT[pick.id];
+  const feature=`<section class="seed-item-display seed-surface shop-feature" data-surface="media" data-item-presentation="integrated" data-item-layout="horizontal" aria-label="추천 장식">
+    ${frame(pickArt.src,'')}
+    <div class="seed-item-display__info shop-feature__copy">
+      <span class="shop-feature__eyebrow">오늘의 추천</span>
+      <h2>${escape(pick.name)}</h2>
+      <p>가볍게 바꾸는 마스코트의 분위기</p>
+      ${state.owned.includes(pick.id)?'<span class="shop-feature__owned">이미 가지고 있어요</span>':cash(pick.price,'large')}
+      <div class="seed-item-display__action">${cta(state.owned.includes(pick.id)?'꾸미러 가기':'아이템 보기',state.owned.includes(pick.id)?'decorate':'item/'+pick.id,'me','neutral-outline')}</div>
+    </div>
+  </section>`;
+  const visible=catalog.filter(item=>selected==='전체'||item.type===selected);
+  const products=visible.map(item=>{
+    const art=MASCOT_EQUIPMENT[item.id];
+    const owned=state.owned.includes(item.id);
+    return `<a class="seed-item-display shop-product" data-item-presentation="open" data-category="${escape(item.type)}" href="${path('item/'+item.id,'me')}" aria-label="${escape(item.name)}, ${owned?'보유 중':fmt(item.price)+' 캐시'}, 상품 상세">
+      ${frame(art.src,'')}
+      <span class="seed-item-display__info shop-product__info">
+        <strong>${escape(item.name)}</strong>
+        ${owned?'<span class="shop-product__owned">보유 중</span>':cash(item.price)}
+      </span>
+    </a>`;
+  }).join('');
+  const catalogPanel=`<section class="shop-inventory" aria-label="꾸미기 아이템">
+    <div class="shop-section-head"><h2>꾸미기 아이템</h2><span>${visible.length}개</span></div>
+    ${chips(types.map(value=>[value,value]),selected,'shop')}
+    <div class="shop-products">${products||'<p class="shop-empty">해당하는 장식이 없어요</p>'}</div>
+  </section>`;
+  // Boxes are earned rewards, never purchasable SKUs in this prototype.
+  const boxes=Object.entries(chestLoot).map(([id,box])=>{
+    const status=state.boxes[id]||'locked';
+    const destination=status==='locked'?(id==='clan'?'clan':'quests'):'rewards';
+    const label=status==='ready'?'열 수 있어요':status==='opened'?'열어본 상자':'획득 전';
+    return `<a class="shop-box" href="${path(destination,destination==='rewards'?'me':undefined)}" aria-label="${escape(box.name)}, ${label}, ${status==='locked'?'도전 현황':'보상함'} 보기">
+      <span class="shop-box__image">${frame(rewards+box.image,'')}</span>
+      <span class="shop-box__info"><strong>${escape(box.name)}</strong><small>${label}</small></span>
+      ${icon('chevron')}
+    </a>`;
+  }).join('');
+  const rewardsPanel=`<section class="shop-rewards" aria-label="획득하는 보상 상자">
+    <div class="shop-section-head"><div><h2>보상 상자</h2><p>퀘스트와 클랜 활동으로 얻어요</p></div>
+      <a class="shop-section-head__link" href="${path('rewards','me')}">보상함 ${icon('chevron')}</a></div>
+    <div class="shop-box-rail" role="group" aria-label="보상 상자 목록">${boxes}</div>
+  </section>`;
+  const cashHint=`<a class="shop-earn" href="${path('quests')}"><span class="shop-earn__icon">${icon('target')}</span>
+    <span><strong>캐시가 더 필요하다면</strong><small>퀘스트를 완료하고 보상을 모아봐요</small></span>${icon('chevron')}</a>`;
+  return `<div class="shop-page">
+    <div class="shop-balance" aria-label="현재 캐시">${cash(state.cash)}</div>
+    ${feature}${catalogPanel}${rewardsPanel}${cashHint}
+  </div>`;
 }
 function itemDetail(state,route) {
   const item=catalog.find(product=>product.id===Number(route.id));

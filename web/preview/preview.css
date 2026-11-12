@@ -530,3 +530,7 @@
 .chat-photo-modal { width:min(calc(100vw - 1.5rem),32rem); }
 .chat-photo-modal img { display:block; max-width:100%; max-height:75dvh; object-fit:contain; margin:auto; border-radius:.5rem; }
 @media(max-width:359px){.chat-row__content{max-width:88%;}.chat-photo img{max-width:53vw;}}
+
+/* Closed details must not paint their absolute-positioned panels. */
+.chat-header-menu:not([open]) > .chat-header-menu__panel,
+.chat-message-tools:not([open]) > .chat-message-tools__menu { display:none; }

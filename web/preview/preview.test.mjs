@@ -623,3 +623,23 @@ test('Existing preview messages migrate without deleting personal writes or sett
   assert.deepEqual(saved.mutedThreads,{});
   assert.equal(saved.messages.clan.length,10);
 });
+
+test('Chat contextual menus close prior panels and hide closed popovers',()=>{
+ const js=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
+ assert.match(js,/const activeChatMenu=event\.target\.closest\('\.chat-header-menu, \.chat-message-tools'\)/);
+ assert.match(js,/if\(menu!==activeChatMenu\)menu\.open=false/);
+ assert.match(js,/document\.addEventListener\('toggle',event=>\{/);
+ assert.match(js,/if\(menu!==target\)menu\.open=false/);
+ assert.match(css,/\.chat-header-menu:not\(\[open\]\)\s*>\s*\.chat-header-menu__panel/);
+ assert.match(css,/\.chat-message-tools:not\(\[open\]\)\s*>\s*\.chat-message-tools__menu\s*\{\s*display:none/);
+ assert.match(html,/preview\.css\?v=dm-menu-fix-v9/);
+ assert.match(html,/app\.mjs\?v=dm-menu-fix-v9/);
+ const s=createStore();
+ const markup=page(s,'#/chat/friend3?tab=dm');
+ assert.equal((markup.match(/class="chat-message-tools"/g)||[]).length,s.read().messages.friend3.filter(m=>m.from==='me').length);
+ assert.doesNotMatch(markup,/class="chat-message-tools" open/);
+ assert.equal(s.dispatch('message','friend3','수정할 내용'),true);
+ assert.match(page(s,'#/chat/friend3?tab=dm'),/data-chat-ui="edit"/);
+});

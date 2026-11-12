@@ -155,8 +155,12 @@ function apply(action,id,value,focusTarget) {
 }
 document.addEventListener('click',event=>{
   if(!event.target.closest('.home-nav-menu'))get('.home-nav-menu[open]')?.removeAttribute('open');
-  if(!event.target.closest('.chat-header-menu'))get('.chat-header-menu[open]')?.removeAttribute('open');
-  if(!event.target.closest('.chat-message-tools'))main.querySelectorAll('.chat-message-tools[open]').forEach(item=>item.open=false);
+  // Only the interacted-with chat menu may remain open. Previous logic left
+  // every message menu open when another message menu was tapped.
+  const activeChatMenu=event.target.closest('.chat-header-menu, .chat-message-tools');
+  document.querySelectorAll('.chat-header-menu[open], .chat-message-tools[open]').forEach(menu=>{
+    if(menu!==activeChatMenu)menu.open=false;
+  });
   if(event.target===alertSheet) {
     const bounds=alertSheet.getBoundingClientRect();
     if(event.clientY<bounds.top||event.clientX<bounds.left||event.clientX>bounds.right) alertSheet.close();
@@ -228,6 +232,14 @@ document.addEventListener('click',event=>{
     [...main.querySelectorAll('button')].find(button=>filter?button.dataset.filter===filter&&button.dataset.value===value:button.dataset.period===period)?.focus({preventScroll:true});
   } else if(action) apply(action,id);
 });
+document.addEventListener('toggle',event=>{
+  // details also opens via keyboard and programmatic interaction.
+  const target=event.target;
+  if(!target.matches?.('.chat-header-menu, .chat-message-tools')||!target.open)return;
+  document.querySelectorAll('.chat-header-menu[open], .chat-message-tools[open]').forEach(menu=>{
+    if(menu!==target)menu.open=false;
+  });
+},true);
 document.addEventListener('input',event=>{
   if(event.target.id==='message'&&route.name==='chat') {
     const field=event.target;

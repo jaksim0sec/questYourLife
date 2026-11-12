@@ -430,20 +430,32 @@ test('My item cards stretch to the same natural row height while preserving wrap
   assert.doesNotMatch(styles,/\.me-collection__name\s*\{[^}]*white-space:nowrap/);
 });
 
-test('DM messenger inbox shows searchable AI and social conversations',()=>{
+test('DM global inbox uses real mascot avatars and SEED Filter Chips',()=>{
  const store=createStore();
- const html=page(store,'#/dm');
- assert.match(html,/id="dm-search"/);
- assert.match(html,/class="dm-ai-entry"/);
- assert.equal((html.match(/class="dm-conversation"/g)||[]).length,4);
- for(const id of ['ai','friend','clan','friend2','friend3'])assert.ok(html.includes('#/chat/'+id+'?tab=dm'));
- assert.doesNotMatch(html,/읽지 않음|방금 전/);
- assert.match(page(store,'#/chat/friend2?tab=dm'),/보너스 도전/);
+ const all=page(store,'#/dm');
+ assert.equal((all.match(/class="dm-conversation"/g)||[]).length,5);
+ assert.equal((all.match(/data-avatar="fluid"/g)||[]).length,4);
+ assert.equal((all.match(/class="seed-filter-chip"/g)||[]).length,3);
+ assert.doesNotMatch(all,/dm-ai-entry|dm-inbox__assistant|방금 전|읽지 않음/);
+ for(const id of ['ai','friend','clan','friend2','friend3'])assert.ok(all.includes('#/chat/'+id+'?tab=dm'));
+ for(const items of ['0,1004','5','3,1003'])assert.ok(all.includes('data-avatar-items="'+items+'"'));
+ assert.match(all,/clan-bookmark-fill\.svg/);
+ const personal=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'personal'});
+ assert.equal((personal.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,1);
+ const clan=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'clan'});
+ assert.equal((clan.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,4);
+ const search=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'personal',dmSearch:'별이'});
+ assert.equal((search.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,4);
+ const empty=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'clan',dmSearch:'별이'});
+ assert.match(empty,/class="dm-inbox__empty" aria-live="polite">검색 결과가 없어요/);
  assert.equal(store.dispatch('message','friend3','내일 같이 구경하자'),true);
  assert.match(page(store,'#/dm'),/내일 같이 구경하자/);
- const filtered=renderPage(store.read(),readRoute('#/dm'),{...ui,dmSearch:'별이'});
- assert.equal((filtered.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,3);
- assert.match(filtered,/id="dm-search"[^>]*value="별이"/);
+ const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(script,/element\.dataset\.avatarItems/);
+ assert.match(script,/row\.dataset\.dmKind!==category/);
+ const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(css,/\.dm-conversation__avatar\s*\{[^}]*background:transparent/);
+ assert.doesNotMatch(css,/\.dm-ai-entry\s*\{/);
 });
 test('DM thread migration preserves older local-storage messages',()=>{
  const prior=createStore().read();

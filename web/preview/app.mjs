@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=dm-inbox-v1';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-inbox-v1';
-import {homeAlerts} from './mock-data.mjs?v=dm-inbox-v1';
-import {readRoute,navMarkup} from './routes.mjs?v=dm-inbox-v1';
+import {createStore} from './store.mjs?v=dm-inbox-v2';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-inbox-v2';
+import {homeAlerts} from './mock-data.mjs?v=dm-inbox-v2';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-inbox-v2';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -15,7 +15,7 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:''};
+const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all'};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -69,7 +69,12 @@ function render() {
   trailing.dataset.slotKind=route.name==='me'||route.name==='shop'?'info':trailing.childElementCount?'action':'empty';
   if(type.bottomNav)selectWebNav(nav,route.tab);
   main.innerHTML=renderPage(state,route,ui);
-  main.querySelectorAll('[data-avatar]').forEach(element=>mountMascotAvatar(element,{equipmentIds:state.equipped,scale:element.dataset.avatar,label:'루원의 마스코트'}));
+  main.querySelectorAll('[data-avatar]').forEach(element=>{
+    const itemIds=element.dataset.avatarItems;
+    const equipmentIds=itemIds===undefined?state.equipped:itemIds.split(',').filter(Boolean).map(Number);
+    const decorative=Boolean(element.closest('.dm-conversation__avatar'));
+    mountMascotAvatar(element,{equipmentIds,scale:element.dataset.avatar,label:'루원의 마스코트',decorative});
+  });
   main.querySelectorAll('.seed-media__image').forEach(img=>{
     img.addEventListener('error',()=>{img.closest('.seed-media').dataset.mediaState='error';});
     if(img.complete&&!img.naturalWidth)img.closest('.seed-media').dataset.mediaState='error';
@@ -153,13 +158,14 @@ document.addEventListener('input',event=>{
   if(event.target.id==='dm-search') {
     ui.dmSearch=event.target.value.slice(0,80);
     const query=ui.dmSearch.trim().toLocaleLowerCase('ko');
+    const category=ui.dmFilter??'all';
     let visible=0;
     main.querySelectorAll('[data-dm-search]').forEach(row=>{
-      row.hidden=Boolean(query)&&!row.dataset.dmSearch.includes(query);
+      row.hidden=(category!=='all'&&row.dataset.dmKind!==category)||(Boolean(query)&&!row.dataset.dmSearch.includes(query));
       if(!row.hidden)visible++;
     });
     const empty=main.querySelector('.dm-inbox__empty');
-    if(empty)empty.hidden=visible>0;
+    if(empty){empty.hidden=visible>0;empty.textContent=query?'검색 결과가 없어요':'해당하는 대화가 없어요';}
     return;
   }
   if(event.target.id!=='home-search')return;

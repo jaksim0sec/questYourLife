@@ -8,7 +8,7 @@
 |---|---|---|---|---|
 | 홈 | 글로벌 | 콤팩트한 일일 진행 요약 → 가로로 넘기는 활동 카드 → 다음 도전 → 기존 트렌드·소셜·이벤트 | 기존 대형 그라데이션·마스코트·붉은 영문 소제목을 제거. 카드 Rail은 overflow-x scroll로 동작하며 실제 목적지에 연결됨. 아래 콘텐츠와 데이터 계약은 유지 | NAV-TOP, P-PAGE-COMPOSE, P-LAYOUT, C-SURFACE, C-STATUS, C-CREDIT, C-IMAGE |
 | 퀘스트 | 글로벌 | 진행 중인 퀘스트북의 챕터와 완료 수 → 상태별 내 퀘스트 | 표지는 실제 책 제목·현재 챕터를 가진 링크. 목록은 진행 중을 기본값으로 사용하며 제안·미룸·완료를 필터칩으로 탐색 | NAV-TOP, C-SELECTION, C-LIST, C-STATUS, C-CREDIT |
-| 디엠 | 글로벌 | 실제 대화 검색 → AI 퀘스트 대화 → 친구·클랜 메시지 목록 | 프로필 이니셜·마지막 메시지 중심 메신저 밀도. 실제 데이터가 없는 읽지 않음·시각은 표기하지 않음. 검색은 실제 DOM 목록을 필터링. 추가 대화는 Mock 계층에서만 제공하며 기존 브라우저 저장 데이터와 호환 | C-FIELD, C-AVATAR, C-LIST, C-SURFACE, P-HIERARCHY |
+| 디엠 | 글로벌 | 대화 검색 → 전체·개인·클랜 Filter Chip → AI·개인·클랜 단일 대화 목록 | AI 별도 카드 제거. 개인·AI는 기존 C-AVATAR 투명 마스코트(친구별 장착은 Mock fixture), 클랜은 공통 북마크 문양. 필터·검색 실제 동작, 기존 상태·메시지·이동 유지. 읽음/시각 미생성 | C-SELECTION Filter Chip, C-AVATAR, C-LIST, P-HIERARCHY |
 | 클랜 | 글로벌 | 팀과 내 기여 → 이번 주 상자 진행·내용·수령 → 멤버 기여도 | 깃발과 이름을 한 줄에 두고, 상자는 기존 아트와 진행률을 한 면에 모은다. 기간 선택은 멤버 기여도만 전환한다. 대화는 상단 액션 | NAV-TOP, C-SEGMENT, C-STATUS, C-LIST, C-CREDIT, A-ART |
 | 마이 | 글로벌 | 기존 Plain Big 프로필·활동 기록 유지 → 3개가 보이는 작고 조밀한 장식 Rail → 내 상자(열 수 있음·열어봄) 세로 목록 → 상점 진입 | 큰 카드 레일 두 번 반복하던 구조를 개선. 아이템은 SEED S06 통합형·contain 유지, 상자는 C-LIST에 가까운 Plain 행으로 별도 역할 부여. 완료 이력과 상태 전이는 기존 Store만 사용 | P-HIERARCHY S05/S06, P-LAYOUT Rail, C-AVATAR, C-IMAGE, C-SURFACE, C-LIST |
 | 퀘스트 상세 | 글로벌 이너 · 진입 탭 | 조건·기한·보상 확인 → 수락 또는 완료 | 한 행동에 집중. 거절·미루기·완료 취소는 보조 | NAV-TOP, C-STATUS, C-ACTION |

@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-inbox-v1';
-import {clanRows,clanTotal} from './store.mjs?v=dm-inbox-v1';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-inbox-v2';
+import {clanRows,clanTotal} from './store.mjs?v=dm-inbox-v2';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -202,31 +202,29 @@ function book(state,route) {
   return `<article class="seed-surface detail-panel" data-surface="subtle">${title(item.title,'hero')}${support(item.goal)}${progress(done,tasks.length,'목표 진행')}${support(done+' / '+tasks.length+' 완료')}</article>`+section(item.chapter,list(tasks.map(q=>questRow(q,route.tab)).join(''),'챕터 퀘스트'));
 }
 function dm(state,ui={}) {
-  const query=(ui.dmSearch??'').trim().toLocaleLowerCase('ko');
+  const category=ui.dmFilter??'all',query=(ui.dmSearch??'').trim().toLocaleLowerCase('ko');
+  const entries=Object.entries(threads);
+  const kind=id=>id==='clan'?'clan':'personal';
   const last=id=>state.messages[id]?.at(-1)?.text||'아직 메시지가 없어요';
-  const others=Object.entries(threads).filter(([id])=>id!=='ai');
-  const searchText=id=>[threads[id].title,last(id),id==='ai'?'AI':''].join(' ').toLocaleLowerCase('ko');
-  const visible=id=>!query||searchText(id).includes(query);
-  const assistant=`<a class="dm-ai-entry" data-dm-search="${escape(searchText('ai'))}" ${visible('ai')?'':'hidden'} href="${path('chat/ai','dm')}">
-    <span class="dm-ai-entry__icon">${icon('sparkle')}</span>
-    <span class="dm-ai-entry__copy"><strong>${escape(threads.ai.title)} <small>AI</small></strong><span>${escape(last('ai'))}</span></span>${icon('chevron')}
-  </a>`;
-  const conversations=others.map(([id,entry])=>{
-    const preview=last(id),group=id==='clan';
-    return `<a class="dm-conversation" data-dm-search="${escape(searchText(id))}" ${visible(id)?'':'hidden'} href="${path('chat/'+id,'dm')}" aria-label="${escape(entry.title)}, ${escape(preview)}, 대화 열기">
-      <span class="dm-conversation__avatar" data-thread="${escape(id)}" data-kind="${group?'group':'person'}" aria-hidden="true">${group?icon('clan-bookmark-fill',true):escape(entry.initials||entry.title.slice(0,1))}</span>
-      <span class="dm-conversation__content"><strong>${escape(entry.title)}</strong><span class="dm-conversation__preview">${escape(preview)}</span></span>
+  const searchText=id=>(threads[id].title+' '+last(id)+(id==='ai'?' AI':'')).toLocaleLowerCase('ko');
+  const shown=id=>(category==='all'||category===kind(id))&&(!query||searchText(id).includes(query));
+  const line=([id,thread])=>{
+    const isAI=id==='ai',isClan=id==='clan';
+    const identity=isClan?`<span class="dm-conversation__clan-icon">${icon('clan-bookmark-fill',true)}</span>`:
+      `<span data-avatar="fluid" data-avatar-items="${(thread.avatarEquipment||[]).join(',')}"></span>`;
+    return `<a class="dm-conversation" data-dm-kind="${kind(id)}" data-dm-search="${escape(searchText(id))}" ${shown(id)?'':'hidden'} href="${path('chat/'+id,'dm')}" aria-label="${escape(thread.title)}, ${escape(last(id))}, 대화 열기">
+      <span class="dm-conversation__avatar" aria-hidden="true">${identity}</span>
+      <span class="dm-conversation__content"><span class="dm-conversation__name">${escape(thread.title)}${isAI?'<small>AI</small>':''}</span><span class="dm-conversation__preview">${escape(last(id))}</span></span>
     </a>`;
-  }).join('');
-  const count=Number(visible('ai'))+others.filter(([id])=>visible(id)).length;
+  };
+  const visibleCount=entries.filter(([id])=>shown(id)).length;
   return `<section class="dm-inbox" aria-label="대화 목록">
-    <div class="dm-inbox__search">${icon('search')}<label class="visually-hidden" for="dm-search">대화 검색</label>
-      <input id="dm-search" type="search" placeholder="대화 검색" autocomplete="off" maxlength="80" value="${escape(ui.dmSearch??'')}">
+    <div class="dm-inbox__search">${icon('search')}<label class="visually-hidden" for="dm-search">대화 검색</label><input id="dm-search" type="search" placeholder="대화 검색" autocomplete="off" maxlength="80" value="${escape(ui.dmSearch??'')}"></div>
+    <div class="dm-inbox__filters" role="group" aria-label="대화 종류 필터">
+      ${[['all','전체'],['personal','개인'],['clan','클랜']].map(([value,label])=>`<button type="button" class="seed-filter-chip" data-filter="dmFilter" data-value="${value}" aria-pressed="${category===value}">${label}</button>`).join('')}
     </div>
-    <div class="dm-inbox__assistant">${assistant}</div>
-    <div class="dm-inbox__heading"><h2>대화</h2><span>${others.length}개</span></div>
-    <div class="dm-inbox__list">${conversations}</div>
-    <p class="dm-inbox__empty" aria-live="polite" ${count?'hidden':''}>검색 결과가 없어요</p>
+    <div class="dm-inbox__list" aria-label="필터링된 대화 목록">${entries.map(line).join('')}</div>
+    <p class="dm-inbox__empty" aria-live="polite" ${visibleCount?'hidden':''}>${query?'검색 결과가 없어요':'해당하는 대화가 없어요'}</p>
   </section>`;
 }
 function chat(state,route) {

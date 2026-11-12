@@ -48,11 +48,11 @@ export const homeTrends = [
 ];
 
 export const threads = {
-  ai:{ title:'퀘스트 만들기', icon:'sparkle' },
-  friend:{ title:'다온', initials:'다', icon:'user' },
+  ai:{ title:'퀘스트 만들기', icon:'sparkle', avatarEquipment:[] },
+  friend:{ title:'다온', initials:'다', icon:'user', avatarEquipment:[0,1004] },
   clan:{ title:'방과후 원정대', initials:'방', icon:'flag' },
-  friend2:{ title:'별이', initials:'별', icon:'user' },
-  friend3:{ title:'민재', initials:'민', icon:'user' },
+  friend2:{ title:'별이', initials:'별', icon:'user', avatarEquipment:[5] },
+  friend3:{ title:'민재', initials:'민', icon:'user', avatarEquipment:[3,1003] },
 };
 
 export const homeAlerts = [

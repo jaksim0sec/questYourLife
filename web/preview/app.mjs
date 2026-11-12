@@ -32,20 +32,23 @@ try { root.dataset.theme=storage?.getItem('hyunsaengpatch-preview-theme')==='dar
 function iconAction(label,name,action,preview=false) {
   return `<button type="button" class="seed-icon-action" aria-label="${label}" data-shell-action="${action}" ${action==='alerts'?'aria-haspopup="dialog" aria-controls="home-alerts"':''}>${icon(name,preview)}</button>`;
 }
-function homeActions(state) {
-  const unread=homeAlerts.some(alert=>!(state.readAlerts??[]).includes(alert.id));
+function globalMenu(state,tab='home') {
   const dark=root.dataset.theme==='dark';
   const shortcut=(label,glyph,href)=>`<a class="menu-row" href="#/${href}">${icon(glyph)}${label}</a>`;
+  return `<details class="home-nav-menu"><summary class="seed-icon-action" aria-label="메뉴">${icon('menu')}</summary>
+    <div class="seed-surface home-menu-panel" data-surface="raised">
+      ${shortcut('퀘스트 만들기','sparkle','chat/ai?tab='+tab)}
+      ${shortcut('보상함','gift','rewards?tab='+tab)}
+      ${shortcut('꾸미기','shirt','decorate')}
+      <button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>
+    </div>
+  </details>`;
+}
+function homeActions(state) {
+  const unread=homeAlerts.some(alert=>!(state.readAlerts??[]).includes(alert.id));
   return iconAction('검색','search','search')+
     `<span class="home-alert-trigger">${iconAction(unread?'알림 · 읽지 않은 항목 있음':'알림','bell-connected','alerts',true)}${unread?'<span class="home-alert-dot" aria-hidden="true"></span>':''}</span>`+
-    `<details class="home-nav-menu"><summary class="seed-icon-action" aria-label="메뉴">${icon('menu')}</summary>
-      <div class="seed-surface home-menu-panel" data-surface="raised">
-        ${shortcut('퀘스트 만들기','sparkle','chat/ai?tab=home')}
-        ${shortcut('보상함','gift','rewards?tab=home')}
-        ${shortcut('꾸미기','shirt','decorate')}
-        <button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>
-      </div>
-    </details>`;
+    globalMenu(state,'home');
 }
 function render() {
   const state=store.read();
@@ -59,6 +62,8 @@ function render() {
   leading.innerHTML=type.header==='standard'?iconAction('뒤로 가기','left','back'):'';
   if(route.name==='home') {
     trailing.innerHTML=homeActions(state);
+  } else if(route.name==='dm') {
+    trailing.innerHTML=globalMenu(state,'dm');
   } else if(route.name==='quests') {
     trailing.innerHTML=iconAction('검색','search','search')+iconAction('퀘스트 만들기','plus','new-quest');
   } else if(route.name==='clan') {

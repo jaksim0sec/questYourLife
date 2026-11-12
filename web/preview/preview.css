@@ -168,6 +168,7 @@
 .home-deadline .seed-icon { --seed-icon-size: .9rem; flex: none; }
 .home-mission-meta, .home-mission-footer { grid-column: 1 / -1; }
 .home-mission-copy { grid-column: 1; grid-row: 2; min-width: 0; }
+.home-mission-copy > .seed-text { word-break: keep-all; overflow-wrap: anywhere; }
 .home-mission-copy > .seed-text:first-child { letter-spacing: -.038em; }
 .home-mission-copy > p.seed-text { margin-top: .38rem; line-height: 1.55; color: color-mix(in srgb,var(--text) 68%,var(--sub)); }
 .home-mission .home-deadline { color: color-mix(in srgb,var(--text) 68%,var(--sub)); }

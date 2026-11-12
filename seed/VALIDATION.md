@@ -320,3 +320,16 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 **검증 증거:** 변경 전 원본 소스 계약 검사 7항목 중 7항목 미충족(RED). GitHub `new` 소스 재조회 후 17/17 정적 조건 GREEN(전역 토큰·Light/Dark·CTA 대비 처리·media natural height·contain·NAV 수치·문서 금지). 추가된 `seed/styles/seed-quality.test.mjs`은 차후 원본 checkout Node 실행을 위한 회귀 게이트. 기존 독립 HTML의 실제 가로 카드 CSS 결함을 교정한 검수용 `seed_item_showcase_v3.html`에서 Chromium 320/360/390/430/780/1080px × Light/Dark **12/12** 가로 넘침/미디어 배경 높이/버튼 이탈 검사 통과(네트워크 이미지 차단 상태). 이는 **SEED 공통 CSS를 실제 소비한 페이지의 시각 인증이 아니라 독립 아티팩트 회귀 재현**이다.
 
 **미검증:** 저장소 전체 Node `--test`, 전역 SEED CSS를 사용한 실제 통합 Preview 렌더(Preview는 의도적으로 비어 있음), 최신 GitHub Pages, 네이티브 및 TalkBack/OS 200% 확대, CDN 네트워크에서 Pretendard 실사용. 저장소 내부 font asset이 없으므로 CDN CSS 경로와 font-family를 명시해도 로딩 실패·오프라인에서 Pretendard를 100% 보장할 수 없다. 최초 D-015 650/620은 과거 합의 이력, 최신 사용자의 미세 보정이 680/650이다.
+
+## 2026-11-12 · D-017 웹 SEED 비교안 검증
+
+기준 입력은 사용자와 비교한 `seed-design-comparison.html`과 좌측 제목의 간격 피드백이다. 적용 범위는 [D-017](../docs/DECISIONS.md#d-017--웹-seed-비교안-반영-사용자-요청--2026-11-12)에 기록했다.
+
+| ID | 완료 기준과 정본 | 검증 결과 |
+|---|---|---|
+| S01-A | [NAV-TOP](TOP_NAVIGATION.md) · Back/Close 타깃 3rem과 좌측 제목 간격 .125rem, 좁은 상점에서 잔액을 본문에 한 번 표시 | 기존 헤더 두 CSS 경로와 JSON을 대조. 320/360/390/430px × 16/32px 기준 글자의 좌측 간격 계산 8/8 통과. 잔액 배치는 페이지의 조합 규격으로 기록했고 실제 화면은 미검증 |
+| S01-B | [F-COLOR](foundations/color-surfaces.md) · 다크 Brand/Danger Badge의 작은 글자 대비 | CSS·JSON·문서 대조와 불투명 sRGB 계산 2.95:1 → 5.65:1. 대표 Brand Action의 기존 색 바인딩을 회귀 검사 |
+| S01-C | [C-SEGMENT](components/segmented-control.md) · 트랙 43px, 알약 37px, 옵션의 터치 영역 최소 48×48px | CSS·JSON 규격 검사. 장식 면의 포인터 통과와 버튼 타깃 확인. 실제 탭·키보드 포커스는 미검증 |
+| S01-D | [P-HIERARCHY](patterns/content-hierarchy.md) · 390px 상점에서 가로 통합형 대표 상품과 3열 오픈형 탐색 예시 | 가로형 CSS의 이미지 배경과 contain 규격 확인. 화면 조합은 설계 예시로 기록했고 실제 상점 렌더는 미검증 |
+
+**실행:** SEED 품질 검사 8/8 통과. SEED Runtime·Styles와 SEED Lab Node 검사 전체는 변경 전 43통과·11실패, 변경 후 45통과·11실패였다. 실패 항목 집합이 동일하다. **미검증:** Chromium 프로세스 시작이 제한되어 라이트·다크 화면 렌더, 실제 클릭·확대 및 Android 실기기 검증은 수행하지 못했다.

@@ -222,6 +222,7 @@
     "containerCount": 1,
     "thumbCount": 1,
     "visibleHeight": 43,
+    "webTargetMinCssPx": 48,
     "minOptions": 2,
     "maxOptions": 4,
     "preferredWidth": "hug"
@@ -273,6 +274,7 @@
     ],
     "height": 26,
     "heightXS": 21,
+    "darkBrandAndDangerForeground": "#FF8173",
     "paddingX": 11,
     "paddingX_XS": 8,
     "iconSize": 13,
@@ -396,7 +398,8 @@
     "standard": {
       "fontSizeRem": 1.08,
       "fontWeight": 650,
-      "letterSpacingEm": -0.018
+      "letterSpacingEm": -0.018,
+      "startTitleGapAfterBackTargetRem": 0.125
     },
     "minHeightRem": 3.5,
     "glyphSizeRem": 1.59,

@@ -244,6 +244,7 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-badge[data-tone="warning"] { background:var(--palette-orange-100); color:var(--palette-orange-700); }
 .seed-badge[data-tone="danger"] { background:var(--brand-weak); color:var(--brand); }
 .seed-badge[data-tone="reward"] { background:var(--reward); color:var(--on-reward); }
+:root[data-theme="dark"] .seed-badge:is([data-tone="brand"],[data-tone="danger"]) { color:#FF8173; }
 :root[data-theme="dark"] .seed-badge[data-tone="success"] { background:var(--palette-green-900); color:var(--palette-green-300); }
 :root[data-theme="dark"] .seed-badge[data-tone="info"] { background:var(--palette-blue-900); color:var(--palette-blue-300); }
 :root[data-theme="dark"] .seed-badge[data-tone="warning"] { background:var(--palette-orange-900); color:var(--palette-orange-300); }
@@ -299,9 +300,11 @@ body { display: grid; grid-template-rows: auto 1fr; }
 .seed-filter-chip:disabled { cursor:not-allowed; opacity:.45; }
 /* U09: default general UI icon follows html root font scale; button/nav slots retain overrides. */
 .seed-icon { width:var(--seed-icon-size,1.25rem); height:var(--seed-icon-size,1.25rem); }
-.seed-segment { display:inline-grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); min-height:43px; padding:3px; border-radius:999px; background:var(--soft); max-width:100%; }
-.seed-segment button { min-height:37px; padding:6px 12px; border:0; border-radius:999px; background:transparent; color:var(--sub); font:inherit; font-size:.8rem; font-weight:700; white-space:normal; cursor:pointer; }
-.seed-segment button[aria-pressed="true"] { background:var(--surface); color:var(--text); box-shadow:0 1px 3px #00000016; }
+.seed-segment { position:relative; isolation:isolate; display:inline-grid; grid-auto-flow:column; grid-auto-columns:minmax(48px,1fr); min-height:48px; padding-inline:3px; max-width:100%; }
+.seed-segment::before { content:""; position:absolute; inset:2.5px 0; z-index:-1; pointer-events:none; border-radius:999px; background:var(--soft); }
+.seed-segment > button { position:relative; isolation:isolate; min-height:48px; padding:6px 12px; border:0; border-radius:999px; background:transparent; color:var(--sub); font:inherit; font-size:.8rem; font-weight:700; white-space:normal; cursor:pointer; }
+.seed-segment > button[aria-pressed="true"] { color:var(--text); }
+.seed-segment > button[aria-pressed="true"]::before { content:""; position:absolute; inset:5.5px 0; z-index:-1; pointer-events:none; border-radius:inherit; background:var(--surface); box-shadow:0 1px 3px #00000016; }
 .seed-field { display:block; width:100%; min-height:48px; padding:12px 16px; border:1px solid var(--seed-stroke-control,var(--line)); background:var(--surface); border-radius:var(--seed-radius-control); color:var(--text); font:inherit; font-size:.9rem; }
 .seed-field:focus-visible { outline:none; border-color:var(--brand); }
 /* C-FIELD label/help composition and native disabled/read-only behavior. */

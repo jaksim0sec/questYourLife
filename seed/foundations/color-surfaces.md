@@ -181,4 +181,6 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 
 선택 이유: 기존 Light secondaryText `#777079`를 Light shell `#F8F7F9`에 사용하면 불투명 sRGB 계산 대비 약4.49:1로 작은 일반 글자의4.5 기준에 못 미친다. 새 공통 보조 글자는 이미 존재하는 F-COLOR fg.secondary `#5E5A65`를 사용하면 같은 배경에서 약6.29:1이다. 기존 JSON 값·레거시 `--sub`를 전역 수정하지 않고 공통 바인딩에서 해결한다. 실제 반투명·이미지 합성은 후속 렌더 검증 대상이다.
 
+다크 `brand`·`danger` Badge 글자는 `#FF8173`, 배경은 기존 `brandWeak` `#3E272A`를 사용한다. 불투명 sRGB 대비는 5.65:1이다. 이 값은 두 Badge의 전경에만 연결한다.
+
 팔레트는 기존 semanticPalette의 theme별 foreground/background/accent로 연결한다. 오브젝트의 금속 금색을 Progress·버튼·전체 배경에 전파하지 않는다. 보상 원본의 입체감과 실제 물체 인지를 유지한다. image10의 유료 패스·레이드·음식 보상을 새 기능으로 가져오지 않는다.

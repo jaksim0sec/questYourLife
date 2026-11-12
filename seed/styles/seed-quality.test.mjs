@@ -9,7 +9,7 @@ const selection=text('../components/segmented-control.md');
 const item=text('../patterns/content-hierarchy.md');
 const surface=text('../components/surface-media.md');
 function declaration(selector){
-  const i=css.indexOf(selector+' {');
+  const i=css.indexOf('\n'+selector+' {');
   if(i<0)return '';
   const a=css.indexOf('{',i);
   return css.slice(a+1,css.indexOf('}',a));
@@ -54,12 +54,40 @@ test('Header tuning is local to navigation and matches tokens',()=>{
 test('Start title clears the back target with a compact gap in both headers',()=>{
   const geometry=declaration('.head, .seed-top-nav__inner');
   assert.match(geometry,/--seed-top-target:3rem/);
+  assert.equal(tokens.topNavigation.standard.startTitleGapAfterBackTargetRem,0.125);
   assert.match(geometry,/--seed-top-start-column:calc\(var\(--seed-top-target\) - min\(var\(--seed-top-optical-inset\), var\(--seed-page-gutter,20px\)\) - \.375rem\)/);
   for (const selector of ['.head.standard', '.seed-top-nav__inner[data-nav-role="standard"]']) {
     const start=declaration(selector+'[data-title-align="start"]');
     assert.match(start,/grid-template-columns:var\(--seed-top-start-column\) minmax\(0,1fr\) minmax\(0,auto\); column-gap:\.5rem/);
     assert.doesNotMatch(declaration(selector),/--seed-top-start-column/);
   }
+});
+test('Dark brand and danger badges meet the text contrast threshold',()=>{
+  const foreground=tokens.badge.darkBrandAndDangerForeground;
+  const badge=declaration(':root[data-theme="dark"] .seed-badge:is([data-tone="brand"],[data-tone="danger"])');
+  assert.match(badge,new RegExp('color:'+foreground));
+  const luminance=(hex)=>hex.slice(1).match(/../g).reduce((total,pair,index)=>{
+    const channel=parseInt(pair,16)/255;
+    const linear=channel<=0.04045?channel/12.92:((channel+0.055)/1.055)**2.4;
+    return total+linear*[0.2126,0.7152,0.0722][index];
+  },0);
+  for (const tone of ['brand','danger']) {
+    assert.match(declaration('.seed-badge[data-tone="'+tone+'"]'),/background:var\(--brand-weak\)/);
+  }
+  const ratio=(luminance(foreground)+0.05)/(luminance(tokens.color.dark.brandWeak)+0.05);
+  assert.ok(ratio>=4.5);
+  assert.match(declaration('.seed-action[data-variant="brand-solid"] .seed-action__face'),/background:var\(--brand\); color:#fff/);
+});
+test('Segmented options preserve the track and use separate hit targets',()=>{
+  const target=tokens.segmented.webTargetMinCssPx;
+  assert.match(declaration('.seed-segment'),new RegExp('grid-auto-columns:minmax\\('+target+'px,1fr\\); min-height:'+target+'px'));
+  assert.match(declaration('.seed-segment > button'),new RegExp('min-height:'+target+'px'));
+  const track=declaration('.seed-segment::before');
+  const thumb=declaration('.seed-segment > button[aria-pressed="true"]::before');
+  assert.equal(target-2*parseFloat(track.match(/inset:([\d.]+)px/)[1]),tokens.segmented.visibleHeight);
+  assert.equal(target-2*parseFloat(thumb.match(/inset:([\d.]+)px/)[1]),37);
+  assert.match(track,/pointer-events:none/);
+  assert.match(thumb,/pointer-events:none/);
 });
 test('Do not redraw banner effects in SVG or turn periods into independent action buttons',()=>{
   assert.match(item,/SVG로.*이펙트.*금지/);

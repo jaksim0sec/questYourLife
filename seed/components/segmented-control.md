@@ -40,4 +40,4 @@ S2-04 반례 09. Period switch는 개별 버튼의 high/low 강조 차이가 아
 
 ## v0.15 단일 알약 세그먼트 · 확정 표현
 
-**하나의 트랙 → 하나의 선택 알약(thumb) → 2–4개 Label.** 트랙을 다시 큰 컨테이너/카드로 감싸지 않으며 버튼별 추가 테두리/칩을 겹치지 않는다. 선택 컨트롤의 폭은 기본 `hug-content`, 같은 비중의 콘텐츠 보기 전환에서만 `fill`. 시연 visible height ≈43px; native touch는 48dp의 비중첩 target 보장. selected만 thumb/foreground 차이, unselected는 중립; 선택 상태를 `aria-pressed` 또는 radio semantics 한 체계로만 노출.
+**하나의 트랙 → 하나의 선택 알약(thumb) → 2–4개 Label.** 트랙을 다시 큰 컨테이너/카드로 감싸지 않으며 버튼별 추가 테두리/칩을 겹치지 않는다. 선택 컨트롤의 폭은 기본 `hug-content`, 같은 비중의 콘텐츠 보기 전환에서만 `fill`. 웹 기본 표시 높이는 트랙 43px, 선택 알약 37px이다. 각 옵션의 실제 버튼 영역은 최소 48×48 CSS px이고 장식 면은 버튼과 별개로 중앙에 둔다. 확대·줄바꿈 시 트랙과 버튼은 내용에 맞춰 높아진다. 좁은 영역에서 모든 타깃을 확보하기 어려우면 선택지를 세로로 배치하거나 기존 선택 패턴을 사용한다. Native touch 기준은 48dp다. selected만 thumb/foreground 차이, unselected는 중립; 선택 상태를 `aria-pressed` 또는 radio semantics 한 체계로만 노출.

@@ -45,6 +45,8 @@ Progress의 이름·현재 값·최댓값을 전달한다. indeterminate는 알 
 
 Badge 톤 = `neutral|brand|success|info|warning|danger|reward` 7종. `label` 필수, `icon|dot`은 선택적. 높이 26px, XS 21px, Radius Pill; 기본 paddingX=11, XS=8, 아이콘 13px, 미세 outline(시연 기준 Light 약 12% / Dark 약 24% 전경색 혼합). 의미색 토큰을 적용하고 한 화면의 모든 Badge를 Brand로 채우지 않음. Badge는 정보 표시, 필터/선택은 C-SELECTION을 사용.
 
+다크 `brand`·`danger` Badge 전경은 [F-COLOR](../foundations/color-surfaces.md)의 Badge 매핑을 사용한다.
+
 Progress는 **공통 컴포넌트 하나**, thickness=6/10(default)/12(feature) 속성. 같은 도메인 값을 다른 Progress component로 중복 선언 금지. 실재 수치·완료 여부 및 스크린리더 Value는 앱 데이터에서 전달.
 
 > **2026-11-08 공통 계약 r1 적용:** 아래 절은 사용자 위임에 따라 이번 웹 개편의 기준으로 확정했다. 문서 전체의 과거 실험·제품 미결·Native 미검증을 일괄 승인한 것은 아니다.

@@ -108,3 +108,7 @@
 - 공통 웹 C-AVATAR의 표현·계약은 `web/preview/seed-mascot-avatar.mjs` 및 `seed-standard.css` 한 곳이 소유한다. 별도의 디자인 시스템이나 새 페이지 유형을 만들지 않는다. 사용자 데이터 저장/서비스 장착·Native 구현 및 기기별 아트 시각 승인은 별개다.
 
 세부 명세와 초깃값은 [C-AVATAR](../seed/components/avatar.md), 파일 소유권은 [에셋 계약](./assets/README.md)에 둔다.
+
+## D-017 · 웹 SEED 비교안 반영 [사용자 요청 · 2026-11-12]
+
+동일 데이터 비교안에서 승인된 범위는 [좌측형 헤더 간격과 좁은 화면의 잔액 배치](../seed/TOP_NAVIGATION.md), [다크 배지의 전경](../seed/foundations/color-surfaces.md), [기간 선택의 터치 영역](../seed/components/segmented-control.md), [상점 진열 조합 예시](../seed/patterns/content-hierarchy.md)다. 상품의 열 수와 잔액 위치는 화면이 선택한다. 실행 근거는 [VALIDATION](../seed/VALIDATION.md)을 따른다.

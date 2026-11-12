@@ -332,12 +332,12 @@ test('My Big profile follows owned and equipped state with actual page destinati
   assert.match(initial,/data-avatar="fluid"/);
   assert.match(initial,/블루 캡/);
   assert.match(initial,/cosmetic_blue_cap.png/);
-  assert.equal((initial.match(/class="me-collection__item"/g)||[]).length,2);
+  assert.equal((initial.match(/class="seed-item-display seed-surface me-collection__item"/g)||[]).length,2);
   for(const path of ['#/decorate?tab=me','#/shop?tab=me','#/rewards?tab=me'])assert.ok(initial.includes(path));
   assert.equal(store.dispatch('equip','0'),true);
   assert.match(page(store,'#/me'),/골지 비니/);
   assert.equal(store.dispatch('open','starter'),true);
-  assert.equal((page(store,'#/me').match(/class="me-collection__item"/g)||[]).length,3);
+  assert.equal((page(store,'#/me').match(/class="seed-item-display seed-surface me-collection__item"/g)||[]).length,3);
   assert.equal(store.dispatch('purchase','1001'),true);
   assert.match(page(store,'#/me'),/크림 헤드폰/);
   assert.equal(store.dispatch('complete','math-today'),true);
@@ -357,4 +357,27 @@ test('My Big identity is unboxed, avatar first, without level meter or duplicate
   const styles=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
   assert.match(styles,/\.me-profile\s*\{[^}]*background:transparent/);
   assert.doesNotMatch(styles,/\.me-profile__meter\s*\{/);
+});
+
+
+test('My integrated collection and real completed record remain connected',()=>{
+  const store=createStore();
+  const initial=page(store,'#/me');
+  assert.doesNotMatch(initial,/지금 내 스타일/);
+  assert.match(initial,/me-record__text/);
+  assert.match(initial,/어제 배운 개념 한 줄 정리/);
+  assert.match(initial,/#\\/quest\\/math-review\\?tab=me/);
+  assert.equal((initial.match(/data-item-presentation="integrated"/g)||[]).length,2);
+  assert.match(initial,/seed-item-display__info/);
+  assert.match(initial,/data-equipped="true"/);
+  const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(css,/\\.me-collection\\s*\\{[^}]*overflow-x:auto/);
+  assert.doesNotMatch(css,/\\.me-profile__outfit\\s*\\{/);
+  assert.equal(store.dispatch('complete','math-today'),true);
+  const updated=page(store,'#/me');
+  assert.match(updated,/수학 오답 3문제 다시 풀기/);
+  assert.match(updated,/\\+ 60 XP/);
+  assert.equal(store.dispatch('open','starter'),true);
+  assert.equal((page(store,'#/me').match(/data-item-presentation="integrated"/g)||[]).length,3);
+  assert.match(page(store,'#/me'),/화이트 이어버드/);
 });

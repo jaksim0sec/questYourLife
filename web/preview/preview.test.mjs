@@ -751,3 +751,51 @@ test('Shop follows S06 responsive frame and scroll contracts',()=>{
  assert.match(css,/\.preview-shell\[data-screen="shop"\] \.shop-balance\s*\{\s*display: flex/);
  assert.doesNotMatch(css,/\.featured-item/);
 });
+
+test('Decorate honors owned-only gallery and live equipped slot identity',()=>{
+ const store=createStore();
+ const first=page(store,'#/decorate',{...ui,dressFilter:'전체'});
+ assert.match(first,/class="decorate-page"/);
+ assert.match(first,/aria-label="현재 장착한 장식"/);
+ assert.match(first,/블루 캡/);
+ assert.match(first,/선택 안 함/);
+ assert.equal((first.match(/class="seed-item-display seed-surface decorate-item"/g)||[]).length,2);
+ assert.equal((first.match(/data-action="equip"/g)||[]).length,2);
+ assert.match(first,/data-id="2" data-equipped="true" aria-pressed="true"/);
+ assert.match(first,/aria-label="보유 장식 종류"/);
+ assert.doesNotMatch(first,/data-action="purchase"|class="item-grid"/);
+ assert.equal(store.dispatch('equip','0'),true);
+ const next=page(store,'#/decorate',{...ui,dressFilter:'전체'});
+ assert.match(next,/골지 비니/);
+ assert.match(next,/data-id="0" data-equipped="true" aria-pressed="true"/);
+ assert.match(next,/data-id="2" data-equipped="false" aria-pressed="false"/);
+ assert.equal(store.dispatch('equip','0'),true);
+ assert.match(page(store,'#/decorate'),/선택 안 함/);
+});
+test('Decorate category filters, empty state and purchased equipment preserve shared store',()=>{
+ const store=createStore();
+ const hats=page(store,'#/decorate',{...ui,dressFilter:'모자'});
+ assert.equal((hats.match(/data-action="equip"/g)||[]).length,2);
+ const audio=page(store,'#/decorate',{...ui,dressFilter:'오디오'});
+ assert.equal((audio.match(/data-action="equip"/g)||[]).length,0);
+ assert.match(audio,/보유한 오디오 장식이 없어요/);
+ assert.match(audio,/#\/shop\?tab=me/);
+ assert.equal(store.dispatch('purchase','1004'),true);
+ assert.equal(store.dispatch('equip','1004'),true);
+ const equipped=page(store,'#/decorate',{...ui,dressFilter:'오디오'});
+ assert.equal((equipped.match(/data-action="equip"/g)||[]).length,1);
+ assert.match(equipped,/화이트 이어버드/);
+ assert.match(equipped,/data-id="1004" data-equipped="true" aria-pressed="true"/);
+ assert.match(page(store,'#/me'),/화이트 이어버드/);
+ assert.match(page(store,'#/shop'),/보유 중/);
+});
+test('Decorate uses page-local layout over SEED shared media/controls, no avatar crop',()=>{
+ const style=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ const script=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+ assert.match(style,/\.decorate-preview__portrait/);
+ assert.match(style,/\.decorate-item > \.seed-media \.seed-media__image\s*\{[^}]*object-fit:contain/);
+ assert.match(style,/\.decorate-items\s*\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+ assert.doesNotMatch(style,/\.dress-stage|\.dress-item\s*\{/);
+ assert.match(script,/editMessage:null,clanView:'mine',dressFilter:'전체'/);
+ assert.match(script,/aria-label="상점으로 이동"/);
+});

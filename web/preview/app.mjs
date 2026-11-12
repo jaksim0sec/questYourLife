@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=shop-global-inner-v12';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=shop-global-inner-v12';
-import {homeAlerts,threads,clan} from './mock-data.mjs?v=shop-global-inner-v12';
-import {readRoute,navMarkup} from './routes.mjs?v=shop-global-inner-v12';
+import {createStore} from './store.mjs?v=decorate-nonglobal-v13';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=decorate-nonglobal-v13';
+import {homeAlerts,threads,clan} from './mock-data.mjs?v=decorate-nonglobal-v13';
+import {readRoute,navMarkup} from './routes.mjs?v=decorate-nonglobal-v13';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -15,7 +15,7 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all',editMessage:null,clanView:'mine'};
+const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:'',dmFilter:'all',editMessage:null,clanView:'mine',dressFilter:'전체'};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -101,6 +101,8 @@ function render() {
     trailing.innerHTML=iconAction('검색','search','search')+iconAction('퀘스트 만들기','plus','new-quest');
   } else if(route.name==='clan') {
     trailing.innerHTML=state.clanJoined===false?'':iconAction('클랜 대화','chat','clan-chat');
+  } else if(route.name==='decorate') {
+    trailing.innerHTML=`<a class="seed-icon-action" href="#/shop?tab=me" aria-label="상점으로 이동">${icon('shopping-bag')}</a>`;
   } else if(route.name==='me'||route.name==='shop') {
     trailing.innerHTML=cash(state.cash);
   } else trailing.replaceChildren();

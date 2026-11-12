@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=shop-global-inner-v12';
-import {clanRows,clanTotal} from './store.mjs?v=shop-global-inner-v12';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=decorate-nonglobal-v13';
+import {clanRows,clanTotal} from './store.mjs?v=decorate-nonglobal-v13';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,7 +30,7 @@ const questRow=(q,tab)=>row({label:q.title,sub:`${q.kind} · ${q.status==='done'
   leading:`<span class="row-icon">${icon(q.status==='done'?'check-circle':q.kind==='메인'?'flag':'target')}</span>`,trailing:rewardLine(q)});
 const empty=text=>`<div class="empty">${support(text)}</div>`;
 const progress=(value,max,label,thickness='default')=>`<div class="progress-track" data-thickness="${thickness}" role="progressbar" aria-label="${escape(label)}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.min(value,max)}" style="--progress:${Math.min(value/max*100,100)}%"><span class="progress-fill"></span></div>`;
-const chips=(entries,selected,name)=>`<div class="filter-row" role="group" aria-label="${name==='shop'?'상품 종류':'퀘스트 상태'}">${entries.map(([value,label])=>`<button class="seed-filter-chip" type="button" data-filter="${name}" data-value="${value}" aria-pressed="${value===selected}">${label}</button>`).join('')}</div>`;
+const chips=(entries,selected,name)=>`<div class="filter-row" role="group" aria-label="${name==='shop'?'상품 종류':name==='dressFilter'?'보유 장식 종류':'퀘스트 상태'}">${entries.map(([value,label])=>`<button class="seed-filter-chip" type="button" data-filter="${name}" data-value="${value}" aria-pressed="${value===selected}">${label}</button>`).join('')}</div>`;
 const segment=period=>`<div class="seed-segment" role="group" aria-label="기여 기간">${[['current','이번 주'],['previous','지난주']].map(([key,label])=>`<button type="button" data-period="${key}" aria-pressed="${key===period}">${label}</button>`).join('')}</div>`;
 const avatar=(scale='hero')=>`<div data-avatar="${scale}"></div>`;
 
@@ -496,13 +496,51 @@ function itemDetail(state,route) {
   const owned=state.owned.includes(item.id);
   return `<article class="seed-surface detail-panel" data-surface="solid">${frame(MASCOT_EQUIPMENT[item.id].src,item.name)}${title(item.name,'hero')}${item.description?support(item.description):''}${cash(item.price,'large')}</article><div class="page-actions">${owned?cta('꾸미기','decorate','me'):act(state.cash>=item.price?'구매하기':'캐시가 부족해요','purchase',item.id,'brand-solid',state.cash<item.price?'disabled':'')}</div>`;
 }
-function decorate(state) {
-  return `<section class="seed-surface dress-stage" data-surface="subtle">${avatar('fluid')}</section>`+section('보유 아이템',`<div class="item-grid">${state.owned.map(id=>{
-    const item=MASCOT_EQUIPMENT[id];
-    if(!item)return '';
-    const equipped=state.equipped.includes(id);
-    return `<article class="dress-item">${frame(item.src,item.name)}${title(item.name,'item','h3')}${act(equipped?'해제':'장착','equip',id,equipped?'neutral-weak':'neutral-outline','aria-pressed="'+equipped+'"')}</article>`;
-  }).join('')}</div>`);
+function decorate(state,ui={}) {
+  // Existing local-owned items and SEED C-AVATAR are the only data sources.
+  const owned=(state.owned||[]).map(id=>MASCOT_EQUIPMENT[id]).filter(Boolean);
+  const worn=(state.equipped||[]).filter(id=>state.owned.includes(id)).map(id=>MASCOT_EQUIPMENT[id]).filter(Boolean);
+  const selected=types.includes(ui.dressFilter)?ui.dressFilter:'전체';
+  const category=item=>item.slot==='headwear'?'모자':'오디오';
+  const visible=owned.filter(item=>selected==='전체'||category(item)===selected);
+  const slots=[['headwear','모자'],['earwear','오디오']].map(([key,label])=>{
+    const item=worn.find(equipment=>equipment.slot===key);
+    return `<div class="decorate-preview__slot"><small>${label}</small><strong>${item?escape(item.name):'선택 안 함'}</strong></div>`;
+  }).join('');
+  const itemMarkup=visible.map(item=>{
+    const equipped=worn.some(current=>current.id===item.id);
+    // The whole tile is one genuine pressable action, never a fake nested button.
+    const media=`<span class="seed-media" data-media-kind="item" data-media-fit="contain" data-media-state="loaded">
+      <img class="seed-media__image" src="${item.src}" alt="" loading="lazy">
+      <span class="seed-media__fallback">이미지를 불러올 수 없어요</span>
+      ${equipped?`<span class="seed-media__badge decorate-item__check" aria-hidden="true">${icon('check')}</span>`:''}
+    </span>`;
+    return `<button type="button" class="seed-item-display seed-surface decorate-item" data-item-presentation="integrated" data-surface="interactive"
+      data-action="equip" data-id="${item.id}" data-equipped="${equipped}" aria-pressed="${equipped}"
+      aria-label="${escape(item.name)}, ${equipped?'현재 선택됨. 누르면 해제':'선택하면 착용'}">
+      ${media}<span class="seed-item-display__info"><strong>${escape(item.name)}</strong></span>
+    </button>`;
+  }).join('');
+  const emptyContent=owned.length===0?
+    `<div class="decorate-empty"><p>아직 보유한 장식이 없어요</p><a href="${path('shop','me')}">상점에서 살펴보기 ${icon('chevron')}</a></div>`:
+    `<div class="decorate-empty"><p>보유한 ${escape(selected)} 장식이 없어요</p><a href="${path('shop','me')}">상점에서 살펴보기 ${icon('chevron')}</a></div>`;
+  return `<div class="decorate-page">
+    <section class="decorate-preview" aria-label="내 마스코트 스타일">
+      <div class="decorate-preview__stage">
+        <span class="decorate-preview__label">나의 마스코트</span>
+        <div class="decorate-preview__portrait">${avatar('fluid')}</div>
+      </div>
+      <div class="decorate-preview__slots" role="group" aria-label="현재 장착한 장식" aria-live="polite">${slots}</div>
+    </section>
+    <section class="decorate-wardrobe" aria-label="보유한 장식 선택">
+      <div class="decorate-wardrobe__heading">
+        <div><h2>내 아이템</h2><span>보유 ${owned.length}개 · 누르면 바로 적용돼요</span></div>
+        <a class="decorate-wardrobe__shop" href="${path('shop','me')}">상점 ${icon('chevron')}</a>
+      </div>
+      ${chips(types.map(type=>[type,type]),selected,'dressFilter')}
+      <div class="decorate-items">${itemMarkup||emptyContent}</div>
+    </section>
+  </div>`;
 }
 function rewardRoom(state) {
   return Object.entries(chestLoot).filter(([id])=>state.boxes[id]!=='locked').map(([id,loot])=>{
@@ -546,7 +584,7 @@ export function renderPage(state,route,ui) {
     case 'ranking':return state.clanJoined===false?empty('클랜에 참여하면 순위를 볼 수 있어요.'):segment(ui.period)+section('기여 순위',rankings(state,ui.period));
     case 'shop':return shop(state,ui);
     case 'item':return itemDetail(state,route);
-    case 'decorate':return decorate(state);
+    case 'decorate':return decorate(state,ui);
     case 'rewards':return rewardRoom(state);
     default:return empty('페이지를 찾을 수 없어요.');
   }

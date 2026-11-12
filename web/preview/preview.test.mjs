@@ -429,3 +429,29 @@ test('My item cards stretch to the same natural row height while preserving wrap
   assert.match(styles,/\.me-collection__item\.seed-item-display\[data-item-presentation="integrated"\]\s*\{[^}]*align-self:stretch/);
   assert.doesNotMatch(styles,/\.me-collection__name\s*\{[^}]*white-space:nowrap/);
 });
+
+test('DM messenger inbox shows searchable AI and social conversations',()=>{
+ const store=createStore();
+ const html=page(store,'#/dm');
+ assert.match(html,/id="dm-search"/);
+ assert.match(html,/class="dm-ai-entry"/);
+ assert.equal((html.match(/class="dm-conversation"/g)||[]).length,4);
+ for(const id of ['ai','friend','clan','friend2','friend3'])assert.ok(html.includes('#/chat/'+id+'?tab=dm'));
+ assert.doesNotMatch(html,/읽지 않음|방금 전/);
+ assert.match(page(store,'#/chat/friend2?tab=dm'),/보너스 도전/);
+ assert.equal(store.dispatch('message','friend3','내일 같이 구경하자'),true);
+ assert.match(page(store,'#/dm'),/내일 같이 구경하자/);
+ const filtered=renderPage(store.read(),readRoute('#/dm'),{...ui,dmSearch:'별이'});
+ assert.equal((filtered.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,3);
+ assert.match(filtered,/id="dm-search"[^>]*value="별이"/);
+});
+test('DM thread migration preserves older local-storage messages',()=>{
+ const prior=createStore().read();
+ const legacy=JSON.parse(JSON.stringify(prior));
+ delete legacy.messages.friend2; delete legacy.messages.friend3;
+ const st={getItem:()=>JSON.stringify(legacy),setItem:()=>{}};
+ const updated=createStore(st).read();
+ assert.equal(updated.cash,prior.cash);
+ assert.equal(updated.messages.friend[0].text,prior.messages.friend[0].text);
+ assert.ok(updated.messages.friend2?.length>0&&updated.messages.friend3?.length>0);
+});

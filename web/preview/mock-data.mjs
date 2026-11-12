@@ -51,6 +51,8 @@ export const threads = {
   ai:{ title:'퀘스트 만들기', icon:'sparkle' },
   friend:{ title:'다온', initials:'다', icon:'user' },
   clan:{ title:'방과후 원정대', initials:'방', icon:'flag' },
+  friend2:{ title:'별이', initials:'별', icon:'user' },
+  friend3:{ title:'민재', initials:'민', icon:'user' },
 };
 
 export const homeAlerts = [
@@ -85,6 +87,8 @@ export function initialData() {
       ai:[{from:'them',text:'어떤 목표를 이루고 싶어? 지금 할 수 있는 것부터 퀘스트로 만들어 줄게.'}],
       friend:[{from:'them',text:'오늘 오답 정리 같이 할래? 나도 세 문제만 먼저 풀어보려고.'}],
       clan:[{from:'them',text:'주간 상자까지 이제 얼마 안 남았어. 오늘 각자 도전 하나씩 해보자!'}],
+      friend2:[{from:'them',text:'오늘 보너스 도전 봤어? 산책하면서 찾아봤어!'}],
+      friend3:[{from:'them',text:'블루 캡 어디서 얻었어? 나도 꾸며 보고 싶네.'}],
     },
     bonusPosts:[{name:'별이', text:'산책하다가 문구점 옆에서 찾았어!', count:3, cheered:false}],
   };

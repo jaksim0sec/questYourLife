@@ -1,4 +1,4 @@
-import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=me-lower-v5';
+import {catalog, chestLoot, clan, homeAlerts, initialData, proposeQuest} from './mock-data.mjs?v=dm-inbox-v1';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const key='hyunsaengpatch-preview-v1';
@@ -19,7 +19,7 @@ export function createStore(storage) {
     const saved=storage?.getItem(key);
     if(saved) {
       const parsed=JSON.parse(saved);
-      if(Array.isArray(parsed.quests)&&Array.isArray(parsed.equipped)&&parsed.messages?.ai&&parsed.boxes&&Array.isArray(parsed.bonusPosts)&&Number.isFinite(parsed.cash)) state=parsed;
+      if(Array.isArray(parsed.quests)&&Array.isArray(parsed.equipped)&&parsed.messages?.ai&&parsed.boxes&&Array.isArray(parsed.bonusPosts)&&Number.isFinite(parsed.cash)) state={...parsed,messages:{...state.messages,...parsed.messages}};
     }
   } catch {}
   function commit(next) {

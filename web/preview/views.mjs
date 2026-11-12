@@ -1,5 +1,5 @@
-import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=me-lower-v5';
-import {clanRows,clanTotal} from './store.mjs?v=me-lower-v5';
+import {books,catalog,chestLoot,clan,homeAlerts,homeTrends,rewards,threads} from './mock-data.mjs?v=dm-inbox-v1';
+import {clanRows,clanTotal} from './store.mjs?v=dm-inbox-v1';
 import {MASCOT_EQUIPMENT} from '../../seed/runtime/seed-mascot-avatar.mjs';
 
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -201,10 +201,33 @@ function book(state,route) {
   const done=tasks.filter(q=>q.status==='done').length;
   return `<article class="seed-surface detail-panel" data-surface="subtle">${title(item.title,'hero')}${support(item.goal)}${progress(done,tasks.length,'목표 진행')}${support(done+' / '+tasks.length+' 완료')}</article>`+section(item.chapter,list(tasks.map(q=>questRow(q,route.tab)).join(''),'챕터 퀘스트'));
 }
-function dm(state) {
-  const message=id=>state.messages[id].at(-1)?.text;
-  return `<a class="seed-surface dm-start" data-surface="subtle" href="${path('chat/ai','dm')}"><span class="row-icon">${icon('sparkle')}</span><div class="row-copy">${title('퀘스트 만들기','item')}${support('목표를 말하면 오늘 할 도전을 제안해요.')}</div>${icon('chevron')}</a>`
-    +section('대화',list(['friend','clan'].map(id=>row({label:threads[id].title,sub:message(id),url:'chat/'+id,tab:'dm',leading:`<span class="row-avatar">${threads[id].initials}</span>`})).join(''),'대화 목록'));
+function dm(state,ui={}) {
+  const query=(ui.dmSearch??'').trim().toLocaleLowerCase('ko');
+  const last=id=>state.messages[id]?.at(-1)?.text||'아직 메시지가 없어요';
+  const others=Object.entries(threads).filter(([id])=>id!=='ai');
+  const searchText=id=>[threads[id].title,last(id),id==='ai'?'AI':''].join(' ').toLocaleLowerCase('ko');
+  const visible=id=>!query||searchText(id).includes(query);
+  const assistant=`<a class="dm-ai-entry" data-dm-search="${escape(searchText('ai'))}" ${visible('ai')?'':'hidden'} href="${path('chat/ai','dm')}">
+    <span class="dm-ai-entry__icon">${icon('sparkle')}</span>
+    <span class="dm-ai-entry__copy"><strong>${escape(threads.ai.title)} <small>AI</small></strong><span>${escape(last('ai'))}</span></span>${icon('chevron')}
+  </a>`;
+  const conversations=others.map(([id,entry])=>{
+    const preview=last(id),group=id==='clan';
+    return `<a class="dm-conversation" data-dm-search="${escape(searchText(id))}" ${visible(id)?'':'hidden'} href="${path('chat/'+id,'dm')}" aria-label="${escape(entry.title)}, ${escape(preview)}, 대화 열기">
+      <span class="dm-conversation__avatar" data-thread="${escape(id)}" data-kind="${group?'group':'person'}" aria-hidden="true">${group?icon('clan-bookmark-fill',true):escape(entry.initials||entry.title.slice(0,1))}</span>
+      <span class="dm-conversation__content"><strong>${escape(entry.title)}</strong><span class="dm-conversation__preview">${escape(preview)}</span></span>
+    </a>`;
+  }).join('');
+  const count=Number(visible('ai'))+others.filter(([id])=>visible(id)).length;
+  return `<section class="dm-inbox" aria-label="대화 목록">
+    <div class="dm-inbox__search">${icon('search')}<label class="visually-hidden" for="dm-search">대화 검색</label>
+      <input id="dm-search" type="search" placeholder="대화 검색" autocomplete="off" maxlength="80" value="${escape(ui.dmSearch??'')}">
+    </div>
+    <div class="dm-inbox__assistant">${assistant}</div>
+    <div class="dm-inbox__heading"><h2>대화</h2><span>${others.length}개</span></div>
+    <div class="dm-inbox__list">${conversations}</div>
+    <p class="dm-inbox__empty" aria-live="polite" ${count?'hidden':''}>검색 결과가 없어요</p>
+  </section>`;
 }
 function chat(state,route) {
   if(!Object.hasOwn(threads,route.id))return empty('대화방을 찾을 수 없어요.');
@@ -373,7 +396,7 @@ export function renderPage(state,route,ui) {
     case 'home':return home(state);
     case 'search':return `<section class="seed-page-shell__section"><label class="visually-hidden" for="home-search">퀘스트나 퀘스트북 검색</label><input class="seed-field" id="home-search" type="search" placeholder="퀘스트나 퀘스트북 검색" autocomplete="off" maxlength="80" value="${escape(ui.search??'')}"><div id="home-search-results" aria-live="polite">${searchResults(state,ui.search??'',route.tab)}</div></section>`;
     case 'quests':return quests(state,ui);
-    case 'dm':return dm(state);
+    case 'dm':return dm(state,ui);
     case 'clan':return clanHome(state,ui);
     case 'me':return me(state);
     case 'quest':return detail(state,route);

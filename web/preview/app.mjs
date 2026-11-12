@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=me-lower-v5';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=me-lower-v5';
-import {homeAlerts} from './mock-data.mjs?v=me-lower-v5';
-import {readRoute,navMarkup} from './routes.mjs?v=me-lower-v5';
+import {createStore} from './store.mjs?v=dm-inbox-v1';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=dm-inbox-v1';
+import {homeAlerts} from './mock-data.mjs?v=dm-inbox-v1';
+import {readRoute,navMarkup} from './routes.mjs?v=dm-inbox-v1';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
@@ -15,7 +15,7 @@ const leading=get('.seed-top-nav__leading');
 const trailing=get('.seed-top-nav__trailing');
 const notice=get('.preview-notice');
 const alertSheet=get('#home-alerts');
-const ui={quest:'active',shop:'전체',period:'current',search:''};
+const ui={quest:'active',shop:'전체',period:'current',search:'',dmSearch:''};
 const scrollPositions=new Map();
 const storage=(()=>{try{return window.localStorage;}catch{return undefined;}})();
 const store=createStore(storage);
@@ -150,6 +150,18 @@ document.addEventListener('click',event=>{
   } else if(action) apply(action,id);
 });
 document.addEventListener('input',event=>{
+  if(event.target.id==='dm-search') {
+    ui.dmSearch=event.target.value.slice(0,80);
+    const query=ui.dmSearch.trim().toLocaleLowerCase('ko');
+    let visible=0;
+    main.querySelectorAll('[data-dm-search]').forEach(row=>{
+      row.hidden=Boolean(query)&&!row.dataset.dmSearch.includes(query);
+      if(!row.hidden)visible++;
+    });
+    const empty=main.querySelector('.dm-inbox__empty');
+    if(empty)empty.hidden=visible>0;
+    return;
+  }
   if(event.target.id!=='home-search')return;
   ui.search=event.target.value;
   get('#home-search-results').innerHTML=searchResults(store.read(),ui.search,route.tab);

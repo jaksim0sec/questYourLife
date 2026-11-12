@@ -69,7 +69,7 @@ export function createStore(storage) {
         break;
       case 'message': {
         const message=value?.trim().slice(0,300);
-        if(!message||!Object.hasOwn(next.messages,id)) return false;
+        if(!message||!Object.hasOwn(next.messages,id)||(id==='clan'&&next.clanJoined===false)) return false;
         next.messages[id].push({from:'me',text:message});
         if(id==='ai') {
           const old=next.quests.findLast(q=>q.id.startsWith('ai-')&&q.status==='offered');
@@ -98,11 +98,17 @@ export function createStore(storage) {
         next.messages[id]=[];break;
       case 'send-photo': {
         const src=value?.src;
-        if(id==='ai'||!Array.isArray(next.messages[id])||typeof src!=='string'||src.length>900000||!/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(src))return false;
+        if(id==='ai'||(id==='clan'&&next.clanJoined===false)||!Array.isArray(next.messages[id])||typeof src!=='string'||src.length>900000||!/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(src))return false;
         next.messages[id].push({from:'me',image:{src,alt:'보낸 사진'}});break;
       }
+      case 'clan-join':
+        if(id!=='clan'||next.clanJoined!==false)return false;
+        next.clanJoined=true;break;
+      case 'clan-leave':
+        if(id!=='clan'||next.clanJoined===false)return false;
+        next.clanJoined=false;break;
       case 'claim':
-        if(id!=='clan'||next.boxes.clan!=='locked'||clanTotal(next)<clan.goal) return false;
+        if(id!=='clan'||next.clanJoined===false||next.boxes.clan!=='locked'||clanTotal(next)<clan.goal) return false;
         next.boxes.clan='ready';
         break;
       case 'open': {

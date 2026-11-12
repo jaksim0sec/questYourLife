@@ -104,7 +104,7 @@ function home(state) {
     </a>`;
   }).join('');
   const discovery=`<section class="home-discovery">${heading('트렌드','지금 뜨는 도전','<span class="home-section-aside">시연 참여 지표</span>')}<div class="home-discovery__items">${trends}</div></section>`;
-  const social=`<section class="home-together">
+  const social=state.clanJoined===false?`<section class="home-together">${heading('소셜','함께하는 기록')}<a class="home-clan-feature" href="${path('clan')}"><span class="home-clan-feature__info"><strong>클랜에 참여해 보세요</strong><span class="home-clan-feature__hint">함께하는 도전과 주간 보상을 만나보세요</span></span>${icon('chevron')}</a></section>`:`<section class="home-together">
     ${heading('소셜','함께하는 기록',more('클랜 보기','clan'))}
     <a class="seed-surface home-clan-feature" data-surface="solid" href="${path('clan')}">
       <div class="home-clan-feature__info">
@@ -203,7 +203,7 @@ function book(state,route) {
 }
 function dm(state,ui={}) {
   const category=ui.dmFilter??'all',query=(ui.dmSearch??'').trim().toLocaleLowerCase('ko');
-  const entries=Object.entries(threads);
+  const entries=Object.entries(threads).filter(([id])=>id!=='clan'||state.clanJoined!==false);
   const kind=id=>id==='clan'?'clan':'personal';
   const last=id=>state.messages[id]?.at(-1)?.image?'사진을 보냈어요':state.messages[id]?.at(-1)?.text||'대화를 시작해 보세요';
   const searchText=id=>(threads[id].title+' '+last(id)+(id==='ai'?' AI':'')).toLocaleLowerCase('ko');
@@ -274,53 +274,114 @@ function chat(state,route,ui={}) {
     </form>
   </div>`;
 }
+
+function clanMemberAvatar(member) {
+  if(member.name==='루원')return '<span class="clan-person__face" aria-hidden="true"><span data-avatar="fluid"></span></span>';
+  const friend=Object.values(threads).find(thread=>thread.title===member.name);
+  return friend?`<span class="clan-person__face" aria-hidden="true"><span data-avatar="fluid" data-avatar-items="${(friend.avatarEquipment||[]).join(',')}"></span></span>`:
+    `<span class="clan-person__face clan-person__fallback" aria-hidden="true">${escape(member.name[0])}</span>`;
+}
 function rankings(state,period) {
-  const members=clanRows(state,period);
-  return list(members.map((member,i)=>{
+  return list(clanRows(state,period).map((member,index)=>{
     const own=member.name==='루원';
     return `<div class="seed-list__item clan-member" data-own="${own}">
-      <span class="rank" aria-label="${i+1}위">${i+1}</span>
-      <span class="row-avatar" aria-hidden="true">${member.name[0]}</span>
+      <span class="rank" aria-label="${index+1}위">${index+1}</span>${clanMemberAvatar(member)}
       <span class="clan-member-name">${title(member.name,'item','span')}${own?badge('나','brand'):''}</span>
       <strong class="rank-xp">${fmt(member.xp)} XP</strong>
     </div>`;
   }).join(''),'클랜 기여 순위');
 }
-
-function clanHome(state,ui) {
-  const total=clanTotal(state);
-  const current=clanRows(state);
-  const mine=current.find(member=>member.name==='루원');
-  const status=state.boxes.clan;
-  const claimable=total>=clan.goal&&status==='locked';
-  const loot=chestLoot.clan;
-  const identity=`<section class="clan-identity" aria-label="내 클랜">
-    <span class="row-icon clan-emblem">${icon('flag')}</span>
-    <div class="row-copy">${title(clan.name)}${support('멤버 '+current.length+'명')}</div>
-    <div class="clan-own-summary">${support('내 기여')}${title(fmt(mine.xp)+' XP','number-small','span')}</div>
-  </section>`;
-  const hint=claimable?'목표 달성 · 수령 가능':status==='opened'?'보상 받음':status==='ready'?'보상함에 도착했어요':fmt(clan.goal-total)+' XP 남음';
-  const nextAction=claimable?act('상자 받기','claim','clan','reward-secondary'):
-    status!=='locked'?cta('보상함 보기','rewards','clan','neutral-outline'):
-      cta('퀘스트 보기','quests',null,'neutral-outline');
-  const reward=`<article class="seed-surface clan-week" data-surface="reward">
-    <div class="clan-week__copy">
-      ${title('이번 주 상자','hero')}
-      <span class="clan-week__hint">${escape(hint)}</span>
-      <div class="clan-week__loot" aria-label="상자 보상">
-        ${cash(loot.cash)}<span>${escape(MASCOT_EQUIPMENT[loot.item].name)}</span>
+function clanHome(state,ui={}) {
+  const total=clanTotal(state),members=clanRows(state);
+  if(state.clanJoined===false) {
+    return `<section class="clan-discover" aria-label="클랜 미참가 상태">
+      <div class="clan-discover__intro">
+        <span class="clan-discover__symbol">${icon('clan-bookmark-fill',true)}</span>
+        <small>함께하는 퀘스트</small><h2>혼자보다 재밌게</h2>
+        <p>친구와 함께 도전하고 주간 보상을 모아 보세요</p>
       </div>
-    </div>
-    <img class="clan-week__art" src="${rewards+loot.image}" alt="">
-    <div class="clan-week__meter">
-      <div class="clan-score"><strong>${fmt(total)}</strong><span> / ${fmt(clan.goal)} XP</span></div>
+      <div class="clan-discover__team">
+        <span class="clan-discover__label">참가 가능한 클랜 · 시연</span>
+        <div class="clan-discover__name"><span>${icon('clan-bookmark-fill',true)}</span>
+          <div><strong>${escape(clan.name)}</strong><small>${clan.current.length}명 · 이번 주 공동 도전</small></div>
+        </div>
+        <div class="clan-discover__progress"><small>${fmt(total)} / ${fmt(clan.goal)} XP</small>${progress(total,clan.goal,'시연 클랜 진행률','micro')}</div>
+        ${act('참가하기','clan-join','clan')}
+      </div>
+      <small class="clan-discover__note">이 화면은 시연용이에요. 실제 클랜 가입 서버는 아직 연결되지 않았어요.</small>
+    </section>`;
+  }
+  const view=['mine','insights','shop'].includes(ui.clanView)?ui.clanView:'mine';
+  const mine=members.find(member=>member.name==='루원');
+  const intro=`<section class="clan-intro" aria-label="내 클랜">
+    <span class="clan-intro__mark" aria-hidden="true">${icon('clan-bookmark-fill',true)}</span>
+    <div class="clan-intro__name"><small>내 클랜 · ${members.length}명</small><h2>${escape(clan.name)}</h2><span>서로의 작은 도전을 모으는 중</span></div>
+    <div class="clan-intro__mine"><small>내 기여</small><strong>${fmt(mine?.xp??0)}</strong><span>XP</span></div>
+  </section>`;
+  const tabbar=`<div class="clan-tabs" role="tablist" aria-label="클랜 콘텐츠">
+    ${[['mine','내 클랜'],['insights','인사이트'],['shop','클랜 상점']].map(([id,label])=>
+      `<button type="button" role="tab" id="clan-tab-${id}" data-clan-view="${id}" aria-controls="clan-panel" aria-selected="${view===id}" tabindex="${view===id?0:-1}">${label}</button>`).join('')}
+  </div>`;
+  const box=chestLoot.clan,status=state.boxes.clan,canClaim=status==='locked'&&total>=clan.goal;
+  const remain=Math.max(clan.goal-total,0),description=canClaim?'목표 달성 · 지금 받을 수 있어요':
+    status==='ready'?'보상함에 도착했어요':status==='opened'?'이번 주 보상을 받았어요':fmt(remain)+' XP 남았어요';
+  const action=canClaim?act('상자 받기','claim','clan','reward-secondary'):
+    status!=='locked'?cta('보상함 보기','rewards','clan','neutral-outline'):
+      `<a href="${path('quests')}" class="clan-reward__continue">퀘스트 이어가기 ${icon('chevron')}</a>`;
+  const weekly=`<section class="clan-reward" aria-label="주간 클랜 상자">
+    <div class="clan-reward__top"><div class="clan-reward__copy">
+      <small>이번 주 보상</small><h3>주간 클랜 상자</h3><p>${escape(description)}</p>
+      <div class="clan-reward__items">${cash(box.cash)}<span>· ${escape(MASCOT_EQUIPMENT[box.item].name)}</span></div>
+    </div><img class="clan-reward__art" src="${rewards+box.image}" alt="" loading="lazy"></div>
+    <div class="clan-reward__bottom">
+      <div class="clan-reward__score"><span>함께 모은 XP</span><strong>${fmt(total)} <small>/ ${fmt(clan.goal)}</small></strong></div>
       ${progress(total,clan.goal,'주간 클랜 상자','featured')}
+      <div class="clan-reward__action">${action}</div>
     </div>
-    <div class="clan-week__action">${nextAction}</div>
-  </article>`;
-  const selectedTotal=clanTotal(state,ui.period);
-  const board=`<div class="clan-board-period">${segment(ui.period)}${support('합계 '+fmt(selectedTotal)+' XP')}</div>${rankings(state,ui.period)}`;
-  return identity+reward+section('멤버 기여도',board,more('순위 보기','ranking','clan'));
+  </section>`;
+  const people=`<section class="clan-people" aria-label="함께하는 멤버">
+    <div class="clan-section-heading"><h3>함께하는 멤버</h3><a href="${path('ranking','clan')}">기여 순위 ${icon('chevron')}</a></div>
+    <div class="clan-people__row">${members.map(member=>`<div class="clan-person">${clanMemberAvatar(member)}
+      <span>${escape(member.name)}${member.name==='루원'?'<small>나</small>':''}</span></div>`).join('')}</div>
+  </section>`;
+  const conversation=`<div class="clan-conversation"><a href="${path('chat/clan','clan')}">
+    <span class="clan-conversation__icon">${icon('chat')}</span>
+    <span><strong>클랜 대화</strong><small>우리의 도전을 이야기해요</small></span>${icon('chevron')}
+  </a></div>`;
+  const memberPanel=weekly+people+conversation+`<button type="button" class="clan-leave" data-action="clan-leave" data-id="clan">클랜 나가기</button>`;
+  const prior=clanTotal(state,'previous'),delta=total-prior;
+  const insights=`<section class="clan-insights">
+    <div class="clan-section-heading"><h3>주간 기록</h3><span>시연 XP</span></div>
+    <div class="clan-insights__totals">
+      <div><small>이번 주</small><strong>${fmt(total)}<span> XP</span></strong></div>
+      <div><small>지난주</small><strong>${fmt(prior)}<span> XP</span></strong></div>
+    </div>
+    <p>${delta===0?'지난주와 같아요':delta>0?'지난주보다 '+fmt(delta)+' XP 높아요':'지난주보다 '+fmt(-delta)+' XP 낮아요'}</p>
+    <div class="clan-insights__meter">${progress(total,clan.goal,'주간 공동 목표 달성률','micro')}
+      <span>공동 목표 ${fmt(clan.goal)} XP · ${Math.floor(Math.min(total/clan.goal,1)*100)}% 달성</span></div>
+  </section>
+  <section class="clan-leaderboard"><div class="clan-section-heading"><h3>멤버 기여도</h3><a href="${path('ranking','clan')}">전체 보기 ${icon('chevron')}</a></div>
+    <div class="clan-board-period">${segment(ui.period||'current')}<small>합계 ${fmt(clanTotal(state,ui.period||'current'))} XP</small></div>
+    ${rankings(state,ui.period||'current')}</section>`;
+  const picks=[5,1003,1004].map(id=>catalog.find(item=>item.id===id)).filter(Boolean);
+  const storePanel=`<section class="clan-market" aria-label="클랜 상점">
+    <div class="clan-market__head"><div><h3>클랜 상점</h3><p>같이 꾸미는 즐거움</p></div>${cash(state.cash)}</div>
+    <div class="clan-market__grid">${picks.map(item=>{
+      const art=MASCOT_EQUIPMENT[item.id],owned=state.owned.includes(item.id);
+      const action=owned?'<span class="clan-market__owned">보유 중</span>':
+        act('구매','purchase',item.id,'neutral-outline',state.cash>=item.price?'':'disabled aria-disabled="true"');
+      return `<article class="clan-market__product">${frame(art.src,'')}
+        <div class="clan-market__product-copy"><strong>${escape(item.name)}</strong>
+          ${cash(item.price)}${action}
+        </div></article>`;
+    }).join('')}</div>
+    <a class="clan-market__all" href="${path('shop','me')}">전체 상점 둘러보기 ${icon('chevron')}</a>
+    <p class="clan-market__note">별도 클랜 재화 없이 기존 캐시와 장식 구매 상태를 사용하는 시연 상점입니다.</p>
+  </section>`;
+  const content=view==='mine'?memberPanel:view==='insights'?insights:storePanel;
+  return `<div class="clan-page">${intro}${tabbar}
+    <div role="tabpanel" id="clan-panel" class="clan-panel" aria-labelledby="clan-tab-${view}" tabindex="-1">${content}</div>
+  </div>`;
 }
 function myBoxRows(boxes) {
   if(!boxes.length)return `<a class="me-box-empty" href="${path('rewards','me')}">아직 받은 상자가 없어요 ${icon('chevron')}</a>`;
@@ -437,8 +498,8 @@ export function renderPage(state,route,ui) {
     case 'me':return me(state);
     case 'quest':return detail(state,route);
     case 'book':return book(state,route);
-    case 'chat':return chat(state,route,ui);
-    case 'ranking':return segment(ui.period)+section('기여 순위',rankings(state,ui.period));
+    case 'chat':return route.id==='clan'&&state.clanJoined===false?empty('클랜에 참여하면 대화를 사용할 수 있어요.'):chat(state,route,ui);
+    case 'ranking':return state.clanJoined===false?empty('클랜에 참여하면 순위를 볼 수 있어요.'):segment(ui.period)+section('기여 순위',rankings(state,ui.period));
     case 'shop':return shop(state,ui);
     case 'item':return itemDetail(state,route);
     case 'decorate':return decorate(state);

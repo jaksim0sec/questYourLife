@@ -473,7 +473,7 @@ function shop(state,ui={}) {
     const destination=status==='locked'?(id==='clan'?'clan':'quests'):'rewards';
     const label=status==='ready'?'열 수 있어요':status==='opened'?'열어본 상자':'획득 전';
     return `<a class="shop-box" href="${path(destination,destination==='rewards'?'me':undefined)}" aria-label="${escape(box.name)}, ${label}, ${status==='locked'?'도전 현황':'보상함'} 보기">
-      <span class="shop-box__image">${frame(rewards+box.image,'')}</span>
+      <div class="shop-box__image">${frame(rewards+box.image,'')}</div>
       <span class="shop-box__info"><strong>${escape(box.name)}</strong><small>${label}</small></span>
       ${icon('chevron')}
     </a>`;

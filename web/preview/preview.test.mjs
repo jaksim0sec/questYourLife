@@ -714,6 +714,7 @@ test('Shop catalog filters, media and acquired chests use existing data',()=>{
  assert.match(all,/data-item-layout="horizontal"/);
  assert.equal((all.match(/class="seed-item-display shop-product"/g)||[]).length,7);
  assert.equal((all.match(/class="shop-box"/g)||[]).length,2);
+ assert.match(all,/<div class="shop-box__image"><div class="seed-media"/);
  assert.match(all,/#\/item\/1\?tab=me/);
  assert.match(all,/#\/rewards\?tab=me/);
  assert.match(all,/href="#\/clan"/);

@@ -421,3 +421,11 @@ test('My below-profile composition keeps identity and separates shelf from item 
   assert.equal(store.dispatch('open','starter'),true);
   assert.match(page(store,'#/me'),/열어본 상자/);
 });
+
+test('My item cards stretch to the same natural row height while preserving wrapped names',()=>{
+  const html=page(createStore(),'#/me');
+  assert.match(html,/class="me-collection"/);
+  const styles=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(styles,/\.me-collection__item\.seed-item-display\[data-item-presentation="integrated"\]\s*\{[^}]*align-self:stretch/);
+  assert.doesNotMatch(styles,/\.me-collection__name\s*\{[^}]*white-space:nowrap/);
+});

@@ -374,7 +374,7 @@
 /* Compact integrated item rail: media and name inside one surface. */
 .me-collection { display:grid; grid-auto-flow:column; grid-auto-columns:clamp(6.35rem,30%,7.25rem); gap:.5rem; min-width:0; overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scroll-padding-inline:var(--seed-page-gutter,20px); scrollbar-width:none; -webkit-overflow-scrolling:touch; padding:0 var(--seed-page-gutter,20px) .25rem; margin-inline:calc(-1 * var(--seed-page-gutter,20px)); }
 .me-collection::-webkit-scrollbar { display:none; }
-.me-collection__item.seed-item-display[data-item-presentation="integrated"] { display:flex; align-self:start; color:var(--text); text-decoration:none; border:1px solid var(--line); border-radius:1rem; background:var(--surface); scroll-snap-align:start; }
+.me-collection__item.seed-item-display[data-item-presentation="integrated"] { display:flex; align-self:stretch; color:var(--text); text-decoration:none; border:1px solid var(--line); border-radius:1rem; background:var(--surface); scroll-snap-align:start; }
 .me-collection__item > .seed-media[data-media-kind="item"] { --media-ratio:1/1; width:100%; background:var(--soft); border-radius:0; }
 .me-collection__item > .seed-item-display__info { display:grid; align-content:start; padding:.53rem .57rem .6rem; background:var(--surface); }
 .me-collection__name { color:var(--text); font-size:.82rem; font-weight:710; line-height:1.35; overflow-wrap:anywhere; }

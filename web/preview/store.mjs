@@ -21,7 +21,7 @@ export function createStore(storage) {
     if(saved) {
       const parsed=JSON.parse(saved);
       if(Array.isArray(parsed.quests)&&Array.isArray(parsed.equipped)&&parsed.messages?.ai&&parsed.boxes&&Array.isArray(parsed.bonusPosts)&&Number.isFinite(parsed.cash)) {
-        state={...parsed,messages:{...seed.messages,...parsed.messages}};
+        state={...seed,...parsed,messages:{...seed.messages,...parsed.messages},mutedThreads:{...seed.mutedThreads,...parsed.mutedThreads}};
         // Upgrade only untouched, single-message preview seeds. Never replace a user's conversation.
         for(const id of ['friend','friend2','friend3','clan']) {
           const previous=parsed.messages[id];
@@ -80,6 +80,27 @@ export function createStore(storage) {
         }
         break;
       }
+      case 'toggle-chat-notifications':
+        if(!Object.hasOwn(next.messages,id))return false;
+        next.mutedThreads??={};next.mutedThreads[id]=!next.mutedThreads[id];
+        break;
+      case 'edit-message': {
+        const item=next.messages[id]?.[value?.index];
+        const text=typeof value?.text==='string'?value.text.trim().slice(0,300):'';
+        if(id==='ai'||!Number.isInteger(value?.index)||item?.from!=='me'||item.image||!text)return false;
+        item.text=text;break;
+      }
+      case 'delete-message':
+        if(id==='ai'||!Number.isInteger(value?.index)||next.messages[id]?.[value.index]?.from!=='me')return false;
+        next.messages[id].splice(value.index,1);break;
+      case 'clear-chat':
+        if(id==='ai'||!Array.isArray(next.messages[id])||!next.messages[id].length)return false;
+        next.messages[id]=[];break;
+      case 'send-photo': {
+        const src=value?.src;
+        if(id==='ai'||!Array.isArray(next.messages[id])||typeof src!=='string'||src.length>900000||!/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(src))return false;
+        next.messages[id].push({from:'me',image:{src,alt:'보낸 사진'}});break;
+      }
       case 'claim':
         if(id!=='clan'||next.boxes.clan!=='locked'||clanTotal(next)<clan.goal) return false;
         next.boxes.clan='ready';
@@ -120,8 +141,8 @@ export function createStore(storage) {
       }
       default: return false;
     }
-    commit(next);
-    return true;
+    if(action==='send-photo'&&storage){try{storage.setItem(key,JSON.stringify(next));}catch{return false;}state=next;return true;}
+    commit(next);return true;
   }
   return {read:()=>state,dispatch};
 }

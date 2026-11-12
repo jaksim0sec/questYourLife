@@ -74,7 +74,7 @@ export const chestLoot = {
 
 export function initialData() {
   return {
-    xp:730, cash:640, owned:[0,2], equipped:[2], readAlerts:[],
+    xp:730, cash:640, owned:[0,2], equipped:[2], readAlerts:[], mutedThreads:{},
     boxes:{ starter:'ready', clan:'locked' },
     quests:[
       {id:'run', kind:'일일', title:'달리기 기록 0.5초 줄이기', condition:'어제와 같은 구간을 달리고, 기록을 어제보다 0.5초 이상 줄이기.', due:'오늘 23:59', xp:80, cash:40, status:'offered'},

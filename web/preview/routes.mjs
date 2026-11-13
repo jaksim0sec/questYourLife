@@ -1,4 +1,4 @@
-import {WEB_NAV_ITEMS} from '../../seed/runtime/seed-page-contract.mjs';
+import {WEB_NAV_ITEMS} from '../../seed/runtime/seed-page-contract.mjs?v=clan-crest-v14';
 import {threads} from './mock-data.mjs?v=clan-crest-v14';
 
 const definitions={

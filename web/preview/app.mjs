@@ -1,4 +1,4 @@
-import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
+import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs?v=clan-crest-v14';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
 import {createStore} from './store.mjs?v=clan-crest-v14';
 import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=clan-crest-v14';

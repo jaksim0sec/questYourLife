@@ -1,9 +1,9 @@
 import {applyPageType,selectWebNav} from '../../seed/runtime/seed-page-contract.mjs';
 import {mountMascotAvatar} from '../../seed/runtime/seed-mascot-avatar.mjs';
-import {createStore} from './store.mjs?v=decorate-nonglobal-v13';
-import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=decorate-nonglobal-v13';
-import {homeAlerts,threads,clan} from './mock-data.mjs?v=decorate-nonglobal-v13';
-import {readRoute,navMarkup} from './routes.mjs?v=decorate-nonglobal-v13';
+import {createStore} from './store.mjs?v=clan-crest-v14';
+import {renderPage,renderHomeAlerts,searchResults,cash,icon} from './views.mjs?v=clan-crest-v14';
+import {homeAlerts,threads,clan} from './mock-data.mjs?v=clan-crest-v14';
+import {readRoute,navMarkup} from './routes.mjs?v=clan-crest-v14';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;

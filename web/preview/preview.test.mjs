@@ -471,7 +471,7 @@ test('DM global inbox uses real mascot avatars and SEED Filter Chips',()=>{
  assert.doesNotMatch(all,/dm-ai-entry|dm-inbox__assistant|방금 전|읽지 않음/);
  for(const id of ['ai','friend','clan','friend2','friend3'])assert.ok(all.includes('#/chat/'+id+'?tab=dm'));
  for(const items of ['0,1004','5','3,1003'])assert.ok(all.includes('data-avatar-items="'+items+'"'));
- assert.match(all,/clan-bookmark-fill\.svg/);
+ assert.match(all,/clan-crest-fill\.svg/);
  const personal=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'personal'});
  assert.equal((personal.match(/class="dm-conversation"[^>]* hidden/g)||[]).length,1);
  const clan=renderPage(store.read(),readRoute('#/dm'),{...ui,dmFilter:'clan'});
@@ -801,4 +801,32 @@ test('Decorate uses page-local layout over SEED shared media/controls, no avatar
  assert.doesNotMatch(style,/\.dress-stage|\.dress-item\s*\{/);
  assert.match(script,/editMessage:null,clanView:'mine',dressFilter:'전체'/);
  assert.match(script,/aria-label="상점으로 이동"/);
+});
+
+test('Clan uses the legacy eight-ray emblem inside its new bookmark silhouette',()=>{
+ const store=createStore();
+ const mine=page(store,'#/clan');
+ const publicView=(()=>{store.dispatch('clan-leave','clan');return page(store,'#/clan')})();
+ assert.match(mine,/clan-intro__mark/);
+ assert.match(mine,/clan-crest-fill\.svg/);
+ assert.match(publicView,/clan-discover__symbol/);
+ assert.match(publicView,/clan-crest-fill\.svg/);
+ assert.match(page(store,'#/dm'),/clan-crest-fill\.svg/);
+ const seed=readFileSync(new URL('../../seed/runtime/seed-page-contract.mjs',import.meta.url),'utf8');
+ assert.match(seed,/outline:"clan-crest-outline",active:"clan-crest-fill"/);
+ assert.match(seed,/outlineBase:"\.\.\/\.\.\/assets\/icons\/preview\/"/);
+ const style=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+ assert.match(style,/\.clan-intro__mark \.seed-icon/);
+ assert.doesNotMatch(style,/\.clan-intro__mark[^}]*border-radius:1\.05rem/);
+});
+test('Clan insights contribution bars derive only from actual periods, with no fabricated ranking',()=>{
+ const store=createStore();
+ const current=page(store,'#/clan',{...ui,clanView:'insights'});
+ assert.equal((current.match(/class="clan-member__meter"/g)||[]).length,4);
+ assert.match(current,/--clan-share:100%/);
+ const past=page(store,'#/clan',{...ui,clanView:'insights',period:'previous'});
+ assert.equal((past.match(/class="clan-member__meter"/g)||[]).length,4);
+ assert.match(past,/합계 1,230 XP/);
+ assert.match(page(store,'#/ranking'),/clan-member__meter/);
+ assert.doesNotMatch(page(store,'#/clan',{...ui,clanView:'mine'}),/clan-member__meter/);
 });

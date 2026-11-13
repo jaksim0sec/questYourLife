@@ -9,14 +9,14 @@ export const PAGE_TYPES=Object.freeze({
   "non-global":Object.freeze({header:"standard",bottomNav:false,overlay:false}),
   "bottom-sheet":Object.freeze({header:"sheet",bottomNav:false,overlay:true})
 });
-/* v0.15 web reference: exactly the five destinations visible in new/web/preview.
- * Actual product IA/deep-link semantics remain O-003. No invented bookmark-fill asset.
- */
+/* The five web navigation destinations remain unchanged. Clan mark is a
+ * preview-only eight-ray crest in the familiar bookmark silhouette, keeping
+ * the approved Soft 56 icon sources untouched. Product IA remains O-003. */
 export const WEB_NAV_ITEMS=Object.freeze([
   Object.freeze({key:"home",label:"홈",outline:"home",active:"home-fill"}),
   Object.freeze({key:"quests",label:"퀘스트",outline:"check-circle",active:"check-circle-fill"}),
   Object.freeze({key:"dm",label:"디엠",outline:"chat",active:"chat-fill"}),
-  Object.freeze({key:"clan",label:"클랜",outline:"bookmark",active:"clan-bookmark-fill",activeBase:"../../assets/icons/preview/"}),
+  Object.freeze({key:"clan",label:"클랜",outline:"clan-crest-outline",active:"clan-crest-fill",outlineBase:"../../assets/icons/preview/",activeBase:"../../assets/icons/preview/"}),
   Object.freeze({key:"me",label:"마이",outline:"me-smile",active:"me-smile-fill",outlineBase:"../../assets/icons/preview/",activeBase:"../../assets/icons/preview/"})
 ]);
 export function getPageType(type){

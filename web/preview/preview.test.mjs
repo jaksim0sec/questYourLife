@@ -806,12 +806,19 @@ test('Decorate uses page-local layout over SEED shared media/controls, no avatar
 test('Clan uses the legacy eight-ray emblem inside its new bookmark silhouette',()=>{
  const store=createStore();
  const mine=page(store,'#/clan');
+ const dm=page(store,'#/dm');
  const publicView=(()=>{store.dispatch('clan-leave','clan');return page(store,'#/clan')})();
  assert.match(mine,/clan-intro__mark/);
  assert.match(mine,/clan-crest-fill\.svg/);
  assert.match(publicView,/clan-discover__symbol/);
  assert.match(publicView,/clan-crest-fill\.svg/);
- assert.match(page(store,'#/dm'),/clan-crest-fill\.svg/);
+ assert.match(dm,/clan-crest-fill\.svg/);
+ assert.doesNotMatch(page(store,'#/dm'),/clan-crest-fill\.svg/);
+ const emblem=readFileSync(new URL('../../assets/icons/preview/clan-crest-fill.svg',import.meta.url),'utf8');
+ assert.match(emblem,/fill-rule="evenodd"/);
+ assert.match(emblem,/M12\.000 7\.450/);
+ const outline=readFileSync(new URL('../../assets/icons/preview/clan-crest-outline.svg',import.meta.url),'utf8');
+ assert.match(outline,/M12 7\.9v5\.8/);
  const seed=readFileSync(new URL('../../seed/runtime/seed-page-contract.mjs',import.meta.url),'utf8');
  assert.match(seed,/outline:"clan-crest-outline",active:"clan-crest-fill"/);
  assert.match(seed,/outlineBase:"\.\.\/\.\.\/assets\/icons\/preview\/"/);

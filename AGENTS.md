@@ -8,10 +8,12 @@ TRACE(Task Routing & Agent Continuity Environment)는 저장소에 지식과 작
 |---|---|
 | 제품·UX·기능 | [확정](docs/DECISIONS.md), [미결](docs/OPEN.md), [제품 색인](docs/product/README.md) |
 | 디자인·버튼·타이포·온보딩·알림·모션 | [SEED](seed/INDEX.md) → 관련 디자인 규격·구현·검증만 선택 |
-| 웹 시연 | [웹 시연 계약](web/preview/README.md), [SEED](seed/INDEX.md) |
+| 과거 웹 시연 조사 (참고만) | [유물 색인](archive/README.md) |
 | 기존 Android·서버 코드 | [기술 지침](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md), [기존 기획](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md), [상세 라우터](docs/AGENTS.md) |
 | 에셋 | [공통 에셋 계약](docs/assets/README.md) |
 | TRACE 자체 | [인프라 규약](docs/core/INFRASTRUCTURE_SPEC.md), [검증 정책](docs/validation/VALIDATION_POLICY.md), [지식 색인](docs/knowledge/INDEX.md) |
+
+**개발 대상:** 웹 Preview와 SEED Lab은 유물로 보존하며 활성 개발·배포·필수 검수 대상이 아니다. SEED 규격·공통 에셋·표현 기술은 유지하고 이후 제품 UI는 실제 Android 앱 기반으로 개발·검증한다. Android 이관은 별도 작업이다. 명시 요청 없이 유물을 수정하거나 새 웹 시연을 만들지 않는다.
 
 **디자인 작업 진입:** [SEED INDEX](seed/INDEX.md)가 디자인의 단일 색인이다. 디자인 작업은 제품 [확정](docs/DECISIONS.md)/[미결](docs/OPEN.md)과 관련 제품 의도를 확인한 뒤 SEED로 이동한다. 화면 단위가 아니라 필요한 규격·직접 의존성만 읽는다. 제품 결정, 작업 주소·진행·검증·종결·브랜치 규칙은 이 AGENTS와 TRACE에서 관리하며 SEED에 복제하지 않는다. 디자인 추출·규격·시각 검증은 SEED가 소유한다. 정본 경로·ID 변경 시 색인을 함께 갱신한다.
 

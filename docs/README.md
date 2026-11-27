@@ -1,6 +1,6 @@
 # 갓생패치 · 문서 및 TRACE 색인
 
-**현재** `new2`는 `new`의 디자인 SEED와 활성 웹 preview를 계승한다. 기존 Android 앱·API·DB는 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있으며 편입은 별도 작업이다. 과거 preview는 `archive/preview-legacy-2026-11-11/`에 보존되어 있고, 활성 `web/preview/`는 다시 구축되어 있다. 공통 CSS는 `seed/styles/seed-standard.css`다. 기존 제품·SEED·에셋·연구 원본의 경로와 승인 범위를 유지한다.
+**현재** `new2`는 `new`의 SEED·공통 에셋을 계승한다. 웹 Preview 및 SEED Lab은 [유물](../archive/README.md)로 보존하고 활성 개발을 종료했다. 기존 Android 앱·API·DB는 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있으며 편입은 별도 작업이다. SEED 공통 CSS·런타임은 표현 기술 참고용으로 남긴다. 기존 승인 범위는 유지한다.
 
 ## TRACE 개발 진입
 

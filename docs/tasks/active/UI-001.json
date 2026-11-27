@@ -1,11 +1,10 @@
 {
   "id": "UI-001",
-  "status": "in_progress",
+  "status": "blocked",
   "baseline": "84bd6bc92b44875cff773f68b96ff905421bcc2c",
   "detail": "docs/tasks/active/UI-001.md",
   "scope": [
-    "seed",
-    "web/preview"
+    "seed"
   ],
   "contracts": [
     "seed/INDEX.md",

@@ -112,3 +112,9 @@
 ## D-017 · 웹 SEED 비교안 반영 [사용자 요청 · 2026-11-12]
 
 동일 데이터 비교안에서 승인된 범위는 [좌측형 헤더 간격과 좁은 화면의 잔액 배치](../seed/TOP_NAVIGATION.md), [다크 배지의 전경](../seed/foundations/color-surfaces.md), [기간 선택의 터치 영역](../seed/components/segmented-control.md), [상점 진열 조합 예시](../seed/patterns/content-hierarchy.md)다. 상품의 열 수와 잔액 위치는 화면이 선택한다. 실행 근거는 [VALIDATION](../seed/VALIDATION.md)을 따른다.
+
+## D-018 · 웹 시연 유물화 [사용자 결정 · 2026-11-27]
+
+- `web/preview`와 `web/seed-lab`은 [유물](../archive/README.md)로 원본 보존한다. 삭제·폐기나 디자인 승인 취소가 아니다. 기존 웹 우선 검증 절차는 실제 앱 기반 검증으로 대체한다.
+- SEED 명세·승인 이력·토큰·공통 에셋 및 갓생알리미 계승 기술 후보는 보존한다. 웹 구현은 기술 참고이며 실제 제품 구현으로 간주하지 않는다.
+- 이후 활성 제품 UI 개발과 검증은 Android 앱에 집중한다. 앱 이관은 별도 작업이며 main/new는 변경하지 않는다.

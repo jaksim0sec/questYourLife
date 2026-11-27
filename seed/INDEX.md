@@ -9,6 +9,8 @@ references: [U-01, U-02, D-011]
 
 # 갓생패치 · 디자인 시드 INDEX
 
+> **D-018 (2026-11-27):** 웹 Preview와 SEED Lab은 유물이다. 아래 웹 구현·시연·검증 경로는 과거 근거이며 추가 웹 개발 지시가 아니다. 디자인 규격·승인·원본 에셋은 유지하고 웹 CSS/런타임은 실제 앱에 재사용할 표현 기술 참고로 읽는다. 이후 검증은 Android에서 수행한다.
+
 [← AGENTS · 개발/TRACE 지침](../AGENTS.md) · [시드 추출 가이드](SEED_AUTHORING_GUIDE.md) · [시각 검증](VALIDATION.md)
 
 SEED는 디자인 규격·표현·조합·시각 검증의 정본이다. 제품 결정·개발 절차·작업 상태는 AGENTS에서 라우팅한다. v0.15의 승인 범위는 [D-012](../docs/DECISIONS.md)에 한정되며 proposed 및 Native/기능 미검증 상태는 유지한다.

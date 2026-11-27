@@ -9,6 +9,8 @@ references: [D-011, D-012, D-013]
 
 # 표준 스타일 적용 체계 · 규격을 코드에서 재사용하기
 
+> **D-018 (2026-11-27):** 웹 Preview와 SEED Lab은 유물이다. 아래 웹 구현·시연·검증 경로는 과거 근거이며 추가 웹 개발 지시가 아니다. 디자인 규격·승인·원본 에셋은 유지하고 웹 CSS/런타임은 실제 앱에 재사용할 표현 기술 참고로 읽는다. 이후 검증은 Android에서 수행한다.
+
 > **사용자 요구의 핵심:** SEED에 이미 정의한 값과 역할을 매 화면·매 요소에서 수동으로 대조·복사하지 않는다. 같은 컴포넌트와 배치 구조는 **공통 스타일/구현을 참조**하고, 토큰·기본 규격의 변경이 해당 사용처에 일관되게 전달되게 한다. 이 문서는 **웹의 스타일시트를 비유로** 설명하며, Android에서 CSS가 그대로 작동한다고 주장하지 않는다.
 >
 > **상태:** 제안 규격 및 구현 가이드. 기존 v0.15 승인값과 D-011/D-013를 변경하지 않으며 이번 문서 등록 자체가 웹·Android 공통 스타일 구현 완료를 뜻하지 않는다.
@@ -213,7 +215,7 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 | 이미지 상태 배지 | `.seed-media .seed-media__badge[data-tone="neutral"]` | 기존 7개 Status Badge 의미색 외 새 임의 variant 없음 |
 | Lab 지역 배치 | `web/seed-lab/lab.css` | 공통 Action 내부 padding/font/색 오버라이드 금지 |
 
-**근거/검증:** [시각 평가 보고서](../../docs/superpowers/reports/2026-11-10-seed-lab-visual-review.md), [정적 회귀 테스트](../../web/seed-lab/visual-polish.test.mjs). 해당 페이지의 Root/Detail/Utility 선택은 실제 앱 라우팅이나 네이티브 시각 승인으로 승격하지 않는다.
+**근거/검증:** [시각 평가 보고서](../../docs/superpowers/reports/2026-11-10-seed-lab-visual-review.md), [정적 회귀 테스트](../../archive/seed-lab/visual-polish.test.mjs). 해당 페이지의 Root/Detail/Utility 선택은 실제 앱 라우팅이나 네이티브 시각 승인으로 승격하지 않는다.
 
 ## 2026-11-10 · 계열별 구현 수렴 (기존 시드 외형 보존)
 

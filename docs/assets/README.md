@@ -50,7 +50,7 @@ assets/                                  # SVG 공통 원본 생성됨, 래스�
 - preview 18개 완전 중복 SVG는 삭제하고, `clan.js`의 CSS mask URL을 `../../assets/icons/soft/v0.14/<name>.svg`로 변경.
 - 독립 `clan-bookmark-fill.svg`, 메뉴의 `sun.svg`와 `moon.svg`는 `assets/icons/preview/`에 둔다. 공식 56종의 Fill 목록은 변경하지 않는다.
 - `index.html` inline SVG 15개를 참조 기반 마스크로 치환. `app.js`의 하단 네비 아이콘 정의도 실제 SVG 파일 선택으로 변경. 커스텀 색으로 렌더하는 `clan.js`의 동적 깃발 도형은 코드에 유지.
-- **새 preview 실행 방식:** 저장소 루트를 정적 서버로 띄우고 `/web/preview/#home` 접근. `web/preview/`만 별도 서버 루트로 삼는 옛 방식은 공통 `/assets/`가 노출되지 않아 더 이상 지원하지 않는다.
+- **2026-11-27:** 웹 Preview/Lab은 [유물](../../archive/README.md)로 이전. 웹 참조·이관 기록은 당시 이력이며 활성 실행·배포 지시가 아니다. 공통 assets 원본 경로와 SHA는 유지한다.
 - 상대 URL은 HTML 페이지 URL 기준으로 해석된다. GitHub Pages의 저장소 base path가 있는 경우도 `../../assets/`로 동일 저장소 내부를 참조한다.
 - **실행 검증 경계:** Git blob/코드 참조의 정적 검증과 실제 브라우저·Pages 시각/404 검증은 구분한다. 브라우저 결과가 확인되지 않은 경우 완료라 하지 않는다.
 - **미완료:** preview 래스터 원본 중복 정리·Android VectorDrawable 변환 및 보상 PNG 8종의 실제 브라우저 404/디코드 검증. PNG 바이너리 8종 업로드는 완료.

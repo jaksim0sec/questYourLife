@@ -7,3 +7,5 @@ Active IA: Home / Quests / Explore / Clan / My. Root hamburger opens the menu wi
 
 
 Home and Quests now contain page-specific session-only demo state: today's checklist, linked goal/task detail, manual creation, example draft, review, explicit accept and shared reversible completion. No live AI or rewards are connected; reload resets examples. Explore/Clan/My remain shell fixtures. See UI-004.
+
+Home v2 adds a session-only mascot preview, completion-derived achievement, explicit example social activity and reversible local cheers, reward/clan previews, and two sample questbooks copied into the existing editable personal plan flow. No live feed, reward grant or ownership claim. Other roots unchanged.

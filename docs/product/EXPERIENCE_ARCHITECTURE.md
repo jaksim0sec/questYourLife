@@ -51,3 +51,7 @@ Use the current approved common header/footer and achromatic UI, brand CTA only 
 Each page design should be judged by its own primary task, not merely by whether it uses SEED. Check at mobile widths including 320 and 390, light/dark, text enlargement, accessible target names, no broken destinations, no fabricated backend success. Real economic, privacy, AI, data and messaging contracts remain open. User review before final visual or production approval.
 
 Related: [Vision](VISION.md), [Quests](QUESTS.md), [Questbooks](QUESTBOOKS.md), [Social](SOCIAL.md), [Rewards](REWARDS.md), [Avatar](AVATAR.md), [Decisions](../DECISIONS.md), [Open](../OPEN.md), [Page composition](../../seed/patterns/page-composition.md).
+
+## Home corrective review (user feedback)
+
+The initial action-only Home was rejected as too dull. Retain quick execution, but add product identity, meaningful completion feedback, representative social activity and discovery that leads into actual user action. Home v2 is an expressive working composition, with clearly labeled examples and no invented economic or social service policies. Validate visually before extending its composition to other pages.

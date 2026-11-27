@@ -1,8 +1,8 @@
 {
   "id": "UI-001",
-  "status": "in_progress",
+  "status": "done",
   "baseline": "84bd6bc92b44875cff773f68b96ff905421bcc2c",
-  "detail": "docs/tasks/active/UI-001.md",
+  "detail": "docs/tasks/archive/UI-001.md",
   "scope": [
     "seed"
   ],
@@ -14,5 +14,5 @@
   "dependencies": [
     "INFRA-001"
   ],
-  "next": "UI-001/T2"
+  "next": ""
 }

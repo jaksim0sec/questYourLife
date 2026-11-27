@@ -17,6 +17,6 @@ TRACE(Task Routing & Agent Continuity Environment)는 저장소에 지식과 작
 
 **디자인 작업 진입:** [SEED INDEX](seed/INDEX.md)가 디자인의 단일 색인이다. 디자인 작업은 제품 [확정](docs/DECISIONS.md)/[미결](docs/OPEN.md)과 관련 제품 의도를 확인한 뒤 SEED로 이동한다. 화면 단위가 아니라 필요한 규격·직접 의존성만 읽는다. 제품 결정, 작업 주소·진행·검증·종결·브랜치 규칙은 이 AGENTS와 TRACE에서 관리하며 SEED에 복제하지 않는다. 디자인 추출·규격·시각 검증은 SEED가 소유한다. 정본 경로·ID 변경 시 색인을 함께 갱신한다.
 
-모든 코드 수정은 기존 AGENT/IDEA 기술·보안·데이터 보존 규칙 및 관련 상세 라우터를 먼저 읽는다. 제품 방향 충돌은 O-001에 따라 해결한다. 작은 수정은 최소 직접 검증으로 충분하며, 여러 단계·세션·병렬 작업은 시작 시 작업 기록과 JSON 범위를 등록한다. T는 독립 기능 결과이지 조사·코딩·검증·보고의 분할이 아니다. 실패/미실행을 통과로 기록하지 않는다. UI 승인과 실제 동작 검증, 웹과 Android, 모의 데이터와 실제 서비스는 독립적으로 판단한다.
+모든 코드 수정은 기존 AGENT/IDEA 기술·보안·데이터 보존 규칙 및 관련 상세 라우터를 먼저 읽는다. 제품 방향 충돌은 O-001에 따라 해결한다. 작은 수정은 최소 직접 검증으로 충분하며, 여러 단계·세션·병렬 작업은 시작 시 작업 기록과 JSON 범위를 등록한다. T는 독립 기능 결과이지 조사·코딩·검증·보고의 분할이 아니다. **A T is one work turn.** Finish implementation, necessary verification, documentation and integration together whenever feasible. Split only for a genuine blocker or required user decision. Mixed English/Korean documentation is permitted. 실패/미실행을 통과로 기록하지 않는다. UI 승인과 실제 동작 검증, 웹과 Android, 모의 데이터와 실제 서비스는 독립적으로 판단한다.
 
 작업 종료 전 관련 정본과 작업 기록, TODO만 갱신하고 `node tools/check-trace.mjs`로 등록·범위·링크를 검사한다. 원격 대상 브랜치에 커밋 반영 및 필요한 검증 근거를 확인한 범위만 종결한다. 미완료 보고 상태는 지속가능/개입필요/대기 중 실제 하나로 표시한다. 자세한 문서 선택은 [docs/AGENTS.md](docs/AGENTS.md).

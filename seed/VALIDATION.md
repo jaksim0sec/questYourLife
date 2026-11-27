@@ -339,3 +339,7 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 ## 2026-11-27 · UI-001 SEED 개편 정적 검증
 
 웹 Preview/Lab은 유물이다. 현 단계의 산출물은 SEED 명세 자체이며 앱 구현·웹 렌더·실기기 시험을 종료 조건에 포함하지 않는다. 개편 후보는 `implementation/v015-tokens.json`의 `refinements`와 소유 명세에만 두고, 기존 승인값과 구분한다. 기존 토큰은 authority 경로 정정 외 유지했다. SVG/에셋, 유물, 제품 결정은 변경하지 않았다. 문서 ID/의존성·색인 행·상대 파일 링크·기존 승인값·웹 참고 CSS의 후보 수치 정적 대조를 수행했다. 기존 정적 테스트와 TRACE Node CLI의 실제 실행은 아직 NOT RUN. 실제 앱에서 검증할 모션·대비·폭·글자 확대·상태와 접근성은 해당 명세에 남긴다. 과거 검증 결과는 소급 변경하지 않는다.
+
+### T2 closure
+
+At baseline `620cc1e9d766713496f17b506efe8b768fbe6e40`, all 12 existing SEED quality-test assertion bodies executed against exact remote source files in a JavaScript harness: 12/12 PASS. All 52 SEED Markdown files scanned for relative links; five stale historical references corrected. TRACE validator logic and five tests passed in the harness. This is static design/document verification, not a native Node CLI run or rendering. Refinements remain proposed; UI-001 concludes at the SEED contract boundary. Android application and onboarding are deferred.

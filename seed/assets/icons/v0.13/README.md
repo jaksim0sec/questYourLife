@@ -10,4 +10,4 @@ Source: user-reviewed 37-icon set from the v0.13 design lab. Individual raw SVG 
 - Do not auto-overwrite the Android `nav-*-clan` compass icon, which remains an approved app resource.
 - Icons requiring transform or rect/circle must be compiled carefully for Android VectorDrawable rather than passed blindly into the existing minimal compiler.
 
-See [implementation handoff](../../implementation/v013.md) and [C-SVG](../../components/svg-icon.md).
+See [implementation handoff](../../../implementation/v013.md) and [C-SVG](../../../components/svg-icon.md).

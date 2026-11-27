@@ -17,7 +17,7 @@ references: [D-011, D-012, D-013]
 
 ## 2026-11-10 · 웹 구현 범위 (Android 미착수)
 
-**현재 구현 소스:** [seed/styles/seed-standard.css](../../seed/styles/seed-standard.css) → [style.css](../../web/preview/style.css) → [clan.css](../../web/preview/clan.css) 순서로 불러온다. 이것은 같은 SEED 토큰과 공통 스타일을 공유하는 **실제 웹 코드**이며, 이전의 문서상 약속만 남은 상태와 다르다.
+**Historical web implementation (archived):** [seed/styles/seed-standard.css](../../seed/styles/seed-standard.css) → [style.css](../../archive/preview-legacy-2026-11-11/style.css) → [clan.css](../../archive/preview-legacy-2026-11-11/clan.css) 순서로 불러온다. These files document the historical shared-style implementation, not an active web deliverable.
 
 | 웹 표준 클래스 | 현재 연결 | 보존 원칙 |
 |---|---|---|
@@ -233,7 +233,7 @@ Android 앱은 CSS의 `class`를 화면에 붙이는 구조가 아니다. 현재
 ## 2026-11-10 · 페이지 유형/Navigation Set/Image Frame 단일 소유권
 
 - **Page Type 4종**(Global/Global Inner/Non-Global/Bottom Sheet)은 [S-PAGE](../shells/page-shells.md)의 가시성 상태 계약. Shell 5역할의 별도 표시. 공통 `seed-page-contract.mjs`와 `seed-standard.css`를 참조하며 페이지별 임의 Bottom Nav on/off를 제거한다.
-- **Top/Bottom Navigation**은 [TOP_NAVIGATION](../../docs/TOP_NAVIGATION.md)와 [C-BOTTOM](../components/bottom-navigation.md)을 사용. `new` 웹 시각값 보존, 새 Glyph 생성 금지.
+- **Top/Bottom Navigation**은 [TOP_NAVIGATION](../TOP_NAVIGATION.md)와 [C-BOTTOM](../components/bottom-navigation.md)을 사용. `new` 웹 시각값 보존, 새 Glyph 생성 금지.
 - **Item Image Frame**은 기존 [C-IMAGE](../components/image-frame.md)에서 담당, Loading/Loaded/Error와 아이템 상태를 분리. Lab은 정본의 시연 소비자다.
 - 계약의 보장은 이 파일을 참조하는 **웹 소비자 범위**. Android Compose는 동일한 분류/네비게이션/프레임에 대한 별도 구현·검증이 필요하다.
 

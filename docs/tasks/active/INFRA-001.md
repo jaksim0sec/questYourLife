@@ -17,3 +17,8 @@
 ### 후속 라우팅 정리 · 2026-11-27
 
 루트 AGENTS → SEED INDEX 직접 이동 및 역방향 링크를 명시했다. 상세 AGENTS의 SEED 중복 색인과 SEED 가이드의 공통 개발/문서 라우팅 중복을 축소하고, 기존 디자인 규격·승인 상태·검증 이력은 유지한다. 이 문서 정리는 INFRA-001/T1에 포함한다. Node 실행 검증은 별도.
+
+
+### UI-001 closure compatibility
+
+The user clarified T = one work turn. AGENTS and INFRASTRUCTURE_SPEC now record this. TRACE negative-case fixtures no longer depend on UI-001 being active. Exact validator logic and five test bodies passed in a JS harness over actual tree/document data. Native Node CLI/test runner remains NOT RUN; INFRA-001 remains open independently.

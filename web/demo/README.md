@@ -1,0 +1,3 @@
+# Page shell demo
+
+Run `python -m http.server` from repository root; open `/web/demo/`. Single shared shell, PAGE_TYPES and page slots. The fixture roots are not product screens; replace one page body at a time. S-PAGE K10 controls navigation visibility; overlays never replace the parent type. Brand and neutral CTA tones coexist, grayscale layers, no decorative metadata or ordinary card borders. Existing archive is frozen. Source SVGs are referenced from assets; standalone exports may embed original SVG data URLs for offline viewing. Browser/OS Back and full continuous sheet/IME behavior are future integration checks, not certified here.

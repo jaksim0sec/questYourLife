@@ -5,6 +5,7 @@
 | ID | 현재 범위 | 기록 |
 |---|---|---|
 | INFRA-001 | TRACE 도입 | [상세](active/INFRA-001.md) · [등록](active/INFRA-001.json) |
+| UI-003 | DONE · Coordinated IA / page purpose brief and shell routing | [상세](archive/UI-003.md) · [등록](archive/UI-003.json) |
 | UI-002 | DONE · Shared page shell (T1) | [상세](archive/UI-002.md) · [등록](archive/UI-002.json) |
 | UI-001 | DONE · SEED reform (T1/T2; expressive corrective proposal) | [상세](archive/UI-001.md) · [등록](archive/UI-001.json) |
 

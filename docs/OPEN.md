@@ -67,3 +67,7 @@
 ## D-013에 따른 공통 계약의 결정 범위 · 2026-11-08
 
 페이지 제작 순서·텍스트 5역할 매핑·Surface 선택·정보 객체 슬롯·표시/행동/상태 분리·웹 인수인계는 [D-013](./DECISIONS.md)의 리드 위임 범위에서 개편 적용 기준으로 결정했다. O-003의 목적지 IA, O-006의 미검증 시각 수치 전체, O-009/010의 Native 검증, O-016 경제와 실제 보유/장착 정책을 일괄 해소한 것은 아니다. 이번 개편의 브라우저 결과는 실행 후 별도로 기록한다.
+
+## D-020 partial resolution
+
+O-003 active demo root names/order and supporting DM placement are agreed: Home / Quests / Explore / Clan / My. Deep links, production/Android navigation and OS Back remain open. O-004/O-015 now have a coordinated content-priority proposal in [experience architecture](product/EXPERIENCE_ARCHITECTURE.md), pending actual page review. Other economic, social, AI and data-policy questions remain unchanged.

@@ -1,0 +1,23 @@
+{
+  "id": "UI-003",
+  "status": "done",
+  "baseline": "4f16db2b5cafbc1f96113556a15625f1a6e91502",
+  "detail": "docs/tasks/archive/UI-003.md",
+  "scope": [
+    "web/demo",
+    "docs/product",
+    "docs/DECISIONS.md",
+    "docs/OPEN.md",
+    "seed",
+    "assets/icons/preview"
+  ],
+  "contracts": [
+    "docs/product/EXPERIENCE_ARCHITECTURE.md",
+    "docs/DECISIONS.md",
+    "seed/shells/page-shells.md"
+  ],
+  "dependencies": [
+    "UI-002"
+  ],
+  "next": ""
+}

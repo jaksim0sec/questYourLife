@@ -102,3 +102,5 @@ SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래�
 `assets/icons/preview/more-root.svg` similarly derives from `assets/icons/soft/v0.14/more.svg` with only stroke width 1.8→2.1 changed; active Root demo only.
 
 `assets/icons/preview/menu-root.svg` derives from `assets/icons/soft/v0.14/menu.svg` with only stroke width 1.8→2.1 changed; replaces the Root dots in the active demo. The previous More variant is retained as review history.
+
+`assets/icons/preview/explore-fill.svg` is a new D-020 active-demo review variant derived from the existing compass outline, using a transparent needle cutout. Soft 56 sources, historical navigation variants and existing Android assets remain untouched.

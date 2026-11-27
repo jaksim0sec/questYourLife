@@ -488,8 +488,40 @@
         "minHeightRem": 3.9525,
         "active": "independent Fill and palette.foreground",
         "inactive": "Outline and palette.secondary",
-        "destinations": "preserve webNavigationSet.items",
-        "visibility": "preserve S-PAGE K10"
+        "destinations": "activeDemoItems (D-020); historical webNavigationSet unchanged",
+        "visibility": "preserve S-PAGE K10",
+        "activeDemoItems": [
+          {
+            "key": "home",
+            "label": "홈",
+            "outline": "assets/icons/soft/v0.14/home.svg",
+            "active": "assets/icons/soft/v0.14/home-fill.svg"
+          },
+          {
+            "key": "quests",
+            "label": "퀘스트",
+            "outline": "assets/icons/soft/v0.14/check-circle.svg",
+            "active": "assets/icons/soft/v0.14/check-circle-fill.svg"
+          },
+          {
+            "key": "explore",
+            "label": "탐색",
+            "outline": "assets/icons/soft/v0.14/explore.svg",
+            "active": "assets/icons/preview/explore-fill.svg"
+          },
+          {
+            "key": "clan",
+            "label": "클랜",
+            "outline": "assets/icons/soft/v0.14/bookmark.svg",
+            "active": "assets/icons/preview/clan-bookmark-fill.svg"
+          },
+          {
+            "key": "me",
+            "label": "마이",
+            "outline": "assets/icons/preview/me-smile.svg",
+            "active": "assets/icons/preview/me-smile-fill.svg"
+          }
+        ]
       },
       "sheet": "independent header; preserve parent",
       "root": {

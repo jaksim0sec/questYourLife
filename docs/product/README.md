@@ -59,3 +59,7 @@
 2. 후속 설계는 이 문서들의 **목적**을 존중하되, 세부 UI·화면 배치·경제 수치를 임의로 확정하지 않음.
 3. 현재 브랜치는 문서화 전용. Android·백엔드·기존 그래픽 파일을 수정하지 않음.
 4. 기존 README/IDEA/AGENT와 철학이 충돌하는 경우 코드 작업 전에 **명시적으로 정책 우선순위를 갱신**해야 함.
+
+## Active page-production brief
+
+[Experience architecture](EXPERIENCE_ARCHITECTURE.md): coordinated root purposes, content priority, user flows, page types and acceptance boundaries; distinct from the original product principles. D-020 owns the agreed active IA.

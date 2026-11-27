@@ -73,3 +73,7 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 ## Icon-only navigation · D-019
 
 Five existing demo destinations and their approved asset mapping remain unchanged. No visible text label, decorative indicator or brand tint. Active uses the separate Fill icon in neutral foreground; inactive uses Outline in neutral secondary foreground. Preserve accessible names (`aria-label`) and exactly one `aria-current=page` while visible. Center glyphs both axes in equal slots. Working glyph size 30, minimum target 48, existing bar height and safe area remain. The larger glyph is a review implementation choice. No new destination or final IA decision. [Tokens](../implementation/v015-tokens.json) → `refinements.navigation.bottom`.
+
+## D-020 active demo destinations
+
+Home / Quests / Explore / Clan / My. Explore replaces the old DM slot; DM is reached from the Root hamburger and is Non-Global. Explore uses the approved Outline `explore.svg` and a derived independent `assets/icons/preview/explore-fill.svg` candidate with a transparent compass needle cutout. Other icon mappings, 30px glyph, neutral selection and 48px targets remain. Historical D-015 mapping above is unchanged. [Experience architecture](../../docs/product/EXPERIENCE_ARCHITECTURE.md).

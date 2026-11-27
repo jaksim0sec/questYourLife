@@ -55,3 +55,5 @@ Related: [Vision](VISION.md), [Quests](QUESTS.md), [Questbooks](QUESTBOOKS.md), 
 ## Home corrective review (user feedback)
 
 The initial action-only Home was rejected as too dull. Retain quick execution, but add product identity, meaningful completion feedback, representative social activity and discovery that leads into actual user action. Home v2 is an expressive working composition, with clearly labeled examples and no invented economic or social service policies. Validate visually before extending its composition to other pages.
+
+Home semantic review: text must identify content, convey distinct state, or support a real action. Do not duplicate the daily title, next-task list or completion totals, and do not make a generic motivational phrase the largest text. Keep character and reward art in meaningful entry points. The v3 composition is a working review, not final visual approval.

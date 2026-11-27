@@ -4,3 +4,6 @@ Repository-managed source: `index.html` (shell markup), `shell.css` (shared styl
 
 
 Active IA: Home / Quests / Explore / Clan / My. Root hamburger opens the menu with a DM entry; the inbox is a Non-Global service-boundary fixture. Standard display settings remain separate. Page bodies still use shared shell fixtures; coordinated page-specific content and routes are defined in [experience architecture](../../docs/product/EXPERIENCE_ARCHITECTURE.md). Build individual product pages against that brief, not the old archived DM root.
+
+
+Home and Quests now contain page-specific session-only demo state: today's checklist, linked goal/task detail, manual creation, example draft, review, explicit accept and shared reversible completion. No live AI or rewards are connected; reload resets examples. Explore/Clan/My remain shell fixtures. See UI-004.

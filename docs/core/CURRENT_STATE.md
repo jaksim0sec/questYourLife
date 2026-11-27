@@ -6,7 +6,7 @@
 |---|---|---|
 | 제품 | 소셜 퀘스트 플랫폼 방향 | [확정](../DECISIONS.md), [미결](../OPEN.md), [제품](../product/README.md) |
 | 디자인 | SEED v0.15 및 이후 결정, 공통 CSS·아이콘·런타임 | [SEED](../../seed/INDEX.md), [검증 이력](../../seed/VALIDATION.md) |
-| New web demo | Shared page shell and D-020 active IA (Explore replaces DM root; DM via menu); product page content not yet built | [web/demo](../../web/demo/README.md) · UI-002/T1 |
+| New web demo | Shared page shell and D-020 active IA (Explore replaces DM root; DM via menu); Home and Quests session-only prototype integrated (UI-004); Explore, Clan and My remain fixtures | [web/demo](../../web/demo/README.md) · UI-002/T1 |
 | 웹 유물 | Preview와 SEED Lab 동결·보관. 활성 개발/배포 대상 아님 | [유물 색인](../../archive/README.md); 실제 서버 아님 |
 | Android/서버 | 기존 main에 별도 존재, 아직 new2에 이관하지 않음 | [기존 기술](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md), [기존 기획](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md), [통합 한계](https://github.com/jaksim0sec/questYourLife/blob/main/docs/development/2026-11-04-main-integration-limitations.md) |
 | 에셋 | 공통 assets 및 과거 시연 보관 | [관리 계약](../assets/README.md) |

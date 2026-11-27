@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validate,load} from './check-trace.mjs';
+import {fileURLToPath} from 'node:url';
+const baseline=()=>load(fileURLToPath(new URL('../',import.meta.url)));
+test('valid repository',()=>assert.deepEqual(validate(baseline()),[]));
+test('missing router rejected',()=>{const f=baseline();f.delete('AGENTS.md');assert.ok(validate(f).some(e=>e.includes('missing AGENTS.md')))});
+test('missing task detail rejected',()=>{const f=baseline();f.delete('docs/tasks/active/UI-001.md');assert.ok(validate(f).some(e=>e.includes('invalid detail')))});
+test('overlapping active scopes rejected',()=>{const f=baseline();const p='docs/tasks/active/UI-001.json';const t=JSON.parse(f.get(p));t.status='in_progress';t.scope=['docs/core'];f.set(p,JSON.stringify(t));assert.ok(validate(f).some(e=>e.includes('scope overlap')))});
+test('invalid next rejected',()=>{const f=baseline();const p='docs/tasks/active/UI-001.json';const t=JSON.parse(f.get(p));t.next='UI-001/T99';f.set(p,JSON.stringify(t));assert.ok(validate(f).some(e=>e.includes('invalid next')))});

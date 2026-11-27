@@ -1,8 +1,12 @@
-# 갓생패치 · new 브랜치 작업 안내
+# 갓생패치 · 문서 및 TRACE 색인
 
-**현재** `new`는 제품 문서와 루트 `seed/`가 중심이며 `web/preview/`는 재구축을 위해 비워 둔 상태이며, Android 앱 코드·API·DB 등은 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있다. **향후** `new`는 `main`에 상응하는 개발 브랜치로 발전할 예정이다. 따라서 과거의 '문서 전용' 설명을 영구 제한 규칙으로 해석하지 않는다.
+**현재** `new2`는 `new`의 디자인 SEED와 활성 웹 preview를 계승한다. 기존 Android 앱·API·DB는 [main](https://github.com/jaksim0sec/questYourLife/tree/main)에 있으며 편입은 별도 작업이다. 과거 preview는 `archive/preview-legacy-2026-11-11/`에 보존되어 있고, 활성 `web/preview/`는 다시 구축되어 있다. 공통 CSS는 `seed/styles/seed-standard.css`다. 기존 제품·SEED·에셋·연구 원본의 경로와 승인 범위를 유지한다.
 
-현재 사용 중인 파일 경로는 유지하며, 코드·에셋 편입은 기존 기능/데이터와 충돌을 검토하고 검증한 후 별도로 실행한다. **디자인 SEED는 루트 `seed/`, 공통 CSS는 `seed/styles/seed-standard.css`로 옮겼다. 기존 Preview는 `archive/preview-legacy-2026-11-11/`에 보존하고 활성 `web/preview/`는 비워 뒀다.**
+## TRACE 개발 진입
+
+[루트 AGENTS](../AGENTS.md) · [현재 상태](core/CURRENT_STATE.md) · [전역 TODO](core/TODO.md) · [작업 색인](tasks/INDEX.md) · [인프라 규약](core/INFRASTRUCTURE_SPEC.md) · [검증 정책](validation/VALIDATION_POLICY.md) · [지식 색인](knowledge/INDEX.md).
+
+기존 Superpowers 명세·계획·보고서는 작성 당시 근거로 보존한다. 현재 진행 상태와 다음 행동은 TRACE 작업 기록에서 관리한다. 기존 확정/미결/SEED 정본을 복제하거나 덮어쓰지 않는다.
 
 ## 다음 작업에서 먼저 볼 곳
 
@@ -13,7 +17,7 @@
 | 제품 의도·화면 흐름 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [제품 색인](./product/README.md)의 관련 항목. 앱 정체성이나 전체 UX를 다루면 [VISION](./product/VISION.md)도 읽는다. |
 | 기존 시드로 화면·컴포넌트 구현 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [v0.15 적용 계약](../seed/implementation/v015.md)과 [토큰](../seed/implementation/v015-tokens.json) → [INDEX](../seed/INDEX.md)의 직접 관련 항목만. 헤더는 [TOP_NAVIGATION](../seed/TOP_NAVIGATION.md), 아이콘은 [Soft SVG 원본 56종](../assets/icons/soft/v0.14/README.md). |
 | 컨셉 이미지에서 규칙 추출 | [DECISIONS](./DECISIONS.md) → [OPEN](./OPEN.md) → [작성 가이드](../seed/SEED_AUTHORING_GUIDE.md) → [INDEX](../seed/INDEX.md)에서 기존 규칙과 대조. |
-| Android 코드 수정 | **현재** `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)를 읽고 실제 코드를 확인. `new`로 코드 이관 시 이 안내를 현황에 맞춰 갱신. |
+| Android 코드 수정 | **현재** `main`의 [AGENT.md](https://github.com/jaksim0sec/questYourLife/blob/main/AGENT.md)와 [IDEA.md](https://github.com/jaksim0sec/questYourLife/blob/main/IDEA.md)를 읽고 실제 코드를 확인. `new2`로 코드 이관 시 이 안내를 현황에 맞춰 갱신. |
 | SVG·이미지 관리/preview 에셋 이전 | [공통 에셋 관리 계약](./assets/README.md) → [SEED INDEX](../seed/INDEX.md)의 관련 아트·아이콘 문서 → 현재 사용처 코드와 자산 확인. |
 
 SEED는 Foundations(색·타이포·간격·형태·아이콘·모션), Components(재사용 부품과 상태), Patterns(부품 조합), Shells(화면 골격과 안전영역), Assets(아트의 표현 규칙과 현행 SVG 원본)로 나뉜다. 실제 에셋 원본의 장래 공통 위치는 [관리 계약](./assets/README.md)에 따로 정의한다. 수치와 시각 규칙은 v0.15 적용 계약과 토큰에서 확인한다. 화면별 데이터·하단 탭 목적지·테마 기본값·글래스 채택·네이티브 적용은 결정 및 구현 상태를 따로 확인한다. 리서치·이전 시드·감사 기록은 근거를 추적할 때 연다.

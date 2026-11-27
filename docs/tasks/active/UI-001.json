@@ -1,0 +1,19 @@
+{
+  "id": "UI-001",
+  "status": "planned",
+  "baseline": "038436f88437861d8faaddda2af91d4124aaf0b9",
+  "detail": "docs/tasks/active/UI-001.md",
+  "scope": [
+    "seed",
+    "web/preview"
+  ],
+  "contracts": [
+    "seed/INDEX.md",
+    "docs/DECISIONS.md",
+    "docs/OPEN.md"
+  ],
+  "dependencies": [
+    "INFRA-001"
+  ],
+  "next": "UI-001/T1"
+}

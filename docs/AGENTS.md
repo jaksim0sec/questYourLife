@@ -1,6 +1,6 @@
 # Agent instructions · document routing
 
-> 적용 범위: 현재 `new` 브랜치의 문서·웹 preview 및 향후 이 브랜치에 편입할 개발 작업의 **문서 라우팅**. `new`는 지금 앱 코드가 없지만, 장차 `main`에 상응하는 개발 브랜치로 전환할 예정임. 이 파일은 개발 규칙 자체를 재정의하지 않는다.
+> 적용 범위: 현재 `new2` 브랜치의 문서·웹 preview 및 향후 이 브랜치에 편입할 개발 작업의 **문서 라우팅**. `new2`는 `new`에서 분기한 개발 브랜치이며, 기존 Android 본체 편입은 별도 작업이다. 이 파일은 기존 분야별 라우팅을 보존한다. 작업 관리·검증·종결은 [루트 TRACE 지침](../AGENTS.md)을 따른다.
 > **현재 상태와 미래 목표를 구분한다.** 앱 코드가 편입되기 전까지 기존 코드의 권위 있는 개발 규칙은 `main`의 `AGENT.md`/`IDEA.md`이며, 새 자산·코드 이관은 별도 실행·검증이 필요하다.
 
 ## 1. 작업 시작 순서
@@ -49,13 +49,13 @@
 
 | 요청 | 기본 경로 |
 |---|---|
-| **컨셉 이미지 → 새 시드 추출** | `DECISIONS` → `OPEN` → `design/SEED_AUTHORING_GUIDE` → (생성된 경우) `design/seed/INDEX` → 필요한 요소 문서만 |
-| **기존 디자인 시드 개선·확장** | `DECISIONS` → `OPEN` → `design/seed/INDEX` → 관련 기존 C/F/P/S 정본 → `design/seed/AUDIT`(참조 근거) → `VALIDATION` |
+| **컨셉 이미지 → 새 시드 추출** | `DECISIONS` → `OPEN` → `seed/SEED_AUTHORING_GUIDE` → (생성된 경우) `seed/INDEX` → 필요한 요소 문서만 |
+| **기존 디자인 시드 개선·확장** | `DECISIONS` → `OPEN` → `seed/INDEX` → 관련 기존 C/F/P/S 정본 → `seed/AUDIT`(참조 근거) → `VALIDATION` |
 | **웹 디자인 시드·홈·전체 UX** | `DECISIONS` → `OPEN` → `product/README` → `VISION` → 관련 제품 문서 → `research/SUMMARY` |
 | **AI 퀘스트 기능** | `DECISIONS` → `OPEN` → `QUESTS` + `QUESTBOOKS`(공유·참여 시) |
 | **친구·클랜·퀘스트북 소셜** | `DECISIONS` → `OPEN` → `SOCIAL` + `QUESTBOOKS` |
 | **보상/상자/캐시/마이페이지** | `DECISIONS` → `OPEN` → `REWARDS` + `AVATAR` |
-| **SVG/PNG/WebP 등록·이전 및 preview 참조 변경** | `DECISIONS` → `assets/README` → `design/seed/INDEX` → 해당 SVG/아트·이미지 명세 + 실제 경로 확인 |
+| **SVG/PNG/WebP 등록·이전 및 preview 참조 변경** | `DECISIONS` → `assets/README` → `seed/INDEX` → 해당 SVG/아트·이미지 명세 + 실제 경로 확인 |
 | **디자인 근거 확인** | `research/SUMMARY` → 필요할 때 원문 아카이브 → 공식 1차 문서 재확인 |
 | **기존 Android/DB 버그 수정** | `AGENT` → `IDEA` → 관련 기술 문서·코드 (사용자 경험·제품 의미가 바뀌면 `DECISIONS`/`OPEN` 및 관련 `product/` 추가) |
 | **웹 시연의 Android 이식** | `AGENT` + `IDEA` + `DECISIONS` + `OPEN` + 관련 `product/` + 합의된 최신 시연 사양(존재할 때만) |
@@ -70,10 +70,10 @@
 - 원문 발언은 제품 문서에서 보존하고, 새 해석은 `[해석]` 등으로 구분한다. 연구 원문 아카이브는 수정하지 않는다.
 - 기존 시스템·데이터·에셋 보존과 `main` 병합/코드 이관의 별도 검증 규칙은 `DECISIONS.md`를 참조. **브랜치의 미래 역할이 바뀌어도 이번 문서 수정만으로 앱 코드 이관·에셋 이동을 실행하지 않는다.**
 
-## `new` 전환 상태 · 현재와 목표
+## 기존 `new` 이관 이력과 `new2` 현재 상태
 
-- **현재:** `new`에는 앱 코드가 없고 문서·웹 preview 및 공통 SVG 원본이 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
-- **목표:** `new`는 장차 `main`에 상응하는 독립 개발 브랜치가 된다. 코드 편입 시 AGENT/IDEA와 기존 데이터·리소스·실행 기준을 실제 파일과 대조하고, 충돌 해결·회귀 검증 후 라우팅 문서를 갱신한다. 현재 문서 전용이라는 이유로 향후 개발 범위를 영구 제한하지 않는다.
+- **현재:** `new2`의 기준 `new`에는 Android 앱 코드가 없고 문서·활성 웹 preview 및 공통 SVG 원본이 존재한다. `AGENT.md`, `IDEA.md` 및 구형 `docs/development/` 등은 기존 **main**에만 있다. 링크된 파일이 이 브랜치에 존재한다고 가정하지 않는다.
+- **목표:** `new2`에서 독립 개발을 재개한다. 코드 편입 시 AGENT/IDEA와 기존 데이터·리소스·실행 기준을 실제 파일과 대조하고, 충돌 해결·회귀 검증 후 라우팅 문서를 갱신한다. 현재 문서 전용이라는 이유로 향후 개발 범위를 영구 제한하지 않는다.
 - **에셋:** 공통 `assets/icons/soft/v0.14/` SVG 이전 및 preview 참조 변경 완료. 기존 Preview의 고유 래스터 3종은 전역 `assets/art/`에 보존했고, 이전 Preview는 `archive/preview-legacy-2026-11-11/`에 이관했다. [관리·이관 현황](./assets/README.md) 참고.
-- 이 파일은 `docs/AGENTS.md`에 위치하므로 **루트 `AGENTS.md` 자동 탐색을 대신한다고 가정하지 않는다**. 새 작업에서는 명시적으로 읽는다.
+- 루트 [AGENTS.md](../AGENTS.md)가 TRACE 진입점이며 이 파일은 분야별 상세 라우터다.
 - 콘텐츠 원본은 `docs/archive/AGENTS-original-2026-11-04.md`에도 변경 없이 보존한다.

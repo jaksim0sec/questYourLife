@@ -961,3 +961,20 @@
   :root[data-seed-design="refined"] :is(.chat-message-sheet,.chat-modal)[open]::backdrop,
   :root[data-seed-design="refined"] .preview-notice:not(:empty) { animation:none; }
 }
+
+
+/* Real theme setting uses the common native Switch; the existing menu stays open. */
+.home-menu-panel .preview-theme-switch { box-sizing:border-box; gap:.55rem; cursor:pointer; }
+.preview-theme-switch__label { flex:1; min-width:0; overflow-wrap:anywhere; }
+.preview-theme-switch .seed-switch__track { margin-inline-start:auto; }
+:root[data-seed-design="refined"] .preview-notice[data-leaving="true"]:not(:empty) {
+  animation:preview-refined-notice-out 180ms ease-out both;
+}
+@keyframes preview-refined-notice-out { from { opacity:1;transform:translate(-50%,0); } to { opacity:0;transform:translate(-50%,.45rem); } }
+@supports (transition-behavior: allow-discrete) and (overlay: auto) {
+  :root[data-seed-design="refined"] :is(.chat-message-sheet,.chat-modal)[open],
+  :root[data-seed-design="refined"] :is(.chat-message-sheet,.chat-modal)[open]::backdrop { animation:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :root[data-seed-design="refined"] .preview-notice[data-leaving="true"]:not(:empty) { animation:none; }
+}

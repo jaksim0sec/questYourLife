@@ -33,7 +33,7 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 
 실제 설정의 이진 상태만 표현한다. 47×28px track, 22px thumb, 3px inset의 비례를 시작점으로 사용하되 SEED의 rem·테마 토큰을 적용한다. 밝은/어두운 테마에서 off는 중립 면과 구분 가능한 thumb, on은 현재 전경색 면과 반대색 thumb. 이동·색 전환은 F-ICON-MOTION을 사용한다. 최소 48px 터치 영역, 읽을 수 있는 label, native checkbox focus/disabled/checked 상태를 유지한다.
 
-웹 공통 CSS의 `label.seed-switch > input[type=checkbox] + .seed-switch__track` 구조를 제공한다. 입력에는 연결된 보이는 라벨 또는 접근 가능한 이름을 제공하고 실제 설정 상태를 연결한다. 기존 페이지에 가짜 설정을 추가하지 않는다. 비례 및 렌더 품질은 사용자 검수 전 후보이며 실제 소비 페이지 연결·Android 검증은 미완료다.
+웹 공통 CSS의 `label.seed-switch > input[type=checkbox] + .seed-switch__track` 구조를 제공한다. 입력에는 연결된 보이는 라벨 또는 접근 가능한 이름을 제공하고 실제 설정 상태를 연결한다. 기존 페이지에 가짜 설정을 추가하지 않는다. 웹 refined 비교안의 기존 다크 모드 설정에 연결했다. 동일 저장 키를 사용하고 전체 화면 재렌더 없이 실제 theme 상태를 전환한다. 비례·접근성 렌더 및 Android 검증은 별도다.
 
 ## Filter Chip · 현재 웹 공통 구현/사용 경계
 

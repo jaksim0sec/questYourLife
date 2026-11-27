@@ -42,7 +42,7 @@ function globalMenu(state,tab='home') {
       ${shortcut('퀘스트 만들기','sparkle','chat/ai?tab='+tab)}
       ${shortcut('보상함','gift','rewards?tab='+(tab==='dm'?'me':tab))}
       ${shortcut('꾸미기','shirt','decorate')}
-      <button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>
+      ${root.dataset.seedDesign==='refined'?`<label class="menu-row seed-switch preview-theme-switch">${icon('moon',true)}<span class="preview-theme-switch__label">다크 모드</span><input type="checkbox" role="switch" data-theme-switch aria-label="다크 모드" ${dark?'checked':''}><span class="seed-switch__track" aria-hidden="true"></span></label>`:`<button type="button" class="menu-row" data-shell-action="theme">${icon(dark?'sun':'moon',true)}${dark?'라이트 모드':'다크 모드'}</button>`}
     </div>
   </details>`;
 }
@@ -126,10 +126,21 @@ function render() {
     if(img.complete&&!img.naturalWidth)img.closest('.seed-media').dataset.mediaState='error';
   });
 }
+function setTheme(dark) {
+  root.dataset.theme=dark?'dark':'light';
+  try { storage?.setItem('hyunsaengpatch-preview-theme',root.dataset.theme); } catch {}
+}
 function showFeedback(text) {
   clearTimeout(noticeTimer);
+  notice.removeAttribute('data-leaving');
   notice.textContent=text;
-  noticeTimer=setTimeout(()=>{notice.textContent='';},3000);
+  noticeTimer=setTimeout(()=>{
+    if(root.dataset.seedDesign!=='refined'||window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      notice.textContent='';return;
+    }
+    notice.dataset.leaving='true';
+    noticeTimer=setTimeout(()=>{notice.textContent='';notice.removeAttribute('data-leaving');},180);
+  },3000);
 }
 function navigate(hash) {
   if(hash===location.hash) return;
@@ -256,8 +267,7 @@ document.addEventListener('click',event=>{
   } else if(shellAction==='close-alerts') {
     alertSheet.close();
   } else if(shellAction==='theme') {
-    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
-    try { storage?.setItem('hyunsaengpatch-preview-theme',root.dataset.theme); } catch {}
+    setTheme(root.dataset.theme!=='dark');
     render();
     get('.home-nav-menu summary')?.focus();
   } else if(filter||period) {
@@ -357,6 +367,11 @@ async function compressChatPhoto(file) {
   } finally{URL.revokeObjectURL(url);}
 }
 document.addEventListener('change',async event=>{
+  if(event.target.matches?.('input[data-theme-switch]')) {
+    // No render: preserve the open menu, focus, draft input and native switch transition.
+    setTheme(event.target.checked);
+    return;
+  }
   if(event.target.id!=='chat-photo-file'||route.name!=='chat')return;
   const element=event.target,file=element.files?.[0],chatId=route.id;element.value='';
   if(!file)return;

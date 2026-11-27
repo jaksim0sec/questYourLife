@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="description" content="갓생패치 퀘스트, 클랜과 마스코트의 웹 시연">
   <title>갓생패치</title>
-  <link rel="stylesheet" href="../../seed/styles/seed-standard.css?v=seed-refined-v1">
-  <link rel="stylesheet" href="./preview.css?v=seed-refined-v1">
-  <script type="module" src="./app.mjs?v=seed-refined-v1"></script>
+  <link rel="stylesheet" href="../../seed/styles/seed-standard.css?v=seed-refined-v2">
+  <link rel="stylesheet" href="./preview.css?v=seed-refined-v2">
+  <script type="module" src="./app.mjs?v=seed-refined-v2"></script>
 </head>
 <body>
   <div class="seed-page-shell preview-shell">
@@ -31,18 +31,18 @@
     </div>
     <div class="seed-sheet__body" id="home-alert-list"></div>
   </dialog>
-  <dialog id="chat-room-info" class="chat-modal" aria-labelledby="chat-room-info-title">
+  <dialog id="chat-room-info" class="chat-modal seed-transition-dialog" aria-labelledby="chat-room-info-title">
     <div class="chat-modal__head"><h2 id="chat-room-info-title">대화방 정보</h2><button type="button" class="seed-icon-action" data-shell-action="close-chat-room-info" aria-label="닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button></div>
     <p id="chat-room-info-body"></p>
   </dialog>
-  <dialog id="chat-message-sheet" class="chat-message-sheet" aria-labelledby="chat-message-sheet-title">
+  <dialog id="chat-message-sheet" class="chat-message-sheet seed-transition-sheet" aria-labelledby="chat-message-sheet-title">
     <span class="chat-message-sheet__grabber" aria-hidden="true"></span>
     <div class="chat-message-sheet__head"><strong id="chat-message-sheet-title">메시지</strong>
       <button type="button" class="seed-icon-action" data-shell-action="close-chat-message-sheet" aria-label="메뉴 닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button>
     </div>
     <div id="chat-message-sheet-actions" class="chat-message-sheet__actions"></div>
   </dialog>
-  <dialog id="chat-photo-viewer" class="chat-modal chat-photo-modal" aria-label="사진 보기">
+  <dialog id="chat-photo-viewer" class="chat-modal chat-photo-modal seed-transition-dialog" aria-label="사진 보기">
     <div class="chat-modal__head"><strong>사진</strong><button type="button" class="seed-icon-action" data-shell-action="close-chat-photo" aria-label="닫기"><span class="seed-icon" aria-hidden="true" style="--seed-icon:url('../../assets/icons/soft/v0.14/close.svg')"></span></button></div>
     <img id="chat-photo-viewer-image" alt="크게 표시한 사진">
   </dialog>

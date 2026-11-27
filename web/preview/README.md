@@ -65,3 +65,5 @@
 - 개선안: `/web/preview/?design=refined#/home`
 
 URL 옵션은 현재 탭·상태·로컬 저장·기능을 바꾸지 않는다. 홈/퀘스트/클랜/마이/상점/DM에서 같은 데이터를 비교하고 기존 메뉴로 라이트/다크를 전환한다. 알림은 홈 헤더에서, 메시지 Sheet/Dialog는 실제 DM 흐름에서 확인한다. Root/Standard·하단바·SVG·보상 아트의 의미 계약은 유지. 기존안은 승인 기준이며 refined는 UI-001 검수 후보이다.
+
+refined 메뉴의 다크 모드는 실제 기존 테마 설정과 연결된 Switch다. 같은 로컬 저장 키를 사용하며 메뉴와 입력 초점을 유지한다. Sheet/Dialog는 지원 브라우저에서 native close의 퇴장 전환, 그 외에는 즉시 닫기. Snackbar 퇴장 중 새로운 메시지가 오면 기존 삭제를 취소한다.

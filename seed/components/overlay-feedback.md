@@ -50,4 +50,4 @@ S08은 기존 제안 상태(proposed) 유지. REF-003 보상 관찰 medium, 미�
 
 ## UI-001/T2 비교 후보
 
-Dialog는 1.5rem radius·1.25rem 여백·강한 제목, Snackbar는 짧은 pill과 240ms 등장으로 비교한다. Sheet/Dialog는 320ms 진입과 scrim fade, 동작 감소 시 정적. 닫기·포커스·실제 처리 결과와 기존 슬롯 계약은 유지한다. 현 구현은 진입 모션만 포함하고 퇴장 연출은 별도 검증 후 추가한다.
+Dialog는 1.5rem radius·1.25rem 여백·강한 제목, Snackbar는 짧은 pill과 240ms 등장으로 비교한다. Sheet/Dialog는 320ms 진입과 scrim fade, 동작 감소 시 정적. 닫기·포커스·실제 처리 결과와 기존 슬롯 계약은 유지한다. 지원 브라우저는 native dialog의 display/overlay discrete transition으로 퇴장 180ms를 적용한다. 닫기·초점 복귀는 즉시 처리하고 미지원 브라우저는 기존 닫기 동작으로 폴백한다. Snackbar도 180ms 퇴장하며 신규 알림이 이전 삭제 타이머를 취소한다. 실제 브라우저 검증은 별도다.

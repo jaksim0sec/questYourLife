@@ -846,3 +846,20 @@ test('Refined design is URL-only and uses the existing preview route and sheets'
   assert.match(css,/data-seed-design="refined"[^}]*\.chat-modal\[open\]/);
   assert.match(css,/prefers-reduced-motion:reduce[\s\S]*?\.preview-notice:not\(:empty\) \{ animation:none; \}/);
 });
+
+test('Refined theme switch uses the existing theme key without rerendering',()=>{
+  const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+  assert.match(app,/role="switch" data-theme-switch aria-label="다크 모드"/);
+  assert.match(app,/function setTheme\(dark\) \{[\s\S]*?hyunsaengpatch-preview-theme/);
+  assert.match(app,/if\(event\.target\.matches\?\.\('input\[data-theme-switch\]'\)\) \{[^}]*setTheme\(event\.target\.checked\);\s*return;/);
+});
+test('Closing visuals are separate from native dialog behavior and stale toast cleanup',()=>{
+  const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+  const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
+  const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.match(html,/chat-message-sheet seed-transition-sheet/);
+  assert.match(html,/chat-modal seed-transition-dialog/);
+  assert.match(app,/clearTimeout\(noticeTimer\);\s*notice\.removeAttribute\('data-leaving'\)/);
+  assert.match(css,/preview-refined-notice-out 180ms/);
+  assert.match(app,/alertSheet\.close\(\)/);
+});

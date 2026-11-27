@@ -31,4 +31,4 @@ min→mid→full→mid→min→closed, pointercancel, backdrop, Escape, keyboard
 
 ## UI-001/T2 비교 후보
 
-표현만 갓생알리미식 비례로 조정: 상단 radius 1.75rem, 좌우 여백 1.25rem(360px 미만 1rem), 제목 1.375rem/760, 진입 320ms의 부드러운 이동+fade. 기존 snap/drag/Body/Footer/Back 계약은 유지. 짧은 알림·메시지 Sheet는 내용 기반 높이와 최대 75dvh를 사용하고 안전 영역과 본문 스크롤을 보호한다. `data-seed-design="refined"` 후보로만 제공하며 렌더 승인 전 기본값을 변경하지 않는다.
+표현만 갓생알리미식 비례로 조정: 상단 radius 1.75rem, 좌우 여백 1.25rem(360px 미만 1rem), 제목 1.375rem/760, 진입 320ms·퇴장 180ms의 이동+fade(퇴장은 native display/overlay 전환 지원 환경에 한정). 기존 snap/drag/Body/Footer/Back 계약은 유지. 짧은 알림·메시지 Sheet는 내용 기반 높이와 최대 75dvh를 사용하고 안전 영역과 본문 스크롤을 보호한다. `data-seed-design="refined"` 후보로만 제공하며 렌더 승인 전 기본값을 변경하지 않는다.

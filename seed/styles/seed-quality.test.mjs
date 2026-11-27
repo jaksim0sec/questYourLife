@@ -114,3 +114,10 @@ test('Refined comparison is opt-in and keeps approved default header geometry',(
   assert.match(css,/data-seed-design="refined"[^}]*\.seed-sheet__head[^}]*--seed-refined-sheet-inset/);
   assert.match(css,/prefers-reduced-motion:reduce[\s\S]*?\.seed-sheet\[open\]::backdrop \{ animation:none; \}/);
 });
+
+test('Native overlay transition is feature gated and does not block a closed modal',()=>{
+  assert.match(css,/@supports \(transition-behavior: allow-discrete\) and \(overlay: auto\)/);
+  assert.match(css,/display 180ms allow-discrete,overlay 180ms allow-discrete/);
+  assert.match(css,/@starting-style/);
+  assert.match(css,/:not\(\[open\]\)::backdrop \{ pointer-events:none; \}/);
+});

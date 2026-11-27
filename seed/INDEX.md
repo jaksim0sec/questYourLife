@@ -21,7 +21,7 @@ SEED는 디자인 규격·표현·조합·시각 검증의 정본이다. 제품 
 
 **에셋 작업 진입:** SVG/PNG/WebP의 파일 정본·미래 공통 경로·preview 참조 이전은 [공통 에셋 관리 계약](../docs/assets/README.md)이 소유한다. 이 INDEX의 `A-ART`, `C-IMAGE`, `F-ICON-MOTION`은 각각 **표현·프레임·아이콘 규격**을 소유한다. 실제 파일의 위치를 여기서 중복 선언하거나 이관 전 경로를 앞서 바꾸지 않는다.
 
-**갓생알리미 기술 계승:** [F-PRINCIPLES](foundations/principles.md)의 표현력 있는 심플리즘과 [작업 색인의 UI-001](../docs/tasks/INDEX.md)의 원본 비교를 따른다. 기존 디자인 승인과 새 후보를 구분한다. **Current expressive proposal (user screenshot correction):** role-specific pill CTA, prominent body headline with inline contrast, contextual round Back/capsule, quiet tonal groups, independent selection tiles/presets and expressive sheets. The earlier web `refined` selector is historical reference, not the current candidate's numerical contract. 수치는 [v0.15 토큰](implementation/v015-tokens.json)의 `refinements`, 의미·사용은 기존 관련 Foundation/Component 정본을 참조한다. 웹 선택자나 별도 디자인 family는 새 규격의 조건이 아니다.
+**갓생알리미 기술 계승:** [F-PRINCIPLES](foundations/principles.md)의 표현력 있는 심플리즘과 [작업 색인의 UI-001](../docs/tasks/INDEX.md)의 원본 비교를 따른다. 기존 디자인 승인과 새 후보를 구분한다. **Current expressive direction:** role-specific pill CTA, prominent body headline with inline contrast, quiet tonal groups, independent selection tiles/presets and expressive sheets. D-019 supersedes the previous header and bottom-bar appearance: unified centered header with neutral round controls; icon-only neutral bottom navigation. The earlier web `refined` selector is historical reference, not the current candidate's numerical contract. 수치는 [v0.15 토큰](implementation/v015-tokens.json)의 `refinements`, 의미·사용은 기존 관련 Foundation/Component 정본을 참조한다. 웹 선택자나 별도 디자인 family는 새 규격의 조건이 아니다.
 
 ## 디자인 규격 선택
 

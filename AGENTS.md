@@ -13,7 +13,7 @@ TRACE(Task Routing & Agent Continuity Environment)는 저장소에 지식과 작
 | 에셋 | [공통 에셋 계약](docs/assets/README.md) |
 | TRACE 자체 | [인프라 규약](docs/core/INFRASTRUCTURE_SPEC.md), [검증 정책](docs/validation/VALIDATION_POLICY.md), [지식 색인](docs/knowledge/INDEX.md) |
 
-**개발 대상:** 웹 Preview와 SEED Lab은 유물로 보존하며 활성 개발·배포·필수 검수 대상이 아니다. 현 단계는 SEED 자체의 조정·개편을 독립 산출물로 완성한다. 실제 Android 정본 구축·이관·UI 적용·실기기 검증은 훗날 별도 작업이며 현재 SEED 작업의 선행조건이나 종료조건이 아니다. 명시 요청 없이 유물을 수정하거나 새 웹 시연을 만들지 않는다. User has now authorized a fresh page-by-page demonstration at [web/demo](web/demo/README.md), beginning with the shared page shell. This does not reactivate archived previews or authorize Android integration.
+**개발 대상:** 웹 Preview와 SEED Lab은 유물로 보존하며 활성 개발·배포·필수 검수 대상이 아니다. 현 단계는 SEED 자체의 조정·개편을 독립 산출물로 완성한다. 실제 Android 정본 구축·이관·UI 적용·실기기 검증은 훗날 별도 작업이며 현재 SEED 작업의 선행조건이나 종료조건이 아니다. 명시 요청 없이 유물을 수정하거나 새 웹 시연을 만들지 않는다. User has now authorized a fresh page-by-page demonstration at [web/demo](web/demo/README.md), beginning with the shared page shell. This does not reactivate archived previews or authorize Android integration. Maintain the live demo in repository source files on new2; commit changes there. Do not produce separate HTML exports for routine review.
 
 **디자인 작업 진입:** [SEED INDEX](seed/INDEX.md)가 디자인의 단일 색인이다. 디자인 작업은 제품 [확정](docs/DECISIONS.md)/[미결](docs/OPEN.md)과 관련 제품 의도를 확인한 뒤 SEED로 이동한다. 화면 단위가 아니라 필요한 규격·직접 의존성만 읽는다. 제품 결정, 작업 주소·진행·검증·종결·브랜치 규칙은 이 AGENTS와 TRACE에서 관리하며 SEED에 복제하지 않는다. 디자인 추출·규격·시각 검증은 SEED가 소유한다. 정본 경로·ID 변경 시 색인을 함께 갱신한다.
 

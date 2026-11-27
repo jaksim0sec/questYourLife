@@ -118,3 +118,7 @@
 - `web/preview`와 `web/seed-lab`은 [유물](../archive/README.md)로 원본 보존한다. 삭제·폐기나 디자인 승인 취소가 아니다. 기존 웹 우선 검증 절차는 실제 앱 기반 검증으로 대체한다.
 - SEED 명세·승인 이력·토큰·공통 에셋 및 갓생알리미 계승 기술 후보는 보존한다. 웹 구현은 기술 참고이며 실제 제품 구현으로 간주하지 않는다.
 - 이후 활성 제품 UI 개발과 검증은 Android 앱에 집중한다. 앱 이관은 별도 작업이며 main/new는 변경하지 않는다.
+
+## D-019 · Unified navigation for the active web demo [user direction · 2026-11-28]
+
+The supplied header reference replaces the previous large Root and Standard visual split: one centered title and identical circular achromatic icon controls for all ordinary pages. Actions must remain contextual; unavailable Back is omitted rather than fabricated. The bottom bar removes visible labels and brand accent, preserving accessible labels, existing Fill/Outline assets, five demo slots and K10 visibility. This supersedes D-015/D-017 appearance only for the active SEED/demo direction; the historical token values, archived artifacts, product IA and Android remain unchanged. Exact working dimensions are in NAV-TOP/C-BOTTOM and the refinement tokens; physical visual review remains pending. Work directly in the committed web source instead of exporting separate HTML files.

@@ -44,3 +44,5 @@ Glyph 박스는 target 박스 중앙에 둔다. 헤더의 icon별 translateX·sc
 ## Expressive contextual action (proposed)
 
 An isolated Back/Close may sit in a 48×48 circular neutral surface, with a centered 24 glyph. Pair with a contextual icon+label capsule only when it communicates a real object or action. Standard headers retain the D-015 default; ordinary toolbar icons need no circular background. Same independent touch target, label, focus and press behavior. See NAV-TOP and C-ACTION.
+
+**D-019:** Every present action in the active demo header uses the same neutral circular surface and target geometry from NAV-TOP. Do not mix transparent and round header actions or synthesize unavailable actions. Other icon-button contexts retain their own role.

@@ -1,6 +1,6 @@
 # 갓생패치 · Top Navigation 시각 기준
 
-D-011/D-015/D-017의 승인 구조와 최신 수치가 기준이다. 웹 시연은 유물이며, 이 명세는 재사용할 디자인 계약이다. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/TOP_NAVIGATION.md).
+**Active demo: D-019 supersedes the previous header appearance and alignment.** All three page roles use one centered title with matching circular neutral icon buttons; the old Root/Standard appearance below is historical (D-011/D-015/D-017). 웹 시연은 유물이며, 이 명세는 재사용할 디자인 계약이다. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/TOP_NAVIGATION.md).
 
 ## Root / Standard
 
@@ -29,6 +29,8 @@ Center와 Start는 동일 Header의 배치 선택이며 화면 작성자가 명�
 
 알림 아이콘은 기존 웹 승인 `assets/icons/preview/bell-connected.svg`를 참고한다. Soft 56종의 공식 bell 및 SVG 원본은 변경하지 않는다.
 
-## Expressive navigation (proposed)
+## Unified header · D-019
 
-Root is a generous identity bar: H76, title 30/800, tracking -.04em, leading 1.22; compact width below 360 uses 28. Use only relevant outline actions. For contextual flows, a circular Back (48 target, 24 glyph) may accompany a meaningful icon+label capsule (H48); move a large question/headline into the body instead of cramming it into the bar. This is a composition of existing roles, not a third navigation type. Existing Standard Center/Start and D-015 default remain unchanged. Use C-ICON/C-ACTION and F-TYPE; no extra actions or invented destinations. [Candidate values](implementation/v015-tokens.json) → `refinements.navigation`.
+Use the reference image's composition for Global, Global Inner and Non-Global: left contextual action, centered title, right contextual action. All use the same height, type, gutter, neutral round surfaces and glyph size. No separate large left-aligned Root title or Start alignment in the active demo. Keep a balanced empty slot when an action is unavailable; never invent a Back or Add action solely to match the image. Body Display remains independent. Bottom Sheet retains its own header.
+
+Working web geometry: H76 minimum, title 18/750 with 1.3 leading, centered 48 minimum circular targets, 26 glyph box, existing page gutter 16/20. These are implementation choices from the reference proportions, not separately measured/approved values. Circle fill uses the neutral soft surface, foreground uses the page foreground. Root with no previous page leaves the left slot empty. Back/Close and right actions use actual route context. No colored navigation or new icon assets. [Tokens](implementation/v015-tokens.json) → `refinements.navigation.unifiedHeader`.

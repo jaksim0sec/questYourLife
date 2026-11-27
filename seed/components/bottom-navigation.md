@@ -9,6 +9,8 @@ references: [S2-04, S2-05, S2-07, S2-08, D-011]
 
 # Bottom Navigation
 
+**Active demo D-019:** icon-only and achromatic. The older text-label and accent-color rules below describe the historical D-015 rendering, not current demo requirements.
+
 ## Purpose / Non-goals
 루트 간 이동과 현재 위치를 표시한다. **정확한 탭 수·이름·중앙 + 액션·목적지는 미확정**이다. 단 아이콘에 **독립 Fill 자산이 있는 경우**의 active Fill / inactive Outline 시각 규칙은 D-012로 승인됐다. 실제 네비게이션 목적지 구현 명세가 아님.
 
@@ -67,3 +69,7 @@ S2-05/07/08 하단바는 서로 구성이 달라 **시각 문법만 비교**. �
 - 웹 하단 5슬롯·균등 폭·`1.56938rem` 렌더 크기·`.6975rem` 라벨·`.2325rem` 간격을 유지. **상단의 1.59rem과 같은 값으로 강제하지 않는다.** 광학적 균형은 렌더링에서 판단한다.
 - 선택 시 `aria-current=page`는 하나만 설정하고 색 + 전용 Fill + 라벨을 함께 사용한다. 전체 IA·라우트 정책은 여전히 O-003 미결.
 - `assets/icons/preview/`는 이름이 preview인 **현행 파일 경로**다. 이 세 파일의 웹 Navigation 디자인 채택은 승인됐으나 파일을 강제로 기존 Soft 56종 manifest에 섞지 않는다.
+
+## Icon-only navigation · D-019
+
+Five existing demo destinations and their approved asset mapping remain unchanged. No visible text label, decorative indicator or brand tint. Active uses the separate Fill icon in neutral foreground; inactive uses Outline in neutral secondary foreground. Preserve accessible names (`aria-label`) and exactly one `aria-current=page` while visible. Center glyphs both axes in equal slots. Working glyph size 30, minimum target 48, existing bar height and safe area remain. The larger glyph is a review implementation choice. No new destination or final IA decision. [Tokens](../implementation/v015-tokens.json) → `refinements.navigation.bottom`.

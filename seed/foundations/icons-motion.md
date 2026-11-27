@@ -32,3 +32,5 @@ references: [REF-001, REF-002, REF-004, REF-005]
 표현 후보는 갓생알리미 소스 비교 및 이전 웹 코드에 근거한다. 새 앱의 실제 접근성·렌더 승인 아님. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/foundations/icons-motion.md); [에셋 계약](../../docs/assets/README.md).
 
 **v5 visual review:** Match the perceived weight and optical size of icons to adjacent type; small/thin isolated symbols are not acceptable. Original approved SVG paths and Fill pairs remain unchanged. The review's 2.05 outline stroke is a presentation candidate, not a rewrite of the 56 source assets. The new shell uses the approved asset masks and their role-specific sizes; further icon stroke review is not implied by this implementation.
+
+**D-019 active navigation:** unified header glyph box 26 and bottom navigation 30 are working review dimensions. Use existing approved SVG paths and independent Fill assets, no per-icon optical hacks; all visible bottom icons are achromatic. Earlier D-015 label and size values remain historical.

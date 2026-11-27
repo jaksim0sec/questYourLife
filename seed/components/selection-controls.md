@@ -12,14 +12,9 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 ## Purpose / Non-goals
 비슷한 알약 모양을 동작이 다른 컴포넌트로 구분한다. 이 문서는 관련 선택 family를 함께 라우팅하지만 하나의 만능 pill API로 합치지 않는다. 하단 목적지는 S-PAGE의 미결 사항이다.
 
-## 책임 분리 · v0.2
-이 파일은 Checkbox/Radio/Switch 등 선택 family의 **공통 원칙만** 소유한다. 독립된 역할·상태·접근성 계약은 [C-TABS](tabs.md) · [C-SEGMENT](segmented-control.md) · [C-CHECK](checkbox.md)가 정본이다. 같은 속성을 여기에서 다시 정의하지 않고 각 명세를 링크한다.
+## 책임 분리
 
-## v0.6 책임 분리
-- 상호 배타적 Radio Choice의 Group/Indicator/Checked·Focus·Disabled는 [C-RADIO](radio-choice.md)가 정본이다.
-- Checkbox는 [C-CHECK](checkbox.md), 상위 탐색은 [C-TABS](tabs.md), 기간/보기는 [C-SEGMENT](segmented-control.md) 정본을 따른다.
-- Segmented는 Chip을 두 겹으로 감싸지 않는다. 하나의 컨테이너 + 선택 Thumb + Label. 실용적인 선택값 2~4개, 콘텐츠 바로 위에 위치. `Tabs`의 네비게이션과 목적이 다르다.
-- 다크 OFF Switch는 독립 `disabled` 값이 아니라 off 상태의 대비를 보장해야 하며, 라이트 전용 회색을 그대로 재사용하지 않는다.
+독립 명세: [Tabs](tabs.md) / [Segmented](segmented-control.md) / [Checkbox](checkbox.md) / [Radio](radio-choice.md). Filter Chip과 Switch 및 family 공통 원칙은 이 문서가 소유한다. Segmented는 단일 Track·Thumb, Switch의 off는 disabled와 구분한다.
 
 ## Anatomy / Properties
 | 종류 | Anatomy·속성 | 의미·배치 |
@@ -33,6 +28,12 @@ references: [REF-001, REF-002, REF-004, REF-005, SRC-SEED-SEGMENT]
 
 ## Tokens / Size
 공통 type.body/support, radius.control/pill, 공간·터치는 Foundation 정본 사용. Tabs는 배경 상자 대신 선택 밑줄을 기본 제안한다. Segmented는 bg.muted Track과 bg.surface Thumb, fg.primary 라벨을 사용한다. 좌우 padding은 segment.paddingX이며 불필요하게 늘리지 않는다. 내용이 짧으면 hug, fill은 실제 동일 폭 선택 구조일 때만 쓴다. 긴 라벨은 눌러 넣거나 작은 글자로 바꾸지 않는다. Track 높이와 target은 F-GEOMETRY를 따른다.
+
+## Switch · 갓생알리미 계승 후보
+
+실제 설정의 이진 상태만 표현한다. 47×28px track, 22px thumb, 3px inset의 비례를 시작점으로 사용하되 SEED의 rem·테마 토큰을 적용한다. 밝은/어두운 테마에서 off는 중립 면과 구분 가능한 thumb, on은 현재 전경색 면과 반대색 thumb. 이동·색 전환은 F-ICON-MOTION을 사용한다. 최소 48px 터치 영역, 읽을 수 있는 label, native checkbox focus/disabled/checked 상태를 유지한다.
+
+웹 공통 CSS의 `label.seed-switch > input[type=checkbox] + .seed-switch__track` 구조를 제공한다. 입력에는 연결된 보이는 라벨 또는 접근 가능한 이름을 제공하고 실제 설정 상태를 연결한다. 기존 페이지에 가짜 설정을 추가하지 않는다. 비례 및 렌더 품질은 사용자 검수 전 후보이며 실제 소비 페이지 연결·Android 검증은 미완료다.
 
 ## Filter Chip · 현재 웹 공통 구현/사용 경계
 

@@ -94,3 +94,15 @@ test('Do not redraw banner effects in SVG or turn periods into independent actio
   assert.match(surface,/SVG로.*이펙트.*금지/);
   assert.match(selection,/독립.*Outline.*버튼.*비권장/);
 });
+
+test('Inherited press feedback preserves outer target and reduced motion',()=>{
+  assert.match(declaration('.seed-action:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]):active .seed-action__face'),/transform:scale\(\.98\)/);
+  assert.match(declaration('.seed-filter-chip:not(:disabled):not([aria-disabled="true"]):active::before'),/scale\(\.96\)/);
+  assert.match(css,/prefers-reduced-motion:reduce[\s\S]*?\.seed-action__face,\.seed-filter-chip,[^}]+transition:none/);
+});
+test('Switch uses native checked/disabled/focus states and retains 48px target',()=>{
+  assert.match(declaration('.seed-switch'),/min-width:3rem; min-height:3rem/);
+  assert.match(declaration('.seed-switch > input:checked + .seed-switch__track::before'),/translateX\(1\.1875rem\)/);
+  assert.match(declaration('.seed-switch > input:focus-visible + .seed-switch__track'),/outline:2px/);
+  assert.match(declaration('.seed-switch > input:disabled + .seed-switch__track'),/opacity:\.45/);
+});

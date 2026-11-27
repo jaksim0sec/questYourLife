@@ -2,7 +2,7 @@
 // S-PAGE K10: visibility is owned here, not in page content.
 const PAGE_TYPES=Object.freeze({global:{header:"root",nav:true},"global-inner":{header:"standard",nav:true},"non-global":{header:"standard",nav:false}});
 const destinations=[["home","홈","home","home-fill"],["quests","퀘스트","check-circle","check-circle-fill"],["dm","디엠","chat","chat-fill"],["clan","클랜","bookmark","clan-bookmark-fill"],["me","마이","me-smile","me-smile-fill"]];
-const previewIcons=new Set(["clan-bookmark-fill","me-smile","me-smile-fill","bell-connected","bell-connected-root"]);
+const previewIcons=new Set(["clan-bookmark-fill","me-smile","me-smile-fill","bell-connected","bell-connected-root","more-root"]);
 const iconPath=n=>"../../assets/icons/"+(previewIcons.has(n)?"preview/":"soft/v0.14/")+n+".svg";
 const icon=n=>'<span class="icon" aria-hidden="true" style="--icon:url(&quot;'+iconPath(n)+'&quot;)"></span>';
 const ib=(name,label,action,round=false)=>'<button class="icon-button'+(round?' round':'')+'" aria-label="'+label+'" data-action="'+action+'">'+icon(name)+'</button>';
@@ -21,7 +21,7 @@ function save(){active.scroll=$("content").scrollTop;active.draft=$("draft")?.va
 function route(key){if($("sheet").open)$("sheet").close();save();const owner=active.owner;if(roots[key]){tabs[owner]=stack;stack=tabs[key]||[{key,owner:key,scroll:0,draft:""}]}else stack.push({key,owner,scroll:0,draft:""});active=stack.at(-1);render()}
 function back(){save();if(stack.length>1)stack.pop();else stack=[{key:active.owner,owner:active.owner,scroll:0,draft:""}];active=stack.at(-1);render()}
 function render(){const p=model(active),type=PAGE_TYPES[p.type];$("shell").dataset.pageType=p.type;
- const header=type.header==="root"?'<div class="head root"><h1>'+p.title+'</h1><div class="end">'+ib("bell-connected-root","알림 및 표시 설정","sheet")+'</div></div>':'<div class="head standard"><div class="start">'+ib("left","뒤로 가기","back",true)+'</div><h1>'+p.title+'</h1><div class="end">'+ib("more","표시 설정","sheet",true)+'</div></div>';
+ const header=type.header==="root"?'<div class="head root"><h1>'+p.title+'</h1><div class="end">'+ib("bell-connected-root","알림","notifications")+ib("more-root","더보기","sheet")+'</div></div>':'<div class="head standard"><div class="start">'+ib("left","뒤로 가기","back",true)+'</div><h1>'+p.title+'</h1><div class="end">'+ib("more","표시 설정","sheet",true)+'</div></div>';
  $("header").innerHTML=header;$("content").innerHTML=p.body();if($("draft"))$("draft").value=active.draft||"";
  $("content").scrollTop=active.scroll||0;$("content").classList.remove("enter");void $("content").offsetWidth;$("content").classList.add("enter");
  $("footer").hidden=!p.footer;$("footer").innerHTML=p.footer?cta(p.footer.label,p.footer.tone,p.footer.action):"";
@@ -30,7 +30,7 @@ function render(){const p=model(active),type=PAGE_TYPES[p.type];$("shell").datas
 function showSheet(trigger){lastTrigger=trigger;$("sheet").dataset.snap="min";$("theme").checked=document.documentElement.dataset.theme==="dark";$("sheet").showModal()}
 function snap(step){const d=$("sheet"),sizes=["min","mid","full"],i=sizes.indexOf(d.dataset.snap)+step;if(i<0)d.close();else d.dataset.snap=sizes[Math.min(2,i)]}
 $("sheetChoices").innerHTML=row("중간 높이","","chevron","snap-mid")+row("전체 높이","","chevron","snap-full");
-document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.action;if(b.hasAttribute("data-close")){b.closest("dialog").close();return}if(!a)return;if(a.startsWith("tab:")){route(a.slice(4));return}if(a==="back")back();else if(a==="sheet")showSheet(b);else if(a==="confirm")$("confirm").showModal();else if(a==="snap-mid"||a==="snap-full")$("sheet").dataset.snap=a.slice(5);else if(fixtures[a])route(a)});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.action;if(b.hasAttribute("data-close")){b.closest("dialog").close();return}if(!a)return;if(a.startsWith("tab:")){route(a.slice(4));return}if(a==="back")back();else if(a==="sheet")showSheet(b);else if(a==="notifications")$("notifications").showModal();else if(a==="confirm")$("confirm").showModal();else if(a==="snap-mid"||a==="snap-full")$("sheet").dataset.snap=a.slice(5);else if(fixtures[a])route(a)});
 $("theme").addEventListener("change",e=>document.documentElement.dataset.theme=e.target.checked?"dark":"light");
 $("sheet").addEventListener("close",()=>{if(lastTrigger?.isConnected)lastTrigger.focus({preventScroll:true})});
 for(const d of document.querySelectorAll("dialog"))d.addEventListener("click",e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientY<r.top||e.clientY>r.bottom||e.clientX<r.left||e.clientX>r.right)d.close()});

@@ -13,3 +13,5 @@ Home v2 adds a session-only mascot preview, completion-derived achievement, expl
 Home v4: compact daily next action/full-list detail, dedicated cover rail and catalog/detail/copy flow, illustrated joint-challenge preview, social/appearance. New SVG cover illustrations are demo candidates. Other root structures unchanged.
 
 UI-005: all five roots now have product-specific content and state-linked interactions; DM example conversations are local only. Search/category, goal status, copy provenance, clan sample join/contribution, profile and activity records connected. Home title readability and mascot/chest overlap corrected; mascot paper backing is a rendering candidate, original art unchanged. Archive consulted, not reactivated. No real services or persistent storage.
+
+UI-006: archive-inspired shop, wardrobe, reward previews, plain profile and clan panels. Catalog/ownership are explicit session examples; no transactions or reward grants. All existing goal/book state preserved.

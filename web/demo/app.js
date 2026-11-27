@@ -36,7 +36,12 @@ const avatarItems={
  beanie:{file:"cosmetic_beanie.png",label:"골지 비니",box:[7.5,5.5,85,61.2,40]},
  cap:{file:"cosmetic_blue_cap.png",label:"블루 캡",box:[6.5,1.5,87,58.2,45]},
  headphones:{file:"cosmetic_black_headphones.png",label:"블랙 헤드폰",box:[3,17.5,94,68.5,21]},
- cream:{file:"cosmetic_cream_headphones.png",label:"크림 헤드폰",box:[3,17.5,94,68.5,20]}
+ cream:{file:"cosmetic_cream_headphones.png",label:"크림 헤드폰",box:[3,17.5,94,68.5,20]},
+ creamcap:{file:"cosmetic_cream_cap.png",label:"크림 캡",box:[4.5,6,91,58.2,44]},
+ charcoal:{file:"cosmetic_charcoal_cap.png",label:"차콜 캡",box:[4.5,6,91,58.2,43]},
+ backward:{file:"cosmetic_backward_cap.png",label:"백워드 캡",box:[10.5,-2,78,61.2,42]},
+ bucket:{file:"cosmetic_bucket_hat.png",label:"버킷 햇",box:[6.75,1.2,86.5,65.6,46]},
+ earbuds:{file:"cosmetic_white_airpods_pair.png",label:"화이트 이어버드",box:[2.5,48,95,36,32]}
 };
 let homeLook=["cap","headphones"];
 const homeArt=(file,cls="")=>'<img class="'+cls+'" src="../../assets/art/'+file+'" alt="" loading="lazy">';
@@ -75,7 +80,7 @@ function homeBody(){
  const discovery='<section class="home-discovery"><div class="section-head"><h2 class="section-title">추천 퀘스트북</h2>'+textAction("전체 보기","home-catalog")+'</div><div class="book-rail" aria-label="추천 퀘스트북 예시">'+[homeBooks[2],homeBooks[0],homeBooks[1],homeBooks[3]].map(homeBookTile).join("")+'</div></section>';
  const event='<section><button class="home-event" data-action="home-clan"><span class="event-copy"><small>공동 도전 예시</small><strong>우리의 작은 습관</strong><span>친구와 각자의 목표 실천</span><span class="event-people">'+socialExamples.map(x=>mascot(x.look,"event-person")).join("")+'</span><span class="event-action">살펴보기'+icon("chevron")+'</span></span><span class="event-art">'+homeArt("rewards/06_wooden_chest.png","event-chest")+'</span></button></section>';
  const social=section("친구들의 도전 (예시)",'<div class="social-rows">'+socialExamples.map(x=>'<div class="social-row">'+mascot(x.look,"social-mascot")+'<div class="social-copy"><strong>'+x.name+'</strong><p>'+x.text+'</p></div><button class="cheer-button" data-action="cheer:'+x.id+'" aria-label="'+x.name+' 응원'+(cheers.has(x.id)?" 취소":"")+'" aria-pressed="'+cheers.has(x.id)+'">'+icon("heart")+'<span>'+(cheers.has(x.id)?"응원함":"응원")+'</span></button></div>').join("")+'</div>',textAction("디엠","dm"));
- const expression=section("꾸미기",'<div class="home-expression"><button class="surface expression-tile" data-action="home-look">'+mascot(homeLook,"expression-mascot")+'<span>마스코트 꾸미기'+icon("chevron")+'</span></button><button class="surface expression-tile" data-action="home-rewards">'+homeArt("rewards/cash-coins-stack.png","expression-art")+'<span>보상 미리보기'+icon("chevron")+'</span></button></div>');
+ const expression=section("꾸미기",'<div class="home-expression"><button class="surface expression-tile" data-action="home-look">'+mascot(homeLook,"expression-mascot")+'<span>마스코트 꾸미기'+icon("chevron")+'</span></button><button class="surface expression-tile" data-action="home-rewards">'+homeArt("rewards/cash-coins-stack.png","expression-art")+'<span>보상함'+icon("chevron")+'</span></button></div>');
  return '<div class="home-feed">'+daily+discovery+event+social+expression+demoNote()+'</div>';
 }
 function homeLookBody(){
@@ -91,7 +96,7 @@ function homeBookBody(){
 function homeClanBody(){
  return '<section class="reward-preview-hero">'+homeArt("rewards/03_delivery_parcel.png")+'<h2 class="display">우리의 작은 습관</h2><p class="support">각자 정한 행동을 실천하고 서로 응원하는 공동 도전 예시예요.</p></section>'+section("함께하는 사람들",'<div class="social-rows">'+socialExamples.map(x=>'<div class="social-row">'+mascot(x.look,"social-mascot")+'<div class="social-copy"><strong>'+x.name+'</strong><p>'+x.text+'</p><small>예시 참여자</small></div></div>').join("")+'</div>')+'<p class="support">클랜 참여와 공유 범위는 아직 실제 서비스에 연결되지 않았어요.</p>'+cta("클랜 둘러보기","weak","tab:clan");
 }
-function setLook(key){const item=avatarItems[key];if(!item)return;const ear=k=>["headphones","cream"].includes(k);save();homeLook=homeLook.includes(key)?homeLook.filter(k=>k!==key):[...homeLook.filter(k=>ear(k)!==ear(key)),key];render(false);document.querySelector?.('[data-action="look:'+key+'"]')?.focus({preventScroll:true})}
+function setLook(key){const item=avatarItems[key];if(!item||!ownedPreview.has(key))return;const ear=k=>["headphones","cream","earbuds"].includes(k);save();homeLook=homeLook.includes(key)?homeLook.filter(k=>k!==key):[...homeLook.filter(k=>ear(k)!==ear(key)),key];render(false);document.querySelector?.('[data-action="look:'+key+'"]')?.focus({preventScroll:true})}
 function cheer(id){if(!socialExamples.some(x=>x.id===id))return;save();cheers.has(id)?cheers.delete(id):cheers.add(id);render(false);document.querySelector?.('[data-action="cheer:'+id+'"]')?.focus({preventScroll:true});$("status").textContent=cheers.has(id)?"시연 응원 표시를 추가했어요.":"시연 응원 표시를 취소했어요."}
 function goalCard(g){
  const {done,total}=stat(g.tasks),next=g.tasks.find(t=>!t.done);
@@ -137,13 +142,13 @@ const countDone=()=>allTasks().filter(x=>x.t.done).length;
 const chips=(items,current,action,label)=>'<div class="filter-tabs" role="group" aria-label="'+label+'">'+items.map(([k,v])=>'<button aria-pressed="'+(current===k)+'" data-action="'+action+':'+k+'">'+v+'</button>').join("")+'</div>';
 function compactGoal(g){
  const {done,total}=stat(g.tasks),b=bookForGoal(g),next=g.tasks.find(t=>!t.done);
- return '<button class="surface compact-goal" data-action="goal:'+g.id+'"><span class="goal-cover">'+(b?homeArt("questbooks/"+b.art):icon("book"))+'</span><span class="goal-info"><strong>'+esc(g.title)+'</strong><span class="goal-meta">'+(goalBook(g)?"참여한 퀘스트북":"내 목표")+'<b>'+done+'/'+total+'</b></span>'+progress(done,total)+'<small>'+esc(next?"다음 · "+next.title:"완료")+'</small></span>'+icon("chevron")+'</button>';
+ return '<button class="compact-goal" data-action="goal:'+g.id+'"><span class="goal-cover">'+(b?homeArt("questbooks/"+b.art):icon("book"))+'</span><span class="goal-info"><strong>'+esc(g.title)+'</strong><span class="goal-meta">'+(goalBook(g)?"참여한 퀘스트북":"내 목표")+'<b>'+done+'/'+total+'</b></span>'+progress(done,total)+'<small>'+esc(next?"다음 · "+next.title:"완료")+'</small></span>'+icon("chevron")+'</button>';
 }
 function questsV2(){
  const today=todayTasks(),{done,total}=stat(today.map(x=>x.t)),next=today.find(x=>!x.t.done);
  const visible=goals.filter(g=>questFilter==="all"|| (questFilter==="active"?g.tasks.some(t=>!t.done):g.tasks.every(t=>t.done)));
  const participated=goals.filter(g=>g.bookId);
- return '<div class="product-feed"><button class="surface daily-strip" data-action="home-today">'+mascot(homeLook,"strip-mascot")+'<span><strong>오늘 <b>'+done+'/'+total+' 완료</b></strong><small>'+esc(next?next.t.title:total?"오늘의 퀘스트 완료":"첫 퀘스트 만들기")+'</small></span>'+icon("chevron")+'</button>'+
+ return '<div class="product-feed"><button class="daily-strip" data-action="home-today">'+mascot(homeLook,"strip-mascot")+'<span><strong>오늘 <b>'+done+'/'+total+' 완료</b></strong><small>'+esc(next?next.t.title:total?"오늘의 퀘스트 완료":"첫 퀘스트 만들기")+'</small></span>'+icon("chevron")+'</button>'+
  '<section>'+chips([["active","진행 중"],["done","완료"],["all","전체"]],questFilter,"qfilter","목표 상태")+'<div class="group">'+(visible.length?visible.map(compactGoal).join(""):'<p class="support empty-state">해당하는 목표가 없어요.</p>')+'</div></section>'+
  cta("새 목표 만들기","brand","create")+
  section("오늘 할 일",today.length?taskGroup(today,true):'<p class="support">오늘의 퀘스트가 없어요.</p>',textAction("전체","home-today"))+
@@ -159,37 +164,80 @@ function exploreBody(){
  '<section>'+chips([["전체","전체"],["공부","공부"],["독서","독서"],["언어","언어"],["습관","습관"]],exploreFilter,"efilter","퀘스트북 분야")+'<div id="explore-results">'+exploreResults()+'</div></section>'+
  section("함께 도전하기",'<button class="surface discovery-link" data-action="home-clan">'+homeArt("rewards/06_wooden_chest.png")+'<span><strong>우리의 작은 습관</strong><small>공동 도전 예시</small></span>'+icon("chevron")+'</button>')+demoNote()+'</div>';
 }
+
+// Archive-inspired presentation only; preview ownership and economy are not production data.
+const ownedPreview=new Set(["cap","headphones","beanie","cream"]);
+const shopCatalog=["creamcap","charcoal","backward","bucket","cream","headphones","earbuds"];
+const itemType=k=>["headphones","cream","earbuds"].includes(k)?"오디오":"모자";
+let shopFilter="전체", wardrobeFilter="전체";
+const itemMedia=(k,cls="")=>'<span class="item-media '+cls+'">'+homeArt("cosmetics/"+avatarItems[k].file)+'</span>';
+const itemTile=(k,action="item:")=>'<button class="catalog-tile" data-action="'+action+k+'"'+(action==="look:"?' aria-pressed="'+homeLook.includes(k)+'"':'')+'>'+itemMedia(k)+'<span class="catalog-info"><strong>'+avatarItems[k].label+'</strong><small>'+(action==="look:"?(homeLook.includes(k)?"착용 중":"선택 가능"):(ownedPreview.has(k)?"보유 예시":"상품 예시"))+'</small></span></button>';
+const itemFilters=(value,action,label)=>chips([["전체","전체"],["모자","모자"],["오디오","오디오"]],value,action,label);
+const rewardExamples=[
+ {id:"first",title:"첫 도전 상자",art:"06_wooden_chest.png",source:"퀘스트 보상 예시"},
+ {id:"clan",title:"공동 도전 상자",art:"08_premium_glowing_chest.png",source:"클랜 보상 예시"}
+];
+const rewardRow=b=>'<button class="reward-open-row" data-action="reward:'+b.id+'">'+homeArt("rewards/"+b.art)+'<span><strong>'+b.title+'</strong><small>'+b.source+'</small></span>'+icon("chevron")+'</button>';
+function shopBody(){
+ const pick="creamcap",visible=shopCatalog.filter(k=>shopFilter==="전체"||itemType(k)===shopFilter);
+ return '<div class="product-feed shop-page"><section class="surface shop-feature">'+itemMedia(pick)+'<div class="shop-feature-copy"><p class="support">추천 소품</p><h2>'+avatarItems[pick].label+'</h2><button class="compact-pill" data-action="item:'+pick+'">소품 보기'+icon("chevron")+'</button></div></section>'+
+ '<section><h2 class="section-title">꾸미기 아이템</h2>'+itemFilters(shopFilter,"shopfilter","상품 종류")+'<div class="catalog-grid">'+visible.map(k=>itemTile(k)).join("")+'</div></section>'+
+ section("보상 상자",'<div class="reward-rail">'+rewardExamples.map(rewardRow).join("")+'</div>',textAction("보상함","home-rewards"))+
+ row("퀘스트 둘러보기","실천으로 얻는 보상","check-circle","tab:quests")+demoNote()+'</div>';
+}
+function itemDetailBody(){
+ const k=active.itemKey,x=avatarItems[k];if(!x)return '<p class="support">소품을 찾을 수 없어요.</p>';
+ return '<div class="product-feed"><section class="item-detail-art">'+itemMedia(k)+'</section><section class="item-detail-copy"><p class="support">'+itemType(k)+'</p><h2 class="display">'+x.label+'</h2><p class="support">'+(ownedPreview.has(k)?"시연 보유 소품":"카탈로그 예시 · 실제 가격과 구매 조건은 미정이에요.")+'</p></section>'+
+ (ownedPreview.has(k)?cta("꾸미기","","home-look"):cta("착용 미리보기","","try-item"))+'</div>';
+}
+function wardrobeBody(){
+ const visible=[...ownedPreview].filter(k=>wardrobeFilter==="전체"||itemType(k)===wardrobeFilter);
+ return '<div class="product-feed"><section class="wardrobe-stage">'+mascot(homeLook,"wardrobe-mascot")+'<div class="equipped-line">'+["모자","오디오"].map(type=>{const k=homeLook.find(k=>itemType(k)===type);return '<div><small>'+type+'</small><strong>'+(k?avatarItems[k].label:"착용 안 함")+'</strong></div>'}).join("")+'</div></section>'+
+ '<section><div class="section-head"><h2 class="section-title">보유 소품 예시</h2>'+textAction("상점","shop")+'</div>'+itemFilters(wardrobeFilter,"wardrobefilter","소품 종류")+'<div class="catalog-grid">'+visible.map(k=>itemTile(k,"look:")).join("")+'</div></section>'+demoNote()+'</div>';
+}
+function rewardListBody(){return '<div class="product-feed">'+section("보상 상자 예시",'<div class="reward-list">'+rewardExamples.map(rewardRow).join("")+'</div>')+'<p class="support">보상 획득 조건과 지급량은 아직 정해지지 않았어요.</p>'+row("꾸미기 상점","","gift","shop")+'</div>'}
+function rewardDetailBody(){
+ const b=rewardExamples.find(x=>x.id===active.rewardId);if(!b)return '<p class="support">상자를 찾을 수 없어요.</p>';
+ return '<div class="product-feed"><section class="reward-preview-hero">'+homeArt("rewards/"+b.art)+'<h2 class="display">'+b.title+'</h2><p class="support">'+b.source+'</p></section><p class="support">상자 내용물과 획득 조건은 미정이며 실제 지급은 없어요.</p>'+cta(b.id==="clan"?"클랜 살펴보기":"퀘스트 살펴보기","",b.id==="clan"?"tab:clan":"tab:quests")+'</div>';
+}
+function tryItem(){
+ const k=active.itemKey;if(!avatarItems[k])return;const preview=homeLook.filter(x=>itemType(x)!==itemType(k)).concat(k);
+ route("item-preview",{itemKey:k,preview});
+}
+function itemPreviewBody(){
+ const k=active.itemKey;if(!avatarItems[k])return '<p class="support">소품을 찾을 수 없어요.</p>';
+ return '<section class="look-preview">'+mascot(active.preview,"wardrobe-mascot")+'<h2 class="section-title">'+avatarItems[k].label+'</h2><p class="support">착용 모습만 확인하는 미리보기예요.</p></section>';
+}
+
 function clanMembers(){
  return [{name:demoIdentity,look:homeLook,done:clanContribution,me:true},{name:"모카",look:["beanie","cream"],done:true},{name:"하루",look:["cap"],done:false}];
 }
 function clanBody(){
  const members=clanMembers(),done=members.filter(m=>m.done).length;
- if(!clanJoined)return '<div class="product-feed"><div class="surface clan-join"><span class="clan-emblem">'+icon("bookmark")+'</span><h2 class="display">느슨한 갓생단</h2><p class="support">각자 정한 행동을 실천하고 서로 응원하는 클랜 예시예요.</p>'+cta("시연 클랜 참여","brand","clan-join")+'</div>'+demoNote()+'</div>';
- const people='<div class="clan-people">'+members.map(m=>'<div>'+mascot(m.look,"member-mascot")+'<strong>'+esc(m.name)+'</strong><small>'+(m.done?"참여 기록 있음":"아직 미기록")+'</small></div>').join("")+'</div>';
- const rows='<div class="surface member-list">'+members.map(m=>'<div class="member-row">'+mascot(m.look,"social-mascot")+'<strong>'+esc(m.name)+(m.me?' (나)':'')+'</strong><span class="support">'+(m.done?"실천 기록":"미기록")+'</span></div>').join("")+'</div>';
- const activity='<div class="surface member-list">'+socialExamples.map(x=>'<div class="member-row">'+mascot(x.look,"social-mascot")+'<div><strong>'+x.name+'</strong><p class="support">'+x.text+'</p></div></div>').join("")+'</div>';
- return '<div class="product-feed"><section class="clan-identity"><span class="clan-emblem">'+icon("bookmark")+'</span><div><h2>느슨한 갓생단</h2><p class="support">멤버 '+members.length+'명 · 시연</p></div><button class="text-action" data-action="clan-leave">나가기</button></section>'+
- '<section class="clan-feature"><div><p>공동 도전</p><h2>우리의 작은 습관</h2><div class="clan-progress-caption"><strong>'+done+'/'+members.length+'명 실천</strong></div>'+progress(done,members.length)+'</div>'+homeArt("rewards/06_wooden_chest.png","clan-feature-art")+'</section>'+
- '<section class="surface clan-contribute"><div><strong>나의 실천 기록</strong><p class="support">개인 목표의 제목이나 상세 내용은 공유하지 않아요.</p></div>'+cta(clanContribution?"기록 취소":"실천 기록하기",clanContribution?"weak":"brand","clan-contribute")+'</section>'+
- section("함께하는 사람들",people)+
- '<section>'+chips([["members","멤버"],["activity","활동"]],clanPanel,"clan-panel","클랜 정보")+(clanPanel==="members"?rows:activity)+'</section>'+
- row("공동 도전 살펴보기","보상과 참여 방식 예시","gift","home-clan")+row("디엠","메시지 예시","chat","dm")+demoNote()+'</div>';
+ if(!clanJoined)return '<div class="product-feed"><section class="clan-join"><span class="clan-emblem">'+icon("bookmark")+'</span><h2 class="display">느슨한 갓생단</h2><p class="support">각자 정한 행동을 실천하고 서로 응원하는 클랜 예시예요.</p>'+cta("시연 클랜 참여","brand","clan-join")+'</section>'+demoNote()+'</div>';
+ const membersList='<div class="plain-member-list">'+members.map(m=>'<div class="member-row">'+mascot(m.look,"social-mascot")+'<strong>'+esc(m.name)+(m.me?' (나)':'')+'</strong><span class="support">'+(m.done?"실천 기록":"미기록")+'</span></div>').join("")+'</div>';
+ const activity='<div class="plain-member-list">'+socialExamples.map(x=>'<div class="member-row">'+mascot(x.look,"social-mascot")+'<div><strong>'+x.name+'</strong><p class="support">'+x.text+'</p></div></div>').join("")+'</div>';
+ const contribution='<section class="clan-feature"><div><p>공동 도전</p><h2>우리의 작은 습관</h2><div class="clan-progress-caption"><strong>'+done+'/'+members.length+'명 실천</strong></div>'+progress(done,members.length)+'</div>'+homeArt("rewards/06_wooden_chest.png","clan-feature-art")+'</section>'+
+ '<section class="clan-own-action"><div><strong>나의 실천 기록</strong><p class="support">개인 목표 내용은 공유하지 않아요.</p></div><button class="compact-pill '+(clanContribution?"":"brand")+'" data-action="clan-contribute">'+(clanContribution?"기록 취소":"실천 기록")+'</button></section>';
+ const insight='<section class="clan-insight"><h2 class="section-title">공동 도전 참여 현황</h2><p class="display">'+done+'<small> / '+members.length+'명</small></p>'+progress(done,members.length)+'</section>'+section("멤버별 실천 기록",membersList)+section("활동 예시",activity);
+ const panel=clanPanel==="insight"?insight:clanPanel==="rewards"?section("공동 보상 예시",rewardRow(rewardExamples[1]))+row("공동 도전","","bookmark","home-clan"):contribution+section("멤버",membersList,textAction("디엠","dm"))+section("최근 활동",activity);
+ return '<div class="product-feed"><section class="clan-identity"><span class="clan-emblem">'+icon("clan-bookmark-fill")+'</span><div><h2>느슨한 갓생단</h2><p class="support">멤버 '+members.length+'명 · 시연</p></div><button class="text-action" data-action="clan-leave">나가기</button></section>'+
+ '<section class="clan-tab-section">'+chips([["members","내 클랜"],["insight","인사이트"],["rewards","보상"]],clanPanel,"clan-panel","클랜 정보")+'<div class="product-feed">'+panel+'</div></section>'+demoNote()+'</div>';
 }
 function myBody(){
  const completed=goals.filter(g=>g.tasks.every(t=>t.done)).length;
- const owned=Object.keys(avatarItems);
- return '<div class="product-feed"><section class="my-profile">'+mascot(homeLook,"profile-mascot")+'<div><h2 class="display">'+demoIdentity+'</h2>'+(clanJoined?'<p class="support">느슨한 갓생단 · 시연 프로필</p>':'<p class="support">시연 프로필</p>')+'<button class="text-action" data-action="home-look">프로필 꾸미기'+icon("chevron")+'</button></div></section>'+
- '<section class="surface my-stats"><div><span>완료한 퀘스트</span><strong>'+countDone()+'<small>개</small></strong></div><div><span>완료한 목표</span><strong>'+completed+'<small>개</small></strong></div></section>'+
- section("내 도전",goals.length?'<div class="my-goal-rail">'+goals.map(g=>{const b=bookForGoal(g),s=stat(g.tasks);return '<button class="mini-book" data-action="goal:'+g.id+'">'+(b?homeArt("questbooks/"+b.art):'<span class="plain-book">'+icon("book")+'</span>')+'<strong>'+esc(g.title)+'</strong><small>'+s.done+'/'+s.total+' 완료</small></button>'}).join("")+'</div>':'<p class="support">아직 목표가 없어요.</p>',textAction("전체","tab:quests"))+
- section("꾸미기 소품 예시",'<div class="item-rail">'+owned.map(k=>'<button class="item-tile" data-action="home-look">'+homeArt("cosmetics/"+avatarItems[k].file)+'<strong>'+avatarItems[k].label+'</strong>'+(homeLook.includes(k)?'<small>착용 중</small>':'')+'</button>').join("")+'</div>',textAction("꾸미기","home-look"))+
- '<div class="group">'+row("보상 미리보기","","gift","home-rewards")+row("성취 기록","","chart","my-record")+'</div>'+demoNote()+'</div>';
+ return '<div class="product-feed"><section class="my-profile plain-profile"><div><h2 class="display">'+demoIdentity+'</h2><p class="support">'+(clanJoined?"느슨한 갓생단 · ":"")+'시연 프로필</p><button class="compact-pill" data-action="home-look">프로필 꾸미기</button></div>'+mascot(homeLook,"profile-mascot")+'</section>'+
+ '<button class="profile-record" data-action="my-record"><span><small>완료 퀘스트</small><strong>'+countDone()+'</strong></span><span><small>완료 목표</small><strong>'+completed+'</strong></span>'+icon("chevron")+'</button>'+
+ section("꾸미기 소품",'<div class="item-rail">'+[...ownedPreview].map(k=>itemTile(k)).join("")+'</div>',textAction("상점","shop"))+
+ section("보상함",'<div class="reward-list">'+rewardExamples.map(rewardRow).join("")+'</div>',textAction("전체","home-rewards"))+
+ section("내 도전",goals.length?'<div class="plain-goal-list">'+goals.map(g=>{const s=stat(g.tasks);return '<button class="plain-goal" data-action="goal:'+g.id+'"><span><strong>'+esc(g.title)+'</strong><small>'+s.done+'/'+s.total+' 완료</small></span>'+icon("chevron")+'</button>'}).join("")+'</div>':'<p class="support">아직 목표가 없어요.</p>',textAction("전체","tab:quests"))+demoNote()+'</div>';
 }
 function myRecordBody(){
  const items=allTasks().filter(x=>x.t.done);
  return '<section class="today-detail"><h2 class="display">'+items.length+'개 완료</h2><p class="support">현재 시연에서 완료한 퀘스트</p></section>'+(items.length?taskGroup(items,true):'<p class="support">아직 완료 기록이 없어요.</p>');
 }
 function dmBody(){
- return '<div class="product-feed"><p class="support">예시 대화 · 실제 메시지를 전송하지 않아요.</p><div class="surface member-list">'+socialExamples.map(x=>'<button class="dm-row" data-action="conversation:'+x.id+'">'+mascot(x.look,"social-mascot")+'<span><strong>'+x.name+'</strong><small>'+esc((messageDrafts[x.id]||[]).at(-1)||exampleMessages[x.id][0])+'</small></span>'+icon("chevron")+'</button>').join("")+'</div></div>';
+ return '<div class="product-feed"><p class="support">예시 대화 · 실제 메시지를 전송하지 않아요.</p><div class="plain-member-list">'+socialExamples.map(x=>'<button class="dm-row" data-action="conversation:'+x.id+'">'+mascot(x.look,"social-mascot")+'<span><strong>'+x.name+'</strong><small>'+esc((messageDrafts[x.id]||[]).at(-1)||exampleMessages[x.id][0])+'</small></span>'+icon("chevron")+'</button>').join("")+'</div></div>';
 }
 function conversationBody(){
  const x=socialExamples.find(s=>s.id===active.personId);if(!x)return '<p class="support">대화 없음</p>';
@@ -205,8 +253,12 @@ const fixtures={
  conversation:{type:"non-global",title:"대화",body:conversationBody,footer:null},
  "home-today":{type:"global-inner",title:"오늘의 퀘스트",body:homeTodayBody,footer:null},
  "home-catalog":{type:"global-inner",title:"추천 퀘스트북",body:homeCatalogBody,footer:null},
- "home-look":{type:"global-inner",title:"꾸미기 미리보기",body:homeLookBody,footer:null},
- "home-rewards":{type:"global-inner",title:"보상 미리보기",body:homeRewardsBody,footer:null},
+ "home-look":{type:"non-global",title:"꾸미기",body:wardrobeBody,footer:null},
+ "home-rewards":{type:"global-inner",title:"보상함",body:rewardListBody,footer:null},
+ shop:{type:"global-inner",title:"상점",body:shopBody,footer:null},
+ item:{type:"non-global",title:"소품 상세",body:itemDetailBody,footer:null},
+ "item-preview":{type:"non-global",title:"착용 미리보기",body:itemPreviewBody,footer:null},
+ reward:{type:"non-global",title:"보상 상자",body:rewardDetailBody,footer:null},
  "home-book":{type:"global-inner",title:"퀘스트북",body:homeBookBody,footer:null},
  "home-clan":{type:"global-inner",title:"공동 도전",body:homeClanBody,footer:null},
  goal:{type:"global-inner",title:"목표 상세",body:goalBody,footer:null},
@@ -232,7 +284,7 @@ function render(animate=true){const p=model(active),type=PAGE_TYPES[p.type];$("s
 function showSheet(trigger){lastTrigger=trigger;const menu=trigger?.dataset?.action==="menu";$("sheet-title").textContent=menu?"메뉴":"표시 설정";$("sheetChoices").innerHTML=menu?row("디엠","","chat","dm"):row("중간 높이","","chevron","snap-mid")+row("전체 높이","","chevron","snap-full");$("sheet").dataset.snap="min";$("theme").checked=document.documentElement.dataset.theme==="dark";$("sheet").showModal()}
 function snap(step){const d=$("sheet"),sizes=["min","mid","full"],i=sizes.indexOf(d.dataset.snap)+step;if(i<0)d.close();else d.dataset.snap=sizes[Math.min(2,i)]}
 $("sheetChoices").innerHTML=row("중간 높이","","chevron","snap-mid")+row("전체 높이","","chevron","snap-full");
-document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.action;if(b.hasAttribute("data-close")){b.closest("dialog").close();return}if(!a)return;if(a.startsWith("tab:")){route(a.slice(4));return}if(a.startsWith("qfilter:")){questFilter=a.slice(8);refreshPage()}else if(a.startsWith("efilter:")){exploreFilter=a.slice(8);refreshPage()}else if(a==="clan-join"){clanJoined=true;refreshPage()}else if(a==="clan-leave"){clanJoined=false;refreshPage()}else if(a==="clan-contribute"&&clanJoined){clanContribution=!clanContribution;refreshPage()}else if(a.startsWith("clan-panel:")){clanPanel=a.slice(11);refreshPage()}else if(a.startsWith("conversation:"))route("conversation",{personId:a.slice(13)});else if(a==="message-local")localMessage();else if(a.startsWith("home-book:"))route("home-book",{bookId:a.slice(10)});else if(a.startsWith("cheer:"))cheer(a.slice(6));else if(a.startsWith("look:"))setLook(a.slice(5));else if(a==="copy-home-book"){const b=homeBooks.find(x=>x.id===active.bookId);if(b)route("create",{bookId:b.id,goalInput:{title:b.title,steps:b.steps.join("\n")}})}else if(a.startsWith("goal:"))route("goal",{goalId:a.slice(5)});else if(a.startsWith("task:"))route("task",{taskId:a.slice(5)});else if(a.startsWith("toggle:"))toggleTask(a.slice(7));else if(a==="sample-plan"){const d=readGoalInput();if(d.title.trim()||d.steps.trim()){const e=$("plan-error");e.textContent="작성한 내용이 있어요. 비어 있을 때만 예시를 불러올 수 있어요.";e.hidden=false;return}$("goal-title").value=samplePlan.title;$("goal-steps").value=samplePlan.steps;$("plan-error").hidden=true}else if(a==="preview-plan")previewPlan();else if(a==="accept-plan")acceptPlan();else if(a==="back")back();else if(a==="sheet"||a==="menu")showSheet(b);else if(a==="notifications")$("notifications").showModal();else if(a==="confirm")$("confirm").showModal();else if(a==="snap-mid"||a==="snap-full")$("sheet").dataset.snap=a.slice(5);else if(fixtures[a])route(a)});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.action;if(b.hasAttribute("data-close")){b.closest("dialog").close();return}if(!a)return;if(a.startsWith("tab:")){route(a.slice(4));return}if(a.startsWith("shopfilter:")){shopFilter=a.slice(11);refreshPage()}else if(a.startsWith("wardrobefilter:")){wardrobeFilter=a.slice(15);refreshPage()}else if(a.startsWith("item:"))route("item",{itemKey:a.slice(5)});else if(a.startsWith("reward:"))route("reward",{rewardId:a.slice(7)});else if(a==="try-item")tryItem();else if(a.startsWith("qfilter:")){questFilter=a.slice(8);refreshPage()}else if(a.startsWith("efilter:")){exploreFilter=a.slice(8);refreshPage()}else if(a==="clan-join"){clanJoined=true;refreshPage()}else if(a==="clan-leave"){clanJoined=false;refreshPage()}else if(a==="clan-contribute"&&clanJoined){clanContribution=!clanContribution;refreshPage()}else if(a.startsWith("clan-panel:")){clanPanel=a.slice(11);refreshPage()}else if(a.startsWith("conversation:"))route("conversation",{personId:a.slice(13)});else if(a==="message-local")localMessage();else if(a.startsWith("home-book:"))route("home-book",{bookId:a.slice(10)});else if(a.startsWith("cheer:"))cheer(a.slice(6));else if(a.startsWith("look:"))setLook(a.slice(5));else if(a==="copy-home-book"){const b=homeBooks.find(x=>x.id===active.bookId);if(b)route("create",{bookId:b.id,goalInput:{title:b.title,steps:b.steps.join("\n")}})}else if(a.startsWith("goal:"))route("goal",{goalId:a.slice(5)});else if(a.startsWith("task:"))route("task",{taskId:a.slice(5)});else if(a.startsWith("toggle:"))toggleTask(a.slice(7));else if(a==="sample-plan"){const d=readGoalInput();if(d.title.trim()||d.steps.trim()){const e=$("plan-error");e.textContent="작성한 내용이 있어요. 비어 있을 때만 예시를 불러올 수 있어요.";e.hidden=false;return}$("goal-title").value=samplePlan.title;$("goal-steps").value=samplePlan.steps;$("plan-error").hidden=true}else if(a==="preview-plan")previewPlan();else if(a==="accept-plan")acceptPlan();else if(a==="back")back();else if(a==="sheet"||a==="menu")showSheet(b);else if(a==="notifications")$("notifications").showModal();else if(a==="confirm")$("confirm").showModal();else if(a==="snap-mid"||a==="snap-full")$("sheet").dataset.snap=a.slice(5);else if(fixtures[a])route(a)});
 document.addEventListener("input",e=>{if(e.target.id==="explore-search"){exploreQuery=e.target.value;$("explore-results").innerHTML=exploreResults()}});
 $("theme").addEventListener("change",e=>document.documentElement.dataset.theme=e.target.checked?"dark":"light");
 $("sheet").addEventListener("close",()=>{if(lastTrigger?.isConnected)lastTrigger.focus({preventScroll:true})});

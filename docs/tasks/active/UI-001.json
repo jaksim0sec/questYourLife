@@ -1,6 +1,6 @@
 {
   "id": "UI-001",
-  "status": "blocked",
+  "status": "in_progress",
   "baseline": "84bd6bc92b44875cff773f68b96ff905421bcc2c",
   "detail": "docs/tasks/active/UI-001.md",
   "scope": [

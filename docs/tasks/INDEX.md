@@ -5,7 +5,7 @@
 | ID | 현재 범위 | 기록 |
 |---|---|---|
 | INFRA-001 | TRACE 도입 | [상세](active/INFRA-001.md) · [등록](active/INFRA-001.json) |
-| UI-001 | 디자인 기술 계승 (2T, T2: 실제 앱 기반 대기) | [상세](active/UI-001.md) · [등록](active/UI-001.json) |
+| UI-001 | 디자인 기술 계승 (2T, T2: SEED 개편 진행) | [상세](active/UI-001.md) · [등록](active/UI-001.json) |
 
 장기/병렬 작업은 [템플릿](templates/task.md)과 같은 ID의 JSON을 등록한다. 상태 planned/in_progress/blocked/done, scope는 저장소 상대 경로, contracts는 정본 경로, dependencies는 작업 ID, baseline은 시작 SHA, detail은 상세 경로, next는 다음 행동 또는 주소다. in_progress/blocked끼리 동일·상하위 경로 점유 금지. done은 상세와 JSON을 archive로 이동하고 색인을 갱신한다.
 

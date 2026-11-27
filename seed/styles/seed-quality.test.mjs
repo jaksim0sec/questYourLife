@@ -106,3 +106,11 @@ test('Switch uses native checked/disabled/focus states and retains 48px target',
   assert.match(declaration('.seed-switch > input:focus-visible + .seed-switch__track'),/outline:2px/);
   assert.match(declaration('.seed-switch > input:disabled + .seed-switch__track'),/opacity:\.45/);
 });
+
+test('Refined comparison is opt-in and keeps approved default header geometry',()=>{
+  assert.match(declaration(':root[data-seed-design="refined"]'),/--seed-refined-root-size:1\.625rem/);
+  assert.match(declaration('.seed-top-nav__title'),/font-size:1\.30rem/);
+  assert.match(declaration('.seed-top-nav__inner[data-nav-role="standard"] .seed-top-nav__title'),/font-size:1\.08rem/);
+  assert.match(css,/data-seed-design="refined"[^}]*\.seed-sheet__head[^}]*--seed-refined-sheet-inset/);
+  assert.match(css,/prefers-reduced-motion:reduce[\s\S]*?\.seed-sheet\[open\]::backdrop \{ animation:none; \}/);
+});

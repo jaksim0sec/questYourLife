@@ -131,3 +131,7 @@ Start  : [<] 페이지 이름                         [ ]  (빈 우측도 허용
 - 기존 D-015의 최초 시연 선택값은 **Root 650 / Standard 620**이었다. 최근 실제 서비스 헤더 참고 이미지와 현재 `클랜` 헤더 비교 후 **Root 680 / Standard 650**으로만 보정한다. Root 크기 1.30rem·Standard 1.08rem, 자간, 높이, 헤더/아이콘 좌표, Center/Start 선택, Nav Surface는 변경하지 않는다.
 - 웹 정본은 `seed/styles/seed-standard.css`의 `.head h1` 및 `.seed-top-nav__title` 두 계열을 동기화한다. 참조 이미지보다 무작정 크게/검게 만드는 것이 아니라 글자의 **밀도만 소폭 보강**한다.
 - **Pretendard는 CDN에서 불러오지만 로딩을 보장하지 않는다.** `@import` URL 한 개와 CSS font-family 선언은 네트워크 차단·CDN 장애·폰트 로딩 실패 시 폴백을 사용한다. 현재 저장소에 로컬 WOFF/WOFF2/TTF가 없으므로 **오프라인 완전 보장 X**. 브라우저의 `document.fonts.check('680 20px "Pretendard Variable"')`와 Network에서 실제 사용 폰트를 확인해야 한다. 폰트 파일 없이 `font-weight`만 올려 타 글꼴의 렌더 차이를 해결했다고 주장하지 않는다.
+
+## UI-001/T2 비교 후보
+
+갓생알리미의 큰 제목·여백 비례를 Root에만 적용: 기본 후보 1.625rem/760, 자간 -.04em, 최소 높이 4.25rem; 360px 미만 1.5rem. Standard와 SVG/target/gutter/슬롯은 기존 계약 유지. `data-seed-design="refined"`에서만 사용하며 D-015의 기본값은 변경하지 않는다. 실제 좁은 폭·긴 제목·다크·200% 확대 검수 후 채택 여부 결정.

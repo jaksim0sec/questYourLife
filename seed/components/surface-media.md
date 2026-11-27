@@ -136,3 +136,7 @@ Surface 역할은 기본 경계·재질을 정한다. Interactive는 HTML button
 - 섹션과 Surface를 일대일로 대응시키지 않는다. Section은 목적 단위, Surface는 표현상의 경계다.
 
 기존 10종 Surface 역할·토큰·금지 중첩 규칙은 변경하지 않는다.
+
+## UI-001/T2 비교 후보
+
+면의 의미를 유지하면서 일반 solid/interactive 경계를 색 면 중심으로 절제하고 radius 1.375rem 후보를 비교한다. outlined/inset/reward/media 및 실제 선택·오류 표시의 의미 경계는 그대로 둔다. 홈 요약·가로 탐색 카드에 같은 비례를 사용한다. `data-seed-design="refined"`에서만 적용하며 보상 아트 및 일반 버튼/표면의 기존 승인 토큰은 변경하지 않는다.

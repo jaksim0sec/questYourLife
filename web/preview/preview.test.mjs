@@ -837,3 +837,12 @@ test('Clan insights contribution bars derive only from actual periods, with no f
  assert.match(page(store,'#/ranking'),/clan-member__meter/);
  assert.doesNotMatch(page(store,'#/clan',{...ui,clanView:'mine'}),/clan-member__meter/);
 });
+
+test('Refined design is URL-only and uses the existing preview route and sheets',()=>{
+  const app=readFileSync(new URL('./app.mjs',import.meta.url),'utf8');
+  const css=readFileSync(new URL('./preview.css',import.meta.url),'utf8');
+  assert.ok(app.includes("new URLSearchParams(location.search).get('design')==='refined'"));
+  assert.match(css,/data-seed-design="refined"[^}]*\.home-alerts \{[^}]*--sheet-height:auto/);
+  assert.match(css,/data-seed-design="refined"[^}]*\.chat-modal\[open\]/);
+  assert.match(css,/prefers-reduced-motion:reduce[\s\S]*?\.preview-notice:not\(:empty\) \{ animation:none; \}/);
+});

@@ -47,3 +47,7 @@ Opening → Open → Busy/Error → Closing. 실제 완료 전 성공 표시 금
 A~F의 독립 슬롯·정렬·dismiss·ARIA·초점·빈 공간을 검사하고 A/B/E/F는 320/360/390/430 × 100/200% × Light/Dark, 긴 문구·스크롤·Footer·오버플로를 비교한다. 실제 native dialog의 showModal/Cancel과 Android Back은 별도 검증. 별도 fixture나 기존 Sheet 검증은 실제 Dialog 구현의 증거가 아니다.
 
 S08은 기존 제안 상태(proposed) 유지. REF-003 보상 관찰 medium, 미노출 동작 low. D-012/013/015 및 Shell/Sheet 규격·기존 에셋/데이터 보존. 이전 상세 설명은 Git 이력에 남아 있으며 새 디자인 승인이나 기능 구현을 뜻하지 않는다.
+
+## UI-001/T2 비교 후보
+
+Dialog는 1.5rem radius·1.25rem 여백·강한 제목, Snackbar는 짧은 pill과 240ms 등장으로 비교한다. Sheet/Dialog는 320ms 진입과 scrim fade, 동작 감소 시 정적. 닫기·포커스·실제 처리 결과와 기존 슬롯 계약은 유지한다. 현 구현은 진입 모션만 포함하고 퇴장 연출은 별도 검증 후 추가한다.

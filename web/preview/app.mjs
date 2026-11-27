@@ -7,6 +7,8 @@ import {readRoute,navMarkup} from './routes.mjs?v=clan-crest-v14';
 
 const get=selector=>document.querySelector(selector);
 const root=document.documentElement;
+// Comparison mode is URL-only and does not mutate saved product state.
+if(new URLSearchParams(location.search).get('design')==='refined')root.dataset.seedDesign='refined';
 const shell=get('.preview-shell');
 const nav=get('.seed-bottom-nav');
 const main=get('#main');

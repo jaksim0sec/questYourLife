@@ -79,3 +79,7 @@ Loading에서도 제목 역할과 예상 콘텐츠 폭을 유지한다. 오류 �
 ## 2026-11-12 · Root/Standard 무게 후속 보정
 
 사용자 참고 이미지 비교로 **Top Navigation 전용 Root 680 / Standard 650**으로 보정. 앞선 D-015 기록의 Root 650 / Standard 620은 최초 확정 당시의 이력으로 보존한다. 일반 C-TEXT의 type.root/standard, 섹션·본문·버튼을 함께 굵게 만들지 않는다. Pretendard Variable은 현재 웹 CSS 외부 CDN 로딩이므로 요청하는 것과 실제 다운로드·적용 여부를 구분한다.
+
+## UI-001/T2 비교 후보
+
+큰 제목과 강한 수치, 낮은 보조 위계라는 갓생알리미 원리를 기존 역할에 적용한다. Section 1.25rem/740, Hero·Number 1.75rem/780, Support 줄높이 1.55. 본문/버튼/Standard 헤더의 기본 수치와 의미는 유지한다. `data-seed-design="refined"` 전용 후보이며 기존 토큰 변경·새 역할 추가 없이 비교한다. 좁은 화면과 글자 확대의 읽힘을 확인한 뒤 채택한다.

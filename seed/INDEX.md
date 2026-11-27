@@ -9,7 +9,9 @@ references: [U-01, U-02, D-011]
 
 # 갓생패치 · 디자인 시드 INDEX
 
-v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../docs/DECISIONS.md)에서 명시적으로 확정한 시각 규격에 한정해 approved.** 개별 문서의 기존 proposed 항목 및 Android 앱 동작·계정·경제·IA는 계속 미검증이다. 정책은 [DECISIONS](../docs/DECISIONS.md) / [OPEN](../docs/OPEN.md), 추출 방식은 [AUTHORING GUIDE](SEED_AUTHORING_GUIDE.md) 정본을 따른다.
+[← AGENTS · 개발/TRACE 지침](../AGENTS.md) · [시드 추출 가이드](SEED_AUTHORING_GUIDE.md) · [시각 검증](VALIDATION.md)
+
+SEED는 디자인 규격·표현·조합·시각 검증의 정본이다. 제품 결정·개발 절차·작업 상태는 AGENTS에서 라우팅한다. v0.15의 승인 범위는 [D-012](../docs/DECISIONS.md)에 한정되며 proposed 및 Native/기능 미검증 상태는 유지한다.
 
 기준: 중립적이고 정돈된 조작 UI + 굵기 있는 명확한 정보 계층 + 붉은 도장 정체성 + 표현력 있는 3D 보상. 컨셉의 콘텐츠·탭 수·배치를 복제하지 않는다. 새 토큰/상태는 제안, 기존 상단은 승인 정본이다.
 
@@ -17,12 +19,12 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../docs/DECISIONS.md)�
 
 **에셋 작업 진입:** SVG/PNG/WebP의 파일 정본·미래 공통 경로·preview 참조 이전은 [공통 에셋 관리 계약](../docs/assets/README.md)이 소유한다. 이 INDEX의 `A-ART`, `C-IMAGE`, `F-ICON-MOTION`은 각각 **표현·프레임·아이콘 규격**을 소유한다. 실제 파일의 위치를 여기서 중복 선언하거나 이관 전 경로를 앞서 바꾸지 않는다.
 
-## 선택적으로 읽기
+## 디자인 규격 선택
 
-1. 기존 부품의 국소 수정은 해당 Component와 직접 의존성만 읽는다. 새 페이지는 제품 과업·콘텐츠·행동을 먼저 결정한다.
-2. 새 페이지는 제품 목적·정보 객체를 확인하고 [페이지 구성](patterns/page-composition.md)에서 섹션, [공간 배치](patterns/layout-composition.md)에서 자식의 배치를 선택한다. P-HIERARCHY는 표현 비중을, S-PAGE는 Shell을, 기존 Component는 실제 UI 슬롯을 소유한다. 아트 역할 선택 시 A-ART를 읽는다.
-3. 제품 결정은 DECISIONS/OPEN을 확인하고, 원본·판단 충돌 때 R-INPUTS를 읽는다. 수치 선택 전·완료 보고 전에는 V-CHECKS를 따른다.
-4. 모든 파일을 매번 읽지 않는다. ID는 안정적으로 유지하고 경로/의존성 변경은 INDEX와 같은 변경에서 반영한다.
+- 단일 부품: 아래 표의 Component 및 직접 의존 규격.
+- 새 페이지: [페이지 구성](patterns/page-composition.md) → [공간 배치](patterns/layout-composition.md) → [정보 위계](patterns/content-hierarchy.md) → 관련 Shell/Component. 아트는 A-ART.
+- 새 시안 추출·시드 확장: [AUTHORING GUIDE](SEED_AUTHORING_GUIDE.md), 원본 대조는 R-INPUTS / [AUDIT](AUDIT.md), 누락 여부는 [COVERAGE](COVERAGE.md).
+- 코드 적용: [v0.15 적용 계약](implementation/v015.md), [토큰](implementation/v015-tokens.json), [공통 스타일](implementation/shared-style-contract.md). 시각 검증은 [V-CHECKS](VALIDATION.md).
 
 | ID | Name / Aliases | Category | Read when | Path | Depends on | Status | References |
 |---|---|---|---|---|---|---|---|
@@ -111,7 +113,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../docs/DECISIONS.md)�
 1. **[v0.15 확정 디자인·검증·적용 계약](implementation/v015.md)** — 결정의 범위, 컴포넌트/제스처/컨테이너 사용 규칙, 실제 검증·미검증 분리
 2. **[v0.15 디자인 토큰 JSON](implementation/v015-tokens.json)** — 앱 구현 시 숫자·의미색·아이콘 크기·Surface·Sheet 상태를 한 곳에서 읽음
 3. **[사용자 제공 SVG 56종 원본](../assets/icons/soft/v0.14/README.md)** + [manifest](../assets/icons/soft/v0.14/manifest.json) — 반드시 이 소스를 인용. v0.13 및 최초 v0.14는 비교 이력
-4. 화면별 구현에는 C-ACTION/C-SURFACE/C-SHEET 등 필요한 **직접 의존 문서만** 추가로 읽는다. 기존 `AGENT.md`, 제품 D-001~D-011, 앱 리소스 정본과 충돌 시 자동 이식하지 않는다.
+4. 화면별 구현에는 C-ACTION/C-SURFACE/C-SHEET 등 필요한 **직접 의존 문서만** 추가로 읽는다. 충돌 시 [AGENTS](../AGENTS.md)의 판단 경로를 따른다.
 
 **상태 구분:** [Seed confirmed] 웹/디자인 규격 승인 · [Native pending] Compose/VectorDrawable/실기기/탭 IA 등 구현 미완료. 새 시드 문서를 늘리기보다 여기의 원칙을 재사용한다.
 
@@ -175,7 +177,7 @@ v0.15 채택 시드 · 2026-11-05 Asia/Seoul · **[D-012](../docs/DECISIONS.md)�
 
 ## C-AVATAR 웹 구현 경로 · 2026-11-10
 
-기존 `C-AVATAR` 항목의 단순 문서 정의를 **코드로 연결**했다. `components/avatar.md` (역할·Anatomy·상태·좌표·레이어 우선순위) → `web/preview/seed-mascot-avatar.mjs` (합성·렌더) + `seed/styles/seed-standard.css` (공통 클래스) → `web/seed-lab/?panel=components#mascot-avatar` (크기별 실사용 시연) → `web/preview/seed-mascot-avatar.test.mjs` (합성 테스트). 기존 21개 컴포넌트 집합을 늘리지 않고 C-AVATAR의 누락 구현만 보강한다.
+기존 `C-AVATAR` 항목의 단순 문서 정의를 **코드로 연결**했다. `components/avatar.md` (역할·Anatomy·상태·좌표·레이어 우선순위) → `seed/runtime/seed-mascot-avatar.mjs` (합성·렌더) + `seed/styles/seed-standard.css` (공통 클래스) → 과거 SEED Lab 시연 (이력, 현행 실행 경로 아님) → `seed/runtime/seed-mascot-avatar.test.mjs` (합성 테스트). 기존 21개 컴포넌트 집합을 늘리지 않고 C-AVATAR의 누락 구현만 보강한다.
 
 원본 자산은 `assets/art/mascot/`와 `assets/art/cosmetics/`이며 `docs/assets/README.md`가 복사 SHA·레거시 중복 보존을 기록한다. 이 구현은 웹 컴포넌트 수준이고, 실기기 비주얼 확정 및 Android 이식은 별도다.
 

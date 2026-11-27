@@ -28,12 +28,7 @@
 | [docs/product/REWARDS.md](./product/REWARDS.md) | 캐시·상자·보상·장식 구매/획득·경제 UI | **현실 수행 → 인앱 보상 → 꾸미기**. 지급 산식은 미정 |
 | [docs/product/AVATAR.md](./product/AVATAR.md) | 마이페이지·마스코트·프로필·아이템·꾸미기 | 단순한 도장 얼굴 + 현실적인 패션이라는 의도·기존 에셋 경로 |
 | [docs/assets/README.md](./assets/README.md) | **SVG·이미지 등록, 원본 이동, preview/Android 참조 이관** | 현재 구조와 장래 공통 `assets/` 정본, 중복·호환성·검증 계약. 이관 실행 전에는 기존 경로 유지 |
-| [seed/SEED_AUTHORING_GUIDE.md](../seed/SEED_AUTHORING_GUIDE.md) | **컨셉 이미지에서 디자인 시드·컴포넌트 문서화 시** | 추출·분산·INDEX 라우팅·검증 규칙. 실제 시드의 승인 사양은 아님 |
-| [seed/INDEX.md](../seed/INDEX.md) | **기존 디자인 시드를 읽거나 새 페이지·컴포넌트에 재사용할 때** | 필요한 Component/Pattern/Shell만 라우팅. 전부 읽지 않음 |
-| [seed/AUDIT.md](../seed/AUDIT.md) | **8장 레퍼런스 추적·디자인 개선 전후 비교 시** | S2-01~08 참조와 Keep/Refine/Merge/Split/Add 판단 |
-| [seed/COVERAGE.md](../seed/COVERAGE.md) | **컴포넌트 누락·중복·SEED와의 비교 시** | 실제 필요한 컴포넌트만 보강, SEED 전체 복제 금지 |
-| [seed/VALIDATION.md](../seed/VALIDATION.md) | **시드 승인·렌더 검증·완료 보고 전** | 실제 실행 검증과 미검증 사항을 구분 |
-| [seed/TOP_NAVIGATION.md](../seed/TOP_NAVIGATION.md) | **새 화면·헤더·내비게이션 구현 및 웹 시연** | 확정된 Root/Standard 시각 기준. 하단 내비게이션은 미확정 |
+| [SEED INDEX](../seed/INDEX.md) | 디자인 추출·규격·구현·시각 검증 | 단일 디자인 진입점. SEED 내부의 세부 라우팅은 그 색인이 소유 |
 | [docs/research/SUMMARY.md](./research/SUMMARY.md) | 내비게이션·디자인 시스템·글래스·모션·텍스트 규칙 선정 | 검증된 외부 근거, **확신도 및 연구 공백** |
 | [docs/research/2026-11-04-gpt-design-research.md](./research/2026-11-04-gpt-design-research.md) | 원래 리서치 표현/맥락 복원, 출처 추적, 재검증 | **수정하지 않는 원문 아카이브**. 채팅 인용 태그는 독립 URL 아님 |
 
@@ -49,13 +44,11 @@
 
 | 요청 | 기본 경로 |
 |---|---|
-| **컨셉 이미지 → 새 시드 추출** | `DECISIONS` → `OPEN` → `seed/SEED_AUTHORING_GUIDE` → (생성된 경우) `seed/INDEX` → 필요한 요소 문서만 |
-| **기존 디자인 시드 개선·확장** | `DECISIONS` → `OPEN` → `seed/INDEX` → 관련 기존 C/F/P/S 정본 → `seed/AUDIT`(참조 근거) → `VALIDATION` |
-| **웹 디자인 시드·홈·전체 UX** | `DECISIONS` → `OPEN` → `product/README` → `VISION` → 관련 제품 문서 → `research/SUMMARY` |
+| **디자인·시드 추출/개선·전체 UI** | `DECISIONS` → `OPEN` → 관련 제품 의도 → [SEED INDEX](../seed/INDEX.md) |
 | **AI 퀘스트 기능** | `DECISIONS` → `OPEN` → `QUESTS` + `QUESTBOOKS`(공유·참여 시) |
 | **친구·클랜·퀘스트북 소셜** | `DECISIONS` → `OPEN` → `SOCIAL` + `QUESTBOOKS` |
 | **보상/상자/캐시/마이페이지** | `DECISIONS` → `OPEN` → `REWARDS` + `AVATAR` |
-| **SVG/PNG/WebP 등록·이전 및 preview 참조 변경** | `DECISIONS` → `assets/README` → `seed/INDEX` → 해당 SVG/아트·이미지 명세 + 실제 경로 확인 |
+| **SVG/PNG/WebP 등록·이전 및 preview 참조 변경** | `DECISIONS` → `assets/README` → [SEED INDEX](../seed/INDEX.md) → 해당 SVG/아트·이미지 명세 + 실제 경로 확인 |
 | **디자인 근거 확인** | `research/SUMMARY` → 필요할 때 원문 아카이브 → 공식 1차 문서 재확인 |
 | **기존 Android/DB 버그 수정** | `AGENT` → `IDEA` → 관련 기술 문서·코드 (사용자 경험·제품 의미가 바뀌면 `DECISIONS`/`OPEN` 및 관련 `product/` 추가) |
 | **웹 시연의 Android 이식** | `AGENT` + `IDEA` + `DECISIONS` + `OPEN` + 관련 `product/` + 합의된 최신 시연 사양(존재할 때만) |
@@ -66,7 +59,7 @@
 
 - **현재 코드 작업의 안전·기술 규칙:** `AGENT.md`를 따른다. **제품의 새로운 방향:** `DECISIONS.md`와 관련 `product/` 문서에 기록된 합의를 참고한다. 기존 `IDEA.md`의 '절제된 체크리스트'·크림 기반 UI 등과 새 소셜 퀘스트 철학이 충돌하면 **조용히 어느 한쪽을 택하지 않는다**. [OPEN O-001](./OPEN.md)의 명시적 이관/합의 이전에 영향을 받는 구현을 독단적으로 진행하지 않는다.
 - `OPEN.md`의 가설이나 외부 리서치를 **승인된 디자인·기능 명세로 승격하지 않는다**. 사용자와 합의하면 `DECISIONS.md`의 짧은 결정 항목을 갱신하고, 필요한 상세 문서에 기록.
-- **시각 시드 미확정:** 색상, 탭 구조, 글래스 재질, 컴포넌트 치수, 마이페이지·홈 배치는 마음대로 잠그지 않는다. 합의는 모바일 웹 시연을 통해 진행한다.
+- 디자인 승인 범위 및 미결은 DECISIONS/OPEN과 [SEED](../seed/INDEX.md)의 관련 정본에서 확인한다.
 - 원문 발언은 제품 문서에서 보존하고, 새 해석은 `[해석]` 등으로 구분한다. 연구 원문 아카이브는 수정하지 않는다.
 - 기존 시스템·데이터·에셋 보존과 `main` 병합/코드 이관의 별도 검증 규칙은 `DECISIONS.md`를 참조. **브랜치의 미래 역할이 바뀌어도 이번 문서 수정만으로 앱 코드 이관·에셋 이동을 실행하지 않는다.**
 

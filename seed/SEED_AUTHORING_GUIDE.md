@@ -2,7 +2,7 @@
 
 > **목적:** 컨셉 이미지·스크린샷·Figma 시안을 받은 에이전트가, 특정 페이지를 복제하는 대신 **재사용 가능한 디자인 문법**을 추출하고 필요한 문서만 빠르게 찾아 쓰게 한다.
 > **범위:** 추출·분류·문서 분산·라우팅·검증 절차만 정의한다. 이 가이드는 색상·토큰·컴포넌트 사양의 최종 승인안이 아니다.
-> **선행:** [확정사항](../docs/DECISIONS.md) / [미결사항](../docs/OPEN.md) / [제품 문서 색인](../docs/product/README.md).
+> **진입:** [AGENTS](../AGENTS.md)의 제품·작업·검증 절차를 따른 뒤 [SEED INDEX](INDEX.md)에서 디자인 관련 문서를 선택한다. 이 가이드는 디자인 추출에 필요한 고유 규칙만 다룬다.
 > **구조 참고:** [SEED Foundations](https://seed-design.io/foundations), [Components](https://seed-design.io/components), [Patterns](https://seed-design.io/patterns). 컴포넌트별 Anatomy / Properties / States / Guidelines / Specification 방식은 참고하되, 시드의 시각적 결과를 SEED에 종속시키지 않는다.
 
 ## 1. 우선 지켜야 할 원칙
@@ -13,7 +13,6 @@
 4. **여러 이미지의 공통 요소와 국소적 예외를 구분한다.** 반복된 요소는 범용 후보, 한정 이벤트/특수 아트는 별도 Pattern 또는 Asset 범위.
 5. **직접 관찰 / 추론 / 설계 제안 / 사용자 승인**을 섞지 않는다. 이미지에 없는 로딩·탭 동작을 관찰 사실로 쓰지 않는다.
 6. **기존 확정 규칙을 보존한다.** 새 이미지의 시각적 차이는 충돌로 기록한다. 현재 [Top Navigation 확정안](TOP_NAVIGATION.md)은 정본이며, 새 시안 하나로 대체하지 않는다.
-7. **읽기 비용을 최소화한다.** INDEX로 먼저 라우팅하고 필요한 Foundation + Component + Shell/Pattern만 읽는다. 모두 읽게 만드는 문서 구조는 실패다.
 
 ## 2. 레퍼런스 입력 기록
 
@@ -87,21 +86,24 @@
 - 3D 보상에 사용하는 빛·금속 느낌·입체감을 일반 UI의 표면·버튼으로 전파하지 않는다.
 - 디지털 마스코트와 패션 소품이 서로 다른 아트 톤이어도 되는지 등은 **사용자의 명시적 기준**으로 검증한다.
 
-## 4. 문서 분산 구조 (제안, 지금은 빈 파일 생성 금지)
+## 4. 문서 분산 구조
 
 ```text
-docs/design/
-  SEED_AUTHORING_GUIDE.md          # 이 문서, 작업 방식만
-  TOP_NAVIGATION.md                # 기존 확정 명세, 정본 유지
-  seed/                            # 실제 추출/승인 작업 때만 생성
-    INDEX.md                       # 단일 검색·라우팅 진입점
-    foundations/                   # colors, typography, spacing, radius, iconography, motion...
-    components/                    # action-button, list, chip, badge, input, tabs...
-    patterns/                      # 여러 컴포넌트의 반복 결합·피드백
-    shells/                        # Root/Detail/Utility/Immersive/Overlay, nav visibility
-    assets/                        # 3D/2D 에셋 표시·일러스트 레벨
-    references/                    # 입력 출처·채택·제외 및 근거
+seed/
+  INDEX.md
+  SEED_AUTHORING_GUIDE.md
+  TOP_NAVIGATION.md
+  foundations/
+  components/
+  patterns/
+  shells/
+  assets/
+  references/
+  implementation/
+  runtime/
+  styles/
 ```
+현행 경로 기준이며 새로운 빈 파일을 만들라는 지시가 아니다.
 
 분리 기준은 **무엇이 바뀌었을 때 어떤 파일만 고치면 되는가**임.
 
@@ -132,18 +134,7 @@ seed/INDEX.md는 **짧은 라우터(권장 1~2페이지)**다. 시드 전체를 
 | Status | approved / proposed / needs-validation / deprecated |
 | References | 참조 ID·합의 결정 ID. 없는 근거 생성 금지 |
 
-### 선택적 독해 절차
-
-1. 요청을 **화면 유형 / 사용자 동작 / 정보 표현 / 필요한 에셋**으로 분해.
-2. INDEX만 먼저 읽어 관련 항목 검색(이름/별칭/read_when).
-3. **Shell → 관련 Component → 해당 Foundation/Pattern 의존성**만 열기.
-4. 아이템의 시각 품질이 중요할 때만 Asset 문서 추가.
-5. 미확정 판단이 필요한 경우만 OPEN을 확인. 전체 문서를 매번 정독하지 않는다.
-6. 디자인 토큰의 전역 변경처럼 영향이 큰 경우에만 관련 카테고리 전체를 넓혀 읽는다.
-
-예: 단순 폼 페이지는 Detail Shell, Field, Button, 입력/색 토큰이면 충분하다. '퀘스트/클랜/상점' 전체 문서를 읽을 필요가 없다.
-
-INDEX는 **없는 파일을 가리키지 말 것**, 파일 이동·삭제 시 같은 커밋에서 갱신. 중복된 원본 사양을 만들지 않고 정본을 링크한다. 이미 확정된 [Top Navigation](TOP_NAVIGATION.md)은 재작성 대신 참조.
+디자인 작업별 문서 선택은 [INDEX](INDEX.md)의 라우팅을 사용한다. 새 문서의 ID·직접 의존성·참조 근거를 등록하고 기존 정본을 복제하지 않는다.
 
 ## 6. 개별 문서 작성 규격
 
@@ -180,9 +171,11 @@ references: [REF-001]
 
 **이미지 속에 선명하게 보인다는 이유로 승인된 디자인이 되는 것은 아님.**
 
-충돌 시: 기존 명시 결정 → 새 사용자 피드백 → 다수 이미지의 공통성/맥락 차이 → Variant·Pattern 분리 가능 여부 → 미결 OPEN 기록 순서로 검토한다. 충돌을 임의로 메우지 않고 출처와 영향을 남긴다.
+제품 승인·충돌의 판단 경로는 [AGENTS](../AGENTS.md)를 따른다. 디자인 분석에서는 여러 이미지의 공통성과 맥락 차이, Variant·Pattern 분리 가능 여부를 근거로 기록한다.
 
-### 최종 검증 체크
+### 디자인 추출 전용 검증 체크
+
+공통 작업 종결 및 검증 기록은 [TRACE 검증 정책](../docs/validation/VALIDATION_POLICY.md)에 따르고, 아래 항목은 시안 추출에만 적용한다.
 
 - [ ] 원본 및 '좋다/제외'라는 사용자 평가가 Reference ID에 연결됨
 - [ ] 직접 관찰 / 추정 / 제안 / 승인 사항을 구분함

@@ -1,8 +1,8 @@
 {
   "id": "UI-002",
-  "status": "in_progress",
+  "status": "done",
   "baseline": "52593eafbb94656b1b3d05a5d9ebe03f59bc176d",
-  "detail": "docs/tasks/active/UI-002.md",
+  "detail": "docs/tasks/archive/UI-002.md",
   "scope": [
     "seed",
     "web/demo"
@@ -16,5 +16,5 @@
   "dependencies": [
     "UI-001"
   ],
-  "next": "UI-002/T1"
+  "next": ""
 }

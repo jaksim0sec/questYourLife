@@ -575,8 +575,12 @@
         "fontSize": 17,
         "weight": 700,
         "paddingX": 24,
-        "defaultTone": "neutral high contrast",
-        "width": "fill"
+        "defaultTone": "choose by action meaning; neutral and brand coexist",
+        "width": "fill",
+        "tones": [
+          "neutral high contrast",
+          "brand"
+        ]
       },
       "peerCTA": {
         "heightMin": 58,
@@ -605,6 +609,36 @@
         "neighbors": "readable muted",
         "controls": "bounded scroll/swipe plus previous/next and accessible equivalent"
       }
+    },
+    "palette": {
+      "status": "v5-working-visual-direction",
+      "dark": {
+        "canvas": "#141414",
+        "surface": "#202020",
+        "soft": "#2c2c2c",
+        "line": "#383838",
+        "foreground": "#f6f6f6",
+        "secondary": "#adadad"
+      },
+      "light": {
+        "canvas": "#f6f6f6",
+        "surface": "#ffffff",
+        "soft": "#eeeeee",
+        "line": "#e0e0e0",
+        "foreground": "#212121",
+        "secondary": "#717171"
+      },
+      "brand": "preserve color.[theme].brand",
+      "reward": "preserve color.[theme].secondaryCTA"
+    },
+    "presentation": {
+      "decorativeOrdinals": false,
+      "redundantBilingualLabels": false,
+      "decorativeDots": false,
+      "ordinaryBorders": false,
+      "productDisplayException": true,
+      "ordinaryOutlineAction": "avoid in new demo",
+      "loading": "preserve original face"
     }
   }
 }

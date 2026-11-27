@@ -184,3 +184,7 @@ Pressed는 원래 tone을 유지한 채 Light 검정 6%, Dark 흰색 8% overlay�
 다크 `brand`·`danger` Badge 글자는 `#FF8173`, 배경은 기존 `brandWeak` `#3E272A`를 사용한다. 불투명 sRGB 대비는 5.65:1이다. 이 값은 두 Badge의 전경에만 연결한다.
 
 팔레트는 기존 semanticPalette의 theme별 foreground/background/accent로 연결한다. 오브젝트의 금속 금색을 Progress·버튼·전체 배경에 전파하지 않는다. 보상 원본의 입체감과 실제 물체 인지를 유지한다. image10의 유료 패스·레이드·음식 보상을 새 기능으로 가져오지 않는다.
+
+## Expressive demo working palette (v5 direction)
+
+Ordinary layers must be achromatic; no accidental purple, blue, or warm tint in neutral surfaces. Preserve brand red and reward gold as semantic accents, not a universal CTA color. Both neutral high-contrast and brand actions remain available. Use `refinements.palette` for the new demo; do not rewrite historical v0.15 values. The user accepted the v5 visual direction, not a blanket native or per-pixel certification.

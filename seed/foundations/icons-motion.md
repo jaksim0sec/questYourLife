@@ -30,3 +30,5 @@ references: [REF-001, REF-002, REF-004, REF-005]
 결과와 입력 상태는 연출보다 먼저 확정하고 중복 실행을 차단한다. 닫기·초점 회복을 애니메이션 종료까지 지연하지 않는다. 로딩은 완료로 위장하지 않고 동작 감소 시 즉시 상태/정적 결과를 제공한다. 일상 목록에 반복 광선·흔들림·파티클을 두지 않고 보상 연출은 건너뛰기 가능하게 한다. 사용자가 이해할 정보는 모션 없이도 전달한다.
 
 표현 후보는 갓생알리미 소스 비교 및 이전 웹 코드에 근거한다. 새 앱의 실제 접근성·렌더 승인 아님. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/foundations/icons-motion.md); [에셋 계약](../../docs/assets/README.md).
+
+**v5 visual review:** Match the perceived weight and optical size of icons to adjacent type; small/thin isolated symbols are not acceptable. Original approved SVG paths and Fill pairs remain unchanged. The review's 2.05 outline stroke is a presentation candidate, not a rewrite of the 56 source assets. The new shell uses the approved asset masks and their role-specific sizes; further icon stroke review is not implied by this implementation.

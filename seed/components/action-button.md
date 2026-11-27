@@ -48,3 +48,7 @@ Keep the six approved variants and ordinary 34/43/48, R16 controls. For a clear 
 Pressed/Loading에서 **outer scale·font-weight·letter-spacing·padding·border-width 변경 금지**. face-only 시각 변환은 외곽/중심을 바꾸지 않는 명시적 예외 후보이며 Busy/Disabled에는 적용하지 않는다. 같은 버튼 상태의 outer rect와 label center 이동은 1 논리 단위 이하(확대에 따른 의도된 재흐름 제외). 200% 글자·대비·키보드·스크린리더 의미·동작 감소를 고려한다.
 
 [패밀리 지도](../implementation/component-families.md) · [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/components/action-button.md). 승인 값과 새로운 모션 후보는 구분하고 실제 앱 구현에서 검증한다.
+
+## v5 working direction
+
+Provide neutral high-contrast and brand-colored primary CTA as explicit tone choices, alongside filled neutral secondary actions. Do not turn every confirmation into red. Avoid ordinary outlined action styling in the new demo; loading uses the same face and geometry as its original action, not a separate outlined loading button. Keep the older approved variants as historical compatibility contracts rather than silently deleting them.

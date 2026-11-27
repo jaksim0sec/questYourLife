@@ -18,3 +18,5 @@ references: [REF-001, REF-002, REF-003, REF-004, REF-005, U-01, U-02]
 - 시안의 기능·문구·경제 수치·배치를 전역 규칙으로 바꾸지 않는다.
 
 정량값·상태·접근성은 각 Foundation/Component 정본에만 둔다. S2-08 일상, S2-05/07 탐색·다크 후보, S2-03/06 보상, S2-01 버튼, S2-04 반례, S2-02 시연 방법의 근거는 [AUDIT](../AUDIT.md)와 [R-INPUTS](../references/inputs.md). 제품 정체성·합의는 [VISION](../../docs/product/VISION.md)과 [DECISIONS](../../docs/DECISIONS.md) 참조. U-01/U-02의 방향은 유지하며 개별 제안의 승인 상태는 변경하지 않는다.
+
+**v5 review direction:** No decorative ordinal numbers, redundant Korean/English labels, arbitrary dots, or gratuitous outlines. A section name alone is sufficient; a number is shown only when it conveys meaningful content. Neutral surfaces are consistently achromatic, while brand and reward tones remain intact.

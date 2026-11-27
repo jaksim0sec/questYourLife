@@ -9,6 +9,8 @@
 | 온보딩 기술 계승 (기존 UI-001/T3) | 보류·미착수 | UI-001 이후 실제 앱에서 진입·설명·필요한 권한 요청/거부/재시도·완료/재진입, 강제 동의·불필요 권한 배제. 갓생알리미 조사 근거 재사용 |
 | 실제 서비스·기기 검증 | 보류 | 실제 서버/동기화/권한/설치 보존/접근성/출시 게이트 |
 
+| Web demo page-by-page | next after shell review | Home first as a suggested order; subsequent individual pages based on current product intent and user review. No blanket IA approval. |
+
 Completed SEED reform: [UI-001](../tasks/archive/UI-001.md). Native implementation and onboarding remain deferred.
 
 기존 제품 미결의 정본은 [OPEN](../OPEN.md), 디자인 검증 미결은 [SEED VALIDATION](../../seed/VALIDATION.md)이다. 중복 목록으로 옮기지 않는다.

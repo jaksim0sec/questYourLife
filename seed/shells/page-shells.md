@@ -160,3 +160,7 @@ Root/Detail/Utility/Immersive/Overlay는 **화면의 탐색·고정 영역·스�
 
 위 K10에서 `Glyph24`라고 쓴 값은 원본 SVG viewBox/당시 기본 출력 기준이다. 사용자가 승인한 **현재 웹 헤더 렌더 크기**는 `1.59rem`, target `3rem`, 최소 높이 `3.5rem`, gutter `360 미만 16px / 이상 20px`이다. 실제 제목/글꼴 값과 surface 연결은 [NAV-TOP](../TOP_NAVIGATION.md)과 `v015-tokens.json`이 소유한다. 과거 `24`나 `60` 후보를 별도 새 웹 CSS 값으로 재적용하지 않는다.
 Global은 Root, Global Inner·Non-Global은 Standard 헤더를 공유한다. Bottom Sheet의 자체 Header와 부모 네비 보존 규칙은 변화 없음. 이 변경은 Shell 종류 추가나 Android 이식이 아니다.
+
+## Active demo shell (user-directed)
+
+The new [web/demo](../../web/demo/README.md) implements the existing K10 classification, not a new hierarchy. Each page supplies its title, owner, body, optional header action and footer to a shared shell. The overlay is not a page route. Earlier `web/preview` paths are frozen historical references. Product screen layouts and the final IA are still reviewed individually.

@@ -1,0 +1,20 @@
+{
+  "id": "UI-002",
+  "status": "in_progress",
+  "baseline": "52593eafbb94656b1b3d05a5d9ebe03f59bc176d",
+  "detail": "docs/tasks/active/UI-002.md",
+  "scope": [
+    "seed",
+    "web/demo"
+  ],
+  "contracts": [
+    "seed/INDEX.md",
+    "seed/shells/page-shells.md",
+    "docs/DECISIONS.md",
+    "docs/OPEN.md"
+  ],
+  "dependencies": [
+    "UI-001"
+  ],
+  "next": "UI-002/T1"
+}

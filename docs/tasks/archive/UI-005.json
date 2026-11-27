@@ -1,0 +1,19 @@
+{
+  "id": "UI-005",
+  "status": "done",
+  "baseline": "1d4e8085430e6db9e31dcbdc07e0fd1f741fe7dc",
+  "detail": "docs/tasks/archive/UI-005.md",
+  "scope": [
+    "web/demo",
+    "docs/product",
+    "docs/assets"
+  ],
+  "contracts": [
+    "docs/product/EXPERIENCE_ARCHITECTURE.md",
+    "seed/shells/page-shells.md"
+  ],
+  "dependencies": [
+    "UI-004"
+  ],
+  "next": ""
+}

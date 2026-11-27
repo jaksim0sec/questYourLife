@@ -108,3 +108,5 @@ SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래�
 ## Questbook cover illustrations · active demo v4
 
 `assets/art/questbooks/reading.svg`, `language.svg`, `focus.svg`, `journal.svg`: original themed vector review artwork for four example books, 240×300 viewBox. These are content art, not Soft UI icons or reward assets; no cover lettering baked into the file. Titles remain accessible HTML. Existing art untouched. Actual browser appearance and production art approval pending.
+
+UI-005: retain four dedicated cover SVGs, now with titles outside the illustration and natural Korean wrapping. Mascot paper backing is a CSS presentation candidate, not a modification of the face PNG. Joint challenge banner uses a single existing chest as the main object and separates participant avatars. Visual approval pending.

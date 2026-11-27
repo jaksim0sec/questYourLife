@@ -21,7 +21,7 @@ SEED는 디자인 규격·표현·조합·시각 검증의 정본이다. 제품 
 
 **에셋 작업 진입:** SVG/PNG/WebP의 파일 정본·미래 공통 경로·preview 참조 이전은 [공통 에셋 관리 계약](../docs/assets/README.md)이 소유한다. 이 INDEX의 `A-ART`, `C-IMAGE`, `F-ICON-MOTION`은 각각 **표현·프레임·아이콘 규격**을 소유한다. 실제 파일의 위치를 여기서 중복 선언하거나 이관 전 경로를 앞서 바꾸지 않는다.
 
-**갓생알리미 기술 계승:** [F-PRINCIPLES](foundations/principles.md)의 표현력 있는 심플리즘과 [작업 색인의 UI-001](../docs/tasks/INDEX.md)의 원본 비교를 따른다. 기존 디자인 승인과 새 후보를 구분한다.
+**갓생알리미 기술 계승:** [F-PRINCIPLES](foundations/principles.md)의 표현력 있는 심플리즘과 [작업 색인의 UI-001](../docs/tasks/INDEX.md)의 원본 비교를 따른다. 기존 디자인 승인과 새 후보를 구분한다. 수치는 [v0.15 토큰](implementation/v015-tokens.json)의 `refinements`, 의미·사용은 기존 관련 Foundation/Component 정본을 참조한다. 웹 선택자나 별도 디자인 family는 새 규격의 조건이 아니다.
 
 ## 디자인 규격 선택
 
@@ -203,6 +203,6 @@ SEED는 디자인 규격·표현·조합·시각 검증의 정본이다. 제품 
 
 ## 2026-11-11 · Standard 제목 위치 선택 (후속 사용자 합의)
 
-- **Standard 두 배치의 정본:** [NAV-TOP · Standard 제목 정렬](TOP_NAVIGATION.md#2026-11-11--standard-헤더-제목-정렬-선택-사용자-최신-합의)에서 **Center(기본)/Start(선택)** 및 우측 Action·C-CREDIT·비움과 트레일링 상태를 선택. 이는 새로운 Header Type이 아니라 기존 Standard의 정렬 속성이다.
+- **Standard 두 배치의 정본:** [NAV-TOP · Standard 제목 정렬](TOP_NAVIGATION.md#s07--d-017-standard-슬롯)에서 **Center(기본)/Start(선택)** 및 우측 Action·C-CREDIT·비움과 트레일링 상태를 선택. 이는 새로운 Header Type이 아니라 기존 Standard의 정렬 속성이다.
 - **Page Type/하단바 계약:** [S-PAGE](shells/page-shells.md)의 `global-inner`·`non-global`은 두 정렬을 모두 사용 가능. `data-title-align="start"`만 Opt-in, Center 기존 정렬/D-015 규격/Root/Sheet/Bottom Navigation은 유지.
 - **구현·시연:** `seed/styles/seed-standard.css`의 기존 `.seed-top-nav__inner` 및 선택적 `.head.standard`만 추가 선택자 사용. SEED Lab Shell의 제목 위치와 우측 아이콘/코인/비움 예제로 교차 검증하며 `web/seed-lab/page-type.test.mjs`에서 기본형 보존을 확인. 실제 제품 페이지 적용은 별도.

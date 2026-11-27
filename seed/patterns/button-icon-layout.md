@@ -16,7 +16,7 @@ Button Container → Centered Content Group [optional Prefix Icon + gap + Label]
 Inline SVG 16–18dp(일반 17), Label 14–16sp·600, gap 6–8dp(일반 7). 한 group의 optical center가 버튼 center와 같아야 한다. 높이·padding·line-height는 Button size가 소유한다.
 
 ## States & Anti-Jitter
-Enabled/Pressed/Loading/Disabled/Success/Error. 로딩 시 전체 버튼 폭과 Label slot을 보존한 채 spinner만 overlay, label 제거/재측정 금지. Pressed scale/letter-spacing/font-weight 변경 금지. Border-width는 모든 state에서 동일 공간 확보.
+Enabled/Pressed/Loading/Disabled/Success/Error. 로딩 시 전체 버튼 폭과 Label slot을 보존한 채 spinner만 overlay, label 제거/재측정 금지. Pressed에서 외곽 scale/letter-spacing/font-weight 변경 금지. F-ICON-MOTION의 face-only 시각 변환 후보는 타깃·label 중심을 고정한다. Border-width는 모든 state에서 동일 공간 확보.
 
 ## CTA Hierarchy
 Primary Red=핵심 행동, Brand Weak=브랜드 보조, Brand Outline=로컬 보조, Secondary Gold=보상 수령 등 제한된 맥락, Neutral Weak=기본 보조. Secondary Gold가 모든 CTA를 대체하지 않음.

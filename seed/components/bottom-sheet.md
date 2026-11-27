@@ -27,8 +27,8 @@ Footer는 primary+neutral secondary 또는 단일 primary, label은 명확한 �
 ## QA
 min→mid→full→mid→min→closed, pointercancel, backdrop, Escape, keyboard Tab loop, long Korean text, 200% font, IME, scroll to last field, reduced motion. **현재 Web 시연을 Android 작동 검증으로 간주하지 않음.**
 
-> 수치는 v0.6 실험 후보이며 사용자 시각 승인 및 Android 검증 전에는 approved로 변경하지 않는다.
+> D-012의 snap/drag/scroll/footer 의미 계약을 보존한다. 185/40vh/380/65%는 기존 웹 시연 수치이며 실제 플랫폼 치수의 승인이 아니다.
 
-## UI-001/T2 비교 후보
+## 개편 표현 · UI-001 (제안)
 
-표현만 갓생알리미식 비례로 조정: 상단 radius 1.75rem, 좌우 여백 1.25rem(360px 미만 1rem), 제목 1.375rem/760, 진입 320ms·퇴장 180ms의 이동+fade(퇴장은 native display/overlay 전환 지원 환경에 한정). 기존 snap/drag/Body/Footer/Back 계약은 유지. 짧은 알림·메시지 Sheet는 내용 기반 높이와 최대 75dvh를 사용하고 안전 영역과 본문 스크롤을 보호한다. `data-seed-design="refined"` 후보로만 제공하며 렌더 승인 전 기본값을 변경하지 않는다.
+상단 radius 28, 좌우 여백 20(360 미만 16), 제목 22/760, 짧은 알림·메시지 Sheet는 내용 기반 높이 및 최대 가용 높이 75% 후보. 이는 일반 Sheet의 min/mid/full snap 계약을 대체하지 않는다. 기존 안전영역·본문 스크롤·고정 Footer 보존. 진입/퇴장은 F-ICON-MOTION을 따른다. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 웹 `refined` 코드는 유물 참고이며 앱 구현/렌더는 후속 작업이다.

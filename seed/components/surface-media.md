@@ -65,20 +65,7 @@ Image loading은 원래 프레임 비율 유지, error는 fallback과 필요한 
 
 ## K04 Surface와 의미 경계
 
-**정본 소유자:** `components/surface-media.md`.
-
-| 판단 | 선택 | 피할 것 |
-|---|---|---|
-| 여백만으로 관계를 읽을 수 있음 | Plain | 의미 없는 박스 |
-| 같은 그룹 안의 약한 경계가 필요 | 필요한 위치의 Divider | 마지막까지 반복하는 선 |
-| 독립된 정보 묶음 | 기존 Solid/Outlined/Subtle 등 목적에 맞는 Surface | 중첩 카드·같은 강조 반복 |
-| 이미지 자체가 정보의 중심 | Media | 이름·상태를 이미지에 모두 밀어넣기 |
-| 실제 보상·이벤트의 한정 강조 | Reward | Reward 안 Reward, 일상 관리 데이터를 광고 카피에 종속 |
-| 떠 있는 조작·층의 의미가 실제 존재 | Raised/Overlay | 깊이감만을 위한 그림자 |
-
-Surface 역할은 기본 경계·재질을 정한다. Interactive는 HTML button을 강제하는 역할명이 아니다. 이동이면 링크, 실행/선택이면 버튼, 정적이면 비조작 요소를 사용한다. 부모 안에 독립 행동이 필요하면 정적 그룹에 형제 링크/버튼을 둔다. 전체 링크 안에 다른 버튼을 넣지 않는다.
-
-강도는 정보 관계로 정한다. Plain→Divider→독립 면은 의사결정 순서이며 모든 화면을 세 형태로만 제한하는 새로운 Surface 목록이 아니다. 기존 10개 역할을 보존한다.
+Plain → 필요한 Divider → 독립 면의 순서로 정보 관계를 판단한다. 정적이면 정적 요소, 이동은 Link, 실행/선택은 Button. 부모에 독립 조작이 필요하면 정적 그룹 안의 형제 조작으로 분리한다. 전체 링크에 다른 버튼을 넣지 않는다. 10개 기존 역할을 보존한다.
 
 ## S06 · 단일 아이템 부모의 Surface 경계 (제안 보완)
 
@@ -137,6 +124,6 @@ Surface 역할은 기본 경계·재질을 정한다. Interactive는 HTML button
 
 기존 10종 Surface 역할·토큰·금지 중첩 규칙은 변경하지 않는다.
 
-## UI-001/T2 비교 후보
+## 개편 표현 · UI-001 (제안)
 
-면의 의미를 유지하면서 일반 solid/interactive 경계를 색 면 중심으로 절제하고 radius 1.375rem 후보를 비교한다. outlined/inset/reward/media 및 실제 선택·오류 표시의 의미 경계는 그대로 둔다. 홈 요약·가로 탐색 카드에 같은 비례를 사용한다. `data-seed-design="refined"`에서만 적용하며 보상 아트 및 일반 버튼/표면의 기존 승인 토큰은 변경하지 않는다.
+일반 Solid/Subtle/Interactive에 여유 있는 곡률 22, 홈 요약형 등의 padding 16과 면 중심 경계를 후보로 둔다. 일반 Solid/Interactive의 불필요한 border를 줄일 수 있으나 D-012 기본값과 S06 통합 상품 카드의 외곽선, Outline/Inset/Reward/Media의 의미 경계 및 실제 선택·오류 표시는 유지한다. 동일 역할에는 같은 표면/곡률을 사용하며 정보 그룹을 무조건 박스로 만들지 않는다. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 별도 Surface 타입이나 제품 화면 배치는 추가하지 않는다.

@@ -45,14 +45,9 @@ references: [REF-001, REF-004, REF-005, REF-006]
 | size.iconButtonContent / .iconButtonCompact | 17 / 16 | D-012 버튼 아이콘 허용16–18에 맞춘 일반/작은 size; 구형14 후보 사용 중단 |
 | size.avatarRow / .avatarProfile / .avatarHeroMax | 40 / 64 / 104 | 행 / 일반 프로필 / 명시적 몰입 영역 상한 |
 
-## 개선 변경의 근거 (제안값)
-S2-01/04/08에 나타나는 Button 내부 콘텐츠 과대·Avatar 과대를 줄이기 위해 `iconButtonContent=18→16`, `avatarProfile=80→64`, `avatarHeroMax=120→104`, `paddingXLarge=20→18`을 v0.2 후보로 조정. 전체 버튼 높이·터치 최소 48·페이지 여백은 보존한다. **수치 감소가 곧 합격은 아니며** 웹에서 동일 fixture 전후 비교가 필요하다. 48 미만 보이는 버튼은 비중첩 48 hit target을 별도로 확보한다.
+## 역할별 적용
 
-## v0.6 변형 규격
-- Progress는 C-STATUS **한 종류**, `micro=6`, `default=10`, `featured=12`의 높이 속성으로 표현한다. 별도 Progress 컴포넌트를 만들지 않는다.
-- Top Nav 60dp(상태바 제외), glyph 24dp, hit target 48dp. Bottom Nav 76dp(inset 제외), glyph 27dp, 라벨 11–12sp, Gap 4dp. 실제 탭 수는 O-003 미결.
-- Button 16dp radius를 기준으로 하고 로딩/프레스 시 Label center·Icon slot·border box 이동 금지. 내장 아이콘은 16–18dp, Label/Icon Gap 6–8dp.
-- Rarity Surface에도 16dp radius를 공유하지만 등급색과 이미지 속성은 별도 C-RARITY에 소유. 3단 Bottom Sheet는 C-SHEET의 content-driven snap과 S-PAGE 안전영역 참조.
+Progress 6/10/12는 C-STATUS, Sheet는 C-SHEET, Header는 NAV-TOP, Bottom Navigation은 C-BOTTOM이 소유한다. `size.topBarMin=60` 등 예전 제안은 승인 NAV-TOP 치수에 우선하지 않는다. 이전 수치 변천은 [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/foundations/geometry.md).
 
 ## 적용 규칙
 같은 size는 tone·treatment가 바뀌어도 높이·padding·radius가 같다. radius는 의미별 family 토큰을 공유하며 같은 숫자를 모든 모양에 강제하지 않는다. 버튼과 카드 내부 패딩을 개별 화면에서 임의로 줄이지 않는다.
@@ -67,7 +62,7 @@ S2-01/04/08에 나타나는 Button 내부 콘텐츠 과대·Avatar 과대를 줄
 OS safe inset은 페이지 spacing과 별개다. 아래 inset·키보드·하단바는 S-PAGE가 한 번만 합산한다. iPhone 프레임·노치·OS 시계를 앱의 padding으로 추출하지 않는다.
 
 ## 상태·근거·영향
-Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오류·확대에서는 높이 증가를 허용한다. 둥근 면의 반복은 관찰 high, 숫자·폭 전환 기준은 proposed이며 실기기 미검증이다. 전역 변경 시 버튼·목록·시트·하단 고정 영역을 같이 확인한다.
+Pressed/selected/loading에서도 외곽 크기를 유지한다. F-ICON-MOTION의 face-only 시각 변환은 레이아웃 크기를 바꾸지 않는다. 긴 라벨·오류·확대에서는 높이 증가를 허용한다. 둥근 면의 반복은 관찰 high, 숫자·폭 전환 기준은 proposed이며 실기기 미검증이다. 전역 변경 시 버튼·목록·시트·하단 고정 영역을 같이 확인한다.
 
 
 ## v0.15 적용 우선 규격
@@ -78,7 +73,7 @@ Pressed/selected/loading에서도 외곽 크기를 유지한다. 긴 라벨·오
 
 ## 공통 계약 r1의 적용 기준
 
-- 버튼의 기본 inline Glyph는 승인 기본17, compact는 허용범위 안의16을 사용한다. 이전 변경 근거의14는 당시 실험 기록이다.
+- 버튼의 기본 inline Glyph는 승인 기본17, compact는 허용범위 안의16을 사용한다. 구형 14 후보는 이력이다.
 - 표시 높이34/43/48과 실제 target을 분리하며 웹 target은 48 CSS px와3rem 중 큰 값 이상으로 비중첩 확보한다. 실제 링크/버튼이 target을 소유하고 내부 face를 중앙에 둔다.
 - page.inset은 360 CSS px 미만1rem, 이상1.25rem. 같은 라우트의 헤더·본문은 같은 gutter와 가용 외곽 폭을 참조한다. OS safe inset은 별도다.
 - 표시 높이는 확대 시 상한이 아니며 텍스트가 필요하면 성장한다. topBarMin/bottomBarMin 등 기존 후보 수치를 무조건 고정 높이로 사용하지 않는다.

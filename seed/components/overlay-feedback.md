@@ -48,6 +48,6 @@ A~F의 독립 슬롯·정렬·dismiss·ARIA·초점·빈 공간을 검사하고 
 
 S08은 기존 제안 상태(proposed) 유지. REF-003 보상 관찰 medium, 미노출 동작 low. D-012/013/015 및 Shell/Sheet 규격·기존 에셋/데이터 보존. 이전 상세 설명은 Git 이력에 남아 있으며 새 디자인 승인이나 기능 구현을 뜻하지 않는다.
 
-## UI-001/T2 비교 후보
+## 개편 표현 · UI-001 (제안)
 
-Dialog는 1.5rem radius·1.25rem 여백·강한 제목, Snackbar는 짧은 pill과 240ms 등장으로 비교한다. Sheet/Dialog는 320ms 진입과 scrim fade, 동작 감소 시 정적. 닫기·포커스·실제 처리 결과와 기존 슬롯 계약은 유지한다. 지원 브라우저는 native dialog의 display/overlay discrete transition으로 퇴장 180ms를 적용한다. 닫기·초점 복귀는 즉시 처리하고 미지원 브라우저는 기존 닫기 동작으로 폴백한다. Snackbar도 180ms 퇴장하며 신규 알림이 이전 삭제 타이머를 취소한다. 실제 브라우저 검증은 별도다.
+Dialog radius 24, 내부 여백 20, 강한 제목(22/760 후보). Snackbar는 짧은 pill을 기본으로 하고 메시지가 길면 자연스럽게 확장한다. 진입/퇴장과 reduced motion은 F-ICON-MOTION. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 닫기/포커스/실제 처리 결과는 연출과 독립적이며 신규 알림이 이전 알림의 삭제 예약을 취소한다. 브라우저별 native dialog 전환 방식은 유물의 구현 참고이며 플랫폼 규칙이 아니다.

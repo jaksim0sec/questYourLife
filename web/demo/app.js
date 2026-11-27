@@ -26,7 +26,7 @@ const section=(title,body,link="")=>'<section><div class="section-head"><h2 clas
 const textAction=(title,action)=>'<button class="text-action" data-action="'+action+'">'+title+icon("chevron")+'</button>';
 const demoNote=()=>'<p class="support demo-note">시연용 예시 데이터 · 새로고침하면 초기화돼요.</p>';
 function taskRow(g,t,showGoal=false){
- return '<div class="quest-task'+(t.done?' is-done':'')+'"><button class="task-check" aria-label="'+esc(t.title)+(t.done?' 완료 취소':' 완료')+'" aria-pressed="'+t.done+'" data-action="toggle:'+t.id+'">'+icon(t.done?"check-circle-fill":"check-circle")+'</button><button class="task-content" data-action="task:'+t.id+'"><span>'+esc(t.title)+'</span><small>'+esc(showGoal?g.title:t.detail||"퀘스트")+'</small>'+icon("chevron")+'</button></div>';
+ return '<div class="quest-task'+(t.done?' is-done':'')+'"><button class="task-check" aria-label="'+esc(t.title)+(t.done?' 완료 취소':' 완료')+'" aria-pressed="'+t.done+'" data-action="toggle:'+t.id+'">'+(t.done?icon("check-circle-fill"):'<span class="unchecked-circle" aria-hidden="true"></span>')+'</button><button class="task-content" data-action="task:'+t.id+'"><span>'+esc(t.title)+'</span><small>'+esc(showGoal?g.title:t.detail||"퀘스트")+'</small>'+icon("chevron")+'</button></div>';
 }
 function taskGroup(items,showGoal=false){return '<div class="surface task-group">'+items.map(({g,t})=>taskRow(g,t,showGoal)).join("")+'</div>'}
 
@@ -50,22 +50,33 @@ const socialExamples=[
 ];
 const cheers=new Set();
 const homeBooks=[
- {id:"b1",title:"일주일, 하루 한 페이지",tag:"독서",author:"모카",look:["beanie"],art:"05_ribbon_gift.png",description:"매일 부담 없는 분량을 읽고 인상 깊은 문장을 남기는 작은 독서 도전.",steps:["읽고 싶은 책 한 권 고르기","오늘 한 페이지 읽기","기억에 남은 문장 기록하기"]},
- {id:"b2",title:"하루 10분 일본어",tag:"언어",author:"하루",look:["cap"],art:"04_mint_tin.png",description:"짧은 표현을 듣고 따라 하며 매일 조금씩 익히는 언어 도전.",steps:["오늘의 일본어 표현 하나 고르기","짧은 예문을 듣고 따라 하기","배운 표현 기록하기"]}
+ {id:"b1",title:"일주일, 하루 한 페이지",tag:"독서",author:"모카",look:["beanie"],art:"reading.svg",description:"매일 부담 없는 분량을 읽고 인상 깊은 문장을 남기는 작은 독서 도전.",steps:["읽고 싶은 책 한 권 고르기","오늘 한 페이지 읽기","기억에 남은 문장 기록하기"]},
+ {id:"b2",title:"하루 10분 일본어",tag:"언어",author:"하루",look:["cap"],art:"language.svg",description:"짧은 표현을 듣고 따라 하며 매일 조금씩 익히는 언어 도전.",steps:["오늘의 일본어 표현 하나 고르기","짧은 예문을 듣고 따라 하기","배운 표현 기록하기"]},
+ {id:"b3",title:"20분 집중 루틴",tag:"공부",author:"모카",look:["beanie","cream"],art:"focus.svg",description:"집중하고 싶은 일을 하나 선택하고 짧게 몰입해 보는 도전.",steps:["집중할 일 하나 고르기","방해 요소 정리하기","20분 집중하고 쉬기"]},
+ {id:"b4",title:"하루 한 줄 기록",tag:"습관",author:"하루",look:["cap"],art:"journal.svg",description:"하루에 기억하고 싶은 일을 한 줄씩 남겨 보세요.",steps:["오늘 기억하고 싶은 일 떠올리기","한 줄로 기록하기"]}
 ];
 function homeBookTile(b){
- return '<button class="home-book" data-action="home-book:'+b.id+'"><span class="home-book-art">'+homeArt("rewards/"+b.art)+'</span><span class="home-book-info"><small>'+esc(b.tag)+'</small><strong>'+esc(b.title)+'</strong><span class="book-author">'+mascot(b.look)+'<span>'+esc(b.author)+'</span></span></span></button>';
+ return '<button class="home-book cover-book" data-action="home-book:'+b.id+'"><span class="home-book-art">'+homeArt("questbooks/"+b.art)+'<span class="cover-title">'+esc(b.title)+'</span></span><span class="home-book-info"><span class="book-author">'+mascot(b.look)+'<span>'+esc(b.author)+' · '+esc(b.tag)+'</span></span></span></button>';
+}
+function homeTodayBody(){
+ const items=todayTasks(),{total,done}=stat(items.map(x=>x.t));
+ const ordered=[...items.filter(x=>!x.t.done),...items.filter(x=>x.t.done)];
+ return '<section class="today-detail"><h2 class="display">'+(total?done+' / '+total+' 완료':'오늘의 첫 퀘스트')+'</h2>'+(total?progress(done,total):cta("목표 만들기","brand","create"))+'</section>'+
+ (total?taskGroup(ordered,true):'')+textAction("전체 목표","tab:quests")+demoNote();
+}
+function homeCatalogBody(){
+ return '<p class="support">퀘스트북 예시</p><div class="home-books cover-grid">'+homeBooks.map(homeBookTile).join("")+'</div>';
 }
 function homeBody(){
- const items=todayTasks(),{total,done}=stat(items.map(x=>x.t)),remaining=total-done;
- const ordered=[...items.filter(x=>!x.t.done),...items.filter(x=>x.t.done)];
- const headline=!total?"첫 퀘스트를 만들어 보세요":remaining?'<strong>'+remaining+'개</strong> 남았어요':'모두 완료했어요';
- return '<section class="home-daily"><div class="section-head"><h2 class="section-title">오늘의 퀘스트</h2>'+textAction("전체 목표","tab:quests")+'</div><div class="home-today-top"><h3 class="display home-daily-title">'+headline+'</h3>'+(total?'<div class="home-ring" style="--pct:'+(done/total*100)+'%" role="img" aria-label="'+done+'개 완료, 총 '+total+'개"><span>'+done+'<small>/'+total+'</small></span></div>':'')+'</div>'+
- (total?taskGroup(ordered,true):cta("목표 만들기","brand","create"))+'</section>'+
- section("꾸미기",'<div class="home-expression"><button class="surface expression-tile" data-action="home-look">'+mascot(homeLook,"expression-mascot")+'<span>마스코트 꾸미기'+icon("chevron")+'</span></button><button class="surface expression-tile" data-action="home-rewards">'+homeArt("rewards/cash-coins-stack.png","expression-art")+'<span>보상 미리보기'+icon("chevron")+'</span></button></div>')+
- section("친구들의 도전 (예시)",'<div class="social-rows">'+socialExamples.map(x=>'<div class="social-row">'+mascot(x.look,"social-mascot")+'<div class="social-copy"><strong>'+x.name+'</strong><p>'+x.text+'</p></div><button class="cheer-button" data-action="cheer:'+x.id+'" aria-label="'+x.name+' 응원'+(cheers.has(x.id)?" 취소":"")+'" aria-pressed="'+cheers.has(x.id)+'">'+icon("heart")+'<span>'+(cheers.has(x.id)?"응원함":"응원")+'</span></button></div>').join("")+'</div>',textAction("디엠","dm"))+
- '<section class="surface home-clan"><div class="home-clan-copy"><p class="support">공동 도전 예시</p><h2>우리의 작은 습관</h2><p class="support">참여 예시 · '+socialExamples.map(x=>x.name).join(", ")+'</p><button class="text-action" data-action="home-clan">도전 살펴보기'+icon("chevron")+'</button></div>'+homeArt("rewards/03_delivery_parcel.png","clan-art")+'</section>'+
- section("새로운 퀘스트북",'<div class="home-books">'+homeBooks.map(homeBookTile).join("")+'</div>',textAction("탐색","tab:explore"))+demoNote();
+ const items=todayTasks(),{total,done}=stat(items.map(x=>x.t));
+ const next=items.find(x=>!x.t.done);
+ const daily='<section class="surface home-quick"><div class="quick-line"><div class="quick-summary"><span>오늘의 퀘스트</span><strong>'+done+'/'+total+'</strong></div>'+textAction("전체","home-today")+'</div>'+
+ (next?'<div class="quick-action"><button class="task-check" aria-label="'+esc(next.t.title)+' 완료" aria-pressed="false" data-action="toggle:'+next.t.id+'"><span class="unchecked-circle" aria-hidden="true"></span></button><button class="quick-task" data-action="task:'+next.t.id+'">'+esc(next.t.title)+icon("chevron")+'</button></div>':total?'<p class="quick-done">'+icon("check-circle-fill")+' 오늘의 퀘스트 완료</p>':cta("목표 만들기","brand","create"))+'</section>';
+ const discovery='<section class="home-discovery"><div class="section-head"><h2 class="section-title">추천 퀘스트북</h2>'+textAction("전체 보기","home-catalog")+'</div><div class="book-rail" aria-label="추천 퀘스트북 예시">'+[homeBooks[2],homeBooks[0],homeBooks[1],homeBooks[3]].map(homeBookTile).join("")+'</div></section>';
+ const event='<section><button class="home-event" data-action="home-clan"><span class="event-copy"><small>공동 도전 예시</small><strong>우리의 작은 습관</strong><span>친구와 각자의 목표 실천</span><span class="event-action">살펴보기'+icon("chevron")+'</span></span><span class="event-art">'+homeArt("rewards/06_wooden_chest.png","event-chest")+mascot(homeLook,"event-mascot")+'</span></button></section>';
+ const social=section("친구들의 도전 (예시)",'<div class="social-rows">'+socialExamples.map(x=>'<div class="social-row">'+mascot(x.look,"social-mascot")+'<div class="social-copy"><strong>'+x.name+'</strong><p>'+x.text+'</p></div><button class="cheer-button" data-action="cheer:'+x.id+'" aria-label="'+x.name+' 응원'+(cheers.has(x.id)?" 취소":"")+'" aria-pressed="'+cheers.has(x.id)+'">'+icon("heart")+'<span>'+(cheers.has(x.id)?"응원함":"응원")+'</span></button></div>').join("")+'</div>',textAction("디엠","dm"));
+ const expression=section("꾸미기",'<div class="home-expression"><button class="surface expression-tile" data-action="home-look">'+mascot(homeLook,"expression-mascot")+'<span>마스코트 꾸미기'+icon("chevron")+'</span></button><button class="surface expression-tile" data-action="home-rewards">'+homeArt("rewards/cash-coins-stack.png","expression-art")+'<span>보상 미리보기'+icon("chevron")+'</span></button></div>');
+ return '<div class="home-feed">'+daily+discovery+event+social+expression+demoNote()+'</div>';
 }
 function homeLookBody(){
  return '<section class="look-preview">'+mascot(homeLook,"large-mascot")+'<p class="support">실제 보유 아이템이 아닌 착용 예시예요.</p></section>'+section("소품 선택",'<div class="look-options">'+Object.entries(avatarItems).map(([key,x])=>'<button class="surface look-option" data-action="look:'+key+'" aria-pressed="'+homeLook.includes(key)+'">'+homeArt("cosmetics/"+x.file)+'<strong>'+x.label+'</strong><small>'+(homeLook.includes(key)?"착용 중":"미리보기")+'</small></button>').join("")+'</div>');
@@ -75,7 +86,7 @@ function homeRewardsBody(){
 }
 function homeBookBody(){
  const b=homeBooks.find(x=>x.id===active.bookId);if(!b)return '<p class="support">퀘스트북을 찾을 수 없어요.</p>';
- return '<section class="home-book-detail">'+homeArt("rewards/"+b.art)+'<p class="support">'+esc(b.tag)+' · 퀘스트북 예시</p><h2 class="display">'+esc(b.title)+'</h2><div class="book-author">'+mascot(b.look)+'<strong>'+esc(b.author)+'</strong></div><p class="support">'+esc(b.description)+'</p></section>'+section("첫날의 행동",'<div class="surface review-steps">'+b.steps.map(t=>'<div>'+icon("check-circle")+'<span>'+esc(t)+'</span></div>').join("")+'</div>')+cta("내 계획으로 가져오기","brand","copy-home-book");
+ return '<section class="home-book-detail">'+homeArt("questbooks/"+b.art)+'<p class="support">'+esc(b.tag)+' · 퀘스트북 예시</p><h2 class="display">'+esc(b.title)+'</h2><div class="book-author">'+mascot(b.look)+'<strong>'+esc(b.author)+'</strong></div><p class="support">'+esc(b.description)+'</p></section>'+section("첫날의 행동",'<div class="surface review-steps">'+b.steps.map(t=>'<div>'+icon("check-circle")+'<span>'+esc(t)+'</span></div>').join("")+'</div>')+cta("내 계획으로 가져오기","brand","copy-home-book");
 }
 function homeClanBody(){
  return '<section class="reward-preview-hero">'+homeArt("rewards/03_delivery_parcel.png")+'<h2 class="display">우리의 작은 습관</h2><p class="support">각자 정한 행동을 실천하고 서로 응원하는 공동 도전 예시예요.</p></section>'+section("함께하는 사람들",'<div class="social-rows">'+socialExamples.map(x=>'<div class="social-row">'+mascot(x.look,"social-mascot")+'<div class="social-copy"><strong>'+x.name+'</strong><p>'+x.text+'</p><small>예시 참여자</small></div></div>').join("")+'</div>')+'<p class="support">클랜 참여와 공유 범위는 아직 실제 서비스에 연결되지 않았어요.</p>'+cta("클랜 둘러보기","weak","tab:clan");
@@ -125,6 +136,8 @@ function toggleTask(id){const item=allTasks().find(x=>x.t.id===id);if(!item)retu
 roots.home.body=homeBody;roots.quests.body=questsBody;
 // Other roots remain shell fixtures.
 const fixtures={
+ "home-today":{type:"global-inner",title:"오늘의 퀘스트",body:homeTodayBody,footer:null},
+ "home-catalog":{type:"global-inner",title:"추천 퀘스트북",body:homeCatalogBody,footer:null},
  "home-look":{type:"global-inner",title:"꾸미기 미리보기",body:homeLookBody,footer:null},
  "home-rewards":{type:"global-inner",title:"보상 미리보기",body:homeRewardsBody,footer:null},
  "home-book":{type:"global-inner",title:"퀘스트북",body:homeBookBody,footer:null},

@@ -1,13 +1,13 @@
 # 갓생패치 · Top Navigation 시각 기준
 
-**Active demo: D-019 supersedes the previous header appearance and alignment.** All three page roles use one centered title with matching circular neutral icon buttons; the old Root/Standard appearance below is historical (D-011/D-015/D-017). 웹 시연은 유물이며, 이 명세는 재사용할 디자인 계약이다. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/TOP_NAVIGATION.md).
+**Active demo: D-019 applies only to Standard headers.** Global pages retain the expressive Root header with large left-aligned title and clear outline actions. Global Inner and Non-Global share the centered title and circular neutral buttons. Earlier numeric approvals below remain historical. 웹 시연은 유물이며, 이 명세는 재사용할 디자인 계약이다. [이전 상세·검증 이력](https://github.com/jaksim0sec/questYourLife/blob/07bdd23ac0da46033b45508767fa5e62643a1931/seed/TOP_NAVIGATION.md).
 
 ## Root / Standard
 
 | 역할 | 배치 | 제목 |
 |---|---|---|
 | Root | 좌측 제목, 우측 맥락별 Outline 조작 | 현재 최상위 목적지 |
-| Standard | 좌측 Back/Close, 중앙 제목(기본) 또는 좌측 제목(Start), 우측 선택적 조작·정보 | 상세·하위 화면 |
+| Standard | 좌측 Back/Close, 중앙 제목(D-019), 우측 선택적 조작·정보 | 상세·하위 화면 |
 
 Back은 이전 화면, Close는 독립 흐름/레이어 닫기다. 제목을 선택 버튼으로 표현할 때 실제 기능과 표시가 있어야 한다. 검색·알림·메뉴는 필요한 것만 둔다. Header는 본문과 자연스럽게 이어지는 중립 표면이며 글래스·새 배경색을 강제하지 않는다. Global Inner/Non-Global의 하단바 의미는 [S-PAGE](shells/page-shells.md), Sheet는 [C-SHEET](components/bottom-sheet.md)를 따른다.
 
@@ -29,8 +29,8 @@ Center와 Start는 동일 Header의 배치 선택이며 화면 작성자가 명�
 
 알림 아이콘은 기존 웹 승인 `assets/icons/preview/bell-connected.svg`를 참고한다. Soft 56종의 공식 bell 및 SVG 원본은 변경하지 않는다.
 
-## Unified header · D-019
+## Active Root / Standard · D-019 correction
 
-Use the reference image's composition for Global, Global Inner and Non-Global: left contextual action, centered title, right contextual action. All use the same height, type, gutter, neutral round surfaces and glyph size. No separate large left-aligned Root title or Start alignment in the active demo. Keep a balanced empty slot when an action is unavailable; never invent a Back or Add action solely to match the image. Body Display remains independent. Bottom Sheet retains its own header.
+Global uses the original expressive Root: H76, left-aligned 30/800 title (28 below 360), leading 1.22 and tracking -.04em. Clear outline actions remain unfilled, with the original 1.59rem glyph and 3rem target. No Back on a root. This restores the pre-D-019 Root appearance exactly.
 
-Working web geometry: H76 minimum, title 18/750 with 1.3 leading, centered 48 minimum circular targets, 26 glyph box, existing page gutter 16/20. These are implementation choices from the reference proportions, not separately measured/approved values. Circle fill uses the neutral soft surface, foreground uses the page foreground. Root with no previous page leaves the left slot empty. Back/Close and right actions use actual route context. No colored navigation or new icon assets. [Tokens](implementation/v015-tokens.json) → `refinements.navigation.unifiedHeader`.
+Global Inner and Non-Global use the reference Standard header: centered title 18/750, leading 1.3, H76 minimum, neutral circular 48 minimum actions with 26 glyph. Keep balanced empty slots where appropriate; do not fabricate actions. Start alignment is historical for the active demo. Shared gutter 16/20. Bottom Sheet retains its own header. Bottom navigation is unchanged. [Tokens](implementation/v015-tokens.json) → `refinements.navigation`.

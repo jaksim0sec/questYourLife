@@ -460,7 +460,6 @@
       "status": "user-directed-D-019-working-demo-geometry",
       "unifiedHeader": {
         "appliesTo": [
-          "global",
           "global-inner",
           "non-global"
         ],
@@ -492,7 +491,23 @@
         "destinations": "preserve webNavigationSet.items",
         "visibility": "preserve S-PAGE K10"
       },
-      "sheet": "independent header; preserve parent"
+      "sheet": "independent header; preserve parent",
+      "root": {
+        "appliesTo": [
+          "global"
+        ],
+        "titleAlignment": "start",
+        "fontSize": 30,
+        "compactUnder360": 28,
+        "fontWeight": 800,
+        "lineHeight": 1.22,
+        "letterSpacingEm": -0.04,
+        "minHeight": 76,
+        "targetMin": 48,
+        "glyphRem": 1.59,
+        "actionSurface": "clear",
+        "back": false
+      }
     },
     "typography": {
       "section": {

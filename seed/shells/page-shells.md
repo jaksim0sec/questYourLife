@@ -9,7 +9,7 @@ references: [REF-001, REF-002, REF-004, REF-005, D-011, SRC-TDS-BOTTOM]
 
 # 페이지 골격과 안전영역
 
-**D-019 active demo override:** the three page roles use the same centered header with round neutral actions, and the visible bottom bar is icon-only/achromatic. K10 navigation visibility, owner, back, overlay and safe-inset contracts remain; historical Root/Standard appearance and Center/Start alternatives are superseded for the new demo. See [NAV-TOP](../TOP_NAVIGATION.md) and [C-BOTTOM](../components/bottom-navigation.md).
+**D-019 active demo override:** Global keeps the expressive Root header; Global Inner and Non-Global share the centered Standard header with round neutral actions. The visible bottom bar remains icon-only/achromatic. K10 navigation visibility, owner, back, overlay and safe-inset contracts remain. See [NAV-TOP](../TOP_NAVIGATION.md) and [C-BOTTOM](../components/bottom-navigation.md).
 
 ## 정본
 상단 시각·슬롯은 [TOP_NAVIGATION](../TOP_NAVIGATION.md)의 D-011 정본을 직접 참조한다. 이 문서는 이를 재정의하지 않는다. Root 좌측 굵은 제목/Outline 액션, Standard Back 또는 Close/중앙 제목/맥락별 보조 액션을 보존한다. 컨셉의 좌측 상세 제목·로고 헤더·다크 헤더는 그 자체로 승인된 예외가 아니다.

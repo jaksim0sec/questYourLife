@@ -31,6 +31,6 @@ Center와 Start는 동일 Header의 배치 선택이며 화면 작성자가 명�
 
 ## Active Root / Standard · D-019 correction
 
-Global uses the expressive Root: H76, left-aligned 28/800 title (26 below 360), leading 1.22 and tracking -.04em. Clear outline actions remain unfilled, with a 1.75rem (28px at the base font size) glyph and 3rem target. No Back on a root. The 30→28 title and 25.44→28 glyph adjustment is a scoped optical-balance review choice; no source SVG changes.
+Global uses the expressive Root: H76, left-aligned 28/700 title (26 below 360), leading 1.22 and tracking -.04em. Clear outline actions remain unfilled, with a 1.75rem (28px at the base font size) glyph and 3rem target. No Back on a root. Root review: 30→28 title, 800→700 weight, 25.44→28 glyph box and 2.1 outline stroke candidate. The Root bell uses a derived variant with unchanged paths; original approved SVG stays intact. Apply the common outer optical inset (10px at the base font size) to the trailing action slot, retaining the full 48px target and page containment. Standard and bottom navigation are unchanged.
 
 Global Inner and Non-Global use the reference Standard header: centered title 18/750, leading 1.3, H76 minimum, neutral circular 48 minimum actions with 26 glyph. Keep balanced empty slots where appropriate; do not fabricate actions. Start alignment is historical for the active demo. Shared gutter 16/20. Bottom Sheet retains its own header. Bottom navigation is unchanged. [Tokens](implementation/v015-tokens.json) → `refinements.navigation`.

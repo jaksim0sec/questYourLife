@@ -499,14 +499,16 @@
         "titleAlignment": "start",
         "fontSize": 28,
         "compactUnder360": 26,
-        "fontWeight": 800,
+        "fontWeight": 700,
         "lineHeight": 1.22,
         "letterSpacingEm": -0.04,
         "minHeight": 76,
         "targetMin": 48,
         "glyphRem": 1.75,
         "actionSurface": "clear",
-        "back": false
+        "back": false,
+        "outlineStroke": 2.1,
+        "outerOpticalInsetRem": 0.625
       }
     },
     "typography": {

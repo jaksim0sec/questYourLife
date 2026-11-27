@@ -453,35 +453,50 @@
     "canonicalSoftSvgCountPreserved": 56
   },
   "refinements": {
-    "status": "proposed-design-refinement-not-approved-or-native-shipped",
-    "source": "UI-001/T2; godseng-alarm 4d9a706; archive/preview",
+    "status": "proposed-expressive-reform-not-approved-or-native-shipped",
+    "source": "UI-001/T2 corrective visual analysis; five user-supplied godseng-alarm screenshots and source 4d9a706; prior refined CSS is historical",
     "units": "logical design units (web baseline 16px=1rem); font scale and actual platform mapping are separate",
     "navigation": {
       "root": {
-        "fontSize": 26,
-        "compactUnder360": 24,
-        "fontWeight": 760,
+        "fontSize": 30,
+        "compactUnder360": 28,
+        "fontWeight": 800,
         "lineHeight": 1.22,
         "letterSpacingEm": -0.04,
-        "minHeight": 68
+        "minHeight": 76
       },
       "standard": "preserve topNavigation.standard",
-      "target": "preserve topNavigation.targetSizeRem"
+      "target": "preserve topNavigation.targetSizeRem",
+      "context": {
+        "roundBackTarget": 48,
+        "glyph": 24,
+        "capsuleHeight": 48,
+        "gap": 12
+      }
     },
     "typography": {
       "section": {
-        "size": 20,
+        "size": 18,
         "weight": 740,
         "lineHeight": 1.3,
         "letterSpacingEm": -0.028
       },
-      "heroAndNumber": {
-        "size": 28,
-        "weight": 780,
+      "display": {
+        "size": 32,
+        "compactUnder360": 28,
+        "weight": 800,
+        "lineHeight": 1.2,
+        "letterSpacingEm": -0.045,
+        "inlineEmphasis": "primary foreground in readable secondary sentence"
+      },
+      "number": {
+        "size": 32,
+        "weight": 800,
         "lineHeight": 1.25,
         "letterSpacingEm": -0.035
       },
       "support": {
+        "headlineContextSize": 15,
         "lineHeight": 1.55
       }
     },
@@ -491,8 +506,14 @@
         "subtle",
         "interactive"
       ],
-      "radius": 22,
-      "defaultPadding": 16,
+      "radius": 24,
+      "defaultPadding": 20,
+      "actionRow": {
+        "heightMin": 60,
+        "radius": 20,
+        "paddingX": 20,
+        "paddingY": 16
+      },
       "border": "optional only for ordinary solid/interactive; preserve approved and semantic boundaries including S06 integrated item"
     },
     "switch": {
@@ -506,19 +527,20 @@
       "on": "foreground with contrasting thumb"
     },
     "sheet": {
-      "topRadius": 28,
+      "topRadius": 30,
       "inset": 20,
       "compactInsetUnder360": 16,
-      "titleSize": 22,
-      "titleWeight": 760,
+      "titleSize": 25,
+      "titleWeight": 800,
       "shortSheetMaxAvailableHeightPercent": 75,
-      "snapContract": "preserve bottomSheet"
+      "snapContract": "preserve bottomSheet",
+      "footer": "refinements.action.primaryCTA"
     },
     "dialog": {
       "radius": 24,
       "inset": 20,
-      "titleSize": 22,
-      "titleWeight": 760
+      "titleSize": 24,
+      "titleWeight": 800
     },
     "snackbar": {
       "shape": "pill",
@@ -545,6 +567,44 @@
       ],
       "reducedMotion": "instant state or static result",
       "outerTargetChanges": false
+    },
+    "action": {
+      "primaryCTA": {
+        "heightMin": 58,
+        "radius": "pill",
+        "fontSize": 17,
+        "weight": 700,
+        "paddingX": 24,
+        "defaultTone": "neutral high contrast",
+        "width": "fill"
+      },
+      "peerCTA": {
+        "heightMin": 58,
+        "radius": "pill",
+        "fontSize": 16,
+        "weight": 700,
+        "paddingX": 20
+      },
+      "ordinary": "preserve button and radius.control"
+    },
+    "selection": {
+      "tile": {
+        "radius": 22,
+        "minHeight": 128,
+        "padding": 16,
+        "iconWell": 36,
+        "iconSize": 20,
+        "selected": "inverted neutral foreground/background"
+      },
+      "preset": {
+        "radius": 14,
+        "heightMin": 48
+      },
+      "wheel": {
+        "centerValue": "prominent",
+        "neighbors": "readable muted",
+        "controls": "bounded scroll/swipe plus previous/next and accessible equivalent"
+      }
     }
   }
 }

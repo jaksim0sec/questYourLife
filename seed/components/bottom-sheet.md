@@ -22,13 +22,13 @@ Backdrop + Container + optional Header(title/description) + Handle + Scrollable 
 Handle은 항상 Drag, Scrollable Body는 **최상단↓/최하단↑에서 drag로 연속 인계**하며 손가락을 실시간 추적, 놓은 높이의 nearest snap으로 정착한다. 정확한 동작·Cancel은 [C-GESTURE](gesture.md)가 정본. Backdrop/Close/Esc/Back 닫기. 입력 중 변경사항이 사라지는 고위험 플로우는 확인/Close 제어를 제공하고 임의 Swipe-to-dismiss 비활성화 검토.
 
 ## Fixed CTA / Text
-Footer는 primary+neutral secondary 또는 단일 primary, label은 명확한 동사. 16dp 컨트롤 radius, 버튼 높이 같고 Safe Area **한 번만** 계산. 텍스트 계층은 Header Section → Body/Meta → CTA. Footer 위 컨텐츠가 뒤에 가려지지 않도록 padding 책임 소유.
+Footer는 primary+neutral secondary 또는 단일 primary, label은 명확한 동사. 기존 16dp 버튼 규격 또는 명시적으로 선택한 C-ACTION expressive CTA 후보를 사용한다. 같은 그룹은 버튼 높이 같고 Safe Area **한 번만** 계산. 텍스트 계층은 Header Section → Body/Meta → CTA. Footer 위 컨텐츠가 뒤에 가려지지 않도록 padding 책임 소유.
 
 ## QA
 min→mid→full→mid→min→closed, pointercancel, backdrop, Escape, keyboard Tab loop, long Korean text, 200% font, IME, scroll to last field, reduced motion. **현재 Web 시연을 Android 작동 검증으로 간주하지 않음.**
 
 > D-012의 snap/drag/scroll/footer 의미 계약을 보존한다. 185/40vh/380/65%는 기존 웹 시연 수치이며 실제 플랫폼 치수의 승인이 아니다.
 
-## 개편 표현 · UI-001 (제안)
+## Expressive sheet (proposed)
 
-상단 radius 28, 좌우 여백 20(360 미만 16), 제목 22/760, 짧은 알림·메시지 Sheet는 내용 기반 높이 및 최대 가용 높이 75% 후보. 이는 일반 Sheet의 min/mid/full snap 계약을 대체하지 않는다. 기존 안전영역·본문 스크롤·고정 Footer 보존. 진입/퇴장은 F-ICON-MOTION을 따른다. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 웹 `refined` 코드는 유물 참고이며 앱 구현/렌더는 후속 작업이다.
+Top radius 30, inset 20 (16 below 360), title 25/800, handle followed by generous separation. Group content as title/context → short options → meaningful filled action rows (C-SURFACE) → optional quiet text action → prominent H58 pill footer (C-ACTION). Content sets the height; short sheets may use up to 75% of available height. No artificial empty slots, repeated dividers or extra X when a clear close action suffices. Keep existing min/mid/full snap, scroll, safe insets, focus/dismiss and fixed-footer ownership. Use the existing F-ICON-MOTION enter/exit contract. [Candidate values](../implementation/v015-tokens.json) → `refinements.sheet`.

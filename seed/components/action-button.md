@@ -30,6 +30,10 @@ Brand Weak/Outline 및 Critical solid/ghost는 별도 제안이며 기본 6종 �
 
 한 행동 영역에서 High 하나가 기본이며 조회 화면은 없어도 된다. 좁거나 3개 이상이면 [P-ACTIONS](../patterns/action-layout.md)의 재배치/메뉴를 고려한다. 섹션의 더보기/전체보기는 [P-PAGE-COMPOSE](../patterns/page-composition.md)의 무테 텍스트/선택적 Chevron, 실제 링크 또는 ghost. 가짜 클릭·동일 목적지 중복·독립 행동 중첩 금지. 정적 아트에는 눌림을 부여하지 않는다.
 
+## Expressive action hierarchy (proposed)
+
+Keep the six approved variants and ordinary 34/43/48, R16 controls. For a clear flow-completing primary action, use a full-width, high-contrast neutral pill face: H58, 17/700 label, 24 horizontal padding, pill radius. Brand or reward tone remains meaningful, not a universal primary color. Two genuinely peer decisive actions may use equal-width H58 pills (16/700), while compact secondary actions stay compact. A contextual icon+label capsule (H48) and round independent Back/Close belong to their appropriate action roles, not to a new global button family. A filled icon/label/trailing action row uses C-SURFACE rather than the default button size. This is an explicit proposed role-specific exception, not a replacement of the D-012 geometry or a blanket pill rule. At larger text, allow the face to grow. [Candidate values](../implementation/v015-tokens.json) → `refinements.action`.
+
 ## 상태 및 표현
 
 | 상태 | 규격 |

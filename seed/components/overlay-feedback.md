@@ -50,4 +50,4 @@ S08은 기존 제안 상태(proposed) 유지. REF-003 보상 관찰 medium, 미�
 
 ## 개편 표현 · UI-001 (제안)
 
-Dialog radius 24, 내부 여백 20, 강한 제목(22/760 후보). Snackbar는 짧은 pill을 기본으로 하고 메시지가 길면 자연스럽게 확장한다. 진입/퇴장과 reduced motion은 F-ICON-MOTION. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 닫기/포커스/실제 처리 결과는 연출과 독립적이며 신규 알림이 이전 알림의 삭제 예약을 취소한다. 브라우저별 native dialog 전환 방식은 유물의 구현 참고이며 플랫폼 규칙이 아니다.
+Expressive Dialog: radius 24, inset 20, dominant title 24/800, readable supporting text and clear action hierarchy. Peer actions may use the C-ACTION expressive pill treatment; ordinary confirmations keep the default. Snackbar는 짧은 pill을 기본으로 하고 메시지가 길면 자연스럽게 확장한다. 진입/퇴장과 reduced motion은 F-ICON-MOTION. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 닫기/포커스/실제 처리 결과는 연출과 독립적이며 신규 알림이 이전 알림의 삭제 예약을 취소한다. 브라우저별 native dialog 전환 방식은 유물의 구현 참고이며 플랫폼 규칙이 아니다.

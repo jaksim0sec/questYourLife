@@ -188,6 +188,10 @@ references: [D-001, D-011, D-012, D-013]
 - 예외를 위해 페이지 CSS가 기존 컴포넌트의 기본 패딩/Radius/색을 덮지 않는다. 책임이 공통 컴포넌트인지 배치인지 먼저 판단한다.
 - 문서에 표준 API가 적혀 있어도 실제 CSS 또는 Compose에 구현이 없으면 **미구현**으로 기록한다. 구현을 확인하기 전 '자동 적용'이라고 보고하지 않는다.
 
+## Expressive composition
+
+Start from the information relationship, not a component checklist. A focused flow can use compact contextual navigation, one prominent body question or value, independent choices or quiet information/action groups, and one decisive footer action. A reading view can use a dominant sentence with inline emphasis, followed by aligned label/value/visual groups. Preserve negative space rather than fill every gap with cards; use ordinary compact components for dense repeated tasks. These are composition patterns, not mandatory pages or copied godseng-alarm layouts. See F-TYPE, C-ACTION, C-SURFACE, C-SELECTION and C-SHEET for their own values.
+
 ## 9. 검토의 경계
 
 - 이번 문서화는 **범용 레이아웃과 페이지 선택 규칙의 설계안**이다. 새 UI 코드·페이지 시연·이동 동작·네이티브·접근성 실증은 다루지 않는다.

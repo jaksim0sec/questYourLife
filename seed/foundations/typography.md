@@ -30,9 +30,9 @@ references: [REF-001, REF-002, REF-004, REF-005]
 
 수치는 기존 제안/r1 시작 기준이다. 서체는 가독성·실제 글리프 폭으로 판단하고 사용자 글자 크기를 존중한다. 웹의 16px 기준 rem과 Android sp는 플랫폼 대응 참고이지 물리 px 매핑이 아니다.
 
-## 개편 표현 · UI-001 (제안)
+## Expressive refinement · UI-001 (proposed)
 
-[후보 수치](../implementation/v015-tokens.json)의 `refinements`. Section 20/1.3/740, Hero·Number 28/1.25/780, Support 줄높이 1.55(크기·weight 유지). 제목·숫자 자간은 후보 토큰대로 절제한다. 모든 글자를 굵게 만들지 않으며 본문·버튼·Header 기본 스케일을 덮어쓰지 않는다.
+A Display is a deliberate focal sentence or value: 32/800, line-height 1.2, tracking -.045em (28 at widths below 360). A sentence may contrast a key number/phrase in primary foreground with surrounding text in readable secondary foreground; color is not the only carrier of meaning. Numeric displays are 32/800, section headings 18/740, support 15 with 1.55 leading when used as headline context. A large headline belongs in the body, not in a crowded action bar. Leave breathing room before the next content group; do not attach a decorative overline to every card. Ordinary item/body/button/caption and approved Standard header values remain intact. [Candidate values](../implementation/v015-tokens.json) → `refinements.typography`.
 
 ## 사용과 접근성
 

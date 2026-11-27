@@ -476,7 +476,8 @@ body { display: grid; grid-template-rows: auto 1fr; }
 }
 
 
-/* UI-001/T2: reversible refinement of existing roles, not a new SEED family.
+/* UI-001/T2: historical first-pass refinement. The later expressive proposal is owned by v015-tokens.json refinements and its SEED specs; do not treat this earlier CSS comparison as the current candidate.
+   Reversible refinement of existing roles, not a new SEED family.
    Opt in on the document root; approved default tokens stay untouched. */
 :root[data-seed-design="refined"] {
   --seed-refined-root-size:1.625rem;

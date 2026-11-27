@@ -343,3 +343,7 @@ Foundation은 전역 시각 토큰, Component는 슬롯·행동·상태, Pattern
 ### T2 closure
 
 At baseline `620cc1e9d766713496f17b506efe8b768fbe6e40`, all 12 existing SEED quality-test assertion bodies executed against exact remote source files in a JavaScript harness: 12/12 PASS. All 52 SEED Markdown files scanned for relative links; five stale historical references corrected. TRACE validator logic and five tests passed in the harness. This is static design/document verification, not a native Node CLI run or rendering. Refinements remain proposed; UI-001 concludes at the SEED contract boundary. Android application and onboarding are deferred.
+
+### Corrective expressive review · UI-001/T2
+
+The previous `refined` CSS candidate is historical; current design proposal is `refinements` and the existing SEED owners. A standalone component-review HTML demonstrates the revised roles, defaults to the new proposal and preserves a baseline comparison. Chromium loaded its actual HTML and checked 320/360/390/430/900 widths × light/dark × refined/compare (20 no-overflow checks), computed 58px pill CTA, selection tile, numeric next/previous tap, switch, sheet open/close, dialog Escape and zero JS errors. No production app, physical device, native wheel scrolling or full sheet gesture validation; do not infer user visual approval from mechanical tests. Prior approvals and archived web artifacts remain intact.

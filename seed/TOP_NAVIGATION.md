@@ -29,6 +29,6 @@ Center와 Start는 동일 Header의 배치 선택이며 화면 작성자가 명�
 
 알림 아이콘은 기존 웹 승인 `assets/icons/preview/bell-connected.svg`를 참고한다. Soft 56종의 공식 bell 및 SVG 원본은 변경하지 않는다.
 
-## 개편 표현 · UI-001 (제안)
+## Expressive navigation (proposed)
 
-갓생알리미처럼 Root 제목과 여백을 보다 선명하게 구분하고 필요한 검색 전환은 연속 모션으로 표현한다. 큰 Root 후보는 [기계 판독값](implementation/v015-tokens.json)의 `refinements.navigation` (26 논리 크기/760, 줄높이 1.22, 자간 -.04em, 최소 높이 68, 360 미만 24). Standard, 터치영역, 광학 정렬, 기존 D-015 기본값은 유지한다. 채택 여부 및 실제 좁은 폭·라이트/다크·확대 품질은 미래 앱 적용 시 검증한다.
+Root is a generous identity bar: H76, title 30/800, tracking -.04em, leading 1.22; compact width below 360 uses 28. Use only relevant outline actions. For contextual flows, a circular Back (48 target, 24 glyph) may accompany a meaningful icon+label capsule (H48); move a large question/headline into the body instead of cramming it into the bar. This is a composition of existing roles, not a third navigation type. Existing Standard Center/Start and D-015 default remain unchanged. Use C-ICON/C-ACTION and F-TYPE; no extra actions or invented destinations. [Candidate values](implementation/v015-tokens.json) → `refinements.navigation`.

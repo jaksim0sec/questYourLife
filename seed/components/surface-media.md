@@ -124,6 +124,6 @@ Plain → 필요한 Divider → 독립 면의 순서로 정보 관계를 판단�
 
 기존 10종 Surface 역할·토큰·금지 중첩 규칙은 변경하지 않는다.
 
-## 개편 표현 · UI-001 (제안)
+## Expressive information grouping (proposed)
 
-일반 Solid/Subtle/Interactive에 여유 있는 곡률 22, 홈 요약형 등의 padding 16과 면 중심 경계를 후보로 둔다. 일반 Solid/Interactive의 불필요한 border를 줄일 수 있으나 D-012 기본값과 S06 통합 상품 카드의 외곽선, Outline/Inset/Reward/Media의 의미 경계 및 실제 선택·오류 표시는 유지한다. 동일 역할에는 같은 표면/곡률을 사용하며 정보 그룹을 무조건 박스로 만들지 않는다. [후보 수치](../implementation/v015-tokens.json)의 `refinements`. 별도 Surface 타입이나 제품 화면 배치는 추가하지 않는다.
+Use whitespace as the first grouping boundary. For independent information, a broad neutral filled surface (R24/P20) can hold an aligned label/value header, a chart or progress body and supporting context; use the full area instead of nesting miniature cards. A real contextual action row (minimum H60, R20, P16/20) uses an icon, readable title, optional secondary line and optional trailing control/chevron. Its entire hit target is the one action; if it contains a separate action, use sibling controls with separate targets. Adjacent independent rows use quiet gaps, not extra outlines. An ordinary card may omit decorative borders, but semantic selection/error/focus, Outline, S06 integrated item, Reward and Media boundaries stay intact. Use existing palette tokens; do not turn all surfaces into solid cards. [Candidate values](../implementation/v015-tokens.json) → `refinements.surface`.

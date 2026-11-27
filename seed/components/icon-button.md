@@ -40,3 +40,7 @@ S2-04 반례 05, S2-05/08 작은 선형 아이콘. 독립 조작 API가 있는 I
 ## 공통 계약 r1의 실제 타깃
 
 Glyph 박스는 target 박스 중앙에 둔다. 헤더의 icon별 translateX·scale로 슬롯을 조작하지 않는다. F-ICON-MOTION의 공통 눌림 glyph 시각 변환 후보는 타깃·광학 정렬의 예외 변경이 아니다. 최소48 CSS px와3rem 중 큰 실제 비중첩 target을 확보한다. 새 Header 아이콘 수·순서는 현재 페이지의 실제 행동으로 정하며 들어가지 않으면 타깃 축소 대신 낮은 우선순위부터 기존 메뉴로 이동한다. 헤더 구조는 [NAV-TOP](../TOP_NAVIGATION.md), 정렬/이력·safe inset은 [S-PAGE](../shells/page-shells.md)의 K10이 소유한다.
+
+## Expressive contextual action (proposed)
+
+An isolated Back/Close may sit in a 48×48 circular neutral surface, with a centered 24 glyph. Pair with a contextual icon+label capsule only when it communicates a real object or action. Standard headers retain the D-015 default; ordinary toolbar icons need no circular background. Same independent touch target, label, focus and press behavior. See NAV-TOP and C-ACTION.

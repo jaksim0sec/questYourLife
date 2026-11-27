@@ -33,4 +33,4 @@ references: [REF-001, REF-002, REF-004, REF-005]
 
 **v5 visual review:** Match the perceived weight and optical size of icons to adjacent type; small/thin isolated symbols are not acceptable. Original approved SVG paths and Fill pairs remain unchanged. The review's 2.05 outline stroke is a presentation candidate, not a rewrite of the 56 source assets. The new shell uses the approved asset masks and their role-specific sizes; further icon stroke review is not implied by this implementation.
 
-**D-019 active navigation:** Standard header glyph box 26, Root original 1.59rem, and bottom navigation 30 are working review dimensions. Use existing approved SVG paths and independent Fill assets, no per-icon optical hacks; all visible bottom icons are achromatic. Earlier D-015 label and size values remain historical.
+**D-019 active navigation:** Standard header glyph box 26, Root 1.75rem (28px at base font size), and bottom navigation 30 are working review dimensions. Use existing approved SVG paths and independent Fill assets, no per-icon optical hacks; all visible bottom icons are achromatic. Earlier D-015 label and size values remain historical.

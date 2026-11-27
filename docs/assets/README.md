@@ -100,3 +100,5 @@ SVG 경로 전환과 보상 PNG 8종 등록은 완료했다. 기존 preview 래�
 `assets/icons/preview/bell-connected-root.svg` derives from `bell-connected.svg` with only stroke width 1.8→2.1 changed. Active Root demo only; no overwrite of the approved source or Soft library. NAV-TOP owns the role-specific presentation contract.
 
 `assets/icons/preview/more-root.svg` similarly derives from `assets/icons/soft/v0.14/more.svg` with only stroke width 1.8→2.1 changed; active Root demo only.
+
+`assets/icons/preview/menu-root.svg` derives from `assets/icons/soft/v0.14/menu.svg` with only stroke width 1.8→2.1 changed; replaces the Root dots in the active demo. The previous More variant is retained as review history.

@@ -5,6 +5,7 @@
 | ID | 현재 범위 | 기록 |
 |---|---|---|
 | INFRA-001 | TRACE 도입 | [상세](active/INFRA-001.md) · [등록](active/INFRA-001.json) |
+| UI-007 | Shared SEED composition adapter integrated | [상세](archive/UI-007.md) · [등록](archive/UI-007.json) |
 | UI-006 | Archive-inspired composition and storefront preview integrated | [상세](archive/UI-006.md) · [등록](archive/UI-006.json) |
 | UI-005 | All five roots integrated; visual review pending | [상세](archive/UI-005.md) · [등록](archive/UI-005.json) |
 | UI-004 | DONE · Home + Quests personal execution prototype | [상세](archive/UI-004.md) · [등록](archive/UI-004.json) |

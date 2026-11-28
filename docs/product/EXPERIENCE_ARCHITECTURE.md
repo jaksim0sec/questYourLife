@@ -67,3 +67,7 @@ User requested a single-turn implementation of all pages after the Home v4 scree
 ## Archive reference composition · UI-006
 
 The user identified archive/preview (the shop-containing demo) as the primary page-composition reference. Adopt its plain profile, open product grid and rail, integrated horizontal featured item, reward-object rows and clan internal tabs. Keep current D-019/D-020 shell, neutral surfaces and new Explore IA. Shop reuses the historical seven product names and existing asset IDs/placement; old prices, currency, purchase and box opening rules are not imported. Existing demo ownership is explicitly a sample; isolated try-on of non-owned items cannot change the shared avatar. Clan insight reflects the current participation fixture, not fabricated XP. Archive is reference-only.
+
+## Shared composition correction · UI-007
+
+User requested applying lessons from the archive, not another layer of page-specific approximations. The active demo directly imports existing SEED component CSS in a lower cascade layer, retaining its own D-019 shell and neutral theme. Shared canonical avatar runtime owns equipment coordinates and slot conflict rules. Use common media/item display markup, actual filter chips, distinct accessible clan tabs, plain list rows and context-specific composition. Home offers compact real session activity shortcuts; Quests presents goals and daily tasks without duplicating the participation shelf. No new economic or social policies. Actual browser cascade/visual review remains open.

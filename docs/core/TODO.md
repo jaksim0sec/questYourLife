@@ -15,3 +15,5 @@ Completed SEED reform: [UI-001](../tasks/archive/UI-001.md). Native implementati
 기존 제품 미결의 정본은 [OPEN](../OPEN.md), 디자인 검증 미결은 [SEED VALIDATION](../../seed/VALIDATION.md)이다. 중복 목록으로 옮기지 않는다.
 
 UI-006: archive-inspired open item presentation, shop/wardrobe/reward detail and clan panels integrated. Next visual review; no production economy or persistence.
+
+UI-007: shared component migration integrated; visual review of current active demo (including CSS cascade and real mobile layouts) pending.

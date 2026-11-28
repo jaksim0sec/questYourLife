@@ -1,0 +1,20 @@
+{
+  "id": "UI-007",
+  "status": "done",
+  "baseline": "b44ec64d8694462cb2338538c5e09c4b064f5277",
+  "detail": "docs/tasks/archive/UI-007.md",
+  "scope": [
+    "web/demo",
+    "docs/product"
+  ],
+  "contracts": [
+    "docs/product/EXPERIENCE_ARCHITECTURE.md",
+    "seed/implementation/shared-style-contract.md",
+    "seed/components/avatar.md",
+    "seed/components/selection-controls.md"
+  ],
+  "dependencies": [
+    "UI-006"
+  ],
+  "next": ""
+}

@@ -15,3 +15,5 @@ Home v4: compact daily next action/full-list detail, dedicated cover rail and ca
 UI-005: all five roots now have product-specific content and state-linked interactions; DM example conversations are local only. Search/category, goal status, copy provenance, clan sample join/contribution, profile and activity records connected. Home title readability and mascot/chest overlap corrected; mascot paper backing is a rendering candidate, original art unchanged. Archive consulted, not reactivated. No real services or persistent storage.
 
 UI-006: archive-inspired shop, wardrobe, reward previews, plain profile and clan panels. Catalog/ownership are explicit session examples; no transactions or reward grants. All existing goal/book state preserved.
+
+UI-007: active demo imports the canonical SEED stylesheet in a lower CSS layer and canonical mascot runtime as an ES module. The shell preserves current navigation/theme overrides. Media/item, filter, clan tab and list patterns are shared; previous page-specific approximations removed where migrated. Browser/device review pending, including cascade and image fallback.

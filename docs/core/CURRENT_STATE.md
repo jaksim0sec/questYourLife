@@ -15,3 +15,5 @@
 갓생알리미 기술 비교와 웹 후보 구현은 기록했다. 실제 웹 렌더/Native 적용·승인은 미검증. 현재 목표는 SEED 자체의 조정·개편 완결이며 Android 정본 구축·적용은 장기 후속 작업이다. [TODO](TODO.md).
 
 UI-006: active demo has shop, filtered owned-preview wardrobe, non-owned isolated try-on, reward previews and clan insight panels. Visual verification remains open.
+
+UI-007: direct SEED stylesheet/runtime consumption, shared media/item display, filter chips, distinct clan tabs and list roles; visual review pending.
